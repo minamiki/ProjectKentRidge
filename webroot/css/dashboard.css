@@ -17,6 +17,9 @@
 	width: 351px;
 	float: left;
 	display: block;
+	background-image: url(../img/statusbar_background_gradient.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
 }
 .left-right-frame:first-child{
 	margin-right: 10px;		
@@ -33,6 +36,9 @@
 	padding-bottom: 10px;
 	padding-left: 10px;
 	clear: both;
+	background-image: url(../img/statusbar_background_gradient.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
 }
 #dashboard-container h2 {
 	font-size: 18px;
@@ -54,7 +60,6 @@
 	position: relative;
 	float: left;
 	margin-right: 10px;
-	margin-left: 10px;
 	margin-top: 4px;
 }
 .quiz_rating  {
@@ -84,15 +89,17 @@
 	border: 1px solid #000;
 }
 .quiz_details .description {
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: normal;
 	margin: 0px;
+	font-family: Verdana, Geneva, sans-serif;
 }
 .quiz_details .source {
 	font-size: 10px;
 	margin-top: 8px;
 	margin-bottom: 0px;
-	font-family: Tahoma, Geneva, sans-serif;
+	font-family: Verdana, Geneva, sans-serif;
+	color: #999;
 }
 .clear:after {
     content: "&nbsp;";
