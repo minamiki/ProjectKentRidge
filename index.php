@@ -3,9 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Quizroo</title>
+<?php include("webroot/inc/header-css.php");?>
 </head>
 
 <body>
-<?php include("../modules/statusbar.php");?>
+<?php include("modules/statusbar.php");?>
 </body>
 </html>

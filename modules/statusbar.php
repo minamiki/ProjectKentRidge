@@ -1,8 +1,3 @@
-<head>
-<link href="../webroot/css/statusbar.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
 <div id="statusbar-container">
     <div id="statusbar-logo"></div>
     <div id="statusbar-divider"></div>
@@ -38,4 +33,3 @@
     <div id="statusbar-divider"></div>
     <div id="statusbar-manage" class="statusbar-text">Manage</div>
 </div>
-</body>
