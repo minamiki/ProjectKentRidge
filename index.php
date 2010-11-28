@@ -8,5 +8,6 @@
 
 <body>
 <?php include("modules/statusbar.php");?>
+<?php include("modules/dashboard.php"); ?>
 </body>
 </html>

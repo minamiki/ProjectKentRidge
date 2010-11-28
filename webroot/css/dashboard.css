@@ -1,0 +1,116 @@
+@charset "utf-8";
+#dashboard-container {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.left-right-frame {
+	border:solid 2px #E0E0E0;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	width: 351px;
+	float: left;
+	display: block;
+}
+.left-right-frame:first-child{
+	margin-right: 10px;		
+}
+.frame {
+	border:solid 2px #E0E0E0;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	clear: both;
+}
+#dashboard-container h2 {
+	font-size: 18px;
+	color: #900;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-bottom: 5px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 5px;
+	margin-left: 0px;
+}
+.thumb_box {
+	background-image: url(../images/popular_tile.png);
+	background-repeat: no-repeat;
+	height: 61px;
+	width: 81px;
+	position: relative;
+	float: left;
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-top: 4px;
+}
+.quiz_rating  {
+	position: absolute;
+	height: 10px;
+	width: 80px;
+	left: 0px;
+	bottom: 1px;
+	background-image: url(../images/trans_grey.png);
+	color: #FC0;
+	font-size: 10px;
+	font-weight: bold;
+	font-family: Wingdings;
+	padding-bottom: 3px;
+	padding-left: 3px;
+}
+.quiz_details   {
+	width: 250px;
+	float: left;
+}
+.quiz_details h3 {
+	font-size: 14px;
+	margin-top: 0px;
+	margin-bottom: 3px;
+}
+.quiz_box a img  {
+	border: 1px solid #000;
+}
+.quiz_details .description {
+	font-size: 12px;
+	font-weight: normal;
+	margin: 0px;
+}
+.quiz_details .source {
+	font-size: 10px;
+	margin-top: 8px;
+	margin-bottom: 0px;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+.clear:after {
+    content: "&nbsp;";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.quiz_box {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	min-height: 85px;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #999;
+	padding-top: 0px;
+	padding-bottom: 5px;
+}
+.quiz_box:last-child {
+	border-bottom-style: none;
+}
