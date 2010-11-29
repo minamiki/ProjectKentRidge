@@ -1,4 +1,5 @@
 <div id="statusbar-container">
+<div id="statusbar">
     <div id="statusbar-logo"></div>
     <div id="statusbar-divider"></div>
 	<div id="statusbar-notification">
@@ -32,4 +33,6 @@
     <div id="statusbar-friends" class="statusbar-text">Friends</div>
     <div id="statusbar-divider"></div>
     <div id="statusbar-manage" class="statusbar-text">Manage</div>
+</div>
+<div id="statusbar-information">You completed 5 quizzes</div>
 </div>

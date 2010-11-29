@@ -10,7 +10,7 @@ var $password = "";
 var $database = "";
 
 function Database(){
-$this->servername = "hci-apps.ddns.comp.nus.edu.sg";
+$this->servername = "localhost";
 $this->username = "root";
 $this->password = "gjtgmcjw";
 $this->database = "quizroo";
@@ -27,11 +27,38 @@ function Disconnect(){
  	die('Could not connect: '.mysql_error());;
 }
 
+/*
+ * Gets values from the specified table with attributes in array format (e.g. array("apple","pear","orange"))
+ * given the "WHERE" clause.
+ */
 function get($table,$attributes,$where){
 	
 	$this->Connect();	
 	
 	$this->SQLStatement = "SELECT ".implode(',',$attributes)." FROM ".$table."  WHERE ".$where;
+	
+	$results = mysql_query($this->SQLStatement);
+	
+	$return = array();
+	
+	if(!is_bool($results)){
+		while($row = mysql_fetch_array($results)){
+			array_push($return,$row);
+		}
+	}
+	
+	$this->Disconnect();
+	
+	return $return;
+}
+
+/*
+ * Executes the query specified.
+ */
+function query($query){
+	$this->Connect();	
+	
+	$this->SQLStatement = $query;
 	$results = mysql_query($this->SQLStatement);
 	
 	$return = array();
@@ -45,6 +72,10 @@ function get($table,$attributes,$where){
 	return $return;
 }
 
+/*
+ * Saves a set of values for the given attributes where the attributes and values are given in the same order in CSV format
+ * (e.g. array("name","company","position"), array("John","Microsoft","Director")).
+ */
 function save($table,$attributes,$values){
 	for($i=0;$i<count($values);$i++){
 		$values[$i] = "'".$values[$i]."'";
@@ -57,7 +88,7 @@ function save($table,$attributes,$values){
 	}
 	$this->Disconnect();
 	
-	return $this->SQLStatement;
+	return $results;
 }
 
 function update($table,$keyattribute,$key,$attributes,$values){
@@ -66,22 +97,34 @@ function update($table,$keyattribute,$key,$attributes,$values){
 	$this->Connect();	
 	if(count($attributes)==count($values)){
 		for($i=0;$i<count($attributes);$i++){
-		$this->SQLStatement = "UPDATE ".$table." SET ".$attributes[$i]." = ".$values[$i]." WHERE ".$keyattribute." = ".$key;
+		$this->SQLStatement = "UPDATE ".$table." SET ".$attributes[$i]."=".$values[$i]." WHERE ".$keyattribute."=".$key;
 		$results = mysql_query($this->SQLStatement);
 		}
 	}
 	$this->Disconnect();
 	
-	return $this->SQLStatement;
+	return $results;
+}
+
+function delete($table,$where){
+	$this->Connect();	
+	
+	$this->SQLStatement = "DELETE FROM ".$table."  WHERE ".$where;
+	$results = mysql_query($this->SQLStatement);
+		
+	$this->Disconnect();
+	
+	return $results;
 }
 
 function mysqlnow(){
 	$this->Connect();
-	$this->SQLStatement = "SELECT NOW()";
-		$results = mysql_query($this->SQLStatement);
+	$this->SQLStatement = "SELECT NOW() as now";
+	$results = mysql_query($this->SQLStatement);
+	$row = mysql_fetch_array($results);
 	$this->Disconnect();
 	
-	return $results;
+	return $row['now'];
 }
 }
 ?>
