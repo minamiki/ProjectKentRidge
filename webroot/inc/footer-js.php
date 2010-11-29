@@ -1,4 +1,6 @@
 <div id="fb-root"></div>
+<script type="text/javascript" src="webroot/js/Statusbar.js"></script>
+<script type="text/javascript" src="webroot/js/jquery-1.4.min.js"></script>
 <script>
 
 //======================================================
@@ -14,5 +16,22 @@ window.fbAsyncInit = function(){
 	e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
 	document.getElementById('fb-root').appendChild(e);
 }());
+
+//======================================================
+// Includes javascript to be executed on document ready
+//======================================================
+
+$(document).ready(function(){
+	Statusbar.updateNotifications();
+	$('#statusbar-information').hide();
+	$('#notification-achievements').click(function(){
+		Statusbar.updateAchievementsNotification();
+		Statusbar.displayInformation('notification-achievements');
+	});
+	$('#notification-system').click(function(){
+		Statusbar.updateAchievementsNotification();
+		Statusbar.displayInformation('notification-system');
+	});
+});
 
 </script>
