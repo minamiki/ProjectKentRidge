@@ -9,5 +9,7 @@
 
 <body>
 <?php include("modules/statusbar.php");?>
+<?php include("modules/dashboard.php"); ?>
+<?php include("webroot/inc/footer-js.php"); ?>
 </body>
 </html>
