@@ -12,7 +12,7 @@ var $database = "";
 function Database(){
 $this->servername = "localhost";
 $this->username = "root";
-$this->password = "gjtgmcjw";
+$this->password = "";
 $this->database = "quizroo";
 }
 
