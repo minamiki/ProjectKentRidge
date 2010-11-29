@@ -21,7 +21,7 @@
 	background-repeat: repeat-x;
 	background-position: bottom;
 }
-.left-right-frame:first-child{
+#recommendations {
 	margin-right: 10px;		
 }
 .frame {
@@ -120,4 +120,33 @@
 }
 .quiz_box:last-child {
 	border-bottom-style: none;
+}
+#recent .recent-feed {
+	font-size: 14px;
+	margin-bottom: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCC;
+	display: block;
+}
+#recent .recent-feed .topic   {
+	font-weight: bold;
+	margin-right: 10px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	padding-top: 3px;
+	padding-right: 5px;
+	padding-bottom: 3px;
+	padding-left: 5px;
+}
+#recent .friend {
+	background-color: #09F;
+}
+#recent .achievement {
+	background-color: #F90;
+}
+#recent .quiz {
+	background-color: #6C3;
 }
