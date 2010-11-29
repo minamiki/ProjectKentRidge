@@ -23,7 +23,6 @@ window.fbAsyncInit = function(){
 
 $(document).ready(function(){
 	Statusbar.updateNotifications();
-	$('#statusbar-information').hide();
 	$('#notification-achievements').click(function(){
 		Statusbar.updateAchievementsNotification();
 		Statusbar.displayInformation('notification-achievements');

@@ -3,13 +3,13 @@ var Statusbar = {
 	displayInformation: function(option){
 			if(option==$('.statusbar-highlighted').attr('id')){
 				$('.statusbar-highlighted').removeClass('statusbar-highlighted');
-				$('#statusbar-information').hide();
-			}else if($('#statusbar-information').css('display')!='none'){
+				$('#statusbar-info').slideUp('fast');
+			}else if($('#statusbar-info').css('display')!='none'){
 				$('.statusbar-highlighted').removeClass('statusbar-highlighted');
 				$('#'+option).addClass('statusbar-highlighted');
 			}else{
 				$('#'+option).addClass('statusbar-highlighted');
-				$('#statusbar-information').show();				
+				$('#statusbar-info').slideDown('fast');				
 			}
 	},
 	

@@ -41,6 +41,7 @@
 	width:50px;
 	height:50px;
 	background-image: url(../img/notification-achievements.png);
+	cursor:pointer;	
 }
 
 #notification-system{
@@ -49,6 +50,7 @@
 	width:50px;
 	height:50px;
 	background-image: url(../img/notification-system.png);
+	cursor:pointer;
 }
 
 .notification-count{
@@ -77,6 +79,7 @@
 	width:45px;
 	height:50px;
 	background-image: url(../img/achievements.png);
+	cursor:pointer;
 }
 
 #achievements-count{
@@ -114,6 +117,7 @@
 	float:right;
 	width:70px;
 	height:50px;
+	cursor:pointer;
 }
 
 #quizcreator-logo{
@@ -127,6 +131,7 @@
 	float:right;
 	width:70px;
 	height:50px;
+	cursor:pointer;
 }
 
 #quiztaker-logo{
@@ -172,16 +177,22 @@
 	-webkit-border-top-right-radius: 5px;
 }
 
-#statusbar-information{
+#statusbar-info-container{
+	width:760px;
+	position: absolute;
+	top:48px;
+}
+
+#statusbar-info{
 	width:500px;
 	padding:10px;
 	margin: 0px auto;
 	position:relative;
-	top: -2px;
 	border:solid 4px #666;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+	display: none;
 	background-color: #999;
 	color:#fff;
 }
