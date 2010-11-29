@@ -34,5 +34,7 @@
     <div id="statusbar-divider"></div>
     <div id="statusbar-manage" class="statusbar-text">Manage</div>
 </div>
-<div id="statusbar-information">You completed 5 quizzes</div>
+<div id="statusbar-info-container">
+	<div id="statusbar-info"></div>
+</div>
 </div>
