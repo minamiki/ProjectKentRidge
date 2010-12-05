@@ -1,5 +1,8 @@
 var Statusbar = {
 	
+	achievementsNotification: '',
+	systemNotification: '',
+	
 	displayInformation: function(option){
 			if(option==$('.statusbar-highlighted').attr('id')){
 				$('.statusbar-highlighted').removeClass('statusbar-highlighted');
@@ -10,6 +13,22 @@ var Statusbar = {
 			}else{
 				$('#'+option).addClass('statusbar-highlighted');
 				$('#statusbar-info').slideDown('fast');				
+			}
+			
+			if(option=='notification-achievements'){
+				var data = Statusbar.achievementsNotification;
+				$('#statusbar-info').html('');
+				$.each(data,function(i,achievement){
+					var desc = achievement['description'];
+					$('#statusbar-info').append("<div class='statusbar-unit'>"+desc+"<div>");
+				});
+			}else if(option=='notification-system'){
+				var data = Statusbar.systemNotification;
+				$('#statusbar-info').html('');
+				$.each(data,function(i,systemnote){
+					var note = systemnote['notification'];
+					$('#statusbar-info').append("<div class='statusbar-unit'>"+note+"<div>");
+				});
 			}
 	},
 	
@@ -24,7 +43,8 @@ var Statusbar = {
 			if(count>9){
 				count = "···"
 			}
-			$("#notification-achievements-count").html(count);
+			$('#notification-achievements-count').html(count);
+			Statusbar.achievementsNotification = data;
 		});
 	},
 	
@@ -35,6 +55,7 @@ var Statusbar = {
 				count = "···"
 			}
 			$("#notification-system-count").html(count);
+			Statusbar.systemNotification = data;
 		});
 	},
 
