@@ -22,8 +22,9 @@
             <div id="quiztaker-count-total" class="achievements-quizcount-top">100</div>
             <div id="quiztaker-count-today" class="achievements-quizcount-bottom">20</div>
         </div>
-		<div id="achievements-count">10K</div>
-    	<div id="achievements-logo"></div>
+    	<div id="achievements-logo">
+        	<div id="achievements-count">10K</div>
+        </div>
     </div>
     <div id="statusbar-divider"></div>
     <div id="statusbar-stats" class="statusbar-text">Stats</div>

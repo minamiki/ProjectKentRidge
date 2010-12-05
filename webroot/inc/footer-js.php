@@ -28,8 +28,11 @@ $(document).ready(function(){
 		Statusbar.displayInformation('notification-achievements');
 	});
 	$('#notification-system').click(function(){
-		Statusbar.updateAchievementsNotification();
+		Statusbar.updateSystemNotification();
 		Statusbar.displayInformation('notification-system');
+	});
+	$('#achievements-logo').click(function(){
+		Statusbar.displayInformation('achievements-logo');
 	});
 });
 
