@@ -43,12 +43,10 @@ function checkAchievements($memberid){
 	/*
 	 * Checks for total score and todays score for quiz taker and quiz creator roles for the user specified. 
 	 */
-	$quizScore = $database->get('members',array('quiztaker_score','quizcreator_score','quiztaker_score_today','quizcreator_score_today'),'id="'.$memberid.'"');
+	$quizScore = $database->get('members',array('quiztaker_score','quizcreator_score','quiztaker_score_today','quizcreator_score_today'),'member_id="'.$memberid.'"');
 	
-	array_push($result['quiztaker'],$quizScore[0]['quiztaker_score']);
-	array_push($result['quiztaker'],$quizScore[0]['quiztaker_score_today']);
-	array_push($result['quizcreator'],$quizScore[0]['quizcreator_score']);
-	array_push($result['quizcreator'],$quizScore[0]['quizcreator_score_today']);
+	$result['quiztaker'] = array('quiztaker_score'=>$quizScore[0]['quiztaker_score'],'quiztaker_score_today'=>$quizScore[0]['quiztaker_score_today']);
+	$result['quizcreator'] = array('quizcreator_score'=>$quizScore[0]['quizcreator_score'],'quizcreator_score_today'=>$quizScore[0]['quizcreator_score_today']);
 	
 	return $result;
 }
