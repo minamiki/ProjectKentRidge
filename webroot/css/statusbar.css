@@ -18,7 +18,7 @@
 	float:left;
 	width:10px;
 	height:50px;
-	background-image: url(../img/divider.png)
+	background-image: url(../img/divider.png);
 }
 
 #statusbar-logo{
@@ -26,13 +26,34 @@
 	width:100px;
 	height:50px;
 	margin:0px 15px;
-	background-image: url(../img/quizroo-logo.png)
+	background-image: url(../img/quizroo-logo.png);
 }
 
 #statusbar-notification{
 	width:50px;
 	height:50px;
 	float:left;
+}
+
+.statusbar-unit-line{
+	width: 500px;
+	margin-bottom: 5px;
+}
+
+.statusbar-unit-line:last-child{
+	margin-bottom: 0px;
+}
+
+.statusbar-system-notification{
+	width: auto;
+	padding: 5px 10px;
+	float: left;
+}
+
+.statusbar-label{
+	float: left;
+	padding: 5px;
+	color: #FFF;
 }
 
 #notification-system{
@@ -57,14 +78,14 @@
 	background-repeat: no-repeat;
 }
 
-#achievements{
+#statusbar-achievements{
 	width:230px;
 	height:50px;
 	padding:0px;
 	float:left;
 }
 
-#achievements-logo{
+#statusbar-achievements-logo{
 	float:right;
 	margin:0px 0px 0px 5px;
 	width:85px;
@@ -74,7 +95,7 @@
 	background-repeat: no-repeat;
 }
 
-#achievements-count{
+#statusbar-achievements-count{
 	float:right;
 	margin:0px 0px 5px 0px;
 	padding:14px 0px;
@@ -85,7 +106,7 @@
 	color:#666;
 }
 
-.achievements-quizcount-top{
+.statusbar-achievements-quizcount-top{
 	float:right;
 	padding:7px 0px 3px 0px;
 	width:25px;
@@ -95,7 +116,7 @@
 	color:#666;
 }
 
-.achievements-quizcount-bottom{
+.statusbar-achievements-quizcount-bottom{
 	float:right;
 	padding:3px 0px 7px 0px;
 	width:25px;
@@ -105,28 +126,28 @@
 	color:#666;
 }
 
-#quizcreator{
+#statusbar-quizcreator{
 	float:right;
 	width:70px;
 	height:50px;
 	cursor:pointer;
 }
 
-#quizcreator-logo{
+#statusbar-quizcreator-logo{
 	float:left;
 	width:45px;
 	height:50px;
 	background-image:url(../img/quizcreator.png);
 }
 
-#quiztaker{
+#statusbar-quiztaker{
 	float:right;
 	width:70px;
 	height:50px;
 	cursor:pointer;
 }
 
-#quiztaker-logo{
+#statusbar-quiztaker-logo{
 	float:left;
 	width:45px;
 	height:50px;
@@ -177,17 +198,13 @@
 	color: #FFF !important;
 }
 
-#statusbar-info-container{
-	width:760px;
-	position: absolute;
-	top:48px;
-}
-
 #statusbar-info{
 	width:500px;
 	padding:10px;
-	margin: 0px auto;
-	position:relative;
+	margin: 0px 0px 0px -260px;
+	position: absolute;
+	top: 48px;
+	left: 50%;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -196,4 +213,90 @@
 	display: none;
 	background-color: #666;
 	color:#fff;
+	z-index: 10;
+}
+
+.statusbar-unit-large{
+	border-bottom-width: thin;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCC;
+	margin-top: 0px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+}
+
+.statusbar-unit-large:last-child{
+	margin: 0px 5px;
+	border: none;		
+}
+
+.statusbar-thumbnail-large{
+	float:left;
+	margin: 3px 0px;
+	width: 80px;
+	height: 80px;
+}
+
+.statusbar-text-container-large{
+	float: left;
+	padding: 10px 0px 10px 10px;
+	width: 400px;
+}
+
+.statusbar-name-large{
+	float: left;
+	width: 400px;
+	height: 26px;
+	margin-bottom: 5px;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.statusbar-description-large{
+	float: left;
+	width: 400px;
+}
+
+.statusbar-unit-small{
+	border-bottom-width: thin;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCC;
+	margin-top: 0px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;		
+}
+
+.statusbar-unit-small:last-child{
+	margin: 0px 5px;
+	border: none;	
+}
+
+.statusbar-thumbnail-small{
+	float:left;
+	margin: 3px 0px;
+	width: 50px;
+	height: 50px;
+}
+
+.statusbar-text-container-small{
+	float: left;
+	padding: 5px 0px 5px 10px;
+	width: 430px;	
+}
+
+.statusbar-name-small{
+	float: left;
+	width: 430px;
+	height: 20px;
+	margin-bottom: 5px;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.statusbar-description-small{
+	float: left;
+	width: 430px;
+	font-size: 14px;
 }
