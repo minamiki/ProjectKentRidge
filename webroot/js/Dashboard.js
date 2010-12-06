@@ -15,3 +15,10 @@ var Dashboard = {
 		}
 	}
 }
+
+$(document).ready(function(){
+	// dashboard handlers
+	$('#recent-toggle').click(function(){
+		Dashboard.togglePanel();
+	});
+});
