@@ -53,6 +53,31 @@ function get($table,$attributes,$where){
 }
 
 /*
+ * Gets values from the specified table with attributes in array format (e.g. array("apple","pear","orange"))
+ * given the "WHERE" clause. Limits results to number specified
+ */
+function limit($table,$attributes,$where,$limit){
+	
+	$this->Connect();	
+	
+	$this->SQLStatement = "SELECT ".implode(',',$attributes)." FROM ".$table."  WHERE ".$where." LIMIT ".$limit;
+	
+	$results = mysql_query($this->SQLStatement);
+	
+	$return = array();
+	
+	if(!is_bool($results)){
+		while($row = mysql_fetch_array($results)){
+			array_push($return,$row);
+		}
+	}
+	
+	$this->Disconnect();
+	
+	return $return;
+}
+
+/*
  * Executes the query specified.
  */
 function query($query){
