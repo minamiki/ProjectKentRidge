@@ -2,7 +2,7 @@ var Statusbar = {
 	
 	achievements: '',
 	systemNotification: '',
-	imagepath: '',
+	imagepath: 'webroot/img/',
 	
 	displayInformation: function(option){
 			if(option==$('.statusbar-highlighted').attr('id')){
@@ -20,11 +20,15 @@ var Statusbar = {
 				var data = Statusbar.achievements;
 				$('#statusbar-info').html('');
 				$.each(data,function(i,achievement){
-					var thumbnail = achievement['image'];
+					var image = achievement['image'];
 					var name = achievement['name'];
 					var desc = achievement['description'];
-
-					$('#statusbar-info').append("<img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+name+"' /><div class='statusbar-name'>"+name+"</div><div class='statusbar-unit'>"+desc+"</div>");
+					
+					if(i==0){
+						$('#statusbar-info').append("<div class='statusbar-unit-large clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+name+"' /><div class='statusbar-text-container-large'><div class='statusbar-name-large'>"+name+"</div><div class='statusbar-description-large clear'>"+desc+"</div></div></div>");
+					}else{
+						$('#statusbar-info').append("<div class='statusbar-unit-small clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-small' alt='"+name+"' /><div class='statusbar-text-container-small'><div class='statusbar-name-small'>"+name+"</div><div class='statusbar-description-small'>"+desc+"</div></div></div>");
+					}
 				});
 			}else if(option=='notification-system'){
 				var data = Statusbar.systemNotification;
@@ -38,23 +42,13 @@ var Statusbar = {
 	},
 	
 	updateNotifications: function(){
-		Statusbar.updateAchievementsNotification();
+		Statusbar.updateAchievements();
 		Statusbar.updateSystemNotification();
 	},
 	
-	updateAchievementsNotification: function(){
+	updateAchievements: function(){
 		$.getJSON('modules/updateStatus.php/',{method:'achievements'},function(data){
-			var count = data.length;
-			if(count==0){
-				$('#notification-achievements-count').hide();	
-			}else if(count>9){
-				$('#notification-achievements-count').show();				
-				count = "···"
-			}else{
-				$('#notification-achievements-count').show();
-			}
-			$('#notification-achievements-count').html(count);
-			Statusbar.achievementsNotification = data;
+			Statusbar.achievements = data;
 		});
 	},
 	

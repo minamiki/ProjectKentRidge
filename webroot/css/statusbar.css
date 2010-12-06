@@ -181,6 +181,7 @@
 	width:760px;
 	position: absolute;
 	top:48px;
+	z-index: 10;
 }
 
 #statusbar-info{
@@ -197,3 +198,90 @@
 	background-color: #666;
 	color:#fff;
 }
+
+.statusbar-unit-large{
+	border-bottom-width: thin;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCC;
+	margin-top: 0px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+}
+
+.statusbar-unit-large:last-child{
+	margin: 0px 5px;
+	border: none;		
+}
+
+.statusbar-thumbnail-large{
+	float:left;
+	margin: 3px 0px;
+	width: 80px;
+	height: 80px;
+}
+
+.statusbar-text-container-large{
+	float: left;
+	padding: 10px 0px 10px 10px;
+	width: 400px;
+}
+
+.statusbar-name-large{
+	float: left;
+	width: 400px;
+	height: 26px;
+	margin-bottom: 5px;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.statusbar-description-large{
+	float: left;
+	width: 400px;
+}
+
+.statusbar-unit-small{
+	border-bottom-width: thin;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCC;
+	margin-top: 0px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;		
+}
+
+.statusbar-unit-small:last-child{
+	margin: 0px 5px;
+	border: none;	
+}
+
+.statusbar-thumbnail-small{
+	float:left;
+	margin: 3px 0px;
+	width: 50px;
+	height: 50px;
+}
+
+.statusbar-text-container-small{
+	float: left;
+	padding: 5px 0px 5px 10px;
+	width: 430px;	
+}
+
+.statusbar-name-small{
+	float: left;
+	width: 430px;
+	height: 20px;
+	margin-bottom: 5px;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.statusbar-description-small{
+	float: left;
+	width: 430px;
+	font-size: 14px;
+}
+
+.clear:after { content: "&nbsp;"; display: block; height: 0; clear: both; visibility: hidden; }
