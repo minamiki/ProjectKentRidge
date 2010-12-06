@@ -6,9 +6,6 @@
         <div id="notification-system">
         <div id="notification-system-count" class="notification-count">0</div>
         </div>
-        <div id="notification-achievements">
-        <div id="notification-achievements-count" class="notification-count">0</div>
-        </div>
     </div>
     <div id="statusbar-divider"></div>
   	<div id="achievements">

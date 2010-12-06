@@ -4,12 +4,12 @@ require 'database.php';
 $method = $_REQUEST['method'];
 $status = new Status();
 
-if($method=='achievements-notification'){
+if($method=='achievements'){
 	echo json_encode($status->checkAchievements(0));	
 }else if($method=='system-notification'){
 	echo json_encode($status->checkSystem(0));	
-}else if($method=='clear-achievements-notification'){
-	echo json_encode($status->clearAchievementsNotification(0));	
+}else if($method=='read-achievements'){
+	echo json_encode($status->readAchievements(0));	
 }else if($method=='clear-system-notification'){
 	echo json_encode($status->clearSystemNotification(0));	
 }else if($method=='recent-achievements-notification'){
@@ -25,9 +25,9 @@ function Status(){
 function checkAchievements($memberid){
 	$result = array();
 	$database = new Database();
-	$achievements = $database->get('g_achievements_log',array('fk_achievement_id'),'fk_member_id="'.$memberid.'" AND isRead="0"');
+	$achievements = $database->query('SELECT fk_achievement_id,timestamp FROM g_achievements_log WHERE fk_member_id="'.$memberid.'" ORDER BY timestamp DESC LIMIT 3'); 
 	foreach($achievements as $achievement){
-		$description = $database->get('g_achievements',array('description'),'id="'.$achievement['fk_achievement_id'].'"');
+		$description = $database->get('g_achievements',array('image','name','description'),'id="'.$achievement['fk_achievement_id'].'"');
 		array_push($result,$description[0]);
 	}
 	
@@ -41,7 +41,7 @@ function checkSystem($memberid){
 	return $systemnotes;
 }
 
-function clearAchievementsNotification($memberid){
+function readAchievements($memberid){
 	$database = new Database();
 	$result = $database->update('g_achievements_log','fk_member_id',$memberid,array('isRead'),array('1'));
 	if($result==1){

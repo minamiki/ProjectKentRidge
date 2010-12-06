@@ -1,7 +1,8 @@
 var Statusbar = {
 	
-	achievementsNotification: '',
+	achievements: '',
 	systemNotification: '',
+	imagepath: '',
 	
 	displayInformation: function(option){
 			if(option==$('.statusbar-highlighted').attr('id')){
@@ -15,20 +16,22 @@ var Statusbar = {
 				$('#statusbar-info').slideDown('fast');				
 			}
 			
-			if(option=='notification-achievements'){
-				var data = Statusbar.achievementsNotification;
+			if(option=='achievements-logo'){
+				var data = Statusbar.achievements;
 				$('#statusbar-info').html('');
 				$.each(data,function(i,achievement){
+					var thumbnail = achievement['image'];
+					var name = achievement['name'];
 					var desc = achievement['description'];
-					$('#statusbar-info').append("<div class='statusbar-unit'>"+desc+"<div>");
+
+					$('#statusbar-info').append("<img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+name+"' /><div class='statusbar-name'>"+name+"</div><div class='statusbar-unit'>"+desc+"</div>");
 				});
-				Statusbar.clearAchievementsNotification();
 			}else if(option=='notification-system'){
 				var data = Statusbar.systemNotification;
 				$('#statusbar-info').html('');
 				$.each(data,function(i,systemnote){
 					var note = systemnote['notification'];
-					$('#statusbar-info').append("<div class='statusbar-unit'>"+note+"<div>");
+					$('#statusbar-info').append("<div class='statusbar-unit'>"+note+"</div>");
 				});
 				Statusbar.clearSystemNotification();
 			}
@@ -40,7 +43,7 @@ var Statusbar = {
 	},
 	
 	updateAchievementsNotification: function(){
-		$.getJSON('modules/updateStatus.php/',{method:'achievements-notification'},function(data){
+		$.getJSON('modules/updateStatus.php/',{method:'achievements'},function(data){
 			var count = data.length;
 			if(count==0){
 				$('#notification-achievements-count').hide();	
@@ -71,11 +74,9 @@ var Statusbar = {
 		});
 	},
 
-	clearAchievementsNotification: function(){
-		$.getJSON('modules/updateStatus.php/',{method:'clear-achievements-notification'},function(data){
+	readAchievements: function(){
+		$.getJSON('modules/updateStatus.php/',{method:'read-achievements'},function(data){
 		if(data=='success'){
-			$('#notification-achievements-count').html(0);
-			$('#notification-achievements-count').hide();
 		}
 		});
 	},

@@ -30,23 +30,14 @@
 }
 
 #statusbar-notification{
-	width:110px;
+	width:50px;
 	height:50px;
 	float:left;
 }
 
-#notification-achievements{
-	float:right;
-	margin:0px 2px 0px 3px;
-	width:50px;
-	height:50px;
-	background-image: url(../img/notification-achievements.png);
-	cursor:pointer;	
-}
-
 #notification-system{
 	float:right;
-	margin:0px 3px 0px 2px;
+	margin:0px 2px 0px 0px;
 	width:50px;
 	height:50px;
 	background-image: url(../img/notification-system.png);
