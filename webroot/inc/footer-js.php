@@ -29,8 +29,8 @@ $(document).ready(function(){
 		Statusbar.updateSystemNotification();
 		Statusbar.displayInformation('notification-system');
 	});
-	$('#achievements-logo').click(function(){
-		Statusbar.displayInformation('achievements-logo');
+	$('#statusbar-achievements-logo').click(function(){
+		Statusbar.displayInformation('statusbar-achievements-logo');
 	});
 	
 	// dashboard handlers

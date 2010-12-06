@@ -3,17 +3,18 @@ require 'database.php';
 
 $method = $_REQUEST['method'];
 $status = new Status();
+$member = 7;
 
 if($method=='achievements'){
-	echo json_encode($status->checkAchievements(0));	
+	echo json_encode($status->checkAchievements($member));	
 }else if($method=='system-notification'){
-	echo json_encode($status->checkSystem(0));	
+	echo json_encode($status->checkSystem($member));	
 }else if($method=='read-achievements'){
-	echo json_encode($status->readAchievements(0));	
+	echo json_encode($status->readAchievements($member));	
 }else if($method=='clear-system-notification'){
-	echo json_encode($status->clearSystemNotification(0));	
+	echo json_encode($status->clearSystemNotification($member));	
 }else if($method=='recent-achievements-notification'){
-	echo json_encode($status->recentAchievementsNotification(0));
+	echo json_encode($status->recentAchievementsNotification($member));
 }
 
 class Status
@@ -22,22 +23,42 @@ class Status
 function Status(){
 }
 
+/**
+ * Returns the achievements, quiztaking score and quiz creation scores for a user specified.
+ * @param int $memberid
+ */
 function checkAchievements($memberid){
-	$result = array();
+	$result = array('overview'=>array(),'quiztaker'=>array(),'quizcreator'=>array());
 	$database = new Database();
-	$achievements = $database->query('SELECT fk_achievement_id,timestamp FROM g_achievements_log WHERE fk_member_id="'.$memberid.'" ORDER BY timestamp DESC LIMIT 3'); 
-	foreach($achievements as $achievement){
-		$description = $database->get('g_achievements',array('image','name','description'),'id="'.$achievement['fk_achievement_id'].'"');
-		array_push($result,$description[0]);
+	
+	/*
+	 * Checks for 3 latest achievements for user specified and fetches the image url, name and description for the achievement.
+	 */
+	$achievementsOverview = $database->query('SELECT fk_achievement_id,timestamp FROM g_achievements_log WHERE fk_member_id="'.$memberid.'" ORDER BY timestamp DESC LIMIT 3'); 
+	foreach($achievementsOverview as $achievementOverview){
+		$description = $database->get('g_achievements',array('image','name','description'),'id="'.$achievementOverview['fk_achievement_id'].'"');
+		array_push($result['overview'],$description[0]);
 	}
+	
+	/*
+	 * Checks for total score and todays score for quiz taker and quiz creator roles for the user specified. 
+	 */
+	$quizScore = $database->get('members',array('quiztaker_score','quizcreator_score','quiztaker_score_today','quizcreator_score_today'),'id="'.$memberid.'"');
+	
+	array_push($result['quiztaker'],$quizScore[0]['quiztaker_score']);
+	array_push($result['quiztaker'],$quizScore[0]['quiztaker_score_today']);
+	array_push($result['quizcreator'],$quizScore[0]['quizcreator_score']);
+	array_push($result['quizcreator'],$quizScore[0]['quizcreator_score_today']);
 	
 	return $result;
 }
 
 function checkSystem($memberid){
 	$database = new Database();
-	$systemnotes = $database->get('s_notifications',array('id','notification'),'fk_member_id='.$memberid.' AND isRead=0');
 
+	$systemnotes = $database->query('SELECT notification, label, color FROM s_notifications LEFT JOIN s_notifications_labels ON s_notifications.fk_label_id = s_notifications_labels.id WHERE fk_member_id='.$memberid);
+	//.' AND isRead=0'
+	
 	return $systemnotes;
 }
 

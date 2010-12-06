@@ -16,8 +16,8 @@ var Statusbar = {
 				$('#statusbar-info').slideDown('fast');				
 			}
 			
-			if(option=='achievements-logo'){
-				var data = Statusbar.achievements;
+			if(option=='statusbar-achievements-logo'){
+				var data = Statusbar.achievements['overview'];
 				$('#statusbar-info').html('');
 				$.each(data,function(i,achievement){
 					var image = achievement['image'];
@@ -35,9 +35,17 @@ var Statusbar = {
 				$('#statusbar-info').html('');
 				$.each(data,function(i,systemnote){
 					var note = systemnote['notification'];
-					$('#statusbar-info').append("<div class='statusbar-unit'>"+note+"</div>");
+					var label = systemnote['label'];
+					var color = systemnote['color'];			
+					
+					$('#statusbar-info').append("<div class='statusbar-unit-line clear'><div class='statusbar-label' style='background-color: #"+color+"'>"+label+"</div><div class='statusbar-system-notification>"+note+"</div></div>");
 				});
+				if(data==''){
+					$('#statusbar-info').append("<div class='statusbar-unit-line'>There are no new notifications</div>");
+				}
 				Statusbar.clearSystemNotification();
+			}else if(option=='statusbar-quiz-taker'){
+				
 			}
 	},
 	
