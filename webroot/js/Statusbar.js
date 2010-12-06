@@ -2,7 +2,7 @@ var Statusbar = {
 	
 	achievements: '',
 	systemNotification: '',
-	imagepath: 'webroot/img/',
+	imagepath: 'img/',
 	
 	displayInformation: function(option){
 			if(option==$('.statusbar-highlighted').attr('id')){
@@ -66,7 +66,7 @@ var Statusbar = {
 	},
 	
 	updateAchievements: function(){
-		$.getJSON('modules/updateStatus.php/',{method:'achievements'},function(data){
+		$.getJSON('../modules/updateStatus.php/',{method:'achievements'},function(data){
 			Statusbar.achievements = data;
 			var totalscore = parseInt(data['quiztaker']['quiztaker_score'])+parseInt(data['quizcreator']['quizcreator_score']);
 			$('#statusbar-achievements-count').html(totalscore);
@@ -78,7 +78,7 @@ var Statusbar = {
 	},
 	
 	updateSystemNotification: function(){
-		$.getJSON('modules/updateStatus.php/',{method:'system-notification'},function(data){
+		$.getJSON('../modules/updateStatus.php/',{method:'system-notification'},function(data){
 			var count = data.length;
 			if(count==0){
 				$('#notification-system-count').hide();	
@@ -94,14 +94,14 @@ var Statusbar = {
 	},
 
 	readAchievements: function(){
-		$.getJSON('modules/updateStatus.php/',{method:'read-achievements'},function(data){
+		$.getJSON('../modules/updateStatus.php/',{method:'read-achievements'},function(data){
 		if(data=='success'){
 		}
 		});
 	},
 	
 	clearSystemNotification: function(){
-		$.getJSON('modules/updateStatus.php/',{method:'clear-system-notification'},function(data){
+		$.getJSON('../modules/updateStatus.php/',{method:'clear-system-notification'},function(data){
 		if(data=='success'){
 			$('#notification-system-count').html(0);
 			$('#notification-system-count').hide();
