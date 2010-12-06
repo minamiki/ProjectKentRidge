@@ -11,16 +11,16 @@
   	<div id="statusbar-achievements">
 	<div id="statusbar-quizcreator">
         	<div id="statusbar-quizcreator-logo"></div>
-            <div id="statusbar-quizcreator-count-total" class="statusbar-achievements-quizcount-top">50</div>
-            <div id=statusbar-"quizcreator-count-today" class="statusbar-achievements-quizcount-bottom">30</div>
+            <div id="statusbar-quizcreator-count-total" class="statusbar-achievements-quizcount-top"></div>
+            <div id="statusbar-quizcreator-count-today" class="statusbar-achievements-quizcount-bottom"></div>
         </div>
         <div id="statusbar-quiztaker">
         	<div id="statusbar-quiztaker-logo"></div>
-            <div id="statusbar-quiztaker-count-total" class="statusbar-achievements-quizcount-top">100</div>
-            <div id="statusbar-quiztaker-count-today" class="statusbar-achievements-quizcount-bottom">20</div>
+            <div id="statusbar-quiztaker-count-total" class="statusbar-achievements-quizcount-top"></div>
+            <div id="statusbar-quiztaker-count-today" class="statusbar-achievements-quizcount-bottom"></div>
         </div>
     	<div id="statusbar-achievements-logo">
-        	<div id="statusbar-achievements-count">10K</div>
+        	<div id="statusbar-achievements-count"></div>
         </div>
     </div>
     <div id="statusbar-divider"></div>

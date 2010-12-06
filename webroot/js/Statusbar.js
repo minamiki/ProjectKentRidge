@@ -18,7 +18,8 @@ var Statusbar = {
 			
 			if(option=='statusbar-achievements-logo'){
 				var data = Statusbar.achievements['overview'];
-				$('#statusbar-info').html('');
+				var score = parseInt(Statusbar.achievements['quiztaker']['quiztaker_score'])+parseInt(Statusbar.achievements['quizcreator']['quizcreator_score']);
+				$('#statusbar-info').html("<div class='statusbar-score-text'>Total Achievement Points: "+score+"</div><div class='statusbar-info-title'>Most Recent Achievements</div>");
 				$.each(data,function(i,achievement){
 					var image = achievement['image'];
 					var name = achievement['name'];
@@ -44,8 +45,18 @@ var Statusbar = {
 					$('#statusbar-info').append("<div class='statusbar-unit-line'>There are no new notifications</div>");
 				}
 				Statusbar.clearSystemNotification();
-			}else if(option=='statusbar-quiz-taker'){
+			}else if(option=='statusbar-quiztaker'){
+				var data = Statusbar.achievements['quiztaker'];
+				var score = data['quiztaker_score'];
+				var today = data['quiztaker_score_today'];
 				
+				$('#statusbar-info').html("<div class='statusbar-line'><div class='statusbar-score-text'>Total Quiz Taker Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div>");
+			}else if(option=='statusbar-quizcreator'){
+				var data = Statusbar.achievements['quizcreator'];
+				var score = data['quizcreator_score'];
+				var today = data['quizcreator_score_today'];
+				
+				$('#statusbar-info').html("<div class='statusbar-line'><div class='statusbar-score-text'>Total Quiz Creator Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div>");
 			}
 	},
 	
@@ -57,6 +68,12 @@ var Statusbar = {
 	updateAchievements: function(){
 		$.getJSON('modules/updateStatus.php/',{method:'achievements'},function(data){
 			Statusbar.achievements = data;
+			var totalscore = parseInt(data['quiztaker']['quiztaker_score'])+parseInt(data['quizcreator']['quizcreator_score']);
+			$('#statusbar-achievements-count').html(totalscore);
+			$('#statusbar-quiztaker-count-total').html(data['quiztaker']['quiztaker_score']);
+			$('#statusbar-quiztaker-count-today').html(data['quiztaker']['quiztaker_score_today']);
+			$('#statusbar-quizcreator-count-total').html(data['quizcreator']['quizcreator_score']);
+			$('#statusbar-quizcreator-count-today').html(data['quizcreator']['quizcreator_score_today']);
 		});
 	},
 	

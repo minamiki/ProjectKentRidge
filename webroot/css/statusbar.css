@@ -37,11 +37,16 @@
 
 .statusbar-unit-line{
 	width: 500px;
+	padding-bottom: 5px;
 	margin-bottom: 5px;
+	border-bottom-width: thin;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCC;	
 }
 
 .statusbar-unit-line:last-child{
 	margin-bottom: 0px;
+	border: none;
 }
 
 .statusbar-system-notification{
@@ -216,6 +221,13 @@
 	z-index: 10;
 }
 
+.statusbar-info-title{
+	width: 500px;
+	color: #CCC;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 .statusbar-unit-large{
 	border-bottom-width: thin;
 	border-bottom-style: dotted;
@@ -299,4 +311,13 @@
 	float: left;
 	width: 430px;
 	font-size: 14px;
+}
+
+.statusbar-score-text{
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.statusbar-score-text:first-child{
+	color: #FC0;	
 }
