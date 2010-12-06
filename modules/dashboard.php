@@ -1,36 +1,5 @@
-<?php require_once('Connections/localhost.php'); ?>
+<?php require_once('../Connections/quizroo.php'); ?>
 <?php
-if (!function_exists("GetSQLValueString")) {
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  if (PHP_VERSION < 6) {
-    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
-  }
-
-  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
-
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
-}
-}
-
 $maxRows_recommendations = 4;
 $pageNum_recommendations = 0;
 if (isset($_GET['pageNum_recommendations'])) {
@@ -38,10 +7,10 @@ if (isset($_GET['pageNum_recommendations'])) {
 }
 $startRow_recommendations = $pageNum_recommendations * $maxRows_recommendations;
 
-mysql_select_db($database_localhost, $localhost);
+mysql_select_db($database_quizroo, $quizroo);
 $query_recommendations = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, nickname, cat_name FROM q_quizzes, q_quiz_cat, members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat ORDER BY creation_date DESC";
 $query_limit_recommendations = sprintf("%s LIMIT %d, %d", $query_recommendations, $startRow_recommendations, $maxRows_recommendations);
-$recommendations = mysql_query($query_limit_recommendations, $localhost) or die(mysql_error());
+$recommendations = mysql_query($query_limit_recommendations, $quizroo) or die(mysql_error());
 $row_recommendations = mysql_fetch_assoc($recommendations);
 
 if (isset($_GET['totalRows_recommendations'])) {
@@ -59,10 +28,10 @@ if (isset($_GET['pageNum_popular'])) {
 }
 $startRow_popular = $pageNum_popular * $maxRows_popular;
 
-mysql_select_db($database_localhost, $localhost);
+mysql_select_db($database_quizroo, $quizroo);
 $query_popular = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, nickname, cat_name FROM q_quizzes, q_quiz_cat, members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat ORDER BY RAND()";
 $query_limit_popular = sprintf("%s LIMIT %d, %d", $query_popular, $startRow_popular, $maxRows_popular);
-$popular = mysql_query($query_limit_popular, $localhost) or die(mysql_error());
+$popular = mysql_query($query_limit_popular, $quizroo) or die(mysql_error());
 $row_popular = mysql_fetch_assoc($popular);
 
 if (isset($_GET['totalRows_popular'])) {
@@ -94,7 +63,7 @@ $totalPages_popular = ceil($totalRows_popular/$maxRows_popular)-1;
       <div class="quiz_box clear">
         <div class="thumb_box">
           <div class="quiz_rating">★★★</div>
-        <a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><img src="quiz_images/imgcrop.php?w=200&amp;h=150&amp;f=<?php echo $row_recommendations['quiz_picture']; ?>" alt="<?php echo $row_recommendations['quiz_description']; ?>" width="80" height="60" border="0" title="<?php echo $row_recommendations['quiz_description']; ?>" /></a></div>
+        <a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=200&amp;h=150&amp;f=<?php echo $row_recommendations['quiz_picture']; ?>" alt="<?php echo $row_recommendations['quiz_description']; ?>" width="80" height="60" border="0" title="<?php echo $row_recommendations['quiz_description']; ?>" /></a></div>
         <div class="quiz_details">
           <h3><?php echo $row_recommendations['quiz_name']; ?></h3>
           <p class="description"><?php echo substr($row_recommendations['quiz_description'], 0, 120).((strlen($row_recommendations['quiz_description']) < 120)? "" : "..."); ?></p>
@@ -109,7 +78,7 @@ $totalPages_popular = ceil($totalRows_popular/$maxRows_popular)-1;
       <div class="quiz_box clear">
         <div class="thumb_box">
           <div class="quiz_rating">★★★</div>
-        <a href="previewQuiz.php?id=<?php echo $row_popular['quiz_id']; ?>"><img src="quiz_images/imgcrop.php?w=200&amp;h=150&amp;f=<?php echo $row_popular['quiz_picture']; ?>" alt="<?php echo $row_popular['quiz_description']; ?>" width="80" height="60" border="0" title="<?php echo $row_popular['quiz_description']; ?>" /></a></div>
+        <a href="previewQuiz.php?id=<?php echo $row_popular['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=200&amp;h=150&amp;f=<?php echo $row_popular['quiz_picture']; ?>" alt="<?php echo $row_popular['quiz_description']; ?>" width="80" height="60" border="0" title="<?php echo $row_popular['quiz_description']; ?>" /></a></div>
         <div class="quiz_details">
           <h3><?php echo $row_popular['quiz_name']; ?></h3>
           <p class="description"><?php echo substr($row_popular['quiz_description'], 0, 120).((strlen($row_popular['quiz_description']) < 120)? "" : "..."); ?></p>
