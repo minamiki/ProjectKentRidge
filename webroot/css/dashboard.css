@@ -3,6 +3,22 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+.frame {
+	border:solid 2px #E0E0E0;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	clear: both;
+	background-image: url(../img/statusbar_background_gradient.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
 .left-right-frame {
 	border:solid 2px #E0E0E0;
 	border-radius: 5px;
@@ -23,22 +39,6 @@
 }
 #recommendations {
 	margin-right: 10px;		
-}
-.frame {
-	border:solid 2px #E0E0E0;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	margin-bottom: 10px;
-	margin-top: 10px;
-	padding-top: 5px;
-	padding-right: 10px;
-	padding-bottom: 10px;
-	padding-left: 10px;
-	clear: both;
-	background-image: url(../img/statusbar_background_gradient.png);
-	background-repeat: repeat-x;
-	background-position: bottom;
 }
 #dashboard-container h2 {
 	font-size: 18px;
@@ -101,13 +101,6 @@
 	font-family: Verdana, Geneva, sans-serif;
 	color: #999;
 }
-.clear:after {
-    content: "&nbsp;";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
 .quiz_box {
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -120,6 +113,9 @@
 }
 .quiz_box:last-child {
 	border-bottom-style: none;
+}
+#recent {
+	position: relative;
 }
 #recent .recent-feed {
 	font-size: 14px;
@@ -149,4 +145,39 @@
 }
 #recent .quiz {
 	background-color: #6C3;
+}
+#recent #recent-extended {
+	display: none;
+}
+#recent #recent-toggle {
+	color: #000;
+	background-color: #FFF;
+	padding: 5px;
+	display: block;
+	width: 80px;
+	text-align: center;
+	text-decoration: none;
+	position: absolute;
+	bottom: -10px;
+	right: 10px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border:solid 2px #E0E0E0;
+	font-size: 12px;
+	font-weight: bold;
+	background-image: url(../img/statusbar_background_gradient.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
+	outline: none;
+}
+#recent #recent-toggle:hover {
+	background-color: #CCC;
+	background-image: none;
+}
+.clear:after {
+    content: "&nbsp;";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
