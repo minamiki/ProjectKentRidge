@@ -1,6 +1,7 @@
 <div id="fb-root"></div>
-<script type="text/javascript" src="webroot/js/Statusbar.js"></script>
 <script type="text/javascript" src="webroot/js/jquery-1.4.min.js"></script>
+<script type="text/javascript" src="webroot/js/Statusbar.js"></script>
+<script type="text/javascript" src="webroot/js/Dashboard.js"></script>
 <script>
 
 //======================================================
@@ -22,6 +23,7 @@ window.fbAsyncInit = function(){
 //======================================================
 
 $(document).ready(function(){
+	// status bar handlers
 	Statusbar.updateNotifications();
 	$('#notification-system').click(function(){
 		Statusbar.updateSystemNotification();
@@ -29,6 +31,11 @@ $(document).ready(function(){
 	});
 	$('#achievements-logo').click(function(){
 		Statusbar.displayInformation('achievements-logo');
+	});
+	
+	// dashboard handlers
+	$('#recent-toggle').click(function(){
+		Dashboard.togglePanel();
 	});
 });
 
