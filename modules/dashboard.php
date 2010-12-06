@@ -43,7 +43,7 @@ if (isset($_GET['totalRows_popular'])) {
 $totalPages_popular = ceil($totalRows_popular/$maxRows_popular)-1;
 ?>
 <div id="dashboard-container">
-  <div id="recent" class="frame">
+  <div id="recent" class="frame rounded">
     <a href="javascript:;" id="recent-toggle">More</a>
     <h2>Recent Activity</h2>
     <div class="recent-feed"><span class="topic quiz">New Quiz</span><span class="event"><a href="javascript:;">Jing Ting</a> has created a new quiz, <a href="javascript:;">&quot;Why like that?&quot;</a> under <a href="javascript:;">Entertainment</a>.</span></div>
@@ -57,7 +57,7 @@ $totalPages_popular = ceil($totalRows_popular/$maxRows_popular)-1;
     <div class="recent-feed"><span class="topic achievement">New Achievement</span><span class="event"><a href="javascript:;">Kristal</a> has been awarded the &quot;Rookie</span>&quot; achievement!</div>
     </div>
   </div>
-  <div id="recommendations" class="left-right-frame">
+  <div id="recommendations" class="frame rounded left-right">
     <h2>Recommendations</h2>
     <?php do { ?>
       <div class="quiz_box clear">
@@ -72,7 +72,7 @@ $totalPages_popular = ceil($totalRows_popular/$maxRows_popular)-1;
       </div>
       <?php } while ($row_recommendations = mysql_fetch_assoc($recommendations)); ?>
   </div>
-  <div id="popular" class="left-right-frame">
+  <div id="popular" class="frame rounded left-right">
     <h2>Popular</h2>
     <?php do { ?>
       <div class="quiz_box clear">

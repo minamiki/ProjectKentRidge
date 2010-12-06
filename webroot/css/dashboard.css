@@ -4,26 +4,14 @@
 	margin-bottom: 10px;
 }
 .frame {
-	border:solid 2px #E0E0E0;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	padding-top: 5px;
 	padding-right: 10px;
 	padding-bottom: 10px;
 	padding-left: 10px;
-	clear: both;
-	background-image: url(../img/statusbar_background_gradient.png);
-	background-repeat: repeat-x;
-	background-position: bottom;
 }
-.left-right-frame {
-	border:solid 2px #E0E0E0;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+.left-right {
 	margin-bottom: 10px;
 	margin-top: 10px;
 	padding-top: 5px;
@@ -33,10 +21,8 @@
 	width: 351px;
 	float: left;
 	display: block;
-	background-image: url(../img/statusbar_background_gradient.png);
-	background-repeat: repeat-x;
-	background-position: bottom;
 }
+
 #recommendations {
 	margin-right: 10px;		
 }
@@ -174,10 +160,4 @@
 	background-color: #CCC;
 	background-image: none;
 }
-.clear:after {
-    content: "&nbsp;";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
+

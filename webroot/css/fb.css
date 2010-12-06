@@ -5,3 +5,22 @@ html, body {
 	padding: 0px;
 	width: 760px;
 }
+.rounded {
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+}
+.clear:after {
+    content: "&nbsp;";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.frame {
+	border:solid 2px #E0E0E0;
+	background-image: url(../img/statusbar_background_gradient.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
