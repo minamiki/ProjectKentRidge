@@ -1,0 +1,31 @@
+@charset "utf-8";
+#takequiz-preamble {
+	font-size: 14px;
+}
+#takequiz-preamble h3 {
+	font-size: 18px;
+	color: #900;
+	margin-top: 5px;
+	margin-right: 0px;
+	margin-bottom: 10px;
+	margin-left: 0px;
+}
+#takequiz-preview {
+	text-align: center;
+}
+#takequiz-preview h2 {
+	color: #036;
+}
+#takequiz-preview .description {
+	font-size: 14px;
+	text-align: justify;
+}
+#takequiz-preview .info {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10px;
+	color: #666;
+}
+#takequiz-preview img {
+	border: 1px solid #000;
+	-moz-box-shadow: 1px 1px 2px #999;
+}

@@ -25,3 +25,23 @@ html, body {
 	background-repeat: repeat-x;
 	background-position: bottom;
 }
+
+/* Input Elements */
+input[type='submit'], input[type='button'] {
+    background-color: #66FF99;
+    border: 1px solid #999999;
+    color: #000000;
+    font-family: "Myriad Pro",Arial,sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 12px;
+	outline: none;
+	
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+}
+input[type='submit']:hover, input[type='button']:hover {
+    background-color: #FFCC00;
+}
