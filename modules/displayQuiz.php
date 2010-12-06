@@ -18,10 +18,8 @@ $totalRows_getQuizInfo = mysql_num_rows($getQuizInfo);
 <img src="../quiz_images/imgcrop.php?w=320&amp;h=213&amp;f=<?php echo $row_getQuizInfo['quiz_picture']; ?>" width="320" height="213" alt="" />
   <p class="description"><?php echo $row_getQuizInfo['quiz_description']; ?></p>
   <p class="info">by <em><?php echo $row_getQuizInfo['nickname']; ?></em> on <?php echo date("F j, Y g:ia", strtotime($row_getQuizInfo['creation_date'])); ?> in the topic '<?php echo $row_getQuizInfo['cat_name']; ?>'</p>
-  <input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="MM_goToURL('parent','takeQuiz.php?id=<?php echo $row_getQuizInfo['quiz_id']; ?>');return document.MM_returnValue" value="Take Quiz now!" />
+  <input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="goToURL('takeQuiz.php?id=<?php echo $row_getQuizInfo['quiz_id']; ?>');" value="Take Quiz now!" />
 </div>
-
-
 <?php
 mysql_free_result($getQuizInfo);
 ?>
