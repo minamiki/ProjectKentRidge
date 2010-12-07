@@ -23,10 +23,14 @@
 
 #statusbar-logo{
 	float:left;
-	width:100px;
+	width:126px;
 	height:50px;
-	margin:0px 15px;
+	margin:0px 2px;
 	background-image: url(../img/quizroo-logo.png);
+}
+
+#statusbar-logo span{
+	display: none;
 }
 
 #statusbar-notification{
