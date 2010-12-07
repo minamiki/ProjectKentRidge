@@ -54,9 +54,9 @@ var Statusbar = {
 			$('#statusbar-info').html("<div class='statusbar-line'><div class='statusbar-score-text'>Quiz Creator Popularity Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div>");
 		}else if(option=='statusbar-quiz'){
 			$('#statusbar-info').addClass('statusbar-menu').html(
-			"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Statistics</div><div class='statusbar-menu-desc'>View statistics for your activities</div></div>"
-			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>History</div><div class='statusbar-menu-desc'>View information about what you have done</div></div>"
-			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Settings</div><div class='statusbar-menu-desc'>Change settings for your Quizroo Account</div></div>"
+			"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Create</div><div class='statusbar-menu-desc'>Create a new quiz</div></div>"
+			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Manage</div><div class='statusbar-menu-desc'>Manage quizzes you have created</div></div>"
+			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Topics</div><div class='statusbar-menu-desc'>View all quiz topics</div></div>"
 			);
 		}else if(option=='statusbar-friends'){
 			$('#statusbar-info').addClass('statusbar-menu').html(
@@ -65,9 +65,9 @@ var Statusbar = {
 			);
 		}else if(option=='statusbar-profile'){
 			$('#statusbar-info').addClass('statusbar-menu').html(
-			"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Create</div><div class='statusbar-menu-desc'>Create a new quiz</div></div>"
-			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Manage</div><div class='statusbar-menu-desc'>Manage quizzes you have created</div></div>"
-			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Topics</div><div class='statusbar-menu-desc'>View all quiz topics</div></div>"
+			"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Statistics</div><div class='statusbar-menu-desc'>View statistics for your activities</div></div>"
+			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>History</div><div class='statusbar-menu-desc'>View information about what you have done</div></div>"
+			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Settings</div><div class='statusbar-menu-desc'>Change settings for your Quizroo Account</div></div>"
 			);
 		}
 		
