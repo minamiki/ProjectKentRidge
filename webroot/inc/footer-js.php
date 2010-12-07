@@ -53,11 +53,6 @@ $(document).ready(function(){
 	$('#statusbar-profile').click(function(){
 		Statusbar.displayInformation('statusbar-profile');
 	});
-	
-	// dashboard handlers
-	$('#recent-toggle').click(function(){
-		Dashboard.togglePanel();
-	});
 });
 
 </script>
