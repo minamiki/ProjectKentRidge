@@ -1,6 +1,6 @@
 <div id="statusbar-container">
 <div id="statusbar">
-    <div id="statusbar-logo"></div>
+    <a href="index.php" id="statusbar-logo" title="Quizroo"><span>Quizroo</span></a>
     <div id="statusbar-divider"></div>
 	<div id="statusbar-notification">
         <div id="notification-system"  class="statusbar-element" title="System Notifications">
