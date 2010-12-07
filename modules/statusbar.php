@@ -3,23 +3,23 @@
     <div id="statusbar-logo"></div>
     <div id="statusbar-divider"></div>
 	<div id="statusbar-notification">
-        <div id="notification-system"  class="statusbar-element">
+        <div id="notification-system"  class="statusbar-element" title="System Notifications">
         <div id="notification-system-count" class="notification-count">0</div>
         </div>
     </div>
     <div id="statusbar-divider"></div>
   	<div id="statusbar-achievements">
 	<div id="statusbar-quizcreator" class="statusbar-element">
-        	<div id="statusbar-quizcreator-logo"></div>
-            <div id="statusbar-quizcreator-count-total" class="statusbar-achievements-quizcount-top"></div>
-            <div id="statusbar-quizcreator-count-today" class="statusbar-achievements-quizcount-bottom"></div>
+        	<div id="statusbar-quizcreator-logo" title="Quiz Creator"></div>
+            <div id="statusbar-quizcreator-count-total" class="statusbar-achievements-quizcount-top" title="Quiz Creator Popularity Score"></div>
+            <div id="statusbar-quizcreator-count-today" class="statusbar-achievements-quizcount-bottom" title="Quiz Creator Score for Today"></div>
         </div>
         <div id="statusbar-quiztaker" class="statusbar-element">
-        	<div id="statusbar-quiztaker-logo"></div>
-            <div id="statusbar-quiztaker-count-total" class="statusbar-achievements-quizcount-top"></div>
-            <div id="statusbar-quiztaker-count-today" class="statusbar-achievements-quizcount-bottom"></div>
+        	<div id="statusbar-quiztaker-logo" title="Quiz Taker"></div>
+            <div id="statusbar-quiztaker-count-total" class="statusbar-achievements-quizcount-top" title="Quiz Taker Score"></div>
+            <div id="statusbar-quiztaker-count-today" class="statusbar-achievements-quizcount-bottom"  title="Quiz Taker Score for Today"></div>
         </div>
-    	<div id="statusbar-achievements-logo" class="statusbar-element">
+    	<div id="statusbar-achievements-logo" class="statusbar-element" title="Achievements">
         	<div id="statusbar-achievements-count"></div>
         </div>
     </div>    
