@@ -28,7 +28,7 @@ function Status(){
  * @param int $memberid
  */
 function checkAchievements($memberid){
-	$result = array('overview'=>array(),'quiztaker'=>array(),'quizcreator'=>array());
+	$result = array('overview'=>array(), 'achievements'=>array(), 'quiztaker'=>array(),'quizcreator'=>array());
 	$database = new Database();
 	
 	/*
@@ -39,6 +39,12 @@ function checkAchievements($memberid){
 		$description = $database->get('g_achievements',array('image','name','description'),'id="'.$achievementOverview['fk_achievement_id'].'"');
 		array_push($result['overview'],$description[0]);
 	}
+	
+	/*
+	 * Checks for total number of achievements.
+	 */
+	$achievements = $database->query('SELECT COUNT(*) as achievements FROM g_achievements_log WHERE fk_member_id="'.$memberid.'"');
+	$result['achievements'] = array('score'=>$achievements[0]['achievements']);
 	
 	/*
 	 * Checks for total score and todays score for quiz taker and quiz creator roles for the user specified. 

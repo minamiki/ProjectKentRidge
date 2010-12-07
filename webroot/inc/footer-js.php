@@ -39,6 +39,15 @@ $(document).ready(function(){
 	$('#statusbar-quizcreator').click(function(){
 		Statusbar.displayInformation('statusbar-quizcreator');
 	});
+	$('#statusbar-quiz').click(function(){
+		Statusbar.displayInformation('statusbar-quiz');
+	});
+	$('#statusbar-friends').click(function(){
+		Statusbar.displayInformation('statusbar-friends');
+	});
+	$('#statusbar-profile').click(function(){
+		Statusbar.displayInformation('statusbar-profile');
+	});
 	
 	// dashboard handlers
 	$('#recent-toggle').click(function(){
