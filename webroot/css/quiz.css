@@ -175,7 +175,7 @@
 }
 #progress {
 	height: 10px;
-	width: 100px;
+	width: 0px;
 	background-color: #F60;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
