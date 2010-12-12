@@ -183,7 +183,7 @@
 	padding: 13px 0px;
 	font-size:14px;
 	font-weight:bold;
-	color:#ccc;
+	color:#666;
 }
 
 .statusbar-element{
@@ -194,7 +194,31 @@
 }
 
 .statusbar-element:hover{
-	color: #666;
+	background-color: #E1E1E1;
+}
+
+.statusbar-search-button{
+	float:left;
+	width:50px;
+	height:20px;
+	margin: 2px 0px;
+	padding: 13px 0px;
+	font-size:14px;
+	font-weight:bold;
+	color:#666;
+	cursor:pointer;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	background-image: url(../img/search.png);
+	background-repeat: no-repeat;	
+}
+
+.statusbar-search-button span{
+	display: none;
+}
+
+.statusbar-search-button:hover{
 	background-color: #E1E1E1;
 }
 
