@@ -53,6 +53,9 @@ $(document).ready(function(){
 	$('#statusbar-profile').click(function(){
 		Statusbar.displayInformation('statusbar-profile');
 	});
+	$(document).click(function(event){
+		Statusbar.triggerHideInfo(event);
+	});
 });
 
 </script>

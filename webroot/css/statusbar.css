@@ -65,6 +65,14 @@
 	color: #FFF;
 }
 
+.statusbar-time{
+	color: #CCC;
+	font-size: 13px;
+	width: 100%;
+	float: left;
+	padding: 5px 0px;
+}
+
 #notification-system{
 	float:right;
 	margin:0px 2px 0px 0px;
@@ -261,7 +269,7 @@
 	z-index: 10;
 }
 
-.statusbar-info-title{
+.statusbar-info-subtitle{
 	width: 500px;
 	color: #CCC;
 	padding-top: 5px;
@@ -286,8 +294,8 @@
 .statusbar-thumbnail-large{
 	float:left;
 	margin: 3px 0px;
-	width: 80px;
-	height: 80px;
+	width: 70px;
+	height: 70px;
 }
 
 .statusbar-text-container-large{
@@ -299,15 +307,16 @@
 .statusbar-name-large{
 	float: left;
 	width: 400px;
-	height: 26px;
+	height: 20px;
 	margin-bottom: 5px;
-	font-size: 24px;
+	font-size: 18px;
 	font-weight: bold;
 }
 
 .statusbar-description-large{
 	float: left;
 	width: 400px;
+	font-size: 16px;
 }
 
 .statusbar-unit-small{
@@ -341,25 +350,22 @@
 .statusbar-name-small{
 	float: left;
 	width: 430px;
-	height: 20px;
+	height: 16px;
 	margin-bottom: 5px;
-	font-size: 18px;
+	font-size: 14px;
 	font-weight: bold;
 }
 
 .statusbar-description-small{
 	float: left;
 	width: 430px;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .statusbar-score-text{
-	font-size: 18px;
-	font-weight: bold;
-}
-
-.statusbar-score-text:first-child{
-	color: #FC0;	
+	font-size: 16px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 }
 
 .statusbar-menu{
@@ -394,7 +400,30 @@
 	font-weight: bold;
 }
 
-.statusbar-menu-desc{
+.statusbar-info-title{
+	color: #FC0;
+	font-size: 18px;
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+
+.statusbar-info-more{
+	float: right;
+	font-size: 14px;
+	font-weight: normal;
+	vertical-align: bottom;
+	height: 100%;
+}
+
+.statusbar-info-more a{
+	color: #CCC;	
+}
+
+.statusbar-info-more a:visited{
+	color: #CCC;
+}
+
+.statusbar-info-desc{
 	width: 294px;
 	font-size: 12px;
 	color: #FFF;
