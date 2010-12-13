@@ -29,7 +29,7 @@ window.fbAsyncInit = function(){
 
 $(document).ready(function(){
 	// status bar handlers
-	Statusbar.updateNotifications();
+	Statusbar.update();
 	$('#notification-system').click(function(){
 		Statusbar.updateSystemNotification();
 		Statusbar.displayInformation('notification-system');
@@ -53,6 +53,14 @@ $(document).ready(function(){
 	$('#statusbar-profile').click(function(){
 		Statusbar.displayInformation('statusbar-profile');
 	});
+	$('#statusbar-about').click(function(){
+		Statusbar.displayInformation('statusbar-about');
+	});
+	$('#statusbar-search').click(function(){
+		Statusbar.displayInformation('statusbar-search');
+	});
+	
+	// Handles click outside of statusbar.
 	$(document).click(function(event){
 		Statusbar.triggerHideInfo(event);
 	});

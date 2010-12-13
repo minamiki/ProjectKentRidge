@@ -205,7 +205,7 @@
 	background-color: #E1E1E1;
 }
 
-.statusbar-search-button{
+.statusbar-searchmenu-button{
 	float:left;
 	width:50px;
 	height:20px;
@@ -219,14 +219,19 @@
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	background-image: url(../img/search.png);
-	background-repeat: no-repeat;	
+	background-repeat: no-repeat;
+	background-position: 0px;
 }
 
-.statusbar-search-button span{
+.statusbar-searchmenu-button-selected{
+	background-position: 50px;
+}
+
+.statusbar-searchmenu-button span{
 	display: none;
 }
 
-.statusbar-search-button:hover{
+.statusbar-searchmenu-button:hover{
 	background-color: #E1E1E1;
 }
 
@@ -374,6 +379,18 @@
 	right: 10px !important;
 }
 
+.statusbar-menu-search{
+	right: 5px !important;
+}
+
+.statusbar-menu-desc{
+	font-size: 12px;
+	padding-top: 2px;
+	padding-right: 0px;
+	padding-bottom: 3px;
+	padding-left: 5px;
+}
+
 .statusbar-menu-item{
 	width: 294px;
 	cursor: pointer;
@@ -431,3 +448,28 @@
 	margin-left: 10px;
 }
 
+#statusbar-search-button{
+	width: 28px;
+	height: 24px;
+	float: right;
+	background-color: #CCC;
+	border-collapse: collapse;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomright: 3px;
+}
+
+#statusbar-search-textfield{
+	width: 268px;
+	height: 18px;
+	border: solid 2px #CCC;
+}
+
+.statusbar-search-icon{
+	width: 24px;
+	height: 24px;
+	background-image: url(../img/search-small.png);	
+}
+
+.statusbar-search-icon span{
+	display: none;
+}

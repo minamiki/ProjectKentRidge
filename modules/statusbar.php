@@ -30,9 +30,9 @@
     <div id="statusbar-divider"></div>
     <div id="statusbar-profile" class="statusbar-text statusbar-element">Profile</div>
 	<div id="statusbar-divider"></div>
-    <div id="statusbar-search" class="statusbar-text statusbar-element">About</div>
+    <div id="statusbar-about" class="statusbar-text statusbar-element">About</div>
 	<div id="statusbar-divider"></div>
-    <div id="statusbar-search" class="statusbar-search-button"><span>Search</span></div>
+    <div id="statusbar-search" class="statusbar-searchmenu-button"><span>Search</span></div>
 
 </div>
 <div id="statusbar-info"></div>
