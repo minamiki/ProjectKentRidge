@@ -2,11 +2,15 @@
 <script type="text/javascript" src="js/jquery-1.4.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/Statusbar.js"></script>
-<?php if(basename($_SERVER['SCRIPT_NAME']) == "index.php"){ // load repective scripts only when required ?>
-<script type="text/javascript" src="js/Dashboard.js"></script>
-<?php }elseif(basename($_SERVER['SCRIPT_NAME']) == "takeQuiz.php"){ ?>
-<script type="text/javascript" src="js/Quiz.js"></script>
-<?php } ?>
+<?php // load repective scripts only when required (single scripts)
+switch(basename($_SERVER['SCRIPT_NAME'])){
+	case "index.php": $src = "Dashboard.js"; break;
+	case "takeQuiz.php": $src = "Quiz.js"; break;
+	default: $src = "";
+}
+
+if($src != ""){
+?><script type="text/javascript" src="js/<?php echo $src; ?>"></script><?php } ?>
 <script>
 
 //======================================================
