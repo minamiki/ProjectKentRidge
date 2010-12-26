@@ -60,7 +60,7 @@ var Statusbar = {
 			var score = data['quizcreator_score'];
 			var today = data['quizcreator_score_today'];
 			
-			$('#statusbar-info').html("<div class='statusbar-info-title'>Achievements<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Popularity Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div>");
+			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Creator<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Popularity Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div>");
 		
 		/*
 		 * Display menus
