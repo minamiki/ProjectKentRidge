@@ -28,7 +28,7 @@ function Status(){
  * @param int $memberid
  */
 function checkAchievements($memberid){
-	$result = array('overview'=>array(), 'achievements'=>array(), 'quiztaker'=>array(),'quizcreator'=>array());
+	$result = array('overview'=>array(), 'achievements'=>array(), 'rank'=>array(), 'quiztaker'=>array(),'quizcreator'=>array());
 	$database = new Database();
 	
 	/*
@@ -39,6 +39,9 @@ function checkAchievements($memberid){
 		$description = $database->get('g_achievements',array('image','name','description'),'id="'.$achievementOverview['fk_achievement_id'].'"');
 		array_push($result['overview'],$description[0]);
 	}
+	
+	$rank = $database->query('SELECT image,name,description FROM g_achievements_log LEFT JOIN g_achievements ON fk_achievement_id=g_achievements.id WHERE (fk_member_id="'.$memberid.'" AND type=1) ORDER BY timestamp DESC LIMIT 1');
+	$result['rank'] = array('image'=>$rank[0]['image'],'name'=>$rank[0]['name'],'description'=>$rank[0]['description']);
 	
 	/*
 	 * Checks for total number of achievements.

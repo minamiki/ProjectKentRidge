@@ -54,7 +54,13 @@ var Statusbar = {
 			var score = data['quiztaker_score'];
 			var today = data['quiztaker_score_today'];
 			
-			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div>");
+			var rank = Statusbar.achievements['rank'];
+			var rankname = rank['name'];
+			var rankdesc = rank['description'];
+			//var level = rank['level'];
+			var image = rank['image'];
+			
+			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div><div class='statusbar-info-subtitle'>Current Rank</div><div class='statusbar-unit-large clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+rankname+"' /><div class='statusbar-text-container-large'><div class='statusbar-name-large'>"+rankname+"</div><div class='statusbar-description-large clear'>"+rankdesc+"</div></div></div>");
 		}else if(option=='statusbar-quizcreator'){
 			var data = Statusbar.achievements['quizcreator'];
 			var score = data['quizcreator_score'];
@@ -156,6 +162,7 @@ var Statusbar = {
 			$('#statusbar-quiztaker-count-today').html(data['quiztaker']['quiztaker_score_today']);
 			$('#statusbar-quizcreator-count-total').html(data['quizcreator']['quizcreator_score']);
 			$('#statusbar-quizcreator-count-today').html(data['quizcreator']['quizcreator_score_today']);
+			
 		});
 	},
 	
