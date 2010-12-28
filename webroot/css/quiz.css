@@ -181,3 +181,15 @@
 	-moz-border-radius: 3px;
 	-o-border-radius: 2px;
 }
+#result-panel {
+	text-align: center;
+}
+#result-panel img {
+	border: 1px solid #000;
+}
+#result-panel .description {
+	font-size: 14px;
+}
+#result-panel h2 {
+	color: #F60;
+}

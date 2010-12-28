@@ -32,9 +32,9 @@ $question_count = 1;
   </div>  
 </div>
 <div id="takequiz-main">
-
   <form name="takeQuiz" id="takeQuiz" action="quiz_result.php" method="post">
     <input type="hidden" name="quiz_id" value="<?php echo $row_getQuizInfo['quiz_id']; ?>" />
+    <input type="hidden" name="logtime" id="logtime" value="<?php date_default_timezone_set("Asia/Singapore"); echo time(); ?>" />
     <div id="questionContainer">
       <div id="question_reel">
         <?php do { 

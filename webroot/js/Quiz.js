@@ -1,6 +1,20 @@
-// CSS/Javascript Slideshow
+// Quiz Slider
 
 $(document).ready(function() {
+	// question class
+	function Quiz(q, o, t){
+		this.question = q;
+		this.option = o;
+		this.time = t;
+	}
+	
+	var logtime = new Array();
+	var logCount = 1;
+	
+	var quizTime = new Date();
+	var startTime = quizTime.getTime();	// get the quiz start time;
+	var serverTime = $("#logtime").val();
+	logtime[0] = new Array(0, serverTime, startTime);
 	// number of questions completed
 	var numCompleted = 0;
 	
@@ -31,7 +45,6 @@ $(document).ready(function() {
 	
 	}; 
 	
-	
 	function updateProgress(){
 		if(typeof($active) != 'undefined'){
 			// check if question is answered
@@ -48,29 +61,6 @@ $(document).ready(function() {
 		$("#progress_percentage").text(Math.round(100/imageSum * numCompleted));
 	}
 	updateProgress();
-	
-	//Rotation + Timing Event
-	/*
-	rotateSwitch = function(){		
-		play = setInterval(function(){ //Set timer - this will repeat itself every 3 seconds
-			$active = $('#question_paging a.active').next();
-			if ( $active.length === 0) { //If paging reaches the end...
-				$active = $('#question_paging a:first'); //go back to first
-			}
-			rotate(); //Trigger the paging and slider function
-		}, 5000); //Timer speed in milliseconds (3 seconds)
-	};*/
-	
-	//rotateSwitch(); //Run function on launch
-	
-	//On Click
-	/*
-	$("#question_paging a").click(function() {
-		$active = $(this); //Activate the clicked paging
-		rotate(); //Trigger rotation immediately
-		updateProgress()
-		return false; //Prevent browser jump to link anchor
-	});*/
 	
 	// Next Button
 	$("[id^=nextBtn]").click(function() {
@@ -96,8 +86,22 @@ $(document).ready(function() {
 		return false; //Prevent browser jump to link anchor
 	});
 	
+	// On option choosen
 	$("input[type='radio']").click(function(){
 		$active = $('#question_paging span.active');
-		updateProgress();
+		
+		var questionNum = $(this).attr("name").substr(1);
+		var optionValue = $(this).val();
+		quizTime = new Date();
+		logtime[logCount++] = new Array(questionNum, optionValue, quizTime.getTime());
+		console.log(logtime);
+		//updateProgress();
+	});
+	
+	// On form submit
+	$("#takeQuiz").submit(function(){
+		$("#logtime").val(logtime.toString());
+		//console.log(logtime.toString());
+		//return false;
 	});
 });
