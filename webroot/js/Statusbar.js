@@ -54,13 +54,14 @@ var Statusbar = {
 			var score = data['quiztaker_score'];
 			var today = data['quiztaker_score_today'];
 			
-			var rank = Statusbar.achievements['rank'];
+			var rank = Statusbar.achievements['quiztakerrank'];
 			var rankname = rank['name'];
 			var rankdesc = rank['description'];
-			//var level = rank['level'];
+			var level = rank['level'];
 			var image = rank['image'];
 			
-			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div><div class='statusbar-info-subtitle'>Current Rank</div><div class='statusbar-unit-large clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+rankname+"' /><div class='statusbar-text-container-large'><div class='statusbar-name-large'>"+rankname+"</div><div class='statusbar-description-large clear'>"+rankdesc+"</div></div></div>");
+			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div><div class='statusbar-info-subtitle'>Current Rank</div><div class='statusbar-unit-large clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+rankname+"' /><div class='statusbar-text-container-large'><div class='statusbar-name-large'>"+rankname+"</div><div class='statusbar-description-large clear'>Level "+level+"</div></div></div><div id='scorebar'><table><tr><td><div id='score-left'></div></td><td><div id='score-done'></div></td></tr></table></div>");
+			Statusbar.displayBar();
 		}else if(option=='statusbar-quizcreator'){
 			var data = Statusbar.achievements['quizcreator'];
 			var score = data['quizcreator_score'];
@@ -162,7 +163,7 @@ var Statusbar = {
 			$('#statusbar-quiztaker-count-today').html(data['quiztaker']['quiztaker_score_today']);
 			$('#statusbar-quizcreator-count-total').html(data['quizcreator']['quizcreator_score']);
 			$('#statusbar-quizcreator-count-today').html(data['quizcreator']['quizcreator_score_today']);
-			
+			Statusbar.achievements['quiztakerrank']['level'] = Statusbar.calculateLevel(data['quiztaker']['quiztaker_score']);
 		});
 	},
 	
@@ -239,4 +240,39 @@ var Statusbar = {
 		return dateString;
 	},
 	
+	calculateLevel: function(score){
+		if(score==0){
+			return 0;
+		}else if(score<11){
+			return 1;
+		}else{
+			var level = 2;
+			for(i=2,calculated=1;calculated<score;i++){
+				calculated+=Math.floor(15*Math.log(level));
+				level = i;
+			}
+			return level;
+		}
+	},
+	
+	displayBar: function(){
+		var level = Statusbar.achievements['quiztakerrank']['level'];
+		var score = Statusbar.achievements['quiztaker']['quiztaker_score'];		
+		var currentscore = 0;
+		var ratio = 0;
+		
+		for(i=2,currentscore=1;i<level;i++){
+			currentscore+=Math.floor(15*Math.log(level));
+		}
+		
+		ratio = (score-currentscore)/Math.floor(15*Math.log(level+1));
+		
+		$('#score-left').css('width',$('#scorebar').width()*ratio);
+		$('#score-done').css('width',$('#scorebar').width()*(1-ratio));
+		if(ratio>0.50){
+			$('#score-left').html(score+'('+ratio*100+'%)');
+		}else{
+			$('#score-done').html(score+'('+ratio*100+'%)');
+		}
+	},
 }

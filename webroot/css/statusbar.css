@@ -281,6 +281,11 @@
 	padding-bottom: 5px;
 }
 
+.statusbar-info-level{
+	float: right;
+	color: #FFF;
+}
+
 .statusbar-unit-large{
 	border-bottom-width: thin;
 	border-bottom-style: dotted;
@@ -472,4 +477,35 @@
 
 .statusbar-search-icon span{
 	display: none;
+}
+
+#scorebar table{
+	width:100%;
+	border-collapse:collapse;
+}
+
+#scorebar table tr td{
+	width:auto;
+	height:20px;
+	padding:0;
+}
+
+#score-left{
+	width:500px;
+	height:20px;
+	background:#FC0;
+	text-align:right;
+	padding:5px 0px 5px;
+	font-size:20px;
+	font-weight:bold;
+}
+
+#score-done{
+	width:0px;
+	height:20px;
+	background:#CCC;
+	text-align:left;
+	padding:5px 0px 5px;
+	font-size:20px;
+	font-weight:bold;
 }
