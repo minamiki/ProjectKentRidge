@@ -60,7 +60,8 @@ var Statusbar = {
 			var level = rank['level'];
 			var image = rank['image'];
 			
-			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div><div class='statusbar-info-subtitle'>Current Rank</div><div class='statusbar-unit-large clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+rankname+"' /><div class='statusbar-text-container-large'><div class='statusbar-name-large'>"+rankname+"</div><div class='statusbar-description-large clear'>Level "+level+"</div></div></div><div id='scorebar'><table><tr><td><div id='score-left'></div></td><td><div id='score-done'></div></td></tr></table></div>");
+			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div><div class='statusbar-info-subtitle'>Current Rank</div><div class='statusbar-unit-large clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+rankname+"' /><div class='statusbar-text-container-large'><div class='statusbar-name-large'>"+rankname+"</div><div class='statusbar-description-large clear'>Level "+level+"</div></div></div><div class='statusbar-info-subtitle'>Current Progress</div><div id='scorebar-container'><div class='scorebar-text-left'>"+level+"</div><div class='scorebar-text-right'>"+(level+1)+"</div><div id='scorebar'><div id='scorebar-progress'></div><div id='scorebar-info'</div></div>");
+			
 			Statusbar.displayBar();
 		}else if(option=='statusbar-quizcreator'){
 			var data = Statusbar.achievements['quizcreator'];
@@ -267,12 +268,13 @@ var Statusbar = {
 		
 		ratio = (score-currentscore)/Math.floor(15*Math.log(level+1));
 		
-		$('#score-left').css('width',$('#scorebar').width()*ratio);
-		$('#score-done').css('width',$('#scorebar').width()*(1-ratio));
-		if(ratio>0.50){
-			$('#score-left').html(score+'('+ratio*100+'%)');
+		if(ratio<0.5){
+			$('#scorebar-info').html((Math.floor(15*Math.log(level+1))-score));
 		}else{
-			$('#score-done').html(score+'('+ratio*100+'%)');
+			$('#scorebar-progress').html((Math.floor(15*Math.log(level+1))-score));			
 		}
+		
+		// Update scorebar width if necessary. Current width is 400px.
+		$('#scorebar-progress').width(460*ratio);
 	},
 }
