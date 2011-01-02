@@ -1,6 +1,6 @@
 <?php
 class Database
-{
+{	
 var $SQLStatement = "";
 var $Error = "";
 var $connection;
@@ -10,10 +10,11 @@ var $password = "";
 var $database = "";
 
 function Database(){
-$this->servername = "localhost";
-$this->username = "root";
-$this->password = "";
-$this->database = "quizroo";
+	include('../Connections/quizroo.php');	
+	$this->servername = $hostname_quizroo;
+	$this->username = $username_quizroo;
+	$this->password = $password_quizroo;
+	$this->database = $database_quizroo;
 }
 
 function Connect(){
