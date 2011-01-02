@@ -34,6 +34,7 @@ window.fbAsyncInit = function(){
 $(document).ready(function(){
 	// status bar handlers
 	Statusbar.update();
+
 	$('#notification-system').click(function(){
 		Statusbar.updateSystemNotification();
 		Statusbar.displayInformation('notification-system');
@@ -63,7 +64,6 @@ $(document).ready(function(){
 	$('#statusbar-search').click(function(){
 		Statusbar.displayInformation('statusbar-search');
 	});
-	
 	// Handles click outside of statusbar.
 	$(document).click(function(event){
 		Statusbar.triggerHideInfo(event);

@@ -460,7 +460,11 @@
 	background-color: #CCC;
 	border-collapse: collapse;
 	-moz-border-radius-topright: 3px;
+	-webkit-border-top-right-radius:: 3px;
+	border-top-right-radius: 3px;
 	-moz-border-radius-bottomright: 3px;
+	-webkit-border-top-left-radius: 3px;
+	border-top-left-radius: 3px;
 }
 
 #statusbar-search-textfield{
@@ -479,33 +483,47 @@
 	display: none;
 }
 
-#scorebar table{
-	width:100%;
-	border-collapse:collapse;
+#scorebar-container {
+	width: 500px;
+	height: 20px;
 }
 
-#scorebar table tr td{
-	width:auto;
-	height:20px;
-	padding:0;
+#scorebar {
+	position: relative;
+	width: 440px;
+	height: 20px;
+	margin-left: 30px;
+	background-color: #CCC;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
-#score-left{
-	width:500px;
-	height:20px;
-	background:#FC0;
-	text-align:right;
-	padding:5px 0px 5px;
-	font-size:20px;
-	font-weight:bold;
+.scorebar-text-left {
+	width: 30px;
+	text-align:center;
+	float: left;
 }
 
-#score-done{
-	width:0px;
-	height:20px;
-	background:#CCC;
-	text-align:left;
-	padding:5px 0px 5px;
-	font-size:20px;
-	font-weight:bold;
+.scorebar-text-right {
+	width: 30px;
+	text-align:center;
+	float:right;
+}
+
+#scorebar-progress{
+	height: 20px;
+	background: #FC0;
+	color: #FFF;
+	text-align: center;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+#scorebar-info {
+	position: absolute;
+	width: 100%;
+	top: 0px;
+	text-align: center;
 }
