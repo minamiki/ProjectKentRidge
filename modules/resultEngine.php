@@ -2,7 +2,7 @@
 <?php
 // TODO: Indentifying quiz takers with from facebook API
 //
-$member_id = 0;
+$facebookID = 123456;
 
 //----------------------------------------
 // Process the quiz results
@@ -31,7 +31,7 @@ $row_getResults = mysql_fetch_assoc($getResults);
 $totalRows_getResults = mysql_num_rows($getResults);
 
 // store the final result into the database
-$query_saveResult = sprintf("INSERT INTO q_store_result(fk_quiz_id, fk_result_id, fk_member_id) VALUES (%d, %d, %d)", GetSQLValueString($quiz_id, "int"), $row_getResults['fk_result'], $member_id);
+$query_saveResult = sprintf("INSERT INTO q_store_result(fk_quiz_id, fk_result_id, fk_member_id) VALUES (%d, %d, %d)", GetSQLValueString($quiz_id, "int"), $row_getResults['fk_result'], $facebookID);
 mysql_query($query_saveResult, $quizroo) or die(mysql_error());
 
 // get the attempt timings
@@ -43,6 +43,9 @@ for($i = 0, $j = 3; $i < sizeof($logtime)/3 - 1; $i++, $j+=3){
 $PHPstartTime = $logtime[1] * 1000;
 $JSstartTime = $logtime[2];
 
+// prepare the achievement array for possible multiple achievements
+$achievement_array = array();
+
 // TODO: Insert attempt timings into database
 //
 
@@ -51,14 +54,14 @@ $JSstartTime = $logtime[2];
 //----------------------------------------
 
 include("calculatePoints.php");
-calculatePoints($member_id);
+calculatePoints($facebookID);
 
 //----------------------------------------
 // Check for achievements
 //----------------------------------------
 
 include("checkAchievements.php");
-checkAchievements($member_id);
+checkAchievements($facebookID);
 
 //----------------------------------------
 // Retrieve Quiz results for display
