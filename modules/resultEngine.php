@@ -2,7 +2,7 @@
 <?php
 // TODO: Indentifying quiz takers with from facebook API
 //
-$facebookID = 123456;
+$facebookID = 1;
 
 //----------------------------------------
 // Process the quiz results

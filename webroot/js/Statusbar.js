@@ -21,7 +21,7 @@ var Statusbar = {
 		if(option=='statusbar-achievements-logo'){
 			var data = Statusbar.achievements['overview'];
 			var totalachievements = Statusbar.achievements['achievements']['score'];
-			var score = parseInt(Statusbar.achievements['quiztaker']['quiztaker_score'])+parseInt(Statusbar.achievements['quizcreator']['quizcreator_score']);
+			var score = Number(Statusbar.achievements['quiztaker']['quiztaker_score']+Statusbar.achievements['quizcreator']['quizcreator_score']).toFixed(1);
 			$('#statusbar-info').html("<div class='statusbar-info-title'>Achievements<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-score-text'>Number of Achievements: "+totalachievements+"</div><div class='statusbar-score-text'>Total Quiz Points: "+score+"</div><div class='statusbar-info-subtitle'>Most Recent Achievements</div>");
 			$.each(data,function(i,achievement){
 				var image = achievement['image'];
@@ -60,7 +60,7 @@ var Statusbar = {
 			var level = rank['level'];
 			var image = rank['image'];
 			
-			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div><div class='statusbar-info-subtitle'>Current Rank</div><div class='statusbar-unit-large clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+rankname+"' /><div class='statusbar-text-container-large'><div class='statusbar-name-large'>"+rankname+"</div><div class='statusbar-description-large clear'>Level "+level+"</div></div></div><div class='statusbar-info-subtitle'>Current Progress</div><div id='scorebar-container'><div class='scorebar-text-left'>"+level+"</div><div class='scorebar-text-right'>"+(level+1)+"</div><div id='scorebar'><div id='scorebar-progress'></div><div id='scorebar-info'</div></div>");
+			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div><div class='statusbar-info-subtitle'>Current Rank</div><div class='statusbar-unit-large clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+rankname+"' /><div class='statusbar-text-container-large'><div class='statusbar-name-large'>"+rankname+"</div><div class='statusbar-description-large clear'>Level "+level+"</div></div></div><div class='statusbar-info-subtitle'>Current Progress</div><div id='scorebar-container'><div class='scorebar-text-left'>"+level+"</div><div class='scorebar-text-right'>"+(parseInt(level)+1)+"</div><div id='scorebar'><div id='scorebar-progress'></div><div id='scorebar-info'</div></div>");
 			
 			Statusbar.displayBar();
 		}else if(option=='statusbar-quizcreator'){
@@ -164,7 +164,6 @@ var Statusbar = {
 			$('#statusbar-quiztaker-count-today').html(data['quiztaker']['quiztaker_score_today']);
 			$('#statusbar-quizcreator-count-total').html(data['quizcreator']['quizcreator_score']);
 			$('#statusbar-quizcreator-count-today').html(data['quizcreator']['quizcreator_score_today']);
-			Statusbar.achievements['quiztakerrank']['level'] = Statusbar.calculateLevel(data['quiztaker']['quiztaker_score']);
 		});
 	},
 	
@@ -259,19 +258,18 @@ var Statusbar = {
 	displayBar: function(){
 		var level = Statusbar.achievements['quiztakerrank']['level'];
 		var score = Statusbar.achievements['quiztaker']['quiztaker_score'];		
-		var currentscore = 0;
+		var levelScore = Statusbar.achievements['quiztakerrank']['levelscore'];
+		var nextLevelScore = Statusbar.achievements['quiztakerrank']['nextlevelscore'];
 		var ratio = 0;
+		var text = '';
 		
-		for(i=2,currentscore=1;i<level;i++){
-			currentscore+=Math.floor(15*Math.log(level));
-		}
-		
-		ratio = (score-currentscore)/Math.floor(15*Math.log(level+1));
+		ratio = (score-levelScore)/(nextLevelScore-levelScore);
+		text = (score-levelScore).toFixed(1)+'/'+(nextLevelScore-levelScore);
 		
 		if(ratio<0.5){
-			$('#scorebar-info').html((Math.floor(15*Math.log(level+1))-score));
+			$('#scorebar-info').html(text);
 		}else{
-			$('#scorebar-progress').html((Math.floor(15*Math.log(level+1))-score));			
+			$('#scorebar-progress').html(text);			
 		}
 		
 		// Update scorebar width if necessary. Current width is 400px.

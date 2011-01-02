@@ -3,7 +3,7 @@ require 'database.php';
 
 $method = $_REQUEST['method'];
 $status = new Status();
-$member = 7;
+$member = 1;
 
 if($method=='achievements'){
 	echo json_encode($status->checkAchievements($member));	
@@ -40,8 +40,9 @@ function checkAchievements($memberid){
 		array_push($result['overview'],$description[0]);
 	}
 	
-	$rank = $database->query('SELECT image,name,description FROM g_achievements_log LEFT JOIN g_achievements ON fk_achievement_id=g_achievements.id WHERE (fk_member_id="'.$memberid.'" AND type=1) ORDER BY timestamp DESC LIMIT 1');
-	$result['quiztakerrank'] = array('image'=>$rank[0]['image'],'name'=>$rank[0]['name'],'description'=>$rank[0]['description']);
+	$rank = $database->query('SELECT image,name,description,level FROM members LEFT JOIN g_achievements ON rank=g_achievements.id WHERE (member_id="'.$memberid.'")');
+	$levelscore = $database->get('g_levels',array('points'),'id='.$rank[0]['level'].' OR id='.($rank[0]['level']+1));
+	$result['quiztakerrank'] = array('image'=>$rank[0]['image'],'name'=>$rank[0]['name'],'description'=>$rank[0]['description'],'level'=>$rank[0]['level'],'levelscore'=>$levelscore[0]['points'],'nextlevelscore'=>$levelscore[1]['points']);
 	
 	/*
 	 * Checks for total number of achievements.
