@@ -51,14 +51,14 @@ $JSstartTime = $logtime[2];
 //----------------------------------------
 
 include("calculatePoints.php");
-calculatePoints();
+calculatePoints($member_id);
 
 //----------------------------------------
 // Check for achievements
 //----------------------------------------
 
 include("checkAchievements.php");
-checkAchievements();
+checkAchievements($member_id);
 
 //----------------------------------------
 // Retrieve Quiz results for display
