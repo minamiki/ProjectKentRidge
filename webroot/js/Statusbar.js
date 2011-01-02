@@ -159,11 +159,11 @@ var Statusbar = {
 	updateAchievements: function(){
 		$.getJSON(Statusbar.pathToSrc+'updateStatus.php/',{method:'achievements'},function(data){
 			Statusbar.achievements = data;
-			$('#statusbar-achievements-count').html(data['achievements']['score']);
-			$('#statusbar-quiztaker-count-total').html(data['quiztaker']['quiztaker_score']);
-			$('#statusbar-quiztaker-count-today').html(data['quiztaker']['quiztaker_score_today']);
-			$('#statusbar-quizcreator-count-total').html(data['quizcreator']['quizcreator_score']);
-			$('#statusbar-quizcreator-count-today').html(data['quizcreator']['quizcreator_score_today']);
+			$('#statusbar-achievements-count').html(Statusbar.handleCount(data['achievements']['score'])).contents().stretch({max:18});
+			$('#statusbar-quiztaker-count-total').html(Statusbar.handleCount(data['quiztaker']['quiztaker_score'])).contents().stretch({max:14});
+			$('#statusbar-quiztaker-count-today').html(Statusbar.handleCount(data['quiztaker']['quiztaker_score_today'])).contents().stretch({max:14});
+			$('#statusbar-quizcreator-count-total').html(Statusbar.handleCount(data['quizcreator']['quizcreator_score'])).contents().stretch({max:14});
+			$('#statusbar-quizcreator-count-today').html(Statusbar.handleCount(data['quizcreator']['quizcreator_score_today'])).contents().stretch({max:14});
 		});
 	},
 	
@@ -238,6 +238,15 @@ var Statusbar = {
 		}
 		
 		return dateString;
+	},
+	
+	handleCount: function(count){
+		if(count>999){
+			count = (count/1000).toFixed(1);
+			return '~'+count+'K';
+		}else{
+			return count;
+		}
 	},
 	
 	calculateLevel: function(score){

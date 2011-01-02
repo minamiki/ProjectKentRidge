@@ -1,5 +1,6 @@
 <div id="fb-root"></div>
 <script type="text/javascript" src="js/jquery-1.4.min.js"></script>
+<script type="text/javascript" src="js/jquery.stretch-0.9.3.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/Statusbar.js"></script>
 <?php // load repective scripts only when required (single scripts)
