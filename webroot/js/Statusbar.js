@@ -243,7 +243,7 @@ var Statusbar = {
 	handleCount: function(count){
 		if(count>999){
 			count = (count/1000).toFixed(1);
-			return '~'+count+'K';
+			return count+'K';
 		}else{
 			return count;
 		}
@@ -273,7 +273,7 @@ var Statusbar = {
 		var text = '';
 		
 		ratio = (score-levelScore)/(nextLevelScore-levelScore);
-		text = (score-levelScore).toFixed(1)+'/'+(nextLevelScore-levelScore);
+		text = (score-levelScore)+' of '+(nextLevelScore-levelScore)+' <span style="font-size:11px;">points to next level</span>';
 		
 		if(ratio<0.5){
 			$('#scorebar-info').html(text);
