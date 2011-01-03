@@ -33,7 +33,7 @@ $question_count = 1;
         <span title="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></span>
         <?php } ?>
       </div>
-      <span id="final-bulb">✔</span>
+      <span id="final-bulb">&#10003;</span>
       <!--<p id="progress_text">Overall Progress (<span id="progress_percentage">0</span>%)</p>-->
       <div id="progress_bar">
         <div id="progress"></div>
