@@ -21,7 +21,7 @@ var Statusbar = {
 		if(option=='statusbar-achievements-logo'){
 			var data = Statusbar.achievements['overview'];
 			var totalachievements = Statusbar.achievements['achievements']['score'];
-			var score = Number(Statusbar.achievements['quiztaker']['quiztaker_score']+Statusbar.achievements['quizcreator']['quizcreator_score']).toFixed(1);
+			var score = parseInt(Statusbar.achievements['quiztaker']['quiztaker_score'])+parseInt(Statusbar.achievements['quizcreator']['quizcreator_score']);
 			$('#statusbar-info').html("<div class='statusbar-info-title'>Achievements<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-score-text'>Number of Achievements: "+totalachievements+"</div><div class='statusbar-score-text'>Total Quiz Points: "+score+"</div><div class='statusbar-info-subtitle'>Most Recent Achievements</div>");
 			$.each(data,function(i,achievement){
 				var image = achievement['image'];
@@ -281,7 +281,7 @@ var Statusbar = {
 			$('#scorebar-progress').html(text);			
 		}
 		
-		// Update scorebar width if necessary. Current width is 400px.
-		$('#scorebar-progress').width(460*ratio);
+		// Update scorebar width if necessary. Current width is 460px.
+		$('#scorebar-progress').width(440*ratio);
 	},
 }
