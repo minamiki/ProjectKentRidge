@@ -26,10 +26,19 @@ $question_count = 1;
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Take a quiz</h3>
   <p>You're now taking the quiz,<em> &quot;<?php echo $row_getQuizInfo['quiz_name']; ?>&quot;</em> by <?php echo $row_getQuizInfo['nickname']; ?>. You may stop taking the quiz anytime by navigating away from this page. No data will be collected unless you complete the quiz.</p>
-  <p id="progress_text">Overall Progress (<span id="progress_percentage">0</span>%)</p>
-  <div id="progress_bar">
-    <div id="progress"></div>
-  </div>  
+  <div id="progress_panel">
+      <div id="question_paging">
+        <?php for($i = 0; $i < $totalRows_getQuizQuestions; $i++) { ?>
+        <!--<a href="#" rel="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></a>--> 
+        <span title="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></span>
+        <?php } ?>
+      </div>
+      <span id="final-bulb">✔</span>
+      <!--<p id="progress_text">Overall Progress (<span id="progress_percentage">0</span>%)</p>-->
+      <div id="progress_bar">
+        <div id="progress"></div>
+      </div>
+  </div>
 </div>
 <div id="takequiz-main">
   <form name="takeQuiz" id="takeQuiz" action="quiz_result.php" method="post">
@@ -79,12 +88,6 @@ $question_count = 1;
           </fieldset>
         </div>
         <?php $question_count++; mysql_free_result($getOptions); } while ($row_getQuizQuestions = mysql_fetch_assoc($getQuizQuestions)); ?>
-      </div>
-      <div id="question_paging">
-        <?php for($i = 0; $i < $totalRows_getQuizQuestions; $i++) { ?>
-        <!--<a href="#" rel="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></a>--> 
-        <span title="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></span>
-        <?php } ?>
       </div>
     </div>
   </form>

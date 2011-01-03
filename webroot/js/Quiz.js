@@ -18,6 +18,12 @@ $(document).ready(function() {
 	// number of questions completed
 	var numCompleted = 0;
 	
+	// set the margin for the indicators
+	var numQuestions = $("#question_paging span").length
+	var margin = (690 - (numQuestions * 15)) / numQuestions;
+	
+	$("#question_paging span").css('marginRight', Math.floor(margin));
+	
 	//Set Default State of each portfolio piece
 	$("#question_paging").show();
 	$("#question_paging span:first").addClass("active");
@@ -55,10 +61,12 @@ $(document).ready(function() {
 				}
 			}
 		}
+		/* remove progress bar due to HCI issues
 		var length = (710/imageSum * numCompleted);
 		//$("#progress").css({'width': length});
 		$("#progress").animate({ width: length }, 200);
 		$("#progress_percentage").text(Math.round(100/imageSum * numCompleted));
+		*/
 	}
 	updateProgress();
 	
@@ -102,6 +110,7 @@ $(document).ready(function() {
 	$("#takeQuiz").submit(function(){
 		$("#logtime").val(logtime.toString());
 		//console.log(logtime.toString());
+		updateProgress();
 		//return false;
 	});
 });
