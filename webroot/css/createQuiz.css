@@ -1,0 +1,126 @@
+@charset "utf-8";
+#create-quiz {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+/* CSS Document */
+#create-quiz fieldset {
+	width: 700px;
+	margin-right: auto;
+	margin-left: auto;
+	-webkit-border-radius: 10px;
+	-webkit-box-shadow: 1px 1px 2px #3b3b3b;
+	-moz-border-radius: 10px;
+	-moz-box-shadow: 1px 1px 2px #3b3b3b;
+	-o-border-radius: 10px;
+	-o-box-shadow: 1px 1px 2px #3b3b3b;	
+	background-image: url(../img/form_bg.gif);
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-bottom: 20px;
+	padding-left: 5px;
+}
+
+#create-quiz h4 {
+	font-family: "Myriad Pro", Arial, sans-serif;
+	font-size: 22px;
+	font-weight: bold;
+	color: #333;
+	margin-top: 10px;
+	margin-right: 0px;
+	margin-bottom: 8px;
+	margin-left: 10px;
+}
+#create-quiz label {
+	color: #C00;
+	font-family: "Myriad Pro", Arial, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: right;
+	display: block;
+}
+#create-quiz p, #login p, #register p, .styleForm p {
+	font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;
+}
+#create-quiz input, #create-quiz textarea, #create-quiz select, #login input, #register input, .styleBtn, .styleForm {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+#create-quiz input[type='text'], #create-quiz textarea, #login input[type='text'], #login input[type='password'], #register input[type='text'], #register input[type='password'], .styleBtn, .styleForm input[type='text']{
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	padding: 5px;
+	border: 1px solid #CCC;
+}
+#create-quiz select {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	padding: 4px;
+	border: 1px solid #CCC;
+}
+#create-quiz input[type='text'], #create-quiz textarea, #login input[type='text'], #login input[type='password'], #register input[type='text'], #register input[type='password'], .styleForm input[type='text']{
+	width: 100%;	
+}
+#create-quiz input[type='text']:focus, #create-quiz textarea:focus, #create-quiz select:focus, #login input[type='text']:focus, #login input[type='password']:focus , #register input[type='text']:focus, #register input[type='password']:focus, .styleForm input[type='text']:focus{
+	border: 1px solid #F90;
+}
+#create-quiz input[type='button'], #create-quiz input[type='submit'], #login input[type='submit'], #register input[type='submit'], .styleBtn, .styleForm input[type='submit'] {
+	font-family: "Myriad Pro", Arial, sans-serif;
+	font-size: 16px;
+	color: #000;
+	background-color: #6F9;
+	border: 1px solid #999;
+	padding-top: 5px;
+	padding-right: 12px;
+	padding-bottom: 5px;
+	padding-left: 12px;
+	font-weight: bold;
+}
+#create-quiz input[type='button']:hover, #create-quiz input[type='submit']:hover, #login input[type='submit']:hover, #register input[type='submit']:hover, .styleBtn:hover, .styleForm input[type='submit']:hover{
+	background-color: #FC0;
+}
+#create-quiz input[type='button'].click {
+	background-color: #FC0;
+	border-top-color: #C00;
+	border-right-color: #C00;
+	border-bottom-color: #C00;
+	border-left-color: #C00;
+}
+#create-quiz input[type='button'].over {
+	background-color: #FC0;
+}
+#create-quiz input[type='button'].disable {
+	background-color: #CCC;
+	color: #FFF;
+}
+#create-quiz .optionField {
+	width: 250px !important;
+}
+#create-quiz .optionSelect {
+	width: 150px;
+}
+#createQuiz .desc {
+	font-size: 12px;
+	color: #333;
+	font-style: italic;
+	padding-top: 2px;
+	display: block;
+	padding-bottom: 8px;
+}
+#createQuiz a {
+	outline: none;
+}
+.selectImage{
+	border: 2px solid #666;
+}
