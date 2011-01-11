@@ -18,7 +18,7 @@ class Member{
 	// - Retrieves the facebook ID
 	//----------------------------------------
 	function __construct(){
-		if(!$debug){
+		if(!$this->debug){
 			require('../Connections/quizroo.php');	// database connections
 			require('facebook.php');				// request for facebook ID
 			require('variables.php');				// global variables
@@ -43,7 +43,8 @@ class Member{
 				}
 			}
 		}else{
-			$this->$me['name'] = "Debug Test User";
+			$me = true;
+			$this->$me = array('name'  => "Debug Test User");
 			$this->id = 1;
 		}
 		
