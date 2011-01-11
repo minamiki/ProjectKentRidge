@@ -8,7 +8,7 @@
 
 <body>
 <?php include("../modules/statusbar.php");?>
-<?php include("../modules/displayQuiz.php"); ?>
+<?php include("../modules/previewQuiz.php"); ?>
 <?php include("inc/footer-js.php"); ?>
 </body>
 </html>
