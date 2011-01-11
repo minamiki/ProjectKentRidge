@@ -66,7 +66,7 @@ function checkAchievements($memberid){
 	if(!in_array('52',$achievements)){
 		$results = $database->query('SELECT COUNT(DISTINCT fk_quiz_cat) as categories FROM q_store_result LEFT JOIN q_quizzes ON fk_quiz_id=quiz_id WHERE q_store_result.fk_member_id='.$memberid);
 		if($results[0]['categories']==2){
-			$database->save('g_achievements_log',array('fk_member_id','fk_achievement_id'),array($memberid,2));
+			$database->save('g_achievements_log',array('fk_member_id','fk_achievement_id'),array($memberid,52));
 			$achievement_array[] = 52;
 		}
 	}
