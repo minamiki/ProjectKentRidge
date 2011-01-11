@@ -39,7 +39,7 @@ function calculatePoints($facebookID){
 	
 	if($new_level > $old_level){
 		// a levelup has occurred
-		$achievement_array[] = 1;	// provide the ID of the level acheievement
+		$achievement_array[] = $new_level;	// provide the ID of the level acheievement
 		
 		// update the member table to reflect the new level
 		$queryUpdate = sprintf("UPDATE members SET quiztaker_score = quiztaker_score + %s, quiztaker_score_today = quiztaker_score_today + %s, level = %d WHERE member_id = %s", $points, $points, $new_level, $facebookID);

@@ -72,4 +72,15 @@ function checkAchievements($memberid){
 	}
 }
 
+function retrieveAchievements($array){
+	$return_array = array();
+	$database = new Database();
+	
+	foreach($array as $achievement){
+		$result = $database->query('SELECT * FROM g_achievements WHERE id='.$achievement);
+		array_push($return_array,$result[0]);
+	}
+
+	return json_encode($return_array);
+}
 ?>

@@ -282,6 +282,6 @@ var Statusbar = {
 		}
 		
 		// Update scorebar width if necessary. Current width is 460px.
-		$('#scorebar-progress').width(440*ratio);
+		$('#scorebar-progress').width(Math.min((440*ratio),440));
 	},
 }
