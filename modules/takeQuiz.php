@@ -39,6 +39,10 @@ $question_count = 1;
         <div id="progress"></div>
       </div>
   </div>
+  <div id="incomplete" class="rounded">
+    <p>Questions marked with a white circle are not answered!</p>
+    <p>Use the &quot;Previous&quot; and &quot;Next&quot; buttons to navigate between questions.</p>
+  </div>
 </div>
 <div id="takequiz-main">
   <form name="takeQuiz" id="takeQuiz" action="quiz_result.php" method="post">
@@ -81,7 +85,7 @@ $question_count = 1;
               <?php }}else{ ?>
               <tr>
                 <td align="left" scope="row"><input name="prevBtn<?php echo $question_count; ?>" type="button" class="styleBtn" id="prevBtn<?php echo $question_count; ?>" value="Previous" /></td>
-                <td align="right"><input name="finishQuiz" type="submit" class="styleBtn" id="finishQuiz" value="Complete Quiz" /></td>
+                <td align="right"><input name="finishQuiz" type="submit" class="btnDisabled" id="finishQuiz" value="Complete Quiz" /></td>
               </tr>
               <?php } ?>
             </table>
