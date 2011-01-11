@@ -69,6 +69,7 @@ $(document).ready(function(){
 	$(document).click(function(event){
 		Statusbar.triggerHideInfo(event);
 	});
+	$('#splash').height($('body').height());
 });
 
 </script>

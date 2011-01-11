@@ -88,6 +88,7 @@ $totalRows_getResultChart = mysql_num_rows($getResultChart);
 	
 	google.setOnLoadCallback(function(){
 		drawCharts();
+		$('#splash').height($('body').height());
 	});
 	
 	function drawCharts() {
@@ -137,6 +138,20 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 </table>
 
 </div>
+
+<?php
+//----------------------------------------
+// Display splash screen with results
+//----------------------------------------
+	include_once("checkAchievements.php");
+	$achievement_details = retrieveAchievements($achievement_array);
+?>
+
+<script type="text/javascript" src="../webroot/js/Splash.js"></script>
+<script type="text/javascript">
+	Splash.display(<?php echo $achievement_details?>);
+</script>
+ 
 <?php
 mysql_free_result($getResults);
 mysql_free_result($getResultChart);

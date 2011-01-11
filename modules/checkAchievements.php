@@ -63,13 +63,24 @@ function checkAchievements($memberid){
 	 *   - Create achievement in achievement log
 	 *   - Push achievement to be displayed
 	 */
-	if(!in_array('2',$achievements)){
+	if(!in_array('52',$achievements)){
 		$results = $database->query('SELECT COUNT(DISTINCT fk_quiz_cat) as categories FROM q_store_result LEFT JOIN q_quizzes ON fk_quiz_id=quiz_id WHERE q_store_result.fk_member_id='.$memberid);
 		if($results[0]['categories']==2){
-			$database->save('g_achievements_log',array('fk_member_id','fk_achievement_id'),array($memberid,2));
-			$achievement_array[] = 2;
+			$database->save('g_achievements_log',array('fk_member_id','fk_achievement_id'),array($memberid,52));
+			$achievement_array[] = 52;
 		}
 	}
 }
 
+function retrieveAchievements($array){
+	$return_array = array();
+	$database = new Database();
+	
+	foreach($array as $achievement){
+		$result = $database->query('SELECT * FROM g_achievements WHERE id='.$achievement);
+		array_push($return_array,$result[0]);
+	}
+
+	return json_encode($return_array);
+}
 ?>

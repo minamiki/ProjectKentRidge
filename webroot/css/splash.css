@@ -1,0 +1,141 @@
+#splash{
+	width: 760px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	background-image: url(../img/trans_grey.png);
+	background-repeat: repeat;
+}
+
+#splash-content{
+	width: 500px;
+	background-color: #FFF;
+	margin-top: 100px;
+	margin-right: auto;
+	margin-left: auto;
+	padding: 10px;	
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 2px 2px 2px #3b3b3b;
+	-webkit-box-shadow: 2px 2px 2px #3b3b3b;
+}
+
+.splash-info-subtitle{
+	width: 500px;
+	color: #333;
+	padding: 5px;
+}
+
+.splash-unit-large{
+	border-bottom-width: thin;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCC;
+	text-align: center;
+	margin-top: 0px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+}
+
+.splash-unit-large:last-child{
+	margin: 0px 5px;
+	border: none;		
+}
+
+.splash-thumbnail-large{
+	width: 150px;
+	height: 150px;
+	margin: auto;
+}
+
+.splash-text-container-large{
+	padding: 0px;
+	text-align: center;
+	width: 500px;
+}
+
+.splash-name-large{
+	float: left;
+	width: 500px;
+	height: 24px;
+	margin-bottom: 5px;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.splash-description-large{
+	float: left;
+	width: 500px;
+	font-size: 18px;
+	padding-bottom: 5px;
+}
+
+.splash-unit-small{
+	border-bottom-width: thin;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCC;
+	margin-top: 0px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;		
+}
+
+.splash-unit-small:last-child{
+	margin: 0px 5px;
+	border: none;	
+}
+
+.splash-thumbnail-small{
+	float:left;
+	margin: 3px 0px;
+	width: 50px;
+	height: 50px;
+}
+
+.splash-text-container-small{
+	float: left;
+	padding: 5px 0px 5px 10px;
+	width: 430px;	
+}
+
+.splash-name-small{
+	float: left;
+	width: 430px;
+	height: 16px;
+	margin-bottom: 5px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.splash-description-small{
+	float: left;
+	width: 430px;
+	font-size: 12px;
+}
+
+#splash-dismiss{
+	color: #000;
+	background-color: #FFF;
+	padding: 5px;
+	width: 80px;
+	text-align: center;
+	text-decoration: none;
+	float: right;	
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border:solid 2px #E0E0E0;
+	font-size: 12px;
+	font-weight: bold;
+	background-image: url(../img/statusbar_background_gradient.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
+	outline: none;
+	cursor: pointer;
+}
+
+#splash-dismiss:hover{
+	background-color: #CCC;
+	background-image: none;
+}
