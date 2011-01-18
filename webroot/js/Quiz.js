@@ -22,6 +22,14 @@ $(document).ready(function() {
 	var numQuestions = $("#question_paging span").length
 	var margin = (690 - (numQuestions * 15)) / numQuestions;
 	
+	// also store the number of questions for error checking later
+	var questionArray = new Array(numQuestions);
+	
+	// fill it with zeros
+    for(var i = 0; i < questionArray.length; i++){
+        questionArray[i] = 0;
+    }
+	
 	$("#question_paging span").css('marginRight', Math.floor(margin));
 	
 	//Set Default State of each portfolio piece
@@ -51,16 +59,27 @@ $(document).ready(function() {
 	
 	}; 
 	
+	// update the progress of the quiz
 	function updateProgress(){
 		if(typeof($active) != 'undefined'){
 			// check if question is answered
 			if($("#takeQuiz input[name='q"+$active.attr("title")+"']:checked").val() != undefined){
 				if(!$active.hasClass('completed')){
 					$active.addClass('completed');
+					questionArray[$active.attr("title")-1] = 1;
 					numCompleted++;
 				}
 			}
 		}
+		
+		// update the state of the submit button
+		if(submitCheck()){
+			$("#finishQuiz").removeClass("btnDisabled");
+			$("#incomplete").slideUp("fast");
+		}else{
+			$("#finishQuiz").addClass("btnDisabled");
+		}
+		
 		/* remove progress bar due to HCI issues
 		var length = (710/imageSum * numCompleted);
 		//$("#progress").css({'width': length});
@@ -69,6 +88,18 @@ $(document).ready(function() {
 		*/
 	}
 	updateProgress();
+	
+	// check if the quiz is ready for submission
+	function submitCheck(){
+		var status = true;
+		// check if there are unanswered questions
+		for(var i = 0; i < questionArray.length; i++){
+			if(questionArray[i] == 0){
+				status = false;
+			}
+		}
+		return status;
+	}
 	
 	// Next Button
 	$("[id^=nextBtn]").click(function() {
@@ -102,15 +133,23 @@ $(document).ready(function() {
 		var optionValue = $(this).val();
 		quizTime = new Date();
 		logtime[logCount++] = new Array(questionNum, optionValue, quizTime.getTime());
-		console.log(logtime);
-		//updateProgress();
+		//console.log(logtime);
 	});
 	
 	// On form submit
 	$("#takeQuiz").submit(function(){
 		$("#logtime").val(logtime.toString());
-		//console.log(logtime.toString());
+		// update the progress on last time (for visual purposes)
 		updateProgress();
-		//return false;
+		// check if all questions are answered
+		//console.log(questionArray.toString());
+		if(submitCheck()){
+			$("#question_paging span").removeClass('active'); //Remove all active class
+			$("#final-bulb").addClass('activeBulb');
+			return true;
+		}else{
+			$("#incomplete").slideDown("fast");
+			return false;
+		}
 	});
 });

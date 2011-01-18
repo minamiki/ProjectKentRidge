@@ -1,9 +1,11 @@
 <?php require_once('../Connections/quizroo.php'); ?>
+<?php require_once('variables.php'); ?>
 <?php
 // TODO: Indentifying quiz takers with from facebook API
-//
-$facebookID = 1;
+require('member.php');
+$member = new Member();
 
+$facebookID = $member->id;
 //----------------------------------------
 // Process the quiz results
 //----------------------------------------

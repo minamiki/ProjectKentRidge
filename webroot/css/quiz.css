@@ -10,6 +10,20 @@
 	margin-bottom: 10px;
 	margin-left: 0px;
 }
+#takequiz-preamble #incomplete {
+	text-align: center;
+	margin-bottom: 5px;
+	display: none;
+	margin-top: 10px;
+	background-color: #FC0;
+	font-weight: bold;
+	padding: 3px;
+	margin-right: 100px;
+	margin-left: 100px;
+}
+#takequiz-preamble #incomplete p {
+	margin: 2px;
+}
 #takequiz-preview {
 	text-align: center;
 }
@@ -103,6 +117,10 @@
 	position: absolute;
 	right: 10px;
 	top: 0px;
+}
+.activeBulb  {
+	background-color: #F60 !important;
+	color: #FFF;
 }
 #question_paging span.active {
 	background-color: #F60 !important;
