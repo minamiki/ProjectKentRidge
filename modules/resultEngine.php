@@ -88,6 +88,8 @@ $totalRows_getResultChart = mysql_num_rows($getResultChart);
 	
 	google.setOnLoadCallback(function(){
 		drawCharts();
+		
+		// Added here to account for charts
 		$('#splash').height($('body').height());
 	});
 	
