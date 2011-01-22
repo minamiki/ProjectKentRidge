@@ -102,5 +102,10 @@ class Member{
 	function terminate(){
 		// remove user from database	
 	}
+	
+	function getToken(){
+		// returns the OAuth access token
+		return $this->session['access_token'];
+	}
 }
 ?>
