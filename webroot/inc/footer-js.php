@@ -4,6 +4,7 @@
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/Statusbar.js"></script>
 <?php // load repective scripts only when required (single scripts)
+require("../modules/variables.php");
 switch(basename($_SERVER['SCRIPT_NAME'])){
 	case "index.php": $src = "Dashboard.js"; break;
 	case "takeQuiz.php": $src = "Quiz.js"; break;
@@ -18,7 +19,7 @@ if($src != ""){
 // Load and initialize the facebook javascript framework
 //======================================================
 window.fbAsyncInit = function(){
-	FB.init({appId: '2fdae40a1de2190372e48d07a1c85c79', status: true, cookie: true, xfbml: true});
+	FB.init({appId: '<?php echo $FB_APPID; ?>', session: <?php echo json_encode($session); ?>, status: true, cookie: true, xfbml: true});
 	// Enable canvas height auto-resize
 	FB.Canvas.setAutoResize();	 
 };
