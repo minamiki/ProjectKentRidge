@@ -1,4 +1,4 @@
-<?php require_once('../Connections/quizroo.php'); ?>
+<?php require('../Connections/quizroo.php'); ?>
 <?php
 $colname_getQuizInfo = "-1";
 if (isset($_GET['id'])) {
