@@ -123,6 +123,10 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 <img src="../quiz_images/imgcrop.php?w=320&amp;h=213&amp;f=<?php echo $row_getResultInfo['result_picture']; ?>" width="320" height="213" alt="" />
   <p class="description"><?php echo $row_getResultInfo['result_description']; ?></p>
 </div>
+
+<!-- Include user sharing interface for liking, posting feed and recommending to friends -->
+<?php include('sharingInterface.php') ?>
+
 <div class="frame rounded">
 <h3>Result Details</h3>
 <div id="result_chart"><img src="../webroot/images/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div>
@@ -150,12 +154,10 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 	include_once("checkAchievements.php");
 	$achievement_details = retrieveAchievements($achievement_array);
 ?>
-
 <script type="text/javascript" src="../webroot/js/Splash.js"></script>
 <script type="text/javascript">
 	Splash.display(<?php echo $achievement_details?>);
 </script>
- 
 <?php
 mysql_free_result($getResults);
 mysql_free_result($getResultChart);
