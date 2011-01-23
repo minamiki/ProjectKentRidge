@@ -59,6 +59,49 @@ class Quiz{
 		return $this->isPublished;
 	}
 	
+	// publish the quiz
+	function publish(){
+		require('../Connections/quizroo.php');
+		require('variables.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// set the publish flag to 1 and award the first creation score
+		$query = sprintf("UPDATE q_quizzes SET isPublished = 1, quiz_score = %d WHERE quiz_id = %d", $BASE_POINT, $this->quiz_id);
+		mysql_query($query, $quizroo) or die(mysql_error());
+		
+		// check the current member stats (for level up calculation later)
+		$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `members` WHERE `member_id` = %d", $this->fk_member_id);
+		$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+		$row_getResults = mysql_fetch_assoc($getResults);
+		$old_level = $row_getResults['level'];
+		$old_score = $row_getResults['quiztaker_score'];
+		mysql_free_result($getResults);
+		
+		// update the member's creation score
+		$query = sprintf("UPDATE members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $BASE_POINT, $BASE_POINT, $this->fk_member_id);
+		mysql_query($query, $quizroo) or die(mysql_error());
+		
+		// check if the there is a levelup:
+		///////////////////////////////////////
+		
+		// check the level table 
+		$queryLevel = sprintf("SELECT id FROM `g_levels` WHERE points <= %d ORDER BY points DESC LIMIT 0, 1", $old_score + $BASE_POINT);
+		$getLevel = mysql_query($queryLevel, $quizroo) or die(mysql_error());
+		$row_getLevel = mysql_fetch_assoc($getLevel);
+		$new_level = $row_getLevel['id'];
+		
+		if($new_level > $old_level){ // a levelup has occurred
+			// update the member table to reflect the new level
+			$queryUpdate = sprintf("UPDATE members SET level = %d WHERE member_id = %s", $new_level, $this->fk_member_id);
+			mysql_query($queryUpdate, $quizroo) or die(mysql_error());	
+			
+			// return the ID of the level acheievement
+			return $new_level;	
+		}else{
+			return -1;
+		}
+	}
+	
 	// return the text name of the creator
 	function creator(){
 		require('../Connections/quizroo.php');

@@ -86,6 +86,7 @@ $getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_erro
 $row_getResultChart = mysql_fetch_assoc($getResultChart);
 $totalRows_getResultChart = mysql_num_rows($getResultChart);
 ?>
+<?php if($quiz->isPublished()){ ?>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
 	google.load('visualization', '1', {'packages':['corechart']});
@@ -119,6 +120,7 @@ $totalRows_getResultChart = mysql_num_rows($getResultChart);
 		chart.draw(data, {width: 700, height: 300, title: 'People per Result'});
 	}
 </script>
+<?php } ?>
 <div class="frame rounded">
 <h3 id="title_quiz_result">Quiz Results</h3>
 Here's the result of the quiz! Do remember to rate the quiz below. You can also see how others have fared while taking this quiz.</div>
@@ -131,7 +133,7 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 
 <!-- Include user sharing interface for liking, posting feed and recommending to friends -->
 <?php include('sharingInterface.php') ?>
-
+<?php if($quiz->isPublished()){ ?>
 <div class="frame rounded">
 <h3>Result Details</h3>
 <div id="result_chart"><img src="../webroot/images/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div>
@@ -152,13 +154,12 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 </table>-->
 
 </div>
-
+<?php } ?>
 <?php
 //----------------------------------------
 // Display splash screen with results
 //----------------------------------------
-	include_once("checkAchievements.php");
-	$achievement_details = retrieveAchievements($achievement_array);
+$achievement_details = retrieveAchievements($achievement_array);
 ?>
 <script type="text/javascript" src="../webroot/js/Splash.js"></script>
 <script type="text/javascript">
