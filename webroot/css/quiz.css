@@ -43,7 +43,13 @@
 	border: 1px solid #000;
 	-moz-box-shadow: 1px 1px 2px #999;
 }
-
+#created-preamble .orangeBtn {
+	background-color: #FC3;
+}
+#created-preamble span.center, #takequiz-preamble span.center{
+	display: block;
+	text-align: center;
+}
 #questionContainer {
 	height: 400px;
 	width: 700px;

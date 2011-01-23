@@ -2,7 +2,7 @@
 //----------------------------------------
 // Member Class
 //----------------------------------------
-
+if(!class_exists("Member")){
 class Member{
 	// debugging mode
 	private $debug = false;
@@ -124,4 +124,6 @@ class Member{
 		return $this->me['gender'];
 	}
 }
+}
+
 ?>

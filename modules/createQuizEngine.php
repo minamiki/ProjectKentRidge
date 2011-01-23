@@ -30,21 +30,6 @@ for($i = 0; $i < $_POST['questionCount']; $i++){
 	}
 }
 
-$result_convertor = array();
-
-/*
-// debug
-echo $quiz_title."<br>".$quiz_description."<br>".$quiz_cat."<br>".$quiz_picture;
-echo "<br><br>";
-print_r($result_title);
-echo "<br>";
-print_r($result_description);
-echo "<br>";
-print_r($result_picture);
-echo "<br><br>";
-print_r($question);
-*/
-
 mysql_select_db($database_quizroo, $quizroo);
 // insert into the quiz table
 $insertSQL = sprintf("INSERT INTO q_quizzes(`quiz_name`, `quiz_description`, `fk_quiz_cat`, `quiz_picture`, `fk_member_id`) VALUES (%s, %s, %d, %s, %d)",
@@ -53,7 +38,6 @@ $insertSQL = sprintf("INSERT INTO q_quizzes(`quiz_name`, `quiz_description`, `fk
 				   GetSQLValueString($quiz_cat, "int"),
 				   GetSQLValueString($quiz_picture, "text"),
 				   GetSQLValueString($quiz_member_id, "int"));
-//echo "<br>".$insertSQL;
 mysql_query($insertSQL, $quizroo) or die(mysql_error());
 
 // find the quiz id
@@ -72,8 +56,8 @@ for($i = 0; $i < $_POST['resultCount']; $i++){
 				   GetSQLValueString($result_picture[$i], "text"),
 				   GetSQLValueString($currentQuizID, "int"));
 }
-//echo "<br>".$insertSQL;
 mysql_query(substr($insertSQL, 0, strlen($insertSQL)-1), $quizroo) or die(mysql_error());
+
 // find the result id
 $querySQL = "SELECT LAST_INSERT_ID() AS insertID";
 $resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
@@ -81,13 +65,11 @@ $row_resultID = mysql_fetch_assoc($resultID);
 $lastResultID = $row_resultID['insertID'];
 mysql_free_result($resultID);
 
-
 // Insert the questions
 for($i = 0; $i < $_POST['questionCount']; $i++){
 	$insertSQL = sprintf("INSERT INTO q_questions(`question`, `fk_quiz_id`) VALUES (%s, %d)",
 				   GetSQLValueString($question[$i][0], "text"),
 				   GetSQLValueString($currentQuizID, "int"));
-	//echo "<br>".$insertSQL;
 	mysql_query($insertSQL, $quizroo) or die(mysql_error());
 
 	// find the question id
@@ -105,7 +87,6 @@ for($i = 0; $i < $_POST['questionCount']; $i++){
 					   GetSQLValueString($resultValue, "int"),
 					   GetSQLValueString($question[$i][1][$j][2], "int"),
 					   GetSQLValueString($currentQuestionID, "int"));
-		//echo "<br>".$insertSQL;
 		mysql_query($insertSQL, $quizroo) or die(mysql_error());
 	}
 }

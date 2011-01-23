@@ -1,24 +1,18 @@
 <?php require('../Connections/quizroo.php'); ?>
 <?php
-$colname_getQuiz = "-1";
-if (isset($_GET['id'])) {
-  $colname_getQuiz = $_GET['id'];
-}
-mysql_select_db($database_quizroo, $quizroo);
-$query_getQuiz = sprintf("SELECT quiz_name, quiz_description, quiz_picture, creation_date,  q_quiz_cat.cat_name, members.member_name FROM q_quizzes, q_quiz_cat, members WHERE quiz_id = %s AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat AND q_quizzes.fk_member_id = members.member_id", GetSQLValueString($colname_getQuiz, "int"));
-$getQuiz = mysql_query($query_getQuiz, $quizroo) or die(mysql_error());
-$row_getQuiz = mysql_fetch_assoc($getQuiz);
-$totalRows_getQuiz = mysql_num_rows($getQuiz);
+require('quiz.php');
+require('member.php');
+
+$quiz = new Quiz($_GET['id']);
 ?>
 <div id="created-preamble" class="frame rounded">
   <h3 id="title_quiz_created">Quiz Created</h3>
-  Yay! Your quiz has been created! You can preview your quiz below, or go to manage quizzes to view statistics on your quiz.</div>
-<div id="create-quiz" class="frame rounded">
-  <h2><?php echo $row_getQuiz['quiz_name']; ?></h2>
-  <p><img src="quiz_images/imgcrop.php?w=320&amp;h=213&amp;f=<?php echo $row_getQuiz['quiz_picture']; ?>" width="320" height="213" alt="" /></p>
-  <p class="description"><?php echo $row_getQuiz['quiz_description']; ?></p>
-  <p class="info">by <em><?php echo $row_getQuiz['member_name']; ?></em> on <?php echo date("F j, Y g:ia", strtotime($row_getQuiz['creation_date'])); ?> in the topic '<?php echo $row_getQuiz['cat_name']; ?>'</p>
-</div>
-<?php
-mysql_free_result($getQuiz);
-?>
+  <p>Yay! Your quiz has been created! You can choose to preview your quiz first, or publish your quiz now.</p>
+  <p>Your newly created quiz is <strong>unpublished</strong>. Unpublished quizzes will not appear in the quiz listings or searches. You can let your friends have a sneak prebiew of your unpublished quiz  by sharing the link below:</p>
+  <p><a href="http://apps.facebook.com/quizroo/previewQuiz.php?id=<?php echo $_GET['id']; ?>">http://apps.facebook.com/quizroo/previewQuiz.php?id=<?php echo $_GET['id']; ?></a></p>
+  <p>Do note that you <em>will not</em> receive points from users taking your unpublished quiz. You can published your quiz anytime by clicking the &quot;Publish Quiz&quot; button below. The button is also avaliable in the preview link above.</p>
+  
+  <span class="center">
+  <input name="publishBtn2" type="button" class="orangeBtn" id="previewBtn" onclick="goToURL('http://apps.facebook.com/quizroo/previewQuiz.php?id=<?php echo $_GET['id']; ?>')" value="Preview Quiz" />&nbsp;
+  <input name="publishBtn" type="button" id="publishBtn" onclick="goToURL('../modules/publishEngine.php')" value="Publish Quiz!" />
+</span></div>

@@ -6,13 +6,20 @@ $quiz = new Quiz($_GET['id']);
 <?php if($quiz->isPublished()){ ?>
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Take a quiz</h3>
-  Here's some information about the quiz! You can decide whether to take this quiz. This quiz contains <strong><?php echo $quiz->numQuestions(); ?> questions</strong>.
+  <p>Here's some information about the quiz! You can decide whether to take this quiz. This quiz contains <strong><?php echo $quiz->numQuestions(); ?> questions</strong>.</p>
 </div>
 <?php }else{ ?>
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Preview Quiz</h3>
-  This is an <strong>unpublished</strong> quiz! You can still try out the quiz and get results, but you <em>will not</em> receive any points for it! Here's some information about the quiz! This quiz contains <strong><?php echo $quiz->numQuestions(); ?> questions</strong>.
-</div>
+  <p>This is an <strong>unpublished</strong> quiz! You can still try out the quiz and get results, but you <em>will not</em> receive any points for it! Here's some information about the quiz! This quiz contains <strong><?php echo $quiz->numQuestions(); ?> questions</strong>.</p></div>
+<?php } ?>
+<?php if($quiz->isOwner($member->id)){ ?>
+<div id="takequiz-preamble" class="frame rounded">
+  <h3>Publish Quiz</h3>
+  <p>If you feel that your quiz is ready, click the &quot;Publish Quiz&quot; button. Once your quiz is published, it will be listed on Quizroo. You will receive points when a user takes your quiz. You can get more points when they &quot;like&quot; your quiz, or no points when they &quot;dislike&quot; your quiz.</p>
+  <span class="center">
+  <input type="button" name="button" id="button" onclick="goToURL('../modules/publishEngine.php')" value="Publish Quiz!" />
+</span> </div>
 <?php } ?>
 <div id="takequiz-preview" class="frame rounded">
   <h2><?php echo $quiz->quiz_name; ?></h2>

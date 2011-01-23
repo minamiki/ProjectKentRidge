@@ -2,7 +2,7 @@
 //----------------------------------------
 // Quiz Class
 //----------------------------------------
-
+if(!class_exists("Quiz")){
 class Quiz{
 	// Quiz data
 	public $quiz_id = NULL;
@@ -77,5 +77,15 @@ class Quiz{
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 		$row_getQuery = mysql_fetch_assoc($getQuery);
 		return $row_getQuery['cat_name'];
-	}	
+	}
+	
+	// check if user is owner
+	function isOwner($facebookID){
+		if($facebookID == $this->fk_member_id){
+			return true;
+		}else{
+			return false;
+		}		
+	}
+}
 }
