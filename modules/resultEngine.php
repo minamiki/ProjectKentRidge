@@ -1,7 +1,11 @@
 <?php require('../Connections/quizroo.php'); ?>
-<?php require('variables.php'); ?>
 <?php
-// TODO: Indentifying quiz takers with from facebook API
+require('variables.php');
+require('quiz.php');
+require('calculatePoints.php');
+require('checkAchievements.php');
+
+// get the member's facebook id
 $facebookID = $member->id;
 
 //----------------------------------------
@@ -10,18 +14,26 @@ $facebookID = $member->id;
 
 // get the quiz id
 $quiz_id = $_POST['quiz_id'];
+$quiz = new Quiz($quiz_id);
 
 // find out the number of questions
-mysql_select_db($database_quizroo, $quizroo);
-$query_getQuestionCount = "SELECT question_id FROM q_questions WHERE fk_quiz_id = ".GetSQLValueString($quiz_id, "int");
-$getQuestionCount = mysql_query($query_getQuestionCount, $quizroo) or die(mysql_error());
-$row_getQuestionCount = mysql_fetch_assoc($getQuestionCount);
-$totalRows_getQuestionCount = mysql_num_rows($getQuestionCount);
+$totalQuestionCount = $quiz->numQuestions();
 
 // iterate and collect the final answers for each question
+$validate = true;
 $answers = "";
-for($i = 0; $i < $totalRows_getQuestionCount; $i++){
-	$answers .= $_POST['q'.($i+1)].",";
+for($i = 0; $i < $totalQuestionCount; $i++){
+	if(isset($_POST['q'.($i+1)])){
+		$answers .= $_POST['q'.($i+1)].",";
+	}else{
+		$validate = false;
+	}
+	
+}
+
+if(!$validate){
+	// invalid date, redirect to home
+	header("Location: index.php");
 }
 
 // caculate and order the final result from the sum of options and their weightage
@@ -30,9 +42,11 @@ $getResults = mysql_query($query_getResults, $quizroo) or die(mysql_error());
 $row_getResults = mysql_fetch_assoc($getResults);
 $totalRows_getResults = mysql_num_rows($getResults);
 
-// store the final result into the database
-$query_saveResult = sprintf("INSERT INTO q_store_result(fk_quiz_id, fk_result_id, fk_member_id) VALUES (%d, %d, %d)", GetSQLValueString($quiz_id, "int"), $row_getResults['fk_result'], $facebookID);
-mysql_query($query_saveResult, $quizroo) or die(mysql_error());
+// store the final result into the database if published
+if($quiz->isPublished()){
+	$query_saveResult = sprintf("INSERT INTO q_store_result(fk_quiz_id, fk_result_id, fk_member_id) VALUES (%d, %d, %d)", GetSQLValueString($quiz_id, "int"), $row_getResults['fk_result'], $facebookID);
+	mysql_query($query_saveResult, $quizroo) or die(mysql_error());
+}
 
 // get the attempt timings
 $logtime = explode(',', $_POST['logtime']);
@@ -49,18 +63,10 @@ $achievement_array = array();
 // TODO: Insert attempt timings into database
 //
 
-//----------------------------------------
 // Calculate Points to award
-//----------------------------------------
+calculatePoints($facebookID, $quiz_id, $quiz->isPublished());
 
-include("calculatePoints.php");
-calculatePoints($facebookID);
-
-//----------------------------------------
 // Check for achievements
-//----------------------------------------
-
-include("checkAchievements.php");
 checkAchievements($facebookID);
 
 //----------------------------------------
@@ -123,6 +129,7 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 <div class="frame rounded">
 <h3>Result Details</h3>
 <div id="result_chart"><img src="../webroot/images/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div>
+<!--
 <table border="0" align="center" cellpadding="3" cellspacing="0">
   <tr>
     <th scope="col">Question</th>
@@ -136,7 +143,7 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
     <td><?php echo date("F j, Y H:i:s", ($PHPstartTime + $attempt[2] - $JSstartTime)/1000); ?></td>
   </tr>
   <?php } ?>
-</table>
+</table>-->
 
 </div>
 
