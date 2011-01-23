@@ -134,7 +134,6 @@ $(document).ready(function() {
 		var optionValue = $(this).val();
 		quizTime = new Date();
 		logtime[logCount++] = new Array(questionNum, optionValue, quizTime.getTime());
-		//console.log(logtime);
 	});
 	
 	// On form submit
@@ -143,7 +142,6 @@ $(document).ready(function() {
 		// update the progress on last time (for visual purposes)
 		updateProgress();
 		// check if all questions are answered
-		console.log(questionArray.toString());
 		if(submitCheck()){
 			$("#question_paging span").removeClass('active'); //Remove all active class
 			$("#final-bulb").addClass('activeBulb');

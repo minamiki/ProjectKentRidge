@@ -116,7 +116,8 @@ $totalRows_getResultChart = mysql_num_rows($getResultChart);
 Here's the result of the quiz! Do remember to rate the quiz below. You can also see how others have fared while taking this quiz.</div>
 <div id="result-panel" class="frame rounded">
 <h2><?php echo $row_getResultInfo['result_title']; ?></h2>
-<img src="../quiz_images/imgcrop.php?w=320&amp;h=213&amp;f=<?php echo $row_getResultInfo['result_picture']; ?>" width="320" height="213" alt="" />
+<?php if($row_getResultInfo['result_picture'] != "none.gif"){ ?>
+<img src="../quiz_images/imgcrop.php?w=320&amp;h=213&amp;f=<?php echo $row_getResultInfo['result_picture']; ?>" width="320" height="213" alt="" /><?php } ?>
   <p class="description"><?php echo $row_getResultInfo['result_description']; ?></p>
 </div>
 <div class="frame rounded">

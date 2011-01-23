@@ -15,7 +15,9 @@ $totalRows_getQuizInfo = mysql_num_rows($getQuizInfo);
   Here's some information about the quiz! You can decide whether to take this quiz. This quiz contains <strong><?php echo $row_getQuizInfo['question_count']; ?> questions</strong>. </div>
 <div id="takequiz-preview" class="frame rounded">
   <h2><?php echo $row_getQuizInfo['quiz_name']; ?></h2>
-<img src="../quiz_images/imgcrop.php?w=320&amp;h=213&amp;f=<?php echo $row_getQuizInfo['quiz_picture']; ?>" width="320" height="213" alt="" />
+  <?php if($row_getQuizInfo['quiz_picture'] != "none.gif"){ ?>
+	<img src="../quiz_images/imgcrop.php?w=320&amp;h=213&amp;f=<?php echo $row_getQuizInfo['quiz_picture']; ?>" width="320" height="213" alt="" />
+  <?php } ?>
   <p class="description"><?php echo $row_getQuizInfo['quiz_description']; ?></p>
   <p class="info">by <em><?php echo $row_getQuizInfo['member_name']; ?></em> on <?php echo date("F j, Y g:ia", strtotime($row_getQuizInfo['creation_date'])); ?> in the topic '<?php echo $row_getQuizInfo['cat_name']; ?>'</p>
   <input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="goToURL('takeQuiz.php?id=<?php echo $row_getQuizInfo['quiz_id']; ?>');" value="Take Quiz now!" />
