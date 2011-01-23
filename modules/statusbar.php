@@ -24,15 +24,15 @@
         </div>
     </div>    
     <div id="statusbar-divider"></div>
-    <div id="statusbar-quiz" class="statusbar-text statusbar-element">Quiz</div>
+    <div id="statusbar-quiz" class="statusbar-text statusbar-element" title="Create, Manage or Browse quizzes">Quiz</div>
     <div id="statusbar-divider"></div>
-    <div id="statusbar-friends" class="statusbar-text statusbar-element">Friends</div>
+    <div id="statusbar-friends" class="statusbar-text statusbar-element" title="Find out about your friends or Invite your friends to Quizroo">Friends</div>
     <div id="statusbar-divider"></div>
-    <div id="statusbar-profile" class="statusbar-text statusbar-element">Profile</div>
+    <div id="statusbar-profile" class="statusbar-text statusbar-element" title="Configure Quizroo, View usage statistics and usage history">Profile</div>
 	<div id="statusbar-divider"></div>
-    <div id="statusbar-about" class="statusbar-text statusbar-element">About</div>
+    <div id="statusbar-about" class="statusbar-text statusbar-element" title="Get help or Find out more about Quizroo">About</div>
 	<div id="statusbar-divider"></div>
-    <div id="statusbar-search" class="statusbar-searchmenu-button"><span>Search</span></div>
+    <div id="statusbar-search" class="statusbar-searchmenu-button" title="Search"><span>Search</span></div>
 
 </div>
 <div id="statusbar-info"></div>

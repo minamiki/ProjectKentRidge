@@ -1,0 +1,16 @@
+.share-button {
+	margin: 0px 3px;
+	padding: 8px 10px 0;
+	cursor: pointer;
+	height: 20px;
+	background-color: #3B5998;
+	font-family: lucida grande,tahoma,verdana,arial,sans-serif;
+	font-weight: bold;
+	font-size: 11px;
+	color: #FFF;
+	float: left;
+}
+
+#user-action-container {
+	margin: auto;
+}

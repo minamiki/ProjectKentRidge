@@ -3,6 +3,7 @@
 <script type="text/javascript" src="js/jquery.stretch-0.9.3.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/Statusbar.js"></script>
+<script type="text/javascript" src="js/Share.js"></script>
 <?php // load repective scripts only when required (single scripts)
 require("../modules/variables.php");
 switch(basename($_SERVER['SCRIPT_NAME'])){
@@ -21,7 +22,7 @@ if($src != ""){
 window.fbAsyncInit = function(){
 	FB.init({appId: '<?php echo $FB_APPID; ?>', session: <?php echo json_encode($member->session); ?>, status: true, cookie: true, xfbml: true});
 	// Enable canvas height auto-resize
-	FB.Canvas.setAutoResize();	 
+	FB.Canvas.setAutoResize();
 };
 (function(){
 	var e = document.createElement('script'); e.async = true;
@@ -32,11 +33,11 @@ window.fbAsyncInit = function(){
 //======================================================
 // Includes javascript to be executed on document ready
 //======================================================
-
 $(document).ready(function(){
 	// status bar handlers
 	Statusbar.update();
-
+	//Share.results({'quiz_id':19,'result_id':35});
+	
 	$('#notification-system').click(function(){
 		Statusbar.updateSystemNotification();
 		Statusbar.displayInformation('notification-system');
