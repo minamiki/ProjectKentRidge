@@ -1,4 +1,4 @@
-<?php require_once('../Connections/quizroo.php'); ?>
+<?php require('../Connections/quizroo.php'); ?>
 <?php
 mysql_select_db($database_quizroo, $quizroo);
 $query_listCat = "SELECT cat_id, cat_name FROM q_quiz_cat";

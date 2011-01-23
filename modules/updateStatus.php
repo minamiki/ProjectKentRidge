@@ -1,20 +1,22 @@
 <?php
 require 'database.php';
+require 'member.php';
 
 $method = $_REQUEST['method'];
 $status = new Status();
-$member = 1;
+$member = new Member();
+$member_id = $member->id;
 
 if($method=='achievements'){
-	echo json_encode($status->checkAchievements($member));	
+	echo json_encode($status->checkAchievements($member_id));	
 }else if($method=='system-notification'){
-	echo json_encode($status->checkSystem($member));	
+	echo json_encode($status->checkSystem($member_id));	
 }else if($method=='read-achievements'){
-	echo json_encode($status->readAchievements($member));	
+	echo json_encode($status->readAchievements($member_id));	
 }else if($method=='clear-system-notification'){
-	echo json_encode($status->clearSystemNotification($member));	
+	echo json_encode($status->clearSystemNotification($member_id));	
 }else if($method=='recent-achievements-notification'){
-	echo json_encode($status->recentAchievementsNotification($member));
+	echo json_encode($status->recentAchievementsNotification($member_id));
 }
 
 class Status
@@ -36,7 +38,7 @@ function checkAchievements($memberid){
 	 */
 	$achievementsOverview = $database->query('SELECT fk_achievement_id,timestamp FROM g_achievements_log WHERE fk_member_id="'.$memberid.'" ORDER BY timestamp DESC LIMIT 3'); 
 	foreach($achievementsOverview as $achievementOverview){
-		$description = $database->get('g_achievements',array('image','name','description'),'id="'.$achievementOverview['fk_achievement_id'].'"');
+		$description = $database->get('g_achievements',array('image','name','description'),'id="'.$achievementOverview[0]['fk_achievement_id'].'"');
 		array_push($result['overview'],$description[0]);
 	}
 	

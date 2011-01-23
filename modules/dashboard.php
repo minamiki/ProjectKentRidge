@@ -1,4 +1,4 @@
-<?php require_once('../Connections/quizroo.php'); ?>
+<?php require('../Connections/quizroo.php'); ?>
 <?php
 $maxRows_recommendations = 4;
 $pageNum_recommendations = 0;
@@ -8,7 +8,7 @@ if (isset($_GET['pageNum_recommendations'])) {
 $startRow_recommendations = $pageNum_recommendations * $maxRows_recommendations;
 
 mysql_select_db($database_quizroo, $quizroo);
-$query_recommendations = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, nickname, cat_name FROM q_quizzes, q_quiz_cat, members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat ORDER BY creation_date DESC";
+$query_recommendations = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, cat_name FROM q_quizzes, q_quiz_cat, members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY creation_date DESC";
 $query_limit_recommendations = sprintf("%s LIMIT %d, %d", $query_recommendations, $startRow_recommendations, $maxRows_recommendations);
 $recommendations = mysql_query($query_limit_recommendations, $quizroo) or die(mysql_error());
 $row_recommendations = mysql_fetch_assoc($recommendations);
@@ -29,7 +29,7 @@ if (isset($_GET['pageNum_popular'])) {
 $startRow_popular = $pageNum_popular * $maxRows_popular;
 
 mysql_select_db($database_quizroo, $quizroo);
-$query_popular = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, nickname, cat_name FROM q_quizzes, q_quiz_cat, members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat ORDER BY RAND()";
+$query_popular = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, cat_name FROM q_quizzes, q_quiz_cat, members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY RAND()";
 $query_limit_popular = sprintf("%s LIMIT %d, %d", $query_popular, $startRow_popular, $maxRows_popular);
 $popular = mysql_query($query_limit_popular, $quizroo) or die(mysql_error());
 $row_popular = mysql_fetch_assoc($popular);
@@ -67,7 +67,7 @@ $totalPages_popular = ceil($totalRows_popular/$maxRows_popular)-1;
         <div class="quiz_details">
           <h3><?php echo $row_recommendations['quiz_name']; ?></h3>
           <p class="description"><?php echo substr($row_recommendations['quiz_description'], 0, 120).((strlen($row_recommendations['quiz_description']) < 120)? "" : "..."); ?></p>
-          <p class="source">from <a href="javascript:;"><?php echo $row_recommendations['cat_name']; ?></a> Category by <a href="javascript:;"><?php echo $row_recommendations['nickname']; ?></a></p>
+          <p class="source">from <a href="javascript:;"><?php echo $row_recommendations['cat_name']; ?></a> Category by <a href="javascript:;"><?php echo $row_recommendations['member_name']; ?></a></p>
         </div>
       </div>
       <?php } while ($row_recommendations = mysql_fetch_assoc($recommendations)); ?>
@@ -82,7 +82,7 @@ $totalPages_popular = ceil($totalRows_popular/$maxRows_popular)-1;
         <div class="quiz_details">
           <h3><?php echo $row_popular['quiz_name']; ?></h3>
           <p class="description"><?php echo substr($row_popular['quiz_description'], 0, 120).((strlen($row_popular['quiz_description']) < 120)? "" : "..."); ?></p>
-          <p class="source">from <a href="javascript:;"><?php echo $row_popular['cat_name']; ?></a> Category by <a href="javascript:;"><?php echo $row_popular['nickname']; ?></a></p>
+          <p class="source">from <a href="javascript:;"><?php echo $row_popular['cat_name']; ?></a> Category by <a href="javascript:;"><?php echo $row_popular['member_name']; ?></a></p>
         </div>
       </div>
       <?php } while ($row_popular = mysql_fetch_assoc($popular)); ?>

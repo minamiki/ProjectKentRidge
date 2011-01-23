@@ -1,11 +1,11 @@
-<?php require_once('../Connections/quizroo.php'); ?>
+<?php require('../Connections/quizroo.php'); ?>
 <?php
 $colname_getQuizInfo = "-1";
 if (isset($_GET['id'])) {
   $colname_getQuizInfo = $_GET['id'];
 }
 mysql_select_db($database_quizroo, $quizroo);
-$query_getQuizInfo = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, creation_date, members.nickname, q_quiz_cat.cat_name, (SELECT COUNT(question_id) FROM q_questions WHERE fk_quiz_id = %s) AS question_count FROM q_quizzes, members, q_quiz_cat WHERE quiz_id = %s AND members.member_id = q_quizzes.fk_member_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat", GetSQLValueString($colname_getQuizInfo, "int"),GetSQLValueString($colname_getQuizInfo, "int"));
+$query_getQuizInfo = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, creation_date, members.member_name, q_quiz_cat.cat_name, (SELECT COUNT(question_id) FROM q_questions WHERE fk_quiz_id = %s) AS question_count FROM q_quizzes, members, q_quiz_cat WHERE quiz_id = %s AND members.member_id = q_quizzes.fk_member_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat", GetSQLValueString($colname_getQuizInfo, "int"),GetSQLValueString($colname_getQuizInfo, "int"));
 $getQuizInfo = mysql_query($query_getQuizInfo, $quizroo) or die(mysql_error());
 $row_getQuizInfo = mysql_fetch_assoc($getQuizInfo);
 $totalRows_getQuizInfo = mysql_num_rows($getQuizInfo);
@@ -25,7 +25,7 @@ $question_count = 1;
 
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Take a quiz</h3>
-  <p>You're now taking the quiz,<em> &quot;<?php echo $row_getQuizInfo['quiz_name']; ?>&quot;</em> by <?php echo $row_getQuizInfo['nickname']; ?>. You may stop taking the quiz anytime by navigating away from this page. No data will be collected unless you complete the quiz.</p>
+  <p>You're now taking the quiz,<em> &quot;<?php echo $row_getQuizInfo['quiz_name']; ?>&quot;</em> by <?php echo $row_getQuizInfo['member_name']; ?>. You may stop taking the quiz anytime by navigating away from this page. No data will be collected unless you complete the quiz.</p>
   <div id="progress_panel">
       <div id="question_paging">
         <?php for($i = 0; $i < $totalRows_getQuizQuestions; $i++) { ?>
