@@ -22,6 +22,7 @@ if($src != ""){
 window.fbAsyncInit = function(){
 	FB.init({appId: '<?php echo $FB_APPID; ?>', session: <?php echo json_encode($member->session); ?>, status: true, cookie: true, xfbml: true});
 	// Enable canvas height auto-resize
+	FB.Canvas.setSize({ height: 400 });
 	FB.Canvas.setAutoResize();
 };
 (function(){
