@@ -36,8 +36,12 @@ class Member{
 			// Session based API call.
 			if($this->session){
 				try{
-					$this->id = $this->facebook->getUser();
+					$this->id = $this->facebook->getUser();		// get the user's facebook ID
 					$this->me = $this->facebook->api('/me');	// populate the facebook $me object
+					
+					// register the user into our database if required
+					$this->register();
+					
 				}catch(FacebookApiException $e){
 					error_log($e);
 					echo $e;
@@ -65,13 +69,14 @@ class Member{
 	function register(){
 		require('../Connections/quizroo.php');	// database connections
 		// check if the member is already in the database
-		$queryCheck = sprintf("SELECT member_id FROM members WHERE member_id = %s", GetSQLValueString($facebook_id, "int"));
+		mysql_select_db($database_quizroo, $quizroo);
+		$queryCheck = sprintf("SELECT member_id FROM members WHERE member_id = %s", GetSQLValueString($this->id, "int"));
 		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 		$row_getCheck = mysql_fetch_assoc($getCheck);
 		$totalRows_getCheck = mysql_num_rows($getCheck);
 		
-		if($totalRows_getCheck != 0){ // user is not in the database, add user into the database
-			$queryInsert = sprintf("INSERT INTO members(member_id) VALUES(%s)", GetSQLValueString($facebook_id, "int"));
+		if($totalRows_getCheck == 0){ // user is not in the database, add user into the database
+			$queryInsert = sprintf("INSERT INTO members(member_id, member_name) VALUES(%s, %s)", GetSQLValueString($this->id, "int"), GetSQLValueString($this->getName(), "text"));
 			mysql_query($queryInsert, $quizroo) or die(mysql_error());
 		}
 	}
@@ -103,9 +108,20 @@ class Member{
 		// remove user from database	
 	}
 	
+	//----------------------------------------
+	// Date providers
+	//----------------------------------------	
 	function getToken(){
 		// returns the OAuth access token
 		return $this->session['access_token'];
+	}
+	
+	function getName(){
+		return $this->me['name'];
+	}
+	
+	function getGender(){
+		return $this->me['gender'];
 	}
 }
 ?>
