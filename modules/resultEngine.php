@@ -28,7 +28,6 @@ for($i = 0; $i < $totalQuestionCount; $i++){
 	}else{
 		$validate = false;
 	}
-	
 }
 
 if(!$validate){
@@ -46,6 +45,11 @@ $totalRows_getResults = mysql_num_rows($getResults);
 if($quiz->isPublished()){
 	$query_saveResult = sprintf("INSERT INTO q_store_result(fk_quiz_id, fk_result_id, fk_member_id) VALUES (%d, %d, %d)", GetSQLValueString($quiz_id, "int"), $row_getResults['fk_result'], $facebookID);
 	mysql_query($query_saveResult, $quizroo) or die(mysql_error());
+	
+	// award the quiz creator the base points
+	if(!$quiz->hasTaken($member->id)){
+		$quiz->awardPoints(0);
+	}
 }
 
 // get the attempt timings

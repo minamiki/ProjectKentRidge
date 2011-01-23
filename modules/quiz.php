@@ -102,6 +102,34 @@ class Quiz{
 		}
 	}
 	
+	function awardPoints($type){
+		require('../Connections/quizroo.php');
+		require('variables.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		switch($type){
+			case -1: // penalty deduction for 'dislike' rating
+			$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score - %d WHERE quiz_id = %d", $BASE_POINT, $this->quiz_id);
+			mysql_query($query, $quizroo) or die(mysql_error());
+			
+			// update the creator's points
+			$query = sprintf("UPDATE members SET quizcreator_score = quizcreator_score - %d, quizcreator_score_today = quizcreator_score_today - %d WHERE member_id = %d", $BASE_POINT, $BASE_POINT, $this->fk_member_id);
+			mysql_query($query, $quizroo) or die(mysql_error());			
+			break;
+						
+			case 0:	// award the base points or bonus award for 'like' rating		
+			case 1: // bonus award for 'like' rating
+			// update the quiz score
+			$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score + %d WHERE quiz_id = %d", $BASE_POINT, $this->quiz_id);
+			mysql_query($query, $quizroo) or die(mysql_error());
+			
+			// update the creator's points
+			$query = sprintf("UPDATE members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $BASE_POINT, $BASE_POINT, $this->fk_member_id);
+			mysql_query($query, $quizroo) or die(mysql_error());
+			break;	
+		}		
+	}
+	
 	// return the text name of the creator
 	function creator(){
 		require('../Connections/quizroo.php');
@@ -129,6 +157,23 @@ class Quiz{
 		}else{
 			return false;
 		}		
+	}
+	
+	// check if a user has taken quiz
+	function hasTaken($facebookID){
+		require('../Connections/quizroo.php');	// database connections
+		
+		// check if user has already taken this quiz
+		$queryCheck = sprintf("SELECT COUNT(store_id) AS count FROM q_store_result WHERE `fk_member_id` = %s AND `fk_quiz_id` = %s", $facebookID, $this->quiz_id);
+		$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+		$row_getResults = mysql_fetch_assoc($getResults);
+		$timesTaken = $row_getResults['count'];	
+		
+		if($timesTaken != 0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
 }
