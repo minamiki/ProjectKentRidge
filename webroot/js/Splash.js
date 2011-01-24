@@ -2,9 +2,9 @@ var Splash = {
 
 	imagepath: 'img/',
 
-	display: function(achievements){
+	display: function(new_achievements,old_achievements,close_ranks){
 		// Check if there are any achievements to display
-		if(achievements!=''){
+		if(new_achievements!=''){
 			//Create div
 			var splash = document.createElement('div');
 			
@@ -13,7 +13,7 @@ var Splash = {
 			$(splash).html('<div id="splash-content"><div class="splash-info-subtitle">New Achievements Unlocked</div></div>');
 			
 			// For each achievement, add it to the splash screen
-			$.each(achievements,function(i,achievement){
+			$.each(new_achievements,function(i,achievement){
 				var image = achievement.image;
 				var name = achievement.name;
 				var desc = achievement.description;
