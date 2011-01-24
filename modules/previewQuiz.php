@@ -13,12 +13,12 @@ $quiz = new Quiz($_GET['id']);
   <h3>Preview Quiz</h3>
   <p>This is an <strong>unpublished</strong> quiz! You can still try out the quiz and get results, but you <em>will not</em> receive any points for it! Here's some information about the quiz! This quiz contains <strong><?php echo $quiz->numQuestions(); ?> questions</strong>.</p></div>
 <?php } ?>
-<?php if($quiz->isOwner($member->id)){ ?>
+<?php if($quiz->isOwner($member->id) && !$quiz->isPublished()){ ?>
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Publish Quiz</h3>
   <p>If you feel that your quiz is ready, click the &quot;Publish Quiz&quot; button. Once your quiz is published, it will be listed on Quizroo. You will receive points when a user takes your quiz. You can get more points when they &quot;like&quot; your quiz, or no points when they &quot;dislike&quot; your quiz.</p>
   <span class="center">
-  <input type="button" name="button" id="button" onclick="goToURL('../modules/publishEngine.php')" value="Publish Quiz!" />
+  <input type="button" name="button" id="button" onclick="goToURL('publishQuiz.php?id=<?php echo $_GET['id']; ?>')" value="Publish Quiz!" />
 </span> </div>
 <?php } ?>
 <div id="takequiz-preview" class="frame rounded">

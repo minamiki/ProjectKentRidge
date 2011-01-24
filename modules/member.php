@@ -7,11 +7,19 @@ class Member{
 	// debugging mode
 	private $debug = false;
 	
-	// member variables
+	// member facebook variables
 	public $session = NULL;
 	public $id = NULL;
 	public $me = NULL;
 	public $facebook = NULL;
+	
+	// member data
+	public $level = NULL;
+	public $rank = NULL;
+	public $quiztaker_score = NULL;
+	public $quizcreator_score = NULL;
+	public $quiztaker_score_today = NULL;
+	public $quizcreator_score_today = NULL;	
 	
 	//----------------------------------------
 	// Class constructer which
@@ -70,15 +78,31 @@ class Member{
 		require('../Connections/quizroo.php');	// database connections
 		// check if the member is already in the database
 		mysql_select_db($database_quizroo, $quizroo);
-		$queryCheck = sprintf("SELECT member_id FROM members WHERE member_id = %s", GetSQLValueString($this->id, "int"));
+		$queryCheck = sprintf("SELECT * FROM members WHERE member_id = %s", $this->id);
 		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 		$row_getCheck = mysql_fetch_assoc($getCheck);
 		$totalRows_getCheck = mysql_num_rows($getCheck);
 		
 		if($totalRows_getCheck == 0){ // user is not in the database, add user into the database
-			$queryInsert = sprintf("INSERT INTO members(member_id, member_name) VALUES(%s, %s)", GetSQLValueString($this->id, "int"), GetSQLValueString($this->getName(), "text"));
+			$queryInsert = sprintf("INSERT INTO members(member_id, member_name) VALUES(%s, '%s')", $this->id, $this->getName());
 			mysql_query($queryInsert, $quizroo) or die(mysql_error());
-		}
+			
+			// populate the user data
+			$this->level = 0;
+			$this->rank = 0;
+			$this->quiztaker_score = 0;
+			$this->quizcreator_score = 0;
+			$this->quiztaker_score_today = 0;
+			$this->quizcreator_score_today = 0;	
+		}else{
+			// populate the user data
+			$this->level = $row_getCheck['level'];
+			$this->rank = $row_getCheck['rank'];
+			$this->quiztaker_score = $row_getCheck['quiztaker_score'];
+			$this->quizcreator_score = $row_getCheck['quizcreator_score'];
+			$this->quiztaker_score_today = $row_getCheck['quiztaker_score_today'];
+			$this->quizcreator_score_today = $row_getCheck['quizcreator_score_today'];	
+		}	
 	}
 	
 	//----------------------------------------
@@ -105,11 +129,35 @@ class Member{
 	// Terminate the user
 	//----------------------------------------
 	function terminate(){
-		// remove user from database	
+		// TODO: remove user from database	
 	}
 	
 	//----------------------------------------
-	// Date providers
+	// Update the member's combined score
+	//----------------------------------------
+	function getTotalScore(){
+		return $this->quizcreator_score + $this->quiztaker_score;
+	}
+	
+	//----------------------------------------
+	// check and update the member's creator score
+	//----------------------------------------
+	function updateCreatorScore(){
+		require('../Connections/quizroo.php');	// database connections
+		
+		// count all the points and update the member's creator score
+		mysql_select_db($database_quizroo, $quizroo);
+		$queryCheck = sprintf("SELECT COUNT(quiz_score) AS score FROM q_quizzes WHERE fk_member_id = %d", $this->id);
+		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+		$row_getCheck = mysql_fetch_assoc($getCheck);
+		$totalScore = $row_getCheck['score'];
+		mysql_free_result($getCheck);
+		$query = sprintf("UPDATE members SET quizcreator_score = %d WHERE member_id = %d)", $totalScore, $this->id);
+		mysql_query($query, $quizroo) or die(mysql_error());
+	}
+	
+	//----------------------------------------
+	// Data providers
 	//----------------------------------------	
 	function getToken(){
 		// returns the OAuth access token

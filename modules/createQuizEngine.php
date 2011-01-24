@@ -91,6 +91,6 @@ for($i = 0; $i < $_POST['questionCount']; $i++){
 	}
 }
 
-$insertGoTo = "../webroot/createQuizSuccess.php?id=".$currentQuizID;
+$insertGoTo = "../webroot/createQuizSuccess.php?id=".$currentQuizID."#";
 header(sprintf("Location: %s", $insertGoTo));
 ?>
