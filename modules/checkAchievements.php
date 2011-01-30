@@ -42,6 +42,7 @@ function checkAchievements($memberid){
 		$database->save('g_achievements_log',array('fk_member_id','fk_achievement_id'),array($memberid,$rank));
 		$achievement_array[] = $rank;
 	}
+		
 	// End Ranks
 	
 	/*
@@ -78,9 +79,18 @@ function retrieveAchievements($array){
 	
 	foreach($array as $achievement){
 		$result = $database->query('SELECT * FROM g_achievements WHERE id='.$achievement);
-		array_push($return_array,$result[0]);
-	}
 
+		/*
+		 * If the achievement is rank related, fetch level data.
+		 */
+		if($result[0]['type']=='3'){
+			$levelscore = $database->get('g_levels',array('points'),'id='.$result[0]['level'].' OR id='.($result[0]['level']+1).' OR id='.($result[0]['level']-1));
+			array_push($return_array, array('image'=>$result[0]['image'],'name'=>$result[0]['name'],'description'=>$result[0]['description'],'level'=>$result[0]['level'],'levelscore'=>$levelscore[0]['points'],'nextlevelscore'=>$levelscore[1]['points']));
+		}else{
+			array_push($return_array,$result[0]);
+		}		
+	}	
+	
 	return json_encode($return_array);
 }
 ?>

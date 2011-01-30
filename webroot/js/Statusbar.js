@@ -74,8 +74,9 @@ var Statusbar = {
 		 * Display menus
 		 */
 		}else if(option=='statusbar-quiz'){
+			var createQuizUrl = "goToURL('createQuiz.php')";
 			$('#statusbar-info').addClass('statusbar-menu').html(
-			"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Create</div><div class='statusbar-menu-desc'>Create a new quiz</div></div>"
+			"<div class='statusbar-menu-item' onclick='"+createQuizUrl+"'><div class='statusbar-menu-title'>Create</div><div class='statusbar-menu-desc'>Create a new quiz</div></div>"
 			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Manage</div><div class='statusbar-menu-desc'>Manage quizzes you have created</div></div>"
 			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Topics</div><div class='statusbar-menu-desc'>View all quiz topics</div></div>"
 			);

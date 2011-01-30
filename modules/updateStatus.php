@@ -38,12 +38,12 @@ function checkAchievements($memberid){
 	 */
 	$achievementsOverview = $database->query('SELECT fk_achievement_id,timestamp FROM g_achievements_log WHERE fk_member_id="'.$memberid.'" ORDER BY timestamp DESC LIMIT 3'); 
 	foreach($achievementsOverview as $achievementOverview){
-		$description = $database->get('g_achievements',array('image','name','description'),'id="'.$achievementOverview[0]['fk_achievement_id'].'"');
+		$description = $database->get('g_achievements',array('image','name','description'),'id="'.$achievementsOverview[0]['fk_achievement_id'].'"');
 		array_push($result['overview'],$description[0]);
 	}
 	
 	/*
-	 * Checks for the rank.
+	 * Checks for the rank for the quiz taker role.
 	 */
 	$rank = $database->query('SELECT image,name,description,level FROM members LEFT JOIN g_achievements ON rank=g_achievements.id WHERE (member_id="'.$memberid.'")');
 	$levelscore = $database->get('g_levels',array('points'),'id='.$rank[0]['level'].' OR id='.($rank[0]['level']+1));
