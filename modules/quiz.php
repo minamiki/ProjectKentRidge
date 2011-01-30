@@ -109,16 +109,23 @@ class Quiz{
 		
 		switch($type){
 			case -1: // penalty deduction for 'dislike' rating
-			$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score - %d WHERE quiz_id = %d", $BASE_POINT, $this->quiz_id);
-			mysql_query($query, $quizroo) or die(mysql_error());
 			
-			// update the creator's points
-			$query = sprintf("UPDATE members SET quizcreator_score = quizcreator_score - %d, quizcreator_score_today = quizcreator_score_today - %d WHERE member_id = %d", $BASE_POINT, $BASE_POINT, $this->fk_member_id);
-			mysql_query($query, $quizroo) or die(mysql_error());			
+			// check if quiz score is more than 0
+			if($this->quiz_score > 0){
+				$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score - %d WHERE quiz_id = %d", $BASE_POINT * 2, $this->quiz_id);
+				mysql_query($query, $quizroo) or die(mysql_error());
+				
+				// update the creator's points
+				$query = sprintf("UPDATE members SET quizcreator_score = quizcreator_score - %d, quizcreator_score_today = quizcreator_score_today - %d WHERE member_id = %d", $BASE_POINT * 2, $BASE_POINT, $this->fk_member_id);
+				mysql_query($query, $quizroo) or die(mysql_error());
+			}
+		
 			break;
 						
 			case 0:	// award the base points or bonus award for 'like' rating		
 			case 1: // bonus award for 'like' rating
+			default:// default case for no type specified
+			
 			// update the quiz score
 			$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score + %d WHERE quiz_id = %d", $BASE_POINT, $this->quiz_id);
 			mysql_query($query, $quizroo) or die(mysql_error());
