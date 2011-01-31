@@ -22,6 +22,12 @@ var unikey = "<?php echo $unikey ?>";
 </script>
 <script src="js/Quiz.create.js" type="text/javascript"></script>
 <script src="js/swf.multi-uploader.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	// always init the first upload widget, since it's required
+	initUploader("result_picture_0");
+});
+</script>
 <script src="js/SpryValidationTextarea.js" type="text/javascript"></script>
 <script src="js/SpryValidationTextField.js" type="text/javascript"></script>
 </body>

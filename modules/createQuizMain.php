@@ -43,13 +43,27 @@ do {
           </select></td>
         </tr>
         <tr>
-          <th valign="top" scope="row"><label>Quiz Picture</label></th>
-          <td class="desc"><div id="quizImagePreview">You can select an image to use for the quiz in the upload images section below</div>              
-            <input type="hidden" name="quiz_picture" id="quiz_picture" val="" />
-          <input name="quiz_member_id" type="hidden" id="quiz_member_id" value="<?php echo $_SESSION['MM_MemberID']; ?>" /></td>
+          <th valign="top" scope="row"><label>Quiz Picture</label><input type="hidden" name="result_picture_0" id="result_picture_0" val="" /></th>
+          <td class="desc"><div id="swfupload-control-0" class="swfupload-control">
+            <table border="0" cellspacing="0" cellpadding="3">
+              <tr>
+                <td><input name="uploader-0" type="button" id="uploader-0" /></td>
+                <td valign="middle" class="formDesc">Upload a picture (jpg, gif only)</td>
+              </tr>
+          </table>
+            <table border="0" cellspacing="0" cellpadding="5">
+              <tr>
+                <td><div id="selected-image-0" class="selected-image"></div></td>
+                <td><p id="queuestatus-0"></p></td>
+              </tr>
+          </table>
+            <ol id="log-0" class="log"></ol>
+          </div>
+          <div id="pictureChoser_0"></div></td>
         </tr>
       </table>
     </fieldset>
+    <!--
     <fieldset>
       <h4>Upload Images</h4>
       <p>You can upload <strong>all</strong> the pictures required for this quiz with this upload tool and specify later which images will be used for the main quiz image and the result images. Images can be gif, jpg or png images with a maximum size of 2MB. <strong>Multiple</strong> files can be selected and uploads will be queued accordingly.</p>
@@ -65,6 +79,7 @@ do {
         </tr>
       </table>
     </fieldset>
+    -->
     <fieldset>
       <h4>Quiz Results</h4>
       <p>Quiz results appear at the end of each quiz. Depending on what options the quiz taker has chosen, the result which carries the most weightage from the options will be the final quiz result. You can add as many results as you like!        </p>

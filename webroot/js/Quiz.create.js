@@ -33,17 +33,21 @@ $(document).ready(function(){
 });
 
 function selectImage(result, filename, id){
+	console.log("Quiz: "+result+" "+filename+" "+id);
 	$("#showResultImage_"+result).text("Image '"+filename+"' selected");
 	$("#result_picture_"+result).val(filename);
-	$("#pictureChoser_"+result+" a img").removeClass("selectedBorder").addClass("selectImage");
-	$("#"+id).removeClass("selectImage").addClass("selectedBorder");
+	$("#select_picture_"+result).val(id);
+	$('#queuestatus-'+result).text('"'+filename.substring(9)+'" will be used as the quiz image.');
+	$('#selected-image-'+result).html('<img src="../quiz_images/imgcrop.php?w=100&amp;h=75&amp;f='+filename+'" alt="" width="100" height="75" />');
+	//$("#pictureChoser_"+result+" a img").removeClass("selectedBorder").addClass("selectImage");
+	//$("#"+id).removeClass("selectImage").addClass("selectedBorder");
 }
 
 function addResult(){
 	$.ajax({
 		type: "GET",
 		url: "../modules/createResultObject.php",
-		data: "resultNumber="+resultCount+"&unikey="+unikey+"&checkTextField="+checkTextField+"&checkTextArea="+checkTextArea,
+		data: "resultNumber="+resultCount+"&unikey="+unikey+"&checkTextField="+checkTextField+"&checkTextArea="+checkTextArea+"&widgetCount="+widgetCount,
 		async: false,
 		success: function(data) {
 			$("#createResultContainer").append(data);
