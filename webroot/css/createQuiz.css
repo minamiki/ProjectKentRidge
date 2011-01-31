@@ -118,9 +118,21 @@
 	display: block;
 	padding-bottom: 8px;
 }
+#createQuiz .formDesc {
+	font-size: 12px;
+	color: #333;
+	font-style: italic;
+	padding-top: 2px;
+}
 #createQuiz a {
 	outline: none;
 }
 .selectImage{
-	border: 2px solid #666;
+	border: 1px solid #CCC;
+}
+.selectImage:hover{
+	border: 1px solid #F90;
+}
+#createQuiz .selected-image img {
+	border: 1px solid #CCC;
 }

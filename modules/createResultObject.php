@@ -2,6 +2,7 @@
 $result = $_GET['resultNumber']+1;
 $checkTextField = $_GET['checkTextField'];
 $checkTextArea = $_GET['checkTextArea'];
+$widgetCount = $_GET['widgetCount'];
 $count = 1;
 ?>
 <div id="r<?php echo $result; ?>">
@@ -20,17 +21,38 @@ $count = 1;
     <span class="desc">Tell the quiz taker what this result means</span></td>
   </tr>
   <tr>
-    <th width="120" rowspan="3" valign="top" scope="row"><label>Picture</label></th>
-    <td><span id="showResultImage_<?php echo $result; ?>">No picture selected</span><input name="result_picture_<?php echo $result; ?>" type="hidden" id="result_picture_<?php echo $result; ?>" value="" /></td>
+    <th width="120" rowspan="4" valign="top" scope="row"><label>Picture</label>
+      <input name="result_picture_<?php echo $result; ?>" type="hidden" id="result_picture_<?php echo $result; ?>" value="" /></th>
+    <td><div id="swfupload-control-<?php echo $widgetCount; ?>" class="swfupload-control">
+      <script>initUploader("result_picture_<?php echo $result; ?>")</script>
+      <table border="0" cellspacing="0" cellpadding="3">
+        <tr>
+          <td><input name="uploader-<?php echo $widgetCount; ?>" type="button" id="uploader-<?php echo $widgetCount; ?>" /></td>
+          <td valign="middle" class="formDesc">Upload a new picture (jpg, gif only)</td>
+          </tr>
+    </table>
+<table border="0" cellspacing="0" cellpadding="5">
+  <tr>
+    <td><div id="selected-image-<?php echo $widgetCount; ?>" class="selected-image"></div></td>
+    <td><p id="queuestatus-<?php echo $widgetCount; ?>"></p></td>
+  </tr>
+</table>
+      <ol id="log-<?php echo $widgetCount; ?>" class="log">
+      </ol>
+    </div></td>
   </tr>
   <tr>
-    <td><div id="pictureChoser_<?php echo $result; ?>"><?php // return uploaded images
-foreach(glob("quiz_images/".$_GET['unikey']."*") as $filename){ ?>
-<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo basename($filename); ?>', 'r<?php echo $result; ?>i<?php echo $count; ?>')"><img src="quiz_images/imgcrop.php?w=90&h=60&f=<?php echo basename($filename); ?>" width="90" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
-<?php $count++; } ?></div></td>
+    <td><div id="pictureChoser_<?php echo $result; ?>"><table border="0" cellspacing="0" cellpadding="3">
+  <tr>
+    <td><span class="formDesc">OR click on a picture below to use it as the result picture</span></td>
   </tr>
   <tr>
-    <td class="desc">Click on  a picture above to select it for this result</td>
+    <td><?php // return uploaded images
+foreach(glob("../quiz_images/".$_GET['unikey']."*") as $filename){ ?>
+<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo basename($filename); ?>', 'r<?php echo $result; ?>i<?php echo $count; ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
+<?php $count++; } ?></td>
+  </tr>
+</table></div></td>
   </tr>
 </table>
 </div>
