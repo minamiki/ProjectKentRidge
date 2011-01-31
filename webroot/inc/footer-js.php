@@ -46,8 +46,8 @@ $(document).ready(function(){
 	$('#statusbar-achievements-logo').click(function(){
 		Statusbar.displayInformation('statusbar-achievements-logo');
 	});
-	$('#statusbar-quiztaker').click(function(){
-		Statusbar.displayInformation('statusbar-quiztaker');
+	$('#statusbar-scores').click(function(){
+		Statusbar.displayInformation('statusbar-scores');
 	});
 	$('#statusbar-quizcreator').click(function(){
 		Statusbar.displayInformation('statusbar-quizcreator');
