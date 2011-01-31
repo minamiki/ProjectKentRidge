@@ -422,6 +422,13 @@
 	font-weight: bold;
 }
 
+.statusbar-menu-title:visited{
+	width: 294px;
+	color: #FC0;
+	font-size: 18px;
+	font-weight: bold;
+}
+
 .statusbar-info-title{
 	color: #FC0;
 	font-size: 18px;
@@ -435,14 +442,17 @@
 	font-weight: normal;
 	vertical-align: bottom;
 	height: 100%;
+	visibility: hidden;
 }
 
 .statusbar-info-more a{
-	color: #CCC;	
+	color: #CCC;
+	visibility: hidden;	
 }
 
 .statusbar-info-more a:visited{
 	color: #CCC;
+	visibility: hidden;
 }
 
 .statusbar-info-desc{

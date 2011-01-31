@@ -11,7 +11,7 @@
 		   <fb:request-form
 		    method='POST' 
 		    action='http://localhost/quizroo/'
-			invite=false
+			invite=true
 			type='Quiz'
 			content='Try this quiz out. <?php echo htmlentities("<fb:req-choice url=\"http://apps.facebook.com/quizroo/previewQuiz.php?id=".$quiz_id."\" label=\"Try quiz\"") ?>' >
 			<fb:multi-friend-selector cols=5 rows=3 

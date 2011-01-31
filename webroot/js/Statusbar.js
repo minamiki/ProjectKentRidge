@@ -50,9 +50,13 @@ var Statusbar = {
 			}
 			Statusbar.clearSystemNotification();
 		}else if(option=='statusbar-quiztaker'){
-			var data = Statusbar.achievements['quiztaker'];
-			var score = data['quiztaker_score'];
-			var today = data['quiztaker_score_today'];
+			var qt_data = Statusbar.achievements['quiztaker'];
+			var qt_score = qt_data['quiztaker_score'];
+			var qt_today = qt_data['quiztaker_score_today'];
+
+			var qc_data = Statusbar.achievements['quizcreator'];
+			var qc_score = qc_data['quizcreator_score'];
+			var qc_today = qc_data['quizcreator_score_today'];
 			
 			var rank = Statusbar.achievements['quiztakerrank'];
 			var rankname = rank['name'];
@@ -60,26 +64,34 @@ var Statusbar = {
 			var level = rank['level'];
 			var image = rank['image'];
 			
-			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div><div class='statusbar-info-subtitle'>Current Rank</div><div class='statusbar-unit-large clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+rankname+"' /><div class='statusbar-text-container-large'><div class='statusbar-name-large'>"+rankname+"</div><div class='statusbar-description-large clear'>Level "+level+"</div></div></div><div class='statusbar-info-subtitle'>Current Progress</div><div id='scorebar-container'><div class='scorebar-text-left'>"+level+"</div><div class='scorebar-text-right'>"+(parseInt(level)+1)+"</div><div id='scorebar'><div id='scorebar-progress'></div><div id='scorebar-info'</div></div>");
+			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Points: "+qt_score+"</div><div class='statusbar-score-text'>Today's Quiz Taker Points: "+qt_today+"</div></div><div class='statusbar-info-title'>Quiz Creator</div><div class='statusbar-line'><div class='statusbar-score-text'>Total Popularity Points: "+qc_score+"</div><div class='statusbar-score-text'>Today's Quiz Creator Points: "+qc_today+"</div></div><div class='statusbar-info-subtitle'>Current Rank</div><div class='statusbar-unit-large clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+rankname+"' /><div class='statusbar-text-container-large'><div class='statusbar-name-large'>"+rankname+"</div><div class='statusbar-description-large clear'>Level "+level+"</div></div></div><div class='statusbar-info-subtitle'>Current Progress</div><div id='scorebar-container'><div class='scorebar-text-left'>"+level+"</div><div class='scorebar-text-right'>"+(parseInt(level)+1)+"</div><div id='scorebar'><div id='scorebar-progress'></div><div id='scorebar-info'</div></div>");
 			
 			Statusbar.displayBar();
 		}else if(option=='statusbar-quizcreator'){
-			var data = Statusbar.achievements['quizcreator'];
-			var score = data['quizcreator_score'];
-			var today = data['quizcreator_score_today'];
-			
-			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Creator<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Popularity Points: "+score+"</div><div class='statusbar-score-text'>Today's Points: "+today+"</div></div>");
+
+			$('#statusbar-info').html("");
 		
 		/*
 		 * Display menus
 		 */
-		}else if(option=='statusbar-quiz'){
-			var createQuizUrl = "goToURL('createQuiz.php')";
-			$('#statusbar-info').addClass('statusbar-menu').html(
-			"<div class='statusbar-menu-item' onclick='"+createQuizUrl+"'><div class='statusbar-menu-title'>Create</div><div class='statusbar-menu-desc'>Create a new quiz</div></div>"
-			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Manage</div><div class='statusbar-menu-desc'>Manage quizzes you have created</div></div>"
-			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Topics</div><div class='statusbar-menu-desc'>View all quiz topics</div></div>"
-			);
+		}else if(option=='statusbar-quiz'){			
+			$('#statusbar-info').addClass('statusbar-menu').html('');
+			
+			var createQuiz = document.createElement('div');
+			$('#statusbar-info').append(createQuiz);
+			$(createQuiz).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Create</div><div class='statusbar-menu-desc'>Create a new quiz</div>");
+			$(createQuiz).click(function(){goToURL('createQuiz.php')});
+			
+			var manageQuiz = document.createElement('div');
+			$('#statusbar-info').append(manageQuiz);
+			$(manageQuiz).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Manage</div><div class='statusbar-menu-desc'>Manage quizzes you have created</div>");
+			//$(manageQuiz).click(function(){goToURL('manageQuiz.php')});
+			
+			var viewQuiz = document.createElement('div');
+			$('#statusbar-info').append(viewQuiz);
+			$(viewQuiz).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Topics</div><div class='statusbar-menu-desc'>View all quiz topics</div>");
+			//$(viewQuiz).click(function(){goToURL('viewQuiz.php')});
+			
 		}else if(option=='statusbar-friends'){
 			$('#statusbar-info').addClass('statusbar-menu').html(
 			"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Overview</div><div class='statusbar-menu-desc'>View information about your friends</div></div>"
