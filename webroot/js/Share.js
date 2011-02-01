@@ -70,7 +70,47 @@ var Share = {
 		});// end button.click
 		$('.recommend-dialog').hide();
 	},
+	
 	/**
-	 * Share quiz created - Publish to wall
+	 * Rate quiz - Like/Unlike the quiz
 	 */
+	 rate: function(parent,opts){
+		var published = opts.published;
+		if(published){
+			var status = opts.status;
+/*			if(status>0){
+				$(like_button).html('Unlike');
+			}
+			else if(status<0){
+				$(dislike_button).toggleClass('share-button-dislike');
+			}
+	*/		
+	/*
+			var dislike_button = document.createElement('div');
+			$(dislike_button).addClass('share-button');
+			$(dislike_button).html('Dislike');
+			$(parent).prepend(dislike_button);
+			$(dislike_button).click(function(){
+				$(like_button).removeClass('share-button-like');
+				$(dislike_button).toggleClass('share-button-dislike');
+			});// end dislike_button.click
+				
+			var like_button = document.createElement('div');
+			$(like_button).addClass('share-button');
+			$(like_button).html('Like');
+			$(parent).prepend(like_button);
+			$(like_button).click(function(){
+				//$(dislike_button).removeClass('share-button-dislike');
+				if(status>0){
+					status = 0;
+					$(like_button).html('Unlike');
+				}else{
+					status = 1;
+					$(like_button).html('Like');
+				}
+			});// end like_button.click	
+*/	
+		}
+	 },
+	 
 }
