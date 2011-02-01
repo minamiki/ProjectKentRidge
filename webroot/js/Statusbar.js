@@ -49,7 +49,7 @@ var Statusbar = {
 				$('#statusbar-info').append("<div class='statusbar-unit-line'>There are no new notifications</div>");
 			}
 			Statusbar.clearSystemNotification();
-		}else if(option=='statusbar-quiztaker'){
+		}else if(option=='statusbar-scores'){
 			var qt_data = Statusbar.achievements['quiztaker'];
 			var qt_score = qt_data['quiztaker_score'];
 			var qt_today = qt_data['quiztaker_score_today'];
@@ -67,9 +67,6 @@ var Statusbar = {
 			$('#statusbar-info').html("<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div><div class='statusbar-line'><div class='statusbar-score-text'>Total Points: "+qt_score+"</div><div class='statusbar-score-text'>Today's Quiz Taker Points: "+qt_today+"</div></div><div class='statusbar-info-title'>Quiz Creator</div><div class='statusbar-line'><div class='statusbar-score-text'>Total Popularity Points: "+qc_score+"</div><div class='statusbar-score-text'>Today's Quiz Creator Points: "+qc_today+"</div></div><div class='statusbar-info-subtitle'>Current Rank</div><div class='statusbar-unit-large clear'><img src='"+Statusbar.imagepath+image+"' class='statusbar-thumbnail-large' alt='"+rankname+"' /><div class='statusbar-text-container-large'><div class='statusbar-name-large'>"+rankname+"</div><div class='statusbar-description-large clear'>Level "+level+"</div></div></div><div class='statusbar-info-subtitle'>Current Progress</div><div id='scorebar-container'><div class='scorebar-text-left'>"+level+"</div><div class='scorebar-text-right'>"+(parseInt(level)+1)+"</div><div id='scorebar'><div id='scorebar-progress'></div><div id='scorebar-info'</div></div>");
 			
 			Statusbar.displayBar();
-		}else if(option=='statusbar-quizcreator'){
-
-			$('#statusbar-info').html("");
 		
 		/*
 		 * Display menus
@@ -80,23 +77,34 @@ var Statusbar = {
 			var createQuiz = document.createElement('div');
 			$('#statusbar-info').append(createQuiz);
 			$(createQuiz).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Create</div><div class='statusbar-menu-desc'>Create a new quiz</div>");
-			$(createQuiz).click(function(){goToURL('createQuiz.php')});
+			$(createQuiz).click(function(){
+				goToURL('createQuiz.php');
+				$(createQuiz).css('background-color','#333');
+			});
 			
 			var manageQuiz = document.createElement('div');
 			$('#statusbar-info').append(manageQuiz);
 			$(manageQuiz).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Manage</div><div class='statusbar-menu-desc'>Manage quizzes you have created</div>");
-			//$(manageQuiz).click(function(){goToURL('manageQuiz.php')});
+			//$(manageQuiz).click(function(){goToURL('manageQuiz.php';$(createQuiz).css('background-color','#333');)});
 			
 			var viewQuiz = document.createElement('div');
 			$('#statusbar-info').append(viewQuiz);
 			$(viewQuiz).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Topics</div><div class='statusbar-menu-desc'>View all quiz topics</div>");
-			//$(viewQuiz).click(function(){goToURL('viewQuiz.php')});
+			//$(viewQuiz).click(function(){goToURL('viewQuiz.php';$(createQuiz).css('background-color','#333');)});
 			
 		}else if(option=='statusbar-friends'){
-			$('#statusbar-info').addClass('statusbar-menu').html(
-			"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Overview</div><div class='statusbar-menu-desc'>View information about your friends</div></div>"
-			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Invite</div><div class='statusbar-menu-desc'>Invite your friends to Quizroo</div></div>"
-			);
+			$('#statusbar-info').addClass('statusbar-menu').html("");
+			
+			var overview = document.createElement('div');
+			$('#statusbar-info').append(overview);
+			$(overview).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Overview</div><div class='statusbar-menu-desc'>View information about your friends</div>");
+			//$(overview).click(function(){});
+			
+			var invite = document.createElement('div');
+			$('#statusbar-info').append(invte);
+			$(invite).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Invite</div><div class='statusbar-menu-desc'>Invite your friends to Quizroo</div>");
+			//$(invite).click(function(){goToURL('inviteFriends.php';$(createQuiz).css('background-color','#333');)});
+			
 		}else if(option=='statusbar-profile'){
 			$('#statusbar-info').addClass('statusbar-menu').html(
 			"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Statistics</div><div class='statusbar-menu-desc'>View statistics for your activities</div></div>"
@@ -128,7 +136,7 @@ var Statusbar = {
 			$('.statusbar-highlighted').removeClass('statusbar-highlighted');
 			$('#'+option).addClass('statusbar-highlighted');
 			$('#'+option).attr("type","statusbar");
-			$('#'+option).contents().attr("type","statusbar");
+			$('#'+option).find('*').attr("type","statusbar");
 			$('#statusbar-info').attr("type","statusbar");
 			$('#statusbar-info').find('*').attr("type","statusbar");
 		}else{
@@ -136,7 +144,7 @@ var Statusbar = {
 			$('#'+option).addClass('statusbar-highlighted');
 			$('#statusbar-info').slideDown('fast');
 			$('#'+option).attr("type","statusbar");	
-			$('#'+option).contents().attr("type","statusbar");	
+			$('#'+option).find('*').attr("type","statusbar");	
 			$('#statusbar-info').attr("type","statusbar");
 			$('#statusbar-info').find('*').attr("type","statusbar");				
 		}
