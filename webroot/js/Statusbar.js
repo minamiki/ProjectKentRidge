@@ -85,7 +85,11 @@ var Statusbar = {
 			var manageQuiz = document.createElement('div');
 			$('#statusbar-info').append(manageQuiz);
 			$(manageQuiz).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Manage</div><div class='statusbar-menu-desc'>Manage quizzes you have created</div>");
-			//$(manageQuiz).click(function(){goToURL('manageQuiz.php';$(createQuiz).css('background-color','#333');)});
+			$(manageQuiz).click(function(){
+				//goToURL('manageQuiz.php');
+				//$(createQuiz).css('background-color','#333');
+				featureUnavailable();
+			});
 			
 			var viewQuiz = document.createElement('div');
 			$('#statusbar-info').append(viewQuiz);

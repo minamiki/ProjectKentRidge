@@ -1,3 +1,6 @@
+<div id="dialog-message" style="display:none;" title="Feature Unavailable">
+	Oops, this feature is currently unavailable yet. Please hang in there while we work on it.
+</div>
 <div id="statusbar-container">
 <div id="statusbar">
     <a href="index.php" id="statusbar-logo" title="Quizroo"><span>Quizroo</span></a>
