@@ -3,9 +3,9 @@
 # Type="MYSQL"
 # HTTP="true"
 $hostname_quizroo = "localhost";
-$database_quizroo = "quizroo";
-$username_quizroo = "root";
-$password_quizroo = "";
+$database_quizroo = "ft";
+$username_quizroo = "quizroo";
+$password_quizroo = "quiz4roo";
 $quizroo = mysql_pconnect($hostname_quizroo, $username_quizroo, $password_quizroo) or trigger_error(mysql_error(),E_USER_ERROR); 
 
 // MySQL SQL-injection prevention

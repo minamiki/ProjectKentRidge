@@ -90,7 +90,7 @@ $getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_erro
 $row_getResultChart = mysql_fetch_assoc($getResultChart);
 $totalRows_getResultChart = mysql_num_rows($getResultChart);
 ?>
-<?php if($quiz->isPublished()){ ?>
+<?php if($quiz->isPublished() && $totalRows_getResultChart != 0){ ?>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
 	google.load('visualization', '1', {'packages':['corechart']});
@@ -137,7 +137,7 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 
 <!-- Include user sharing interface for liking, posting feed and recommending to friends -->
 <?php include('sharingInterface.php') ?>
-<?php if($quiz->isPublished()){ ?>
+<?php if($quiz->isPublished() && $totalRows_getResultChart != 0){ ?>
 <div class="frame rounded">
 <h3>Result Details</h3>
 <div id="result_chart"><img src="../webroot/images/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div>
@@ -156,6 +156,7 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
   </tr>
   <?php } ?>
 </table>-->
+<?php } ?>
 
 </div>
 <?php } ?>
@@ -165,12 +166,8 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 //----------------------------------------
 $achievement_details = retrieveAchievements($achievement_array);
 ?>
-<script type="text/javascript" src="../webroot/js/Splash.js"></script>
-<script type="text/javascript">
-	Splash.display(<?php echo $achievement_details?>);
-</script>
 <?php
-mysql_free_result($getResults);
-mysql_free_result($getResultChart);
-mysql_free_result($getResultInfo);
+//mysql_free_result($getResults);
+//mysql_free_result($getResultChart);
+//mysql_free_result($getResultInfo);
 ?>
