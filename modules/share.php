@@ -1,5 +1,7 @@
 <?php
 require 'database.php';
+require 'quiz.php';
+require 'member.php';
 
 $method=$_REQUEST['method'];
 if($method=='results'){
@@ -20,5 +22,11 @@ if($method=='results'){
 	}	
 	
 	echo json_encode($results);
+}else if(method=='rate'){
+	$quiz_id = $_REQUEST['quiz_id'];
+	$type = $_REQUEST['type'];
+	$quiz = new Quiz($quiz_id);
+	$member = new Member();
+	$quiz->awardPoints($type,$member->id);
 }
 ?>

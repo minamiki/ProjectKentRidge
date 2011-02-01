@@ -1,16 +1,22 @@
 .share-button {
 	margin: 0px 3px;
-	padding: 8px 10px 0;
+	padding: 4px 5px;
 	cursor: pointer;
-	height: 20px;
-	background-color: #3B5998;
+	background-color: #ECEEF5;
+	border:solid 1px #CAD4E7;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 	font-family: lucida grande,tahoma,verdana,arial,sans-serif;
-	font-weight: bold;
 	font-size: 11px;
-	color: #FFF;
+	color: #3B5998;
 	float: left;
 }
 
 #user-action-container {
 	margin: auto;
+}
+
+.share-like {
+	margin: 0px 3px;
 }

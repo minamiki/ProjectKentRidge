@@ -4,6 +4,7 @@
   FB.init({ appId:<?php echo $FB_APPID ?>, cookie:true, xfbml:true });
 </script>
 <div id='user-actions-container' class='frame rounded clear'>
+	<div class='share-like'><fb:like href="http://apps.facebook.com/quizroo/previewQuiz.php?id=<?php echo $quiz_id ?>" show_faces="false" width="450"></fb:like></div>
 	<div class='recommend-dialog'>
 		<fb:serverFbml width="625px">
 		  <script type="text/fbml">
@@ -26,7 +27,23 @@
 	</div>
 </div>
 <script type="text/javascript" src="../webroot/js/Share.js"></script>
+<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
 <script type="text/javascript">
 	Share.recommend($('#user-actions-container'),{'quiz_id': <?php echo $quiz_id ?>});
 	Share.results($('#user-actions-container'),{'quiz_id': <?php echo $quiz_id ?>,'result_id':<?php echo $row_getResults['fk_result'] ?>});
+	Share.checkLike(<?php $quiz->isPublished() ?>);
+	
+	/*
+	 * Subscribe to Facebook Like event to handle it for our own data. 
+	 */
+	FB.Event.subscribe('edge.create', function(response) {
+		  Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz_id ?>,'type':1});
+	});
+	
+	/*
+	 * Subscribe to Facebook Unlike event to handle it for our own data. 
+	 */
+	FB.Event.subscribe('edge.remove', function(response) {
+		  Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz_id ?>,'type':0});
+	});
 </script>
