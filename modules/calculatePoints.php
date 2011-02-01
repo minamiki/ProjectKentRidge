@@ -7,7 +7,7 @@ include("variables.php");
 function calculatePoints($facebookID, $quiz_id, $quiz_publish_status){
 	include("../Connections/quizroo.php");
 	// register the global variables
-	global $BASE_POINT, $MULTIPLIER, $REWARD_RETAKES, $achievement_array;
+	global $GAME_BASE_POINT, $GAME_MULTIPLIER, $GAME_REWARD_RETAKES, $achievement_array;
 	
 	// check if user has already taken this quiz
 	$queryCheck = sprintf("SELECT COUNT(store_id) AS count FROM q_store_result WHERE `fk_member_id` = %s AND `fk_quiz_id` = %s", $facebookID, $quiz_id);
@@ -16,7 +16,7 @@ function calculatePoints($facebookID, $quiz_id, $quiz_publish_status){
 	$timesTaken = $row_getResults['count'];	
 	mysql_free_result($getResults);
 	
-	if(($timesTaken == 1 || $REWARD_RETAKES) && $quiz_publish_status){
+	if(($timesTaken == 1 || $GAME_REWARD_RETAKES) && $quiz_publish_status){
 		// The following factors should be fulfilled before points are awarded
 		// - first time taking this question OR always reward flag on
 		// - quiz is published
@@ -29,7 +29,7 @@ function calculatePoints($facebookID, $quiz_id, $quiz_publish_status){
 		mysql_free_result($getResults);
 		
 		// calculate the points by multiplier
-		$points = $BASE_POINT + ($todayMultiplier - 1) * ($MULTIPLIER);
+		$points = $GAME_BASE_POINT + ($todayMultiplier - 1) * ($GAME_MULTIPLIER);
 		
 		// check the current member stats (for level up calculation later)
 		$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `members` WHERE `member_id` = %d", $facebookID);

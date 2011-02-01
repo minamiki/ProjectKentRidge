@@ -1,15 +1,19 @@
 <?php
 //----------------------------------------
 // For game variables
+// Prefix with "GAME_"
 //----------------------------------------
 
 // The base score for awarding of points
-$BASE_POINT = 10;
+$GAME_BASE_POINT = 10;
 // The multiplier amount for each increment
-$MULTIPLIER = 1;
+$GAME_MULTIPLIER = 1;
+// Whether users get points for retaking quizzes
+$GAME_REWARD_RETAKES = false;
 
 //----------------------------------------
-// For game variables
+// Facebook variables
+// Prefix with "FB_"
 //----------------------------------------
 
 // Facebook App ID
@@ -18,10 +22,11 @@ $FB_APPID = "154849761223760";
 $FB_SECRET = "26cfea224822c58cd618eae900d87f69";
 
 //----------------------------------------
-// For debugging and testing
+// Quiz/Application variables
+// Prefix with "VAR_"
 //----------------------------------------
 
-// Whether users get points for retaking quizzes
-$REWARD_RETAKES = false;
+// Number of recommendations/popular quizzes to show
+$VAR_NUM_LISTINGS = 4;
 
 ?>
