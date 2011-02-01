@@ -10,6 +10,8 @@ $GAME_BASE_POINT = 10;
 $GAME_MULTIPLIER = 1;
 // Whether users get points for retaking quizzes
 $GAME_REWARD_RETAKES = false;
+// Whether users get to 'dislike' quizzes
+$GAME_ALLOW_DISLIKES = false;
 
 //----------------------------------------
 // Facebook variables
@@ -20,6 +22,8 @@ $GAME_REWARD_RETAKES = false;
 $FB_APPID = "154849761223760";
 // Facebook App Secret Key
 $FB_SECRET = "26cfea224822c58cd618eae900d87f69";
+// Facebook Canvas URL
+$FB_CANVAS = "http://apps.facebook.com/quizroo/";
 
 //----------------------------------------
 // Quiz/Application variables
@@ -28,5 +32,9 @@ $FB_SECRET = "26cfea224822c58cd618eae900d87f69";
 
 // Number of recommendations/popular quizzes to show
 $VAR_NUM_LISTINGS = 4;
+// The true URL for the application
+$VAR_URL = "http://quizroo.nus-hci.com/";
+// Whether to display the recent activity panel
+$VAR_SHOW_RECENT = false;
 
 ?>
