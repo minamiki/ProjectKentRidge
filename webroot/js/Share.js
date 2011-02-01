@@ -59,11 +59,13 @@ var Share = {
 		$(parent).prepend(button);
 		$(button).click(function(){
 			if($('.recommend-dialog').css('display')=='none'){
-				$(button).css('background-color','#666');			
+				$(button).css('background-color','#666');
+				$(button).css('color','#FFF');							
 				$('.recommend-dialog').slideDown('fast');
 				$(button).html('Click to here to cancel');
 			}else{
-				$(button).css('background-color','#3B5998');
+				$(button).css('background-color','#ECEEF5');
+				$(button).css('color','#3B5998');
 				$('.recommend-dialog').hide();
 				$(button).html('Recommend to friends');
 			}
@@ -80,7 +82,7 @@ var Share = {
 	 * Rate quiz - Handle like event for logic
 	 */
 	 rate: function(parent,opts){
-		$.getJSON(Share.pathToSrc+'share.php/',{method:'rate',quiz_id:opts.quiz_id,type:opts.type},function(data){alert('liked')});
+		$.getJSON(Share.pathToSrc+'share.php/',{method:'rate',quiz_id:opts.quiz_id,type:opts.type},function(data){});
 		/*
 		 * Legacy code to suppose both Like and dislike
 		 */ 
