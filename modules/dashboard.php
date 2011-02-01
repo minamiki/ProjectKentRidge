@@ -8,7 +8,7 @@ if (isset($_GET['pageNum_recommendations'])) {
 $startRow_recommendations = $pageNum_recommendations * $maxRows_recommendations;
 
 mysql_select_db($database_quizroo, $quizroo);
-$query_recommendations = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY creation_date DESC";
+$query_recommendations = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY creation_date DESC";
 $query_limit_recommendations = sprintf("%s LIMIT %d, %d", $query_recommendations, $startRow_recommendations, $maxRows_recommendations);
 $recommendations = mysql_query($query_limit_recommendations, $quizroo) or die(mysql_error());
 $row_recommendations = mysql_fetch_assoc($recommendations);
@@ -29,7 +29,7 @@ if (isset($_GET['pageNum_popular'])) {
 $startRow_popular = $pageNum_popular * $maxRows_popular;
 
 mysql_select_db($database_quizroo, $quizroo);
-$query_popular = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY RAND()";
+$query_popular = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY RAND()";
 $query_limit_popular = sprintf("%s LIMIT %d, %d", $query_popular, $startRow_popular, $maxRows_popular);
 $popular = mysql_query($query_limit_popular, $quizroo) or die(mysql_error());
 $row_popular = mysql_fetch_assoc($popular);

@@ -78,13 +78,13 @@ class Member{
 		require('../Connections/quizroo.php');	// database connections
 		// check if the member is already in the database
 		mysql_select_db($database_quizroo, $quizroo);
-		$queryCheck = sprintf("SELECT * FROM members WHERE member_id = %s", $this->id);
+		$queryCheck = sprintf("SELECT * FROM s_members WHERE member_id = %s", $this->id);
 		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 		$row_getCheck = mysql_fetch_assoc($getCheck);
 		$totalRows_getCheck = mysql_num_rows($getCheck);
 		
 		if($totalRows_getCheck == 0){ // user is not in the database, add user into the database
-			$queryInsert = sprintf("INSERT INTO members(member_id, member_name) VALUES(%s, '%s')", $this->id, $this->getName());
+			$queryInsert = sprintf("INSERT INTO s_members(member_id, member_name) VALUES(%s, '%s')", $this->id, $this->getName());
 			mysql_query($queryInsert, $quizroo) or die(mysql_error());
 			
 			// populate the user data
@@ -152,7 +152,7 @@ class Member{
 		$row_getCheck = mysql_fetch_assoc($getCheck);
 		$totalScore = $row_getCheck['score'];
 		mysql_free_result($getCheck);
-		$query = sprintf("UPDATE members SET quizcreator_score = %d WHERE member_id = %d)", $totalScore, $this->id);
+		$query = sprintf("UPDATE s_members SET quizcreator_score = %d WHERE member_id = %d)", $totalScore, $this->id);
 		mysql_query($query, $quizroo) or die(mysql_error());
 	}
 	

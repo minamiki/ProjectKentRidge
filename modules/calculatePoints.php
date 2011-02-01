@@ -32,7 +32,7 @@ function calculatePoints($facebookID, $quiz_id, $quiz_publish_status){
 		$points = $GAME_BASE_POINT + ($todayMultiplier - 1) * ($GAME_MULTIPLIER);
 		
 		// check the current member stats (for level up calculation later)
-		$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `members` WHERE `member_id` = %d", $facebookID);
+		$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `s_members` WHERE `member_id` = %d", $facebookID);
 		$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 		$row_getResults = mysql_fetch_assoc($getResults);
 		$old_level = $row_getResults['level'];
@@ -43,7 +43,7 @@ function calculatePoints($facebookID, $quiz_id, $quiz_publish_status){
 		///////////////////////////////////////
 		
 		// check the level table 
-		$queryCheck = sprintf("SELECT id FROM `g_levels` WHERE points <= (SELECT `quiztaker_score` FROM members WHERE member_id = %d)+%s ORDER BY points DESC LIMIT 0, 1", $facebookID, $points);
+		$queryCheck = sprintf("SELECT id FROM `g_levels` WHERE points <= (SELECT `quiztaker_score` FROM s_members WHERE member_id = %d)+%s ORDER BY points DESC LIMIT 0, 1", $facebookID, $points);
 		$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 		$row_getResults = mysql_fetch_assoc($getResults);
 		$new_level = $row_getResults['id'];
@@ -54,10 +54,10 @@ function calculatePoints($facebookID, $quiz_id, $quiz_publish_status){
 			$achievement_array[] = $new_level;	// provide the ID of the level acheievement
 			
 			// update the member table to reflect the new level
-			$queryUpdate = sprintf("UPDATE members SET quiztaker_score = quiztaker_score + %s, quiztaker_score_today = quiztaker_score_today + %s, level = %d WHERE member_id = %s", $points, $points, $new_level, $facebookID);
+			$queryUpdate = sprintf("UPDATE s_members SET quiztaker_score = quiztaker_score + %s, quiztaker_score_today = quiztaker_score_today + %s, level = %d WHERE member_id = %s", $points, $points, $new_level, $facebookID);
 		}else{
 			// just update the member table to reflect the points
-			$queryUpdate = sprintf("UPDATE members SET quiztaker_score = quiztaker_score + %s, quiztaker_score_today = quiztaker_score_today + %s WHERE member_id = %s", $points, $points, $facebookID);
+			$queryUpdate = sprintf("UPDATE s_members SET quiztaker_score = quiztaker_score + %s, quiztaker_score_today = quiztaker_score_today + %s WHERE member_id = %s", $points, $points, $facebookID);
 		}
 		// execute the update statement
 		mysql_query($queryUpdate, $quizroo) or die(mysql_error());	

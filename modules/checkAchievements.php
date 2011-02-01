@@ -30,7 +30,7 @@ function checkAchievements($memberid){
 	 * - Push achievement to be displayed
 	 */
 	
-	$results = $database->get('members',array('level,rank'),'member_id='.$memberid);
+	$results = $database->get('s_members',array('level,rank'),'member_id='.$memberid);
 	$db_rank = $results[0]['rank'];
 	$level = $results[0]['level'];
 	
@@ -38,7 +38,7 @@ function checkAchievements($memberid){
 	$rank = $results[0]['fk_id'];
 	
 	if($db_rank!=$rank){
-		$database->update('members','member_id',$memberid,array('rank'),array($rank));
+		$database->update('s_members','member_id',$memberid,array('rank'),array($rank));
 		$database->save('g_achievements_log',array('fk_member_id','fk_achievement_id'),array($memberid,$rank));
 		$achievement_array[] = $rank;
 	}

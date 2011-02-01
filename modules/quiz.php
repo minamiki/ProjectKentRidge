@@ -74,7 +74,7 @@ class Quiz{
 		mysql_query($query, $quizroo) or die(mysql_error());
 		
 		// check the current member stats (for level up calculation later)
-		$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `members` WHERE `member_id` = %d", $this->fk_member_id);
+		$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `s_members` WHERE `member_id` = %d", $this->fk_member_id);
 		$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 		$row_getResults = mysql_fetch_assoc($getResults);
 		$old_level = $row_getResults['level'];
@@ -82,7 +82,7 @@ class Quiz{
 		mysql_free_result($getResults);
 		
 		// update the member's creation score
-		$query = sprintf("UPDATE members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
+		$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
 		mysql_query($query, $quizroo) or die(mysql_error());
 		
 		// check if the there is a levelup:
@@ -96,7 +96,7 @@ class Quiz{
 		
 		if($new_level > $old_level){ // a levelup has occurred
 			// update the member table to reflect the new level
-			$queryUpdate = sprintf("UPDATE members SET level = %d WHERE member_id = %s", $new_level, $this->fk_member_id);
+			$queryUpdate = sprintf("UPDATE s_members SET level = %d WHERE member_id = %s", $new_level, $this->fk_member_id);
 			mysql_query($queryUpdate, $quizroo) or die(mysql_error());	
 			
 			// return the ID of the level acheievement
@@ -143,7 +143,7 @@ class Quiz{
 						mysql_query($query, $quizroo) or die(mysql_error());
 		
 						// update the creator's points
-						$query = sprintf("UPDATE members SET quizcreator_score = quizcreator_score - %d, quizcreator_score_today = quizcreator_score_today - %d WHERE member_id = %d", $GAME_BASE_POINT * 2, $GAME_BASE_POINT, $this->fk_member_id);
+						$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score - %d, quizcreator_score_today = quizcreator_score_today - %d WHERE member_id = %d", $GAME_BASE_POINT * 2, $GAME_BASE_POINT, $this->fk_member_id);
 						mysql_query($query, $quizroo) or die(mysql_error());
 					}
 					
@@ -176,7 +176,7 @@ class Quiz{
 					mysql_query($query, $quizroo) or die(mysql_error());
 					
 					// update the creator's points
-					$query = sprintf("UPDATE members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
+					$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
 					mysql_query($query, $quizroo) or die(mysql_error());
 					
 					if($type == 1){			
@@ -201,7 +201,7 @@ class Quiz{
 	function creator(){
 		require('../Connections/quizroo.php');
 		mysql_select_db($database_quizroo, $quizroo);
-		$query = sprintf("SELECT member_name FROM members WHERE member_id = %d", GetSQLValueString($this->fk_member_id, "int"));
+		$query = sprintf("SELECT member_name FROM s_members WHERE member_id = %d", GetSQLValueString($this->fk_member_id, "int"));
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 		$row_getQuery = mysql_fetch_assoc($getQuery);
 		return $row_getQuery['member_name'];

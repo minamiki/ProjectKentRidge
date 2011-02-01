@@ -5,7 +5,7 @@ if (isset($_GET['id'])) {
   $colname_getQuizInfo = $_GET['id'];
 }
 mysql_select_db($database_quizroo, $quizroo);
-$query_getQuizInfo = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, creation_date, members.member_name, q_quiz_cat.cat_name, (SELECT COUNT(question_id) FROM q_questions WHERE fk_quiz_id = %s) AS question_count FROM q_quizzes, members, q_quiz_cat WHERE quiz_id = %s AND members.member_id = q_quizzes.fk_member_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat", GetSQLValueString($colname_getQuizInfo, "int"),GetSQLValueString($colname_getQuizInfo, "int"));
+$query_getQuizInfo = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, creation_date, s_members.member_name, q_quiz_cat.cat_name, (SELECT COUNT(question_id) FROM q_questions WHERE fk_quiz_id = %s) AS question_count FROM q_quizzes, s_members, q_quiz_cat WHERE quiz_id = %s AND s_members.member_id = q_quizzes.fk_member_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat", GetSQLValueString($colname_getQuizInfo, "int"),GetSQLValueString($colname_getQuizInfo, "int"));
 $getQuizInfo = mysql_query($query_getQuizInfo, $quizroo) or die(mysql_error());
 $row_getQuizInfo = mysql_fetch_assoc($getQuizInfo);
 $totalRows_getQuizInfo = mysql_num_rows($getQuizInfo);

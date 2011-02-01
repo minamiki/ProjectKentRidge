@@ -45,7 +45,7 @@ function checkAchievements($memberid){
 	/*
 	 * Checks for the rank for the quiz taker role.
 	 */
-	$rank = $database->query('SELECT image,name,description,level FROM members LEFT JOIN g_achievements ON rank=g_achievements.id WHERE (member_id="'.$memberid.'")');
+	$rank = $database->query('SELECT image,name,description,level FROM s_members LEFT JOIN g_achievements ON rank=g_achievements.id WHERE (member_id="'.$memberid.'")');
 	$levelscore = $database->get('g_levels',array('points'),'id='.$rank[0]['level'].' OR id='.($rank[0]['level']+1));
 	$result['quiztakerrank'] = array('image'=>$rank[0]['image'],'name'=>$rank[0]['name'],'description'=>$rank[0]['description'],'level'=>$rank[0]['level'],'levelscore'=>$levelscore[0]['points'],'nextlevelscore'=>$levelscore[1]['points']);
 	
@@ -58,7 +58,7 @@ function checkAchievements($memberid){
 	/*
 	 * Checks for total score and todays score for quiz taker and quiz creator roles for the user specified. 
 	 */
-	$quizScore = $database->get('members',array('quiztaker_score','quizcreator_score','quiztaker_score_today','quizcreator_score_today'),'member_id="'.$memberid.'"');
+	$quizScore = $database->get('s_members',array('quiztaker_score','quizcreator_score','quiztaker_score_today','quizcreator_score_today'),'member_id="'.$memberid.'"');
 	
 	$result['quiztaker'] = array('quiztaker_score'=>$quizScore[0]['quiztaker_score'],'quiztaker_score_today'=>$quizScore[0]['quiztaker_score_today']);
 	$result['quizcreator'] = array('quizcreator_score'=>$quizScore[0]['quizcreator_score'],'quizcreator_score_today'=>$quizScore[0]['quizcreator_score_today']);
