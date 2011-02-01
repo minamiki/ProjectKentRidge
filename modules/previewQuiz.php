@@ -1,8 +1,4 @@
 <?php require('../Connections/quizroo.php'); ?>
-<?php
-require('quiz.php');
-$quiz = new Quiz($_GET['id']);
-?>
 <?php if($quiz->isPublished()){ ?>
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Take a quiz</h3>
