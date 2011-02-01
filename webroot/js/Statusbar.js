@@ -78,8 +78,9 @@ var Statusbar = {
 			$('#statusbar-info').append(createQuiz);
 			$(createQuiz).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Create</div><div class='statusbar-menu-desc'>Create a new quiz</div>");
 			$(createQuiz).click(function(){
-				goToURL('createQuiz.php');
-				$(createQuiz).css('background-color','#333');
+				//goToURL('createQuiz.php');
+				//$(createQuiz).css('background-color','#333');
+				featureUnavailable();
 			});
 			
 			var manageQuiz = document.createElement('div');
@@ -94,7 +95,11 @@ var Statusbar = {
 			var viewQuiz = document.createElement('div');
 			$('#statusbar-info').append(viewQuiz);
 			$(viewQuiz).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Topics</div><div class='statusbar-menu-desc'>View all quiz topics</div>");
-			//$(viewQuiz).click(function(){goToURL('viewQuiz.php';$(createQuiz).css('background-color','#333');)});
+			$(viewQuiz).click(function(){
+				//goToURL('viewQuiz.php');
+				//$(createQuiz).css('background-color','#333');
+				featureUnavailable();
+			});
 			
 		}else if(option=='statusbar-friends'){
 			$('#statusbar-info').addClass('statusbar-menu').html("");
@@ -102,29 +107,79 @@ var Statusbar = {
 			var overview = document.createElement('div');
 			$('#statusbar-info').append(overview);
 			$(overview).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Overview</div><div class='statusbar-menu-desc'>View information about your friends</div>");
-			//$(overview).click(function(){});
+			$(overview).click(function(){
+				featureUnavailable();	
+			});
 			
 			var invite = document.createElement('div');
-			$('#statusbar-info').append(invte);
+			$('#statusbar-info').append(invite);
 			$(invite).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Invite</div><div class='statusbar-menu-desc'>Invite your friends to Quizroo</div>");
-			//$(invite).click(function(){goToURL('inviteFriends.php';$(createQuiz).css('background-color','#333');)});
+			$(invite).click(function(){
+				//goToURL('inviteFriends.php');
+				//$(invite).css('background-color','#333');
+				featureUnavailable();
+			});
 			
 		}else if(option=='statusbar-profile'){
-			$('#statusbar-info').addClass('statusbar-menu').html(
-			"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Statistics</div><div class='statusbar-menu-desc'>View statistics for your activities</div></div>"
-			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>History</div><div class='statusbar-menu-desc'>View information about what you have done</div></div>"
-			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Settings</div><div class='statusbar-menu-desc'>Change settings for your Quizroo Account</div></div>"
-			);
+			$('#statusbar-info').addClass('statusbar-menu').html("");
+			
+			var stats = document.createElement('div');
+			$('#statusbar-info').append(stats);
+			$(stats).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Statistics</div><div class='statusbar-menu-desc'>View statistics for your activities</div>");
+			$(stats).click(function(){
+				//goToURL('statistics.php');
+				//$(stats).css('background-color','#333');
+				featureUnavailable();
+			});
+			
+			var history = document.createElement('div');
+			$('#statusbar-info').append(history);
+			$(history).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>History</div><div class='statusbar-menu-desc'>View information about what you have done</div>");
+			$(history).click(function(){
+				//goToURL('history.php');
+				//$(history).css('background-color','#333');
+				featureUnavailable();
+			});
+			
+			var settings = document.createElement('div');
+			$('#statusbar-info').append(settings);
+			$(settings).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Settings</div><div class='statusbar-menu-desc'>Change settings for your Quizroo Account</div>");
+			$(settings).click(function(){
+				//goToURL('settings.php');
+				//$(settings).css('background-color','#333');
+				featureUnavailable();
+			});
 		}else if(option=='statusbar-about'){
 			$('#statusbar-info').addClass('statusbar-menu').html(
 			"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Help</div><div class='statusbar-menu-desc'>Get help using Quizroo</div></div>"
-			+"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Quizroo</div><div class='statusbar-menu-desc'>Know more about Quizroo</div></div>"
+			+"<div class='statusbar-menu-item'></div>"
 			);
+			
+			var help = document.createElement('div');
+			$('#statusbar-info').append(help);
+			$(help).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Help</div><div class='statusbar-menu-desc'>Get help using Quizroo</div>");
+			$(help).click(function(){
+				//goToURL('help.php');
+				//$(help).css('background-color','#333');
+				featureUnavailable();
+			});
+			
+			var quizroo = document.createElement('div');
+			$('#statusbar-info').append(quizroo);
+			$(quizroo).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Quizroo</div><div class='statusbar-menu-desc'>Know more about Quizroo</div>");
+			$(quizroo).click(function(){
+				//goToURL('quizroo.php');
+				//$(quizroo).css('background-color','#333');
+				featureUnavailable();
+			});
 		}else if(option=='statusbar-search'){
+			/*
 			$('#statusbar-searchmenu-button').toggleClass('statusbar-searchmenu-button-selected');
 			$('#statusbar-info').addClass('statusbar-menu').addClass('statusbar-menu-search').html(
 			"<div class='statusbar-search-bar'><input id='statusbar-search-textfield' type='text'/><div id='statusbar-search-button'><div class='statusbar-search-icon'><span>search</span></div></div></div>"
 			);
+			*/
+			featureUnavailable();
 		}
 		
 		/*
