@@ -31,8 +31,19 @@
 <script type="text/javascript">
 	Share.recommend($('#user-actions-container'),{'quiz_id': <?php echo $quiz_id ?>});
 	Share.results($('#user-actions-container'),{'quiz_id': <?php echo $quiz_id ?>,'result_id':<?php echo $row_getResults['fk_result'] ?>});
+	Share.checkLike(<?php $quiz->isPublished() ?>);
 	
+	/*
+	 * Subscribe to Facebook Like event to handle it for our own data. 
+	 */
 	FB.Event.subscribe('edge.create', function(response) {
-		  alert('Hi');
+		  Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz_id ?>,'type':1});
+	});
+	
+	/*
+	 * Subscribe to Facebook Unlike event to handle it for our own data. 
+	 */
+	FB.Event.subscribe('edge.remove', function(response) {
+		  Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz_id ?>,'type':0});
 	});
 </script>

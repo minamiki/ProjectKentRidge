@@ -71,14 +71,23 @@ var Share = {
 		$('.recommend-dialog').hide();
 	},
 	
+	checkPublished: function(published){
+		if(published==false){
+			$('.share').hide();
+		}
+	},
 	/**
-	 * Rate quiz - Like/Unlike the quiz
+	 * Rate quiz - Handle like event for logic
 	 */
 	 rate: function(parent,opts){
-		var published = opts.published;
+		$.getJSON(Share.pathToSrc+'share.php/',{method:'rate',quiz_id:opts.quiz_id,type:opts.type},function(data){alert('liked')});
+		/*
+		 * Legacy code to suppose both Like and dislike
+		 */ 
+	/*	var published = opts.published;
 		if(published){
 			var status = opts.status;
-/*			if(status>0){
+			if(status>0){
 				$(like_button).html('Unlike');
 			}
 			else if(status<0){
@@ -108,9 +117,9 @@ var Share = {
 					status = 1;
 					$(like_button).html('Like');
 				}
-			});// end like_button.click	
-*/	
+			});// end like_button.click		
 		}
+	*/
 	 },
 	 
 }
