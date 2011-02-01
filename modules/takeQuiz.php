@@ -62,6 +62,9 @@ $question_count = 1;
         <div class="question_slide">
           <fieldset>
             <h4>Question <?php echo $question_count; ?></h4>
+            <?php if($row_getQuizQuestions['question_image'] != NULL){ ?>
+            <span id="question-image"><img src="../quiz_images/imgcrop.php?w=500&h=375&f=<?php echo $row_getQuizQuestions['question_image']; ?>" width="500" height="375" /></span>
+            <?php } ?>
             <p><?php echo $row_getQuizQuestions['question']; ?></p>
             <table width="100%" border="0" cellpadding="5" cellspacing="0">
               <?php do { ?>

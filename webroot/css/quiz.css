@@ -55,6 +55,14 @@
 	margin-right: auto;
 	margin-left: auto;
 }
+#question-image {
+	text-align: center;
+	display: block;
+	height: 375px;
+}
+#question-image img {
+	border: 1px solid #CCC;
+}
 #question_reel {
 	position: absolute;
 	top: 0;
@@ -137,7 +145,7 @@
 #question_reel div {
 	float: left;
 	display: block;
-	height: 400px;
+	height: auto;
 	width: 700px;
 }
 #question_navigation {

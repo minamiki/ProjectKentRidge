@@ -11,5 +11,23 @@
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/takeQuiz.php"); ?>
 <?php include("inc/footer-js.php"); ?>
+<script>
+// update the slider height
+$(document).ready(function(){
+    var question_slides = $(".question_slide");
+	var maxHeight = 400;
+     
+    //Loop all the slides
+    question_slides.each(function() {       
+        //Store the highest value
+        if($(this).height() > maxHeight){
+            maxHeight = $(this).height();
+        }
+    });
+     
+    //Set the height
+    $("#questionContainer").height(maxHeight);
+});
+</script>
 </body>
 </html>

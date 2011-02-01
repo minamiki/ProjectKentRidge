@@ -81,6 +81,9 @@ $(document).ready(function() {
 			$("#finishQuiz").addClass("btnDisabled");
 		}
 		
+		// gotoTop of page
+		gotoTop();
+		
 		/* remove progress bar due to HCI issues
 		var length = (710/imageSum * numCompleted);
 		//$("#progress").css({'width': length});

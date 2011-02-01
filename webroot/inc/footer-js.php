@@ -1,4 +1,24 @@
 <div id="fb-root"></div>
+<script>
+//======================================================
+// Load and initialize the facebook javascript framework
+//======================================================
+window.fbAsyncInit = function(){
+	FB.init({appId: '<?php echo $FB_APPID; ?>', session: <?php echo json_encode($member->session); ?>, status: true, cookie: true, xfbml: true});
+	// Enable canvas height auto-resize
+	FB.Canvas.setSize({ height: 400 });
+	FB.Canvas.setAutoResize();
+};
+(function(){
+	var e = document.createElement('script'); e.async = true;
+	e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+	document.getElementById('fb-root').appendChild(e);
+}());
+	function gotoTop(){
+		FB.Canvas.setSize({ height: 400 });
+		FB.Canvas.setAutoResize();
+	}
+</script>
 <script type="text/javascript" src="js/jquery-1.4.4.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.9.js"></script>
 <script type="text/javascript" src="js/jquery.stretch-0.9.3.min.js"></script>
@@ -16,22 +36,6 @@ switch(basename($_SERVER['SCRIPT_NAME'])){
 if($src != ""){
 ?><script type="text/javascript" src="js/<?php echo $src; ?>"></script><?php } ?>
 <script>
-
-//======================================================
-// Load and initialize the facebook javascript framework
-//======================================================
-window.fbAsyncInit = function(){
-	FB.init({appId: '<?php echo $FB_APPID; ?>', session: <?php echo json_encode($member->session); ?>, status: true, cookie: true, xfbml: true});
-	// Enable canvas height auto-resize
-	FB.Canvas.setSize({ height: 400 });
-	FB.Canvas.setAutoResize();
-};
-(function(){
-	var e = document.createElement('script'); e.async = true;
-	e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-	document.getElementById('fb-root').appendChild(e);
-}());
-
 //======================================================
 // Includes javascript to be executed on document ready
 //======================================================
