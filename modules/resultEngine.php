@@ -31,7 +31,7 @@ for($i = 0; $i < $totalQuestionCount; $i++){
 }
 
 if(!$validate){
-	// invalid date, redirect to home
+	// invalid data, redirect to home
 	header("Location: index.php");
 }
 
@@ -48,7 +48,7 @@ if($quiz->isPublished()){
 	
 	// award the quiz creator the base points
 	if(!$quiz->hasTaken($member->id)){
-		$quiz->awardPoints(0);
+		$quiz->awardPoints(0, $member->id);
 	}
 }
 
@@ -61,11 +61,11 @@ for($i = 0, $j = 3; $i < sizeof($logtime)/3 - 1; $i++, $j+=3){
 $PHPstartTime = $logtime[1] * 1000;
 $JSstartTime = $logtime[2];
 
-// prepare the achievement array for possible multiple achievements
-$achievement_array = array();
-
 // TODO: Insert attempt timings into database
 //
+
+// prepare the achievement array for possible multiple achievements
+$achievement_array = array();
 
 // Calculate Points to award
 calculatePoints($facebookID, $quiz_id, $quiz->isPublished());

@@ -42,6 +42,7 @@
 	margin-right: 10px;
 	margin-top: 4px;
 	border: 1px solid #000;
+	margin-bottom: 12px;
 }
 .quiz_rating  {
 	position: absolute;
@@ -69,11 +70,6 @@
 	color: #F00;
 	font-weight: bold;
 }
-.quiz_details h3 {
-	font-size: 14px;
-	margin-top: 0px;
-	margin-bottom: 3px;
-}
 .quiz_box a img  {
 	
 }
@@ -90,6 +86,13 @@
 	font-family: Verdana, Geneva, sans-serif;
 	color: #999;
 }
+.quiz_details .rating {
+	font-size: 10px;
+	margin-top: 2px;
+	margin-bottom: 0px;
+	font-family: Verdana, Geneva, sans-serif;
+	color: #999;
+}
 .quiz_box {
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -98,7 +101,13 @@
 	border-bottom-style: dotted;
 	border-bottom-color: #999;
 	padding-top: 0px;
-	padding-bottom: 5px;
+	padding-bottom: 8px;
+}
+.quiz_box h3 {
+	font-size: 14px;
+	margin-top: 0px;
+	margin-bottom: 3px;
+	color: #333;
 }
 .quiz_box:last-child {
 	border-bottom-style: none;
