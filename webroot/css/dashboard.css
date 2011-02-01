@@ -35,8 +35,8 @@
 	margin-left: 0px;
 }
 .thumb_box {
-	height: 60px;
-	width: 80px;
+	height: 68px;
+	width: 90px;
 	position: relative;
 	float: left;
 	margin-right: 10px;
@@ -46,20 +46,28 @@
 .quiz_rating  {
 	position: absolute;
 	height: 10px;
-	width: 78px;
+	width: 98px;
 	left: 0px;
 	bottom: 0px;
 	background-image: url(../img/trans_grey.png);
-	color: #FC0;
+	color: #FFF;
 	font-size: 10px;
 	font-weight: bold;
-	font-family: Wingdings;
+	font-family: Verdana, Geneva, sans-serif;
 	padding-bottom: 3px;
 	padding-left: 3px;
 }
 .quiz_details   {
-	width: 250px;
+	width: 230px;
 	float: left;
+}
+.quiz_details .like {
+	color: #090;
+	font-weight: bold;
+}
+.quiz_details .dislike {
+	color: #F00;
+	font-weight: bold;
 }
 .quiz_details h3 {
 	font-size: 14px;
@@ -97,6 +105,10 @@
 }
 #recent {
 	position: relative;
+}
+#topics .topicTitle {
+	padding-right: 10px;
+	padding-left: 10px;
 }
 #recent .recent-feed {
 	font-size: 14px;
@@ -154,4 +166,7 @@
 #recent #recent-toggle:hover {
 	background-color: #CCC;
 	background-image: none;
+}
+#topics .description {
+	font-size: 14px;
 }
