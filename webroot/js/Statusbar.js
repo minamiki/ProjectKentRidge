@@ -151,8 +151,7 @@ var Statusbar = {
 			});
 		}else if(option=='statusbar-about'){
 			$('#statusbar-info').addClass('statusbar-menu').html(
-			"<div class='statusbar-menu-item'><div class='statusbar-menu-title'>Help</div><div class='statusbar-menu-desc'>Get help using Quizroo</div></div>"
-			+"<div class='statusbar-menu-item'></div>"
+			""
 			);
 			
 			var help = document.createElement('div');

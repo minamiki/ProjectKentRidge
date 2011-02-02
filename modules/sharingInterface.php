@@ -11,7 +11,7 @@
 		  <fb:fbml>
 		   <fb:request-form
 		    method='POST' 
-		    action='http://localhost/quizroo/'
+		    action='<?php echo $VAR_URL ?>'
 			invite=true
 			type='Quiz'
 			content='Try this quiz out. <?php echo htmlentities("<fb:req-choice url=\"http://apps.facebook.com/quizroo/previewQuiz.php?id=".$quiz_id."\" label=\"Try quiz\"") ?>' >
