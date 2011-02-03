@@ -14,10 +14,10 @@ window.fbAsyncInit = function(){
 	e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
 	document.getElementById('fb-root').appendChild(e);
 }());
-	function gotoTop(){
-		FB.Canvas.setSize({ height: 400 });
-		FB.Canvas.setAutoResize();
-	}
+function gotoTop(){
+	//FB.Canvas.setSize({ height: 400 });
+	//FB.Canvas.setAutoResize();
+}
 </script>
 <script type="text/javascript" src="js/jquery-1.4.4.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.9.js"></script>
