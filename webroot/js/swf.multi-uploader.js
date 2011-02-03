@@ -3,7 +3,6 @@ var isUploading = new Array();
 var widgetCount = 0;
 
 function initUploader(targetField){
-	console.log("Upload Widget is " + widgetCount);
 	$('#swfupload-control-'+widgetCount).swfupload({
 		upload_url: "../modules/"+uploadfile+".php?unikey="+unikey,
 		file_post_name: 'uploadfile',
@@ -83,7 +82,6 @@ function initUploader(targetField){
 
 function updateWidgets(){
 	for(i = 0; i < resultCount+1; i++){
-		console.log("Updating pict chooser " + i);
 		$.ajax({
 			type: "GET",
 			url: "../modules/createQuizImagePool.php",
@@ -91,8 +89,6 @@ function updateWidgets(){
 			async: false,
 			success: function(data) {
 				$("#pictureChoser_"+i).html(data);
-				//$("#pictureChoser_"+i+" a img").removeClass("selectedBorder").addClass("selectImage");
-				//$("#"+$("#select_picture_"+i).val()).removeClass("selectImage").addClass("selectedBorder");
 			}
 		});	
 	}
