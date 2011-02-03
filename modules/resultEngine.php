@@ -43,13 +43,14 @@ $totalRows_getResults = mysql_num_rows($getResults);
 
 // store the final result into the database if published
 if($quiz->isPublished()){
-	$query_saveResult = sprintf("INSERT INTO q_store_result(fk_quiz_id, fk_result_id, fk_member_id) VALUES (%d, %d, %d)", GetSQLValueString($quiz_id, "int"), $row_getResults['fk_result'], $facebookID);
-	mysql_query($query_saveResult, $quizroo) or die(mysql_error());
-	
 	// award the quiz creator the base points
 	if(!$quiz->hasTaken($member->id)){
 		$quiz->awardPoints(0, $member->id);
 	}
+	
+	// log the quiz taking attempt
+	$query_saveResult = sprintf("INSERT INTO q_store_result(fk_quiz_id, fk_result_id, fk_member_id) VALUES (%d, %d, %d)", GetSQLValueString($quiz_id, "int"), $row_getResults['fk_result'], $facebookID);
+	mysql_query($query_saveResult, $quizroo) or die(mysql_error());
 }
 
 // get the attempt timings
@@ -159,7 +160,6 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 <?php } ?>
 
 </div>
-<?php } ?>
 <?php
 //----------------------------------------
 // Display splash screen with results
