@@ -2,8 +2,107 @@
 <?php
 // get the member info
 require('member.php');
+require('quiz.php');
 $member = new Member();
 
+// turn on sessions
+session_start();
+
+// find out which step is it
+if(isset($_GET['step'])){
+	switch($_GET['step']){
+		
+		case 1: // save the quiz information
+		
+		// get the unikey from the form
+		$key = $_POST['unikey'];
+		
+		// save the data from step 1
+		$quiz = new Quiz();
+		$quiz_picture = ($_POST['result_picture_0'] != "") ? $_POST['result_picture_0'] : "none.gif";
+		$quiz_id = $quiz->create($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id);
+		
+		// direct them to step 2
+		header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id."&key=".$key);
+		
+		break;		
+		case 2: // save the quiz results
+		
+		// get the unikey and id from the form
+		$key = $_POST['unikey'];
+		$quiz_id = $_POST['id'];
+		
+		// save the results from step 2
+		$quiz = new Quiz($quiz_id);
+		// Quiz Results
+		for($i = 0; $i < $_POST['resultCount']; $i++){
+			if(isset($_POST['result_title_'.$i]) && isset($_POST['result_description_'.$i]) && isset($_POST['result_picture_'.$i])){
+				$result_title = $_POST['result_title_'.$i];
+				$result_description = $_POST['result_description_'.$i];
+				$result_picture = ($_POST['result_picture_'.$i] != "") ? $_POST['result_picture_'.$i] : "none.gif";
+				if(isset($_POST['id'.$i])){
+					$quiz->updateResult($result_title, $result_description, $result_picture, $_POST['id'.$i]);
+				}else{
+					$quiz->addResult($result_title, $result_description, $result_picture);
+				}
+			}
+		}
+		
+		// direct them to step 3
+		header("Location: ../webroot/createQuiz.php?step=3&id=".$quiz_id."&key=".$key);
+		
+		break;
+		case 3:
+		
+		// get the unikey and id from the form
+		$key = $_POST['unikey'];
+		$quiz_id = $_POST['id'];
+		
+		// save the questions from step 3
+		$quiz = new Quiz($quiz_id);
+		
+		// Insert the questions and options
+		$questionArray = explode("_", $_POST['optionCounts']);
+
+		$question = array();
+		for($i = 0; $i < $_POST['questionCount']; $i++){
+			if(isset($_POST['question_'.$i])){
+				if(isset($_POST['uq'.$i])){
+					$question_id = $quiz->updateQuestion($_POST['question_'.$i], $_POST['uq'.$i]);
+				}else{
+					$question_id = $quiz->addQuestion($_POST['question_'.$i]);
+				}
+			}
+			// Quiz Options
+			for($j = 0; $j < $questionArray[$i]; $j++){
+				if(isset($_POST['q'.$i.'o'.$j]) && isset($_POST['q'.$i.'r'.$j]) && isset($_POST['q'.$i.'w'.$j])){
+					if(isset($_POST['uq'.$i.'o'.$j])){
+						$quiz->updateOption($_POST['q'.$i.'o'.$j], $_POST['q'.$i.'r'.$j], $_POST['q'.$i.'w'.$j], $_POST['uq'.$i.'o'.$j]);
+					}else{
+						$quiz->addOption($_POST['q'.$i.'o'.$j], $_POST['q'.$i.'r'.$j], $_POST['q'.$i.'w'.$j], $question_id);
+					}
+				}
+			}
+		}
+		
+		// direct them to step 4
+		header("Location: ../webroot/createQuiz.php?step=4&id=".$quiz_id."&key=".$key);
+		
+		break;
+		case 4: // final step
+		
+		
+		$insertGoTo = "../webroot/createQuizSuccess.php?id=".$currentQuizID."#";
+		header(sprintf("Location: %s", $insertGoTo));
+		break;
+		
+	}
+}else{
+	// if not step is given we direct them to the first step
+	header("Location: ../webroot/createQuiz.php");
+}
+
+/*
 // Quiz Information
 $quiz_title = $_POST['quiz_title'];
 $quiz_description = $_POST['quiz_description'];
@@ -90,7 +189,5 @@ for($i = 0; $i < $_POST['questionCount']; $i++){
 		mysql_query($insertSQL, $quizroo) or die(mysql_error());
 	}
 }
-
-$insertGoTo = "../webroot/createQuizSuccess.php?id=".$currentQuizID."#";
-header(sprintf("Location: %s", $insertGoTo));
+*/
 ?>

@@ -17,7 +17,7 @@ class Quiz{
 	public $dislikes = NULL;
 	public $isPublished = NULL;
 	
-	function __construct($quiz_id){
+	function __construct($quiz_id = NULL){
 		if($quiz_id != NULL){
 			require('../Connections/quizroo.php');
 			// populate class with quiz data			
@@ -46,6 +46,201 @@ class Quiz{
 		}else{
 			return false;
 		}	
+	}
+	
+	// create a new quiz
+	function create($title, $description, $cat, $picture, $member_id){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// insert into the quiz table
+		$insertSQL = sprintf("INSERT INTO q_quizzes(`quiz_name`, `quiz_description`, `fk_quiz_cat`, `quiz_picture`, `fk_member_id`) VALUES (%s, %s, %d, %s, %d)",
+						   GetSQLValueString($title, "text"),
+						   GetSQLValueString($description, "text"),
+						   GetSQLValueString($cat, "int"),
+						   GetSQLValueString($picture, "text"),
+						   GetSQLValueString($member_id, "int"));
+		mysql_query($insertSQL, $quizroo) or die(mysql_error());
+		
+		// find the quiz id
+		$querySQL = "SELECT LAST_INSERT_ID() AS insertID, creation_date FROM q_quizzes WHERE quiz_id = LAST_INSERT_ID()";
+		$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
+		$row_resultID = mysql_fetch_assoc($resultID);
+		
+		$this->quiz_id = $row_resultID['insertID'];
+		$this->quiz_name = $title;
+		$this->quiz_description = $description;
+		$this->fk_quiz_cat = $cat;
+		$this->quiz_picture = $picture;
+		$this->creation_date = $row_resultID['creation_date'];
+		$this->fk_member_id = $member_id;
+		
+		mysql_free_result($resultID);
+		
+		return $this->quiz_id;
+	}
+	
+	// create a new result
+	function addResult($result_title, $result_description, $result_picture){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// Insert the result
+		$insertSQL = sprintf("INSERT INTO q_results(`result_title`, `result_description`, `result_picture`, `fk_quiz_id`) VALUES (%s, %s, %s, %d)",
+						   GetSQLValueString($result_title, "text"),
+						   GetSQLValueString($result_description, "text"),
+						   GetSQLValueString($result_picture, "text"),
+						   GetSQLValueString($this->quiz_id, "int"));
+		mysql_query($insertSQL, $quizroo) or die(mysql_error());
+		
+		// find the result id
+		$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
+		$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
+		$row_resultID = mysql_fetch_assoc($resultID);
+		mysql_free_result($resultID);
+		
+		return $row_resultID['insertID'];
+	}
+	
+	// create a new result
+	function updateResult($result_title, $result_description, $result_picture, $result_id){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// Insert the result
+		$insertSQL = sprintf("UPDATE q_results SET `result_title` = %s, `result_description` = %s, `result_picture` = %s WHERE `result_id` = %d",
+						   GetSQLValueString($result_title, "text"),
+						   GetSQLValueString($result_description, "text"),
+						   GetSQLValueString($result_picture, "text"),
+						   GetSQLValueString($result_id, "int"));
+		mysql_query($insertSQL, $quizroo) or die(mysql_error());
+		
+		return $result_id;
+	}
+	
+	// remove a new result
+	function removeResult($result_id, $memberID){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// owner check
+		if($this->isOwner($memberID)){
+			// delete the result and also check if this results actually belongs to this quiz
+			$insertSQL = sprintf("DELETE FROM q_results WHERE `result_id` = %d AND `result_id` IN(%s)", GetSQLValueString($result_id, "int"), $this->getResults());
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());	
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	// create a new question
+	function addQuestion($question){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// insert the question
+		$insertSQL = sprintf("INSERT INTO q_questions(`question`, `fk_quiz_id`) VALUES (%s, %d)",
+					   GetSQLValueString($question, "text"),
+					   GetSQLValueString($this->quiz_id, "int"));
+		mysql_query($insertSQL, $quizroo) or die(mysql_error());
+	
+		// find the question id
+		$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
+		$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
+		$row_resultID = mysql_fetch_assoc($resultID);
+		$currentQuestionID = $row_resultID['insertID'];
+		mysql_free_result($resultID);
+		
+		return $row_resultID['insertID'];
+	}
+	
+	// update a question
+	function updateQuestion($question, $question_id){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// insert the question
+		$insertSQL = sprintf("UPDATE q_questions SET `question` = %s WHERE `question_id` = %d",
+					   GetSQLValueString($question, "text"),
+					   GetSQLValueString($question_id, "int"));
+		mysql_query($insertSQL, $quizroo) or die(mysql_error());
+		
+		return $question_id;
+	}
+	
+	// remove a new question
+	function removeQuestion($question_id, $memberID){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// owner check
+		if($this->isOwner($memberID)){
+			// delete the options and also check if this results actually belongs to this quiz
+			$insertSQL = sprintf("DELETE FROM q_options WHERE `fk_question_id` = %d AND `fk_question_id` IN(%s)", GetSQLValueString($question_id, "int"), $this->getQuestions());
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());				
+			// delete the result and also check if this results actually belongs to this quiz
+			$insertSQL = sprintf("DELETE FROM q_questions WHERE `question_id` = %d AND `question_id` IN(%s)", GetSQLValueString($question_id, "int"), $this->getQuestions());
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());	
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	// create a option
+	function addOption($option, $result, $weightage, $question){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// insert the option
+		$insertSQL = sprintf("INSERT INTO q_options(`option`, `fk_result`, `option_weightage`, `fk_question_id`) VALUES (%s, %d, %d, %d)",
+					   GetSQLValueString($option, "text"),
+					   GetSQLValueString($result, "int"),
+					   GetSQLValueString($weightage, "int"),
+					   GetSQLValueString($question, "int"));
+		mysql_query($insertSQL, $quizroo) or die(mysql_error());
+	
+		// find the question id
+		$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
+		$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
+		$row_resultID = mysql_fetch_assoc($resultID);
+		$currentQuestionID = $row_resultID['insertID'];
+		mysql_free_result($resultID);
+		
+		return $row_resultID['insertID'];
+	}
+	
+	// update an option
+	function updateOption($option, $result, $weightage, $option_id){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// insert the option
+		$insertSQL = sprintf("UPDATE q_options SET `option`=%s, `fk_result`=%d, `option_weightage`=%d WHERE option_id=%d",
+					   GetSQLValueString($option, "text"),
+					   GetSQLValueString($result, "int"),
+					   GetSQLValueString($weightage, "int"),
+					   GetSQLValueString($option_id, "int"));
+		mysql_query($insertSQL, $quizroo) or die(mysql_error());
+		
+		return $option_id;
+	}
+	
+	// remove an option
+	function removeOption($option_id, $memberID){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// owner check
+		if($this->isOwner($memberID)){
+			// delete the options and also check if this results actually belongs to this quiz
+			$insertSQL = sprintf("DELETE FROM q_options WHERE `option_id` = %d AND `fk_question_id` IN(%s)", GetSQLValueString($option_id, "int"), $this->getQuestions());
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());				
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	// return the number of question in this quiz
@@ -120,6 +315,66 @@ class Quiz{
 			return $row_getQuery['rating'];
 		}else{
 			return 0;
+		}
+	}
+	
+	// get the list of results belonging to this quiz
+	function getResults(){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		$query = sprintf("SELECT result_id FROM q_results WHERE fk_quiz_id = %d", $this->quiz_id);
+		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
+		$row_getQuery = mysql_fetch_assoc($getQuery);
+		$totalRows_getQuery = mysql_num_rows($getQuery);
+		
+		if($totalRows_getQuery != 0){
+			$results = "";
+			do{
+				$results .= $row_getQuery['result_id'].",";
+			}while($row_getQuery = mysql_fetch_assoc($getQuery));
+			return substr($results, 0, -1);
+		}else{
+			return false;
+		}
+	}
+	
+	// get the list of questions belonging to this quiz
+	function getQuestions(){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		$query = sprintf("SELECT question_id FROM q_questions WHERE fk_quiz_id = %d", $this->quiz_id);
+		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
+		$row_getQuery = mysql_fetch_assoc($getQuery);
+		$totalRows_getQuery = mysql_num_rows($getQuery);
+		
+		if($totalRows_getQuery != 0){
+			$results = "";
+			do{
+				$results .= $row_getQuery['question_id'].",";
+			}while($row_getQuery = mysql_fetch_assoc($getQuery));
+			return substr($results, 0, -1);
+		}else{
+			return false;
+		}
+	}
+	
+	// get the list of options belonging to a question
+	function getOptions($question_id){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		$query = sprintf("SELECT option_id FROM q_options WHERE fk_question_id = %d", $question_id);
+		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
+		$row_getQuery = mysql_fetch_assoc($getQuery);
+		$totalRows_getQuery = mysql_num_rows($getQuery);
+		
+		if($totalRows_getQuery != 0){
+			$results = "";
+			do{
+				$results .= $row_getQuery['option_id'].",";
+			}while($row_getQuery = mysql_fetch_assoc($getQuery));
+			return substr($results, 0, -1);
+		}else{
+			return false;
 		}
 	}
 	

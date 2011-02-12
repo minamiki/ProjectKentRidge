@@ -1,10 +1,18 @@
 // track whether widget is uploading
 var isUploading = new Array();
-var widgetCount = 0;
+//var widgetCount = 0;
+
+function scanInitUploader(){
+	// find out the number of uploading widgets
+	$('.swfupload-control').each(function(i){
+		initUploader(i);
+		selectImage(i, $('#result_picture_'+i).val());
+	});
+}
 
 function initUploader(targetField){
-	$('#swfupload-control-'+widgetCount).swfupload({
-		upload_url: "../modules/"+uploadfile+".php?unikey="+unikey,
+	$('#swfupload-control-'+targetField).swfupload({
+		upload_url: "../modules/uploadQuiz.php?unikey="+unikey,
 		file_post_name: 'uploadfile',
 		file_size_limit : "5120",
 		file_types : "*.jpg;*.png;*.gif",
@@ -13,7 +21,7 @@ function initUploader(targetField){
 		button_image_url : 'img/uploadBtn.png',
 		button_width : 81,
 		button_height : 33,
-		button_placeholder : $('#uploader-'+widgetCount)[0],
+		button_placeholder : $('#uploader-'+targetField)[0],
 		debug: false
 	})
 	.bind('fileQueued', function(event, file){
@@ -65,7 +73,7 @@ function initUploader(targetField){
 		$(this).swfupload('startUpload');
 		// set as default main image
 		//if($('#'+targetField).val() == ""){
-			$('#'+targetField).val(unikey+'_'+file.name);
+			$('#result_picture_'+targetField).val(unikey+'_'+file.name);
 			updateWidgets();
 			$('#quizImagePreview-'+targetWidget).html('<img name="quizImagePreview-'+targetWidget+'" src="../quiz_images/imgcrop.php?w=180&h=120&f='+unikey+'_'+file.name+'" width="180" height="120" title="You can change this image in the upload image section" />');
 			// update the result image
@@ -77,11 +85,12 @@ function initUploader(targetField){
 		// upload flag
 		isUploading[targetWidget] = false;
 	})
-	widgetCount++;
+	//widgetCount++;
 }
 
 function updateWidgets(){
-	for(i = 0; i < resultCount+1; i++){
+	resultCount = $("#resultCount").val()+1;
+	for(i = 0; i < resultCount; i++){
 		$.ajax({
 			type: "GET",
 			url: "../modules/createQuizImagePool.php",
@@ -111,5 +120,25 @@ function successSubmit(value)
 			alert("Photo uploads still in progress! Please wait for uploads to complete!");
 		}
 		return false;
+	}
+}
+
+function selectImage(result, filename){
+	$("#showResultImage_"+result).text("Image '"+filename+"' selected");
+	$("#result_picture_"+result).val(filename);
+	imagefilename = filename.substring(9);
+	if(imagefilename != ""){
+		$('#queuestatus-'+result).text('"'+imagefilename+'" will be used as the quiz image.');
+	}else{
+		$('#queuestatus-'+result).text('No image was chosen for this result.');
+	}	
+	$('#selected-image-'+result).html('<img src="../quiz_images/imgcrop.php?w=100&amp;h=75&amp;f='+filename+'" alt="" width="100" height="75" />');
+}
+
+function checkIfUploading(){
+	if($.inArray(true, isUploading) == -1){
+		return false;
+	}else{
+		return true;
 	}
 }
