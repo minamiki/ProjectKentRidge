@@ -33,7 +33,9 @@ $(document).ready(function(){
 	QuizInfo.init(<?php echo $quiz_id; ?>, '<?php echo $unikey; ?>');
 	QuizResult.init();
 	QuizQuestion.init();
-	<?php }?>
+	<?php }else{ ?>
+	initUploader("result_picture_0");
+	<?php } ?>
 });
 </script>
 </body>

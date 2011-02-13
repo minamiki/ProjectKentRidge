@@ -16,6 +16,7 @@ class Quiz{
 	public $likes = NULL;
 	public $dislikes = NULL;
 	public $isPublished = NULL;
+	public $quiz_key = NULL;
 	
 	function __construct($quiz_id = NULL){
 		if($quiz_id != NULL){
@@ -38,7 +39,8 @@ class Quiz{
 				$this->quiz_score		= $row_getQuiz['quiz_score'];
 				$this->likes			= $row_getQuiz['likes'];
 				$this->dislikes			= $row_getQuiz['dislikes'];
-				$this->isPublished		= $row_getQuiz['isPublished'];				
+				$this->isPublished		= $row_getQuiz['isPublished'];
+				$this->quiz_key			= $row_getQuiz['quiz_key'];
 				return true;
 			}else{
 				return false;
@@ -49,17 +51,18 @@ class Quiz{
 	}
 	
 	// create a new quiz
-	function create($title, $description, $cat, $picture, $member_id){
+	function create($title, $description, $cat, $picture, $member_id, $key){
 		require('../Connections/quizroo.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// insert into the quiz table
-		$insertSQL = sprintf("INSERT INTO q_quizzes(`quiz_name`, `quiz_description`, `fk_quiz_cat`, `quiz_picture`, `fk_member_id`) VALUES (%s, %s, %d, %s, %d)",
+		$insertSQL = sprintf("INSERT INTO q_quizzes(`quiz_name`, `quiz_description`, `fk_quiz_cat`, `quiz_picture`, `fk_member_id`, `quiz_key`) VALUES (%s, %s, %d, %s, %d, %s)",
 						   GetSQLValueString($title, "text"),
 						   GetSQLValueString($description, "text"),
 						   GetSQLValueString($cat, "int"),
 						   GetSQLValueString($picture, "text"),
-						   GetSQLValueString($member_id, "int"));
+						   GetSQLValueString($member_id, "int"),
+						   GetSQLValueString($key, "text"));
 		mysql_query($insertSQL, $quizroo) or die(mysql_error());
 		
 		// find the quiz id
@@ -74,6 +77,7 @@ class Quiz{
 		$this->quiz_picture = $picture;
 		$this->creation_date = $row_resultID['creation_date'];
 		$this->fk_member_id = $member_id;
+		$this->quiz_key = $key;
 		
 		mysql_free_result($resultID);
 		

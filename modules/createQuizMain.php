@@ -9,14 +9,14 @@ if(isset($_GET['step'])){
 switch($_GET['step']){ case 1:
 
 // get the unikey and quiz id
-if(isset($_GET['key']) && isset($_GET['id'])){
-	$unikey = $_GET['key'];
+if(isset($_GET['id'])){
 	$quiz_id = $_GET['id'];
 	// now check whether this quiz actually belongs to this user
 	$quiz = new Quiz($quiz_id);
 	if(!$quiz->isOwner($member->id)){
 		die("Authentication Failure");
 	}
+	$unikey = $quiz->quiz_key;
 	
 	// populate the categories
 	mysql_select_db($database_quizroo, $quizroo);
@@ -42,7 +42,6 @@ if(isset($_GET['key']) && isset($_GET['id'])){
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=1" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-    <input type="hidden" name="unikey" value="<?php echo $unikey; ?>" />
     <input type="hidden" name="id" value="<?php echo $quiz_id; ?>" />
     <table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
@@ -72,9 +71,8 @@ if(isset($_GET['key']) && isset($_GET['id'])){
         </tr>
         <tr>
           <th rowspan="2" valign="top" scope="row"><label>Quiz Picture</label>
-          <input type="hidden" name="result_picture_0" id="result_picture_0" value="<?php echo $quiz->quiz_picture; ?>" /></th>
+          <input type="hidden" name="result_picture_0" id="result_picture_0" value="<?php echo $unikey; ?>" /></th>
           <td class="desc"><div id="swfupload-control-0" class="swfupload-control">
-              <script>initUploader("result_picture_0")</script>
               <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td><input name="uploader-0" type="button" id="uploader-0" /></td>
@@ -115,14 +113,14 @@ foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
 <?php // THE SECOND STEP: Quiz Results
 break; case 2:
 	// get the unikey and quiz id
-	if(isset($_GET['key']) && isset($_GET['id'])){
-		$unikey = $_GET['key'];
+	if(isset($_GET['id'])){
 		$quiz_id = $_GET['id'];
 		// now check whether this quiz actually belongs to this user
 		$quiz = new Quiz($quiz_id);
 		if(!$quiz->isOwner($member->id)){
 			die("Authentication Failure");
 		}
+		$unikey = $quiz->quiz_key;
 	}else{
 		// find a way to post and error
 		die("session has expired");
@@ -140,7 +138,6 @@ break; case 2:
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=2" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-<input type="hidden" name="unikey" value="<?php echo $unikey; ?>" />
 <input type="hidden" name="id" value="<?php echo $quiz_id; ?>" />
 <div id="createResultContainer"></div>
     <div class="add_container">
@@ -154,14 +151,14 @@ break; case 2:
 <?php // THE THIRD STEP: Quiz Questions
 break; case 3:
 	// get the unikey and quiz id
-	if(isset($_GET['key']) && $_GET['id']){
-		$unikey = $_GET['key'];
+	if(isset($_GET['id'])){
 		$quiz_id = $_GET['id'];
 		// now check whether this quiz actually belongs to this user
 		$quiz = new Quiz($quiz_id);
 		if(!$quiz->isOwner($member->id)){
 			die("Authentication Failure");
 		}
+		$unikey = $quiz->quiz_key;
 	}else{
 		// find a way to post and error
 		die("session has expired");
@@ -179,7 +176,6 @@ break; case 3:
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=3" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-<input type="hidden" name="unikey" value="<?php echo $unikey; ?>" />
 <input type="hidden" name="id" value="<?php echo $quiz_id; ?>" />
 <input type="hidden" name="optionCounts" id="optionCounts" value="" />
 <input type="hidden" name="questionCount" id="questionCount" value="" />
@@ -194,14 +190,14 @@ break; case 3:
 <?php // THE FOURTH STEP: Confirm and publish
 break; case 4:
 	// get the unikey and quiz id
-	if(isset($_GET['key']) && $_GET['id']){
-		$unikey = $_GET['key'];
+	if(isset($_GET['id'])){
 		$quiz_id = $_GET['id'];
 		// now check whether this quiz actually belongs to this user
 		$quiz = new Quiz($quiz_id);
 		if(!$quiz->isOwner($member->id)){
 			die("Authentication Failure");
 		}
+		$unikey = $quiz->quiz_key;
 		require("../modules/variables.php");
 			
 		// overall check
@@ -259,7 +255,6 @@ break; case 4:
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=4" method="post" name="createQuiz" id="createQuiz">
-<input type="hidden" name="unikey" value="<?php echo $unikey; ?>" />
 <input type="hidden" name="id" value="<?php echo $quiz_id; ?>" />
 <table border="0" align="center" cellpadding="5" cellspacing="0" id="checkQuizTable">
       <tr>
@@ -312,9 +307,6 @@ $query_listCat = "SELECT cat_id, cat_name FROM q_quiz_cat";
 $listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
 $row_listCat = mysql_fetch_assoc($listCat);
 $totalRows_listCat = mysql_num_rows($listCat);
-
-// create a session for quiz creation in progress
-$_SESSION['unikey'] = $unikey;
 ?>
 <div id="progress-container" class="frame rounded">
   <h3>Create Quiz</h3>
@@ -361,7 +353,6 @@ $_SESSION['unikey'] = $unikey;
           <th rowspan="2" valign="top" scope="row"><label>Quiz Picture</label>
           <input type="hidden" name="result_picture_0" id="result_picture_0" value="" /></th>
           <td class="desc"><div id="swfupload-control-0" class="swfupload-control">
-              <script>initUploader("result_picture_0")</script>
               <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td><input name="uploader-0" type="button" id="uploader-0" /></td>
