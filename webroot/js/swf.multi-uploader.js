@@ -89,15 +89,27 @@ function initUploader(targetField){
 }
 
 function updateWidgets(){
-	resultCount = $("#resultCount").val()+1;
-	for(i = 0; i < resultCount; i++){
+	if($("#resultCount").val() != undefined){
+		resultCount = $("#resultCount").val()+1;
+		for(i = 0; i < resultCount; i++){
+			$.ajax({
+				type: "GET",
+				url: "../modules/createQuizImagePool.php",
+				data: "resultNumber="+i+"&unikey="+unikey,
+				async: false,
+				success: function(data) {
+					$("#pictureChoser_"+i).html(data);
+				}
+			});	
+		}
+	}else{
 		$.ajax({
 			type: "GET",
 			url: "../modules/createQuizImagePool.php",
-			data: "resultNumber="+i+"&unikey="+unikey,
+			data: "resultNumber=0&unikey="+unikey,
 			async: false,
 			success: function(data) {
-				$("#pictureChoser_"+i).html(data);
+				$("#pictureChoser_0").html(data);
 			}
 		});	
 	}

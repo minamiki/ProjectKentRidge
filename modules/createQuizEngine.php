@@ -18,9 +18,14 @@ if(isset($_GET['step'])){
 		$key = $_POST['unikey'];
 		
 		// save the data from step 1
-		$quiz = new Quiz();
 		$quiz_picture = ($_POST['result_picture_0'] != "") ? $_POST['result_picture_0'] : "none.gif";
-		$quiz_id = $quiz->create($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id);
+		if(isset($_POST['id'])){
+			$quiz = new Quiz($_POST['id']);
+			$quiz_id = $quiz->update($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture);
+		}else{
+			$quiz = new Quiz();
+			$quiz_id = $quiz->create($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id);
+		}
 		
 		// direct them to step 2
 		header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id."&key=".$key);
@@ -48,8 +53,12 @@ if(isset($_GET['step'])){
 			}
 		}
 		
-		// direct them to step 3
-		header("Location: ../webroot/createQuiz.php?step=3&id=".$quiz_id."&key=".$key);
+		// check the direction to go
+		if($_POST['save'] == "Previous Step"){
+			header("Location: ../webroot/createQuiz.php?step=1&id=".$quiz_id."&key=".$key);
+		}else{
+			header("Location: ../webroot/createQuiz.php?step=3&id=".$quiz_id."&key=".$key);
+		}
 		
 		break;
 		case 3:
@@ -85,15 +94,30 @@ if(isset($_GET['step'])){
 			}
 		}
 		
-		// direct them to step 4
-		header("Location: ../webroot/createQuiz.php?step=4&id=".$quiz_id."&key=".$key);
+		// check the direction to go
+		if($_POST['save'] == "Previous Step"){
+			header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id."&key=".$key);
+		}else{
+			header("Location: ../webroot/createQuiz.php?step=4&id=".$quiz_id."&key=".$key);
+		}
 		
 		break;
 		case 4: // final step
 		
+		// get the unikey and id from the form
+		$key = $_POST['unikey'];
+		$quiz_id = $_POST['id'];
 		
-		$insertGoTo = "../webroot/createQuizSuccess.php?id=".$currentQuizID."#";
-		header(sprintf("Location: %s", $insertGoTo));
+		
+		// check the direction to go
+		if($_POST['save'] == "Previous Step"){
+			header("Location: ../webroot/createQuiz.php?step=3&id=".$quiz_id."&key=".$key);
+		}elseif($_POST['save'] == "Preview"){
+			header("Location: ../webroot/createQuizSuccess.php?id=".$quiz_id."#");
+		}else{
+			header("Location: ../webroot/publishQuiz.php?id=".$quiz_id);
+		}
+
 		break;
 		
 	}

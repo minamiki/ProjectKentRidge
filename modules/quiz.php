@@ -80,6 +80,23 @@ class Quiz{
 		return $this->quiz_id;
 	}
 	
+	// update the  quiz
+	function update($title, $description, $cat, $picture){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// insert into the quiz table
+		$insertSQL = sprintf("UPDATE q_quizzes SET `quiz_name`=%s, `quiz_description`=%s, `fk_quiz_cat`=%d, `quiz_picture`=%s WHERE `quiz_id` = %d",
+						   GetSQLValueString($title, "text"),
+						   GetSQLValueString($description, "text"),
+						   GetSQLValueString($cat, "int"),
+						   GetSQLValueString($picture, "text"),
+						   GetSQLValueString($this->quiz_id, "int"));
+		mysql_query($insertSQL, $quizroo) or die(mysql_error());
+		
+		return $this->quiz_id;
+	}
+	
 	// create a new result
 	function addResult($result_title, $result_description, $result_picture){
 		require('../Connections/quizroo.php');
@@ -264,39 +281,45 @@ class Quiz{
 		require('variables.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
-		// set the publish flag to 1 and award the first creation score
-		$query = sprintf("UPDATE q_quizzes SET isPublished = 1, quiz_score = %d WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
-		mysql_query($query, $quizroo) or die(mysql_error());
-		
-		// check the current member stats (for level up calculation later)
-		$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `s_members` WHERE `member_id` = %d", $this->fk_member_id);
-		$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
-		$row_getResults = mysql_fetch_assoc($getResults);
-		$old_level = $row_getResults['level'];
-		$old_score = $row_getResults['quiztaker_score'];
-		mysql_free_result($getResults);
-		
-		// update the member's creation score
-		$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
-		mysql_query($query, $quizroo) or die(mysql_error());
-		
-		// check if the there is a levelup:
-		///////////////////////////////////////
-		
-		// check the level table 
-		$queryLevel = sprintf("SELECT id FROM `g_levels` WHERE points <= %d ORDER BY points DESC LIMIT 0, 1", $old_score + $GAME_BASE_POINT);
-		$getLevel = mysql_query($queryLevel, $quizroo) or die(mysql_error());
-		$row_getLevel = mysql_fetch_assoc($getLevel);
-		$new_level = $row_getLevel['id'];
-		
-		if($new_level > $old_level){ // a levelup has occurred
-			// update the member table to reflect the new level
-			$queryUpdate = sprintf("UPDATE s_members SET level = %d WHERE member_id = %s", $new_level, $this->fk_member_id);
-			mysql_query($queryUpdate, $quizroo) or die(mysql_error());	
+		// check if the quiz is already published
+		if(!$this->isPublished()){		
+			// set the publish flag to 1 and award the first creation score
+			$query = sprintf("UPDATE q_quizzes SET isPublished = 1, quiz_score = %d WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
+			mysql_query($query, $quizroo) or die(mysql_error());
 			
-			// return the ID of the level acheievement
-			return $new_level;	
+			// check the current member stats (for level up calculation later)
+			$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `s_members` WHERE `member_id` = %d", $this->fk_member_id);
+			$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+			$row_getResults = mysql_fetch_assoc($getResults);
+			$old_level = $row_getResults['level'];
+			$old_score = $row_getResults['quiztaker_score'];
+			mysql_free_result($getResults);
+			
+			// update the member's creation score
+			$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
+			mysql_query($query, $quizroo) or die(mysql_error());
+			
+			// check if the there is a levelup:
+			///////////////////////////////////////
+			
+			// check the level table 
+			$queryLevel = sprintf("SELECT id FROM `g_levels` WHERE points <= %d ORDER BY points DESC LIMIT 0, 1", $old_score + $GAME_BASE_POINT);
+			$getLevel = mysql_query($queryLevel, $quizroo) or die(mysql_error());
+			$row_getLevel = mysql_fetch_assoc($getLevel);
+			$new_level = $row_getLevel['id'];
+			
+			if($new_level > $old_level){ // a levelup has occurred
+				// update the member table to reflect the new level
+				$queryUpdate = sprintf("UPDATE s_members SET level = %d WHERE member_id = %s", $new_level, $this->fk_member_id);
+				mysql_query($queryUpdate, $quizroo) or die(mysql_error());	
+				
+				// return the ID of the level acheievement
+				return $new_level;	
+			}else{
+				return -1;
+			}
 		}else{
+			// already published, do nothing
 			return -1;
 		}
 	}
@@ -319,7 +342,7 @@ class Quiz{
 	}
 	
 	// get the list of results belonging to this quiz
-	function getResults(){
+	function getResults($type = NULL){
 		require('../Connections/quizroo.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		$query = sprintf("SELECT result_id FROM q_results WHERE fk_quiz_id = %d", $this->quiz_id);
@@ -327,19 +350,25 @@ class Quiz{
 		$row_getQuery = mysql_fetch_assoc($getQuery);
 		$totalRows_getQuery = mysql_num_rows($getQuery);
 		
-		if($totalRows_getQuery != 0){
-			$results = "";
-			do{
-				$results .= $row_getQuery['result_id'].",";
-			}while($row_getQuery = mysql_fetch_assoc($getQuery));
-			return substr($results, 0, -1);
+		if($type == "count"){
+			// return the count
+			return $totalRows_getQuery;
 		}else{
-			return false;
+			// return the list
+			if($totalRows_getQuery != 0){
+				$results = "";
+				do{
+					$results .= $row_getQuery['result_id'].",";
+				}while($row_getQuery = mysql_fetch_assoc($getQuery));
+				return substr($results, 0, -1);
+			}else{
+				return false;
+			}
 		}
 	}
 	
 	// get the list of questions belonging to this quiz
-	function getQuestions(){
+	function getQuestions($type = NULL){
 		require('../Connections/quizroo.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		$query = sprintf("SELECT question_id FROM q_questions WHERE fk_quiz_id = %d", $this->quiz_id);
@@ -347,19 +376,25 @@ class Quiz{
 		$row_getQuery = mysql_fetch_assoc($getQuery);
 		$totalRows_getQuery = mysql_num_rows($getQuery);
 		
-		if($totalRows_getQuery != 0){
-			$results = "";
-			do{
-				$results .= $row_getQuery['question_id'].",";
-			}while($row_getQuery = mysql_fetch_assoc($getQuery));
-			return substr($results, 0, -1);
+		if($type == "count"){
+			// return the count
+			return $totalRows_getQuery;
 		}else{
-			return false;
+			// return the list
+			if($totalRows_getQuery != 0){
+				$results = "";
+				do{
+					$results .= $row_getQuery['question_id'].",";
+				}while($row_getQuery = mysql_fetch_assoc($getQuery));
+				return substr($results, 0, -1);
+			}else{
+				return false;
+			}
 		}
 	}
 	
 	// get the list of options belonging to a question
-	function getOptions($question_id){
+	function getOptions($question_id, $type = NULL){
 		require('../Connections/quizroo.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		$query = sprintf("SELECT option_id FROM q_options WHERE fk_question_id = %d", $question_id);
@@ -367,14 +402,19 @@ class Quiz{
 		$row_getQuery = mysql_fetch_assoc($getQuery);
 		$totalRows_getQuery = mysql_num_rows($getQuery);
 		
-		if($totalRows_getQuery != 0){
-			$results = "";
-			do{
-				$results .= $row_getQuery['option_id'].",";
-			}while($row_getQuery = mysql_fetch_assoc($getQuery));
-			return substr($results, 0, -1);
+		if($type == "count"){
+			// return the count
+			return $totalRows_getQuery;
 		}else{
-			return false;
+			if($totalRows_getQuery != 0){
+				$results = "";
+				do{
+					$results .= $row_getQuery['option_id'].",";
+				}while($row_getQuery = mysql_fetch_assoc($getQuery));
+				return substr($results, 0, -1);
+			}else{
+				return false;
+			}
 		}
 	}
 	

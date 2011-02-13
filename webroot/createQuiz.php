@@ -33,8 +33,7 @@ $(document).ready(function(){
 	QuizInfo.init(<?php echo $quiz_id; ?>, '<?php echo $unikey; ?>');
 	QuizResult.init();
 	QuizQuestion.init();
-	<?php }else{ ?>// always init the first upload widget, since it's required
-	initUploader(0);<?php } ?>
+	<?php }?>
 });
 </script>
 </body>

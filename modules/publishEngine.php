@@ -28,7 +28,7 @@ $achievement_details = retrieveAchievements($achievement_array);
 ?>
 <div class="frame rounded">
 <h3 id="title_quiz_result">Quiz Published!</h3> 
-You have successfully published your quiz. Your quiz will now be avaliable under the topic XX. It will also turn up in search queries. You will start recieving points when users take your quiz! Good luck!
+You have successfully published your quiz. Your quiz will now be avaliable under the topic <?php echo $quiz->category(); ?>. It will also turn up in search queries. You will start recieving points when users take your quiz! Good luck!
 </div>
 <div id="takequiz-preview" class="frame rounded">
   <h2><?php echo $quiz->quiz_name; ?></h2>

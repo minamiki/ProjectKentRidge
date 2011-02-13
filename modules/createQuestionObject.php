@@ -86,7 +86,7 @@ if(isset($_GET['load'])){
       <th valign="top" scope="row"><input type="button" name="addOptionBtn<?php echo $question; ?>" id="addOptionBtn<?php echo $question; ?>" value="Add new option" onClick="QuizQuestion.addOption(<?php echo $question; ?>)" /></th>
     </tr>
     <tr>
-      <td valign="top" class="desc" scope="row">Create a new option for this quiz</td>
+      <td valign="top" class="desc" scope="row">Create a new option for this question</td>
     </tr>
   </table>
 </div>
@@ -171,7 +171,7 @@ $quiz = $_GET['id'];
       <th valign="top" scope="row"><input type="button" name="addOptionBtn<?php echo $question; ?>" id="addOptionBtn<?php echo $question; ?>" value="Add new option" onClick="QuizQuestion.addOption(<?php echo $question; ?>)" /></th>
     </tr>
     <tr>
-      <td valign="top" class="desc" scope="row">Create a new option for this quiz</td>
+      <td valign="top" class="desc" scope="row">Create a new option for this question</td>
     </tr>
   </table>
 </div>

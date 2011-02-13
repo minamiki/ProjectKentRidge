@@ -33,7 +33,7 @@ if(isset($_GET['load'])){
       <input name="result_picture_<?php echo $result; ?>" type="hidden" id="result_picture_<?php echo $result; ?>" value="<?php echo $row_getQuery['result_picture']; ?>" /></th>
     <td><div id="swfupload-control-<?php echo $result; ?>" class="swfupload-control">
       <script>initUploader("result_picture_<?php echo $result; ?>")</script>
-      <table border="0" cellspacing="0" cellpadding="3">
+      <table border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td><input name="uploader-<?php echo $result; ?>" type="button" id="uploader-<?php echo $result; ?>" /></td>
           <td valign="middle" class="formDesc">Upload a new picture (jpg, gif only)</td>
@@ -50,17 +50,17 @@ if(isset($_GET['load'])){
     </div></td>
   </tr>
   <tr>
-    <td><div id="pictureChoser_<?php echo $result; ?>"><table border="0" cellspacing="0" cellpadding="3">
+    <td><div id="pictureChoser_<?php echo $result; ?>"><?php if(sizeof(glob("../quiz_images/".$unikey."*")) > 0){ ?><table border="0" cellspacing="0" cellpadding="3">
   <tr>
     <td><span class="formDesc">OR click on a picture below to use it as the result picture</span></td>
   </tr>
   <tr>
     <td><?php // return uploaded images
 foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
-<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo basename($filename); ?>', 'r<?php echo $result; ?>i<?php echo $count; ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
+<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo basename($filename); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
 <?php $count++; } ?></td>
   </tr>
-</table></div></td>
+</table><?php } ?></div></td>
   </tr>
 </table>
 </div>			
@@ -103,7 +103,7 @@ $count = 1;
       <input name="result_picture_<?php echo $result; ?>" type="hidden" id="result_picture_<?php echo $result; ?>" value="" /></th>
     <td><div id="swfupload-control-<?php echo $result; ?>" class="swfupload-control">
       <script>initUploader("result_picture_<?php echo $result; ?>")</script>
-      <table border="0" cellspacing="0" cellpadding="3">
+      <table border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td><input name="uploader-<?php echo $result; ?>" type="button" id="uploader-<?php echo $result; ?>" /></td>
           <td valign="middle" class="formDesc">Upload a new picture (jpg, gif only)</td>
@@ -120,17 +120,17 @@ $count = 1;
     </div></td>
   </tr>
   <tr>
-    <td><div id="pictureChoser_<?php echo $result; ?>"><table border="0" cellspacing="0" cellpadding="3">
+    <td><div id="pictureChoser_<?php echo $result; ?>"><?php if(sizeof(glob("../quiz_images/".$unikey."*")) > 0){ ?><table border="0" cellspacing="0" cellpadding="3">
   <tr>
     <td><span class="formDesc">OR click on a picture below to use it as the result picture</span></td>
   </tr>
   <tr>
     <td><?php // return uploaded images
 foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
-<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo basename($filename); ?>', 'r<?php echo $result; ?>i<?php echo $count; ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
+<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo basename($filename); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
 <?php $count++; } ?></td>
   </tr>
-</table></div></td>
+</table><?php } ?></div></td>
   </tr>
 </table>
 </div>
