@@ -52,8 +52,14 @@
 	margin-bottom: 10px;
 	color: #333;
 }
-#create-quiz p.center{
+p.center{
 	text-align: center;
+}
+#checkQuizTable img {
+	border: 1px solid #333;
+}
+#checkQuizTable a img {
+	border: none;
 }
 
 #create-quiz input, #create-quiz textarea, #create-quiz select {
