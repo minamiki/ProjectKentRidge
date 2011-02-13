@@ -126,6 +126,9 @@
 	background-color: #F60 !important;
 	color: #FFF;
 }
+.center {
+	text-align: center;
+}
 #question_paging span.active {
 	background-color: #F60 !important;
 	color: #FFF;

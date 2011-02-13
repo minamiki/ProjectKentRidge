@@ -84,7 +84,7 @@ class Quiz{
 		return $this->quiz_id;
 	}
 	
-	// update the  quiz
+	// update the quiz
 	function update($title, $description, $cat, $picture){
 		require('../Connections/quizroo.php');
 		mysql_select_db($database_quizroo, $quizroo);
@@ -276,7 +276,43 @@ class Quiz{
 	
 	// return the publish status of the quiz
 	function isPublished(){
-		return $this->isPublished;
+		if($this->isPublished == 1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	// check if quiz is ready to be published
+	function checkPublish(){
+		require('variables.php');		
+		// check the number of results
+		$numResults = $this->getResults("count");
+		// check the number of questions
+		$numQuestions = $this->getQuestions("count");
+		// check the number of options
+		$listQuestion = explode(',', $this->getQuestions());
+		
+		if($numQuestions != 0){
+			$questionState = true;
+			$optionState = true;
+			foreach($listQuestion as $question){
+				// check the number of options for this question
+				$numOptions = $this->getOptions($question, "count");
+				if($numOptions < $VAR_QUIZ_MIN_OPTIONS){
+					$optionState = false;
+				}
+			}
+		}else{
+			$questionState = false;
+			$optionState = false;
+		}
+		// run through the checks, return false if failed
+		if($numResults <= $VAR_QUIZ_MIN_RESULT || $numQuestions <= $VAR_QUIZ_MIN_QUESTIONS || !$optionState){
+			return false;
+		}else{
+			return true;
+		}
 	}
 	
 	// publish the quiz
@@ -286,45 +322,101 @@ class Quiz{
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// check if the quiz is already published
-		if(!$this->isPublished()){		
-			// set the publish flag to 1 and award the first creation score
-			$query = sprintf("UPDATE q_quizzes SET isPublished = 1, quiz_score = %d WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
-			mysql_query($query, $quizroo) or die(mysql_error());
+		if(!$this->isPublished()){
+			// run through the checks, return false if failed
+			if(!$this->checkPublish()){
+				return false;
+			}
 			
-			// check the current member stats (for level up calculation later)
-			$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `s_members` WHERE `member_id` = %d", $this->fk_member_id);
-			$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
-			$row_getResults = mysql_fetch_assoc($getResults);
-			$old_level = $row_getResults['level'];
-			$old_score = $row_getResults['quiztaker_score'];
-			mysql_free_result($getResults);
-			
-			// update the member's creation score
-			$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
-			mysql_query($query, $quizroo) or die(mysql_error());
-			
-			// check if the there is a levelup:
-			///////////////////////////////////////
-			
-			// check the level table 
-			$queryLevel = sprintf("SELECT id FROM `g_levels` WHERE points <= %d ORDER BY points DESC LIMIT 0, 1", $old_score + $GAME_BASE_POINT);
-			$getLevel = mysql_query($queryLevel, $quizroo) or die(mysql_error());
-			$row_getLevel = mysql_fetch_assoc($getLevel);
-			$new_level = $row_getLevel['id'];
-			
-			if($new_level > $old_level){ // a levelup has occurred
-				// update the member table to reflect the new level
-				$queryUpdate = sprintf("UPDATE s_members SET level = %d WHERE member_id = %s", $new_level, $this->fk_member_id);
-				mysql_query($queryUpdate, $quizroo) or die(mysql_error());	
+			// check if coming from edits
+			if($this->isPublished == 0){				
+				// set the publish flag to 1 and award the first creation score
+				$query = sprintf("UPDATE q_quizzes SET isPublished = 1, quiz_score = %d WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
+				mysql_query($query, $quizroo) or die(mysql_error());
+				$this->isPublished = 1;
 				
-				// return the ID of the level acheievement
-				return $new_level;	
+				// check the current member stats (for level up calculation later)
+				$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `s_members` WHERE `member_id` = %d", $this->fk_member_id);
+				$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+				$row_getResults = mysql_fetch_assoc($getResults);
+				$old_level = $row_getResults['level'];
+				$old_score = $row_getResults['quiztaker_score'];
+				mysql_free_result($getResults);
+				
+				// update the member's creation score
+				$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
+				mysql_query($query, $quizroo) or die(mysql_error());
+				
+				// check if the there is a levelup:
+				///////////////////////////////////////
+				
+				// check the level table 
+				$queryLevel = sprintf("SELECT id FROM `g_levels` WHERE points <= %d ORDER BY points DESC LIMIT 0, 1", $old_score + $GAME_BASE_POINT);
+				$getLevel = mysql_query($queryLevel, $quizroo) or die(mysql_error());
+				$row_getLevel = mysql_fetch_assoc($getLevel);
+				$new_level = $row_getLevel['id'];
+				
+				if($new_level > $old_level){ // a levelup has occurred
+					// update the member table to reflect the new level
+					$queryUpdate = sprintf("UPDATE s_members SET level = %d WHERE member_id = %s", $new_level, $this->fk_member_id);
+					mysql_query($queryUpdate, $quizroo) or die(mysql_error());	
+					
+					// return the ID of the level acheievement
+					return $new_level;	
+				}else{
+					return -1;
+				}
 			}else{
+				// set the publish flag to 1
+				$query = sprintf("UPDATE q_quizzes SET isPublished = 1 WHERE quiz_id = %d", $this->quiz_id);
+				mysql_query($query, $quizroo) or die(mysql_error());
+				$this->isPublished = 1;
+				
 				return -1;
 			}
 		}else{
 			// already published, do nothing
 			return -1;
+		}
+	}
+	
+	// re-publish the quiz
+	function republish(){
+		require('../Connections/quizroo.php');
+		require('variables.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// check if the quiz is already published
+		if(!$this->isPublished()){		
+			// set the publish flag to 1
+			$query = sprintf("UPDATE q_quizzes SET isPublished = 1 WHERE quiz_id = %d", $this->quiz_id);
+			mysql_query($query, $quizroo) or die(mysql_error());
+			
+			$this->isPublished = 1;
+			
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	// unpublish the quiz
+	function unpublish(){
+		require('../Connections/quizroo.php');
+		require('variables.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// check if the quiz is already published
+		if($this->isPublished()){		
+			// set the publish flag to 0
+			$query = sprintf("UPDATE q_quizzes SET isPublished = 2 WHERE quiz_id = %d", $this->quiz_id);
+			mysql_query($query, $quizroo) or die(mysql_error());
+			
+			$this->isPublished = 2;
+			
+			return true;
+		}else{
+			return false;
 		}
 	}
 	
