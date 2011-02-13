@@ -28,7 +28,7 @@ if(isset($_GET['step'])){
 		}
 		
 		// direct them to step 2
-		header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id."&key=".$key);
+		header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
 		
 		break;		
 		case 2: // save the quiz results
@@ -44,8 +44,8 @@ if(isset($_GET['step'])){
 				$result_title = $_POST['result_title_'.$i];
 				$result_description = $_POST['result_description_'.$i];
 				$result_picture = ($_POST['result_picture_'.$i] != "") ? $_POST['result_picture_'.$i] : "none.gif";
-				if(isset($_POST['id'.$i])){
-					$quiz->updateResult($result_title, $result_description, $result_picture, $_POST['id'.$i]);
+				if(isset($_POST['ur'.$i])){
+					$quiz->updateResult($result_title, $result_description, $result_picture, $_POST['ur'.$i]);
 				}else{
 					$quiz->addResult($result_title, $result_description, $result_picture);
 				}
@@ -115,10 +115,6 @@ if(isset($_GET['step'])){
 		}
 
 		break;
-		
 	}
-}else{
-	// if not step is given we direct them to the first step
-	header("Location: ../webroot/createQuiz.php");
 }
 ?>

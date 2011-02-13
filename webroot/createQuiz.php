@@ -31,10 +31,14 @@ $(document).ready(function(){
 	QuizValidate.init();
 	<?php if(isset($_GET['step'])){ ?>
 	QuizInfo.init(<?php echo $quiz_id; ?>, '<?php echo $unikey; ?>');
+	<?php switch($_GET['step']){ case 1: ?>
+	scanInitUploader();
+	<?php break; case 2: ?>
 	QuizResult.init();
-	QuizQuestion.init();
-	<?php }else{ ?>
-	initUploader("result_picture_0");
+	<?php break; case 3: ?>
+	QuizQuestion.init();	
+	<?php break; case 4: ?>
+	<?php }}else{ ?>
 	<?php } ?>
 });
 </script>

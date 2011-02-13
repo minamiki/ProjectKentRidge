@@ -11,12 +11,14 @@ switch($_GET['step']){ case 1:
 // get the unikey and quiz id
 if(isset($_GET['id'])){
 	$quiz_id = $_GET['id'];
-	// now check whether this quiz actually belongs to this user
 	$quiz = new Quiz($quiz_id);
-	if(!$quiz->isOwner($member->id)){
+	
+	// now check whether this quiz actually belongs to this user
+	if($quiz->isOwner($member->id)){
+		$unikey = $quiz->quiz_key;
+	}else{
 		die("Authentication Failure");
 	}
-	$unikey = $quiz->quiz_key;
 	
 	// populate the categories
 	mysql_select_db($database_quizroo, $quizroo);
@@ -26,7 +28,7 @@ if(isset($_GET['id'])){
 	$totalRows_listCat = mysql_num_rows($listCat);
 }else{
 	// find a way to post and error
-	die("session has expired");
+	die("No quiz was specified");
 }
 ?>
 <div id="progress-container" class="frame rounded">
@@ -71,7 +73,7 @@ if(isset($_GET['id'])){
         </tr>
         <tr>
           <th rowspan="2" valign="top" scope="row"><label>Quiz Picture</label>
-          <input type="hidden" name="result_picture_0" id="result_picture_0" value="<?php echo $unikey; ?>" /></th>
+          <input type="hidden" name="result_picture_0" id="result_picture_0" value="<?php echo $quiz->quiz_picture; ?>" /></th>
           <td class="desc"><div id="swfupload-control-0" class="swfupload-control">
               <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
@@ -115,15 +117,17 @@ break; case 2:
 	// get the unikey and quiz id
 	if(isset($_GET['id'])){
 		$quiz_id = $_GET['id'];
-		// now check whether this quiz actually belongs to this user
 		$quiz = new Quiz($quiz_id);
-		if(!$quiz->isOwner($member->id)){
+		
+		// now check whether this quiz actually belongs to this user
+		if($quiz->isOwner($member->id)){
+			$unikey = $quiz->quiz_key;
+		}else{
 			die("Authentication Failure");
 		}
-		$unikey = $quiz->quiz_key;
 	}else{
 		// find a way to post and error
-		die("session has expired");
+		die("No quiz was specified");
 	}
 ?>
 <div id="progress-container" class="frame rounded">
@@ -153,20 +157,22 @@ break; case 3:
 	// get the unikey and quiz id
 	if(isset($_GET['id'])){
 		$quiz_id = $_GET['id'];
-		// now check whether this quiz actually belongs to this user
 		$quiz = new Quiz($quiz_id);
-		if(!$quiz->isOwner($member->id)){
+		
+		// now check whether this quiz actually belongs to this user
+		if($quiz->isOwner($member->id)){
+			$unikey = $quiz->quiz_key;
+		}else{
 			die("Authentication Failure");
 		}
-		$unikey = $quiz->quiz_key;
 	}else{
 		// find a way to post and error
-		die("session has expired");
+		die("No quiz was specified");
 	}
 ?>
 <div id="progress-container" class="frame rounded">
   <h3>Create Quiz: Questions</h3>
-  <p>You're just <strong>2</strong> steps away from creating your own quiz! <em>Step 3</em> allows you to populate your quiz with question. You can provide several options for quiz takers to choose for each question. You should also specify the weightage of each option - how each option contributes to a result. </p>
+  <p>You're just <strong>2</strong> steps away from creating your own quiz! <em>Step 3</em> allows you to populate your quiz with questions. You can provide several options for quiz takers to choose for each question. You should also specify the weightage of each option - how each option contributes to a result. </p>
   <ul class="rounded">
     <li class="complete_full start"><strong>Step 1</strong> Quiz Information</li>
     <li class="completed_last"><strong>Step 2</strong> Results</li>
@@ -192,23 +198,22 @@ break; case 4:
 	// get the unikey and quiz id
 	if(isset($_GET['id'])){
 		$quiz_id = $_GET['id'];
-		// now check whether this quiz actually belongs to this user
 		$quiz = new Quiz($quiz_id);
-		if(!$quiz->isOwner($member->id)){
+		
+		// now check whether this quiz actually belongs to this user
+		if($quiz->isOwner($member->id)){
+			$unikey = $quiz->quiz_key;
+		}else{
 			die("Authentication Failure");
 		}
+		
 		$unikey = $quiz->quiz_key;
 		require("../modules/variables.php");
 			
-		// overall check
-		$quizState = true;
-		
 		// check the number of results
-		$numResults = $quiz->getResults("count");
-		
+		$numResults = $quiz->getResults("count");		
 		// check the number of questions
 		$numQuestions = $quiz->getQuestions("count");
-		
 		// check the number of options
 		$listQuestion = explode(',', $quiz->getQuestions());
 		$totalOptions = 0;
@@ -224,9 +229,6 @@ break; case 4:
 				}
 				$totalOptions += $numOptions;
 			}
-		}else{
-			$questionState = false;
-			$optionState = false;
 		}
 		
 		if($numQuestions != 0){
@@ -235,12 +237,14 @@ break; case 4:
 			$averageOptionCount = 0;
 		}
 		
-		if($numResults <= $VAR_QUIZ_MIN_RESULT || $numQuestions <= $VAR_QUIZ_MIN_QUESTIONS || !$optionState){
+		if(!$quiz->checkPublish()){
 			$quizState = false;
+		}else{
+			$quizState = true;
 		}
 	}else{
 		// find a way to post and error
-		die("session has expired");
+		die("No quiz was specified");
 	}
 ?>
 <div id="progress-container" class="frame rounded">

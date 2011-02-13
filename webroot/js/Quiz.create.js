@@ -49,7 +49,7 @@ var QuizInfo = {
 	init: function(id, key){
 		this.id = id;
 		this.key = key;
-	}		
+	}
 }
 
 // Quiz Result class
