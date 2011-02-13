@@ -1,4 +1,6 @@
 <div id="fb-root"></div>
+<?php // load variables 
+require("../modules/variables.php"); ?>
 <script>
 //======================================================
 // Load and initialize the facebook javascript framework
@@ -25,16 +27,6 @@ function gotoTop(){
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/Statusbar.js"></script>
 <script type="text/javascript" src="js/Share.js"></script>
-<?php // load repective scripts only when required (single scripts)
-require("../modules/variables.php");
-switch(basename($_SERVER['SCRIPT_NAME'])){
-	case "index.php": $src = "Dashboard.js"; break;
-	case "takeQuiz.php": $src = "Quiz.js"; break;
-	default: $src = "";
-}
-
-if($src != ""){
-?><script type="text/javascript" src="js/<?php echo $src; ?>"></script><?php } ?>
 <script>
 //======================================================
 // Includes javascript to be executed on document ready

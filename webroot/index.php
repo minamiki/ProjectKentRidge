@@ -11,5 +11,6 @@
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/dashboard.php"); ?>
 <?php include("inc/footer-js.php"); ?>
+<script type="text/javascript" src="js/Dashboard.js"></script>
 </body>
 </html>
