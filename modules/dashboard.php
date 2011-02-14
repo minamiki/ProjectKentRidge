@@ -102,6 +102,7 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
         <?php } while ($row_popular = mysql_fetch_assoc($popular)); ?>
     </div>
   </div>
+  <?php if($VAR_SHOW_TOPICS){ ?>
   <div id="topics" class="frame rounded">
     <h2>Topics</h2>
     <p class="description">Browse quizzes by their topic!</p>
@@ -109,6 +110,7 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
 <a href="topic.php?id=<?php echo $row_getTopics['cat_id']; ?>" class="topicTitle"><?php echo $row_getTopics['cat_name']; ?></a>
       <?php } while ($row_getTopics = mysql_fetch_assoc($getTopics)); ?>
   </div>
+  <?php } ?>
 </div>
 <?php
 mysql_free_result($recommendations);

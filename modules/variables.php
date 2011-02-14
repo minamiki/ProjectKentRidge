@@ -36,6 +36,8 @@ $VAR_NUM_LISTINGS = 4;
 $VAR_URL = "http://quizroo.nus-hci.com/";
 // Whether to display the recent activity panel
 $VAR_SHOW_RECENT = false;
+// Whether to display the recent activity panel
+$VAR_SHOW_TOPICS = false;
 // Minimum number of quiz results allowed
 $VAR_QUIZ_MIN_RESULT = 1;
 // Minimum number of quiz questions allowed
