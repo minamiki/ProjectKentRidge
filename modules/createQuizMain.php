@@ -304,6 +304,8 @@ break; case 4:
 break;} }else{ 
 // generate a one time hash key for the upload, (this hash key will stay with the quiz throughout the entire creation process)
 $unikey = get_rand_id(8);
+// bind it to a member
+$member->bindImagekey($unikey);
 
 // populate the categories
 mysql_select_db($database_quizroo, $quizroo);

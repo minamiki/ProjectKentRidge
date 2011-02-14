@@ -24,7 +24,7 @@ if(isset($_GET['step'])){
 			$quiz_id = $quiz->update($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture);
 		}else{
 			$quiz = new Quiz();
-			$quiz_id = $quiz->create($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $key, $member->id);
+			$quiz_id = $quiz->create($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id, $key);
 		}
 		
 		// direct them to step 2

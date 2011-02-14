@@ -5,7 +5,7 @@
 if(!class_exists("Member")){
 class Member{
 	// debugging mode
-	private $debug = false;
+	private $debug = true;
 	
 	// member facebook variables
 	public $session = NULL;
@@ -60,8 +60,8 @@ class Member{
 			}
 		}else{
 			$this->me = true;
-			$this->me = array('name' => "Debug Test User");
-			$this->id = 1;
+			$this->me = array('name' => "Ho Yit Chun");
+			$this->id = 581124362;
 		}
 		
 		if($this->me){
@@ -170,6 +170,15 @@ class Member{
 	
 	function getGender(){
 		return $this->me['gender'];
+	}
+	
+	// bind a unikey with this member
+	function bindImagekey($unikey){
+		require('../Connections/quizroo.php');	// database connections
+		
+		mysql_select_db($database_quizroo, $quizroo);
+		$queryCheck = sprintf("INSERT INTO s_image_store(`uni_key`, `fk_member_id`) VALUES(%s, %d)",  GetSQLValueString($unikey, "text"), $this->id);
+		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 	}
 }
 }
