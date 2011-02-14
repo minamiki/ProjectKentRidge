@@ -106,30 +106,34 @@ var QuizResult = {
 	},
 	
 	remove: function(id){
-		// unregister the validators
-		QuizValidate.remove("textfield", "result_title_"+id);		// remove title
-		QuizValidate.remove("textarea", "result_description_"+id);	// remove description
-		// is it already in the database ?
-		if($("#ur"+id).val() != undefined){
-			// remove from database
-			$.ajax({
-				type: "GET",
-				url: "../modules/createResultObject.php?delete",
-				data: "result="+$("#ur"+id).val()+"&id="+QuizInfo.id,
-				async: false,
-				success: function(data) {
-					if(data != ""){
-						alert(data);
+		if(confirm("Are you sure you want to remove this result? This action cannot be undone!")){
+			// unregister the validators
+			QuizValidate.remove("textfield", "result_title_"+id);		// remove title
+			QuizValidate.remove("textarea", "result_description_"+id);	// remove description
+			// is it already in the database ?
+			if($("#ur"+id).val() != undefined){
+				// remove from database
+				$.ajax({
+					type: "GET",
+					url: "../modules/createResultObject.php?delete",
+					data: "result="+$("#ur"+id).val()+"&id="+QuizInfo.id,
+					async: false,
+					success: function(data) {
+						if(data != ""){
+							alert(data);
+						}
 					}
-				}
-			});
+				});
+			}
+			// just remove the question widget
+			$("#r"+id).remove();
+			//this.resultCount--;
+			// update the count
+			this.updateCount();
+			return this.resultCount
+		}else{
+			return false;
 		}
-		// just remove the question widget
-		$("#r"+id).remove();
-		//this.resultCount--;
-		// update the count
-		this.updateCount();
-		return this.resultCount
 	},
 	
 	updateCount: function(){
@@ -210,58 +214,66 @@ var QuizQuestion = {
 	},
 	
 	remove: function(id){
-		// find and remove the options in it
-		for(i=0; i < this.question[id]; i++){
-			this.removeOption(id, this.question[id][i]);
-		}
-		// unregister the validators
-		QuizValidate.remove("textfield", "q"+id);
-		// is it already in the database ?
-		if($("#uq"+id).val() != undefined){
-			// remove from database
-			$.ajax({
-				type: "GET",
-				url: "../modules/createQuestionObject.php?delete",
-				data: "question="+$("#uq"+id).val()+"&id="+QuizInfo.id,
-				async: false,
-				success: function(data) {
-					if(data != ""){
-						alert(data);
+		if(confirm("Are you sure you want to remove this question and it's options? This action cannot be undone!")){
+			// find and remove the options in it
+			for(i=0; i < this.question[id]; i++){
+				this.removeOption(id, this.question[id][i]);
+			}
+			// unregister the validators
+			QuizValidate.remove("textfield", "q"+id);
+			// is it already in the database ?
+			if($("#uq"+id).val() != undefined){
+				// remove from database
+				$.ajax({
+					type: "GET",
+					url: "../modules/createQuestionObject.php?delete",
+					data: "question="+$("#uq"+id).val()+"&id="+QuizInfo.id,
+					async: false,
+					success: function(data) {
+						if(data != ""){
+							alert(data);
+						}
 					}
-				}
-			});
+				});
+			}
+			// remove the question widget
+			$("#q"+id).remove();
+			delete this.question[id];
+			this.updateCount();
+			this.getOptionValues();
+			
+			return true;
+		}else{
+			return false;
 		}
-		// remove the question widget
-		$("#q"+id).remove();
-		delete this.question[id];
-		this.updateCount();
-		this.getOptionValues();
-		
-		return true;
 	},
 	
 	removeOption: function(question, option){
-		// unregister the validators
-		QuizValidate.remove("textfield", 'q'+question+'o'+option);
-		// is it already in the database ?
-		if($('#uq'+question+'o'+option).val() != undefined){
-			// remove from database
-			$.ajax({
-				type: "GET",
-				url: "../modules/createOptionObject.php?delete",
-				data: "option="+$('#uq'+question+'o'+option).val()+"&id="+QuizInfo.id,
-				async: false,
-				success: function(data) {
-					if(data != ""){
-						alert(data);
+		if(confirm("Are you sure you want to remove this option? This action cannot be undone!")){
+			// unregister the validators
+			QuizValidate.remove("textfield", 'q'+question+'o'+option);
+			// is it already in the database ?
+			if($('#uq'+question+'o'+option).val() != undefined){
+				// remove from database
+				$.ajax({
+					type: "GET",
+					url: "../modules/createOptionObject.php?delete",
+					data: "option="+$('#uq'+question+'o'+option).val()+"&id="+QuizInfo.id,
+					async: false,
+					success: function(data) {
+						if(data != ""){
+							alert(data);
+						}
 					}
-				}
-			});
+				});
+			}
+			// remove the option widget
+			$('#cq'+question+'o'+option).remove();
+			delete this.question[question][option];
+			return true;
+		}else{
+			return false;
 		}
-		// remove the option widget
-		$('#cq'+question+'o'+option).remove();
-		delete this.question[question][option];
-		return true;
 	},
 	
 	numQuestions: function(){
