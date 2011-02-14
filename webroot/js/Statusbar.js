@@ -158,9 +158,9 @@ var Statusbar = {
 			$('#statusbar-info').append(help);
 			$(help).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Help</div><div class='statusbar-menu-desc'>Get help using Quizroo</div>");
 			$(help).click(function(){
-				//goToURL('help.php');
+				goToURL('previewQuiz.php?id=1');
 				//$(help).css('background-color','#333');
-				featureUnavailable();
+				//featureUnavailable();
 			});
 			
 			var quizroo = document.createElement('div');
