@@ -78,18 +78,16 @@ var Statusbar = {
 			$('#statusbar-info').append(createQuiz);
 			$(createQuiz).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Create</div><div class='statusbar-menu-desc'>Create a new quiz</div>");
 			$(createQuiz).click(function(){
-				//goToURL('createQuiz.php');
-				//$(createQuiz).css('background-color','#333');
-				featureUnavailable();
+				goToURL('createQuiz.php');
+				$(createQuiz).css('background-color','#333');
 			});
 			
 			var manageQuiz = document.createElement('div');
 			$('#statusbar-info').append(manageQuiz);
 			$(manageQuiz).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Manage</div><div class='statusbar-menu-desc'>Manage quizzes you have created</div>");
 			$(manageQuiz).click(function(){
-				//goToURL('manageQuiz.php');
-				//$(createQuiz).css('background-color','#333');
-				featureUnavailable();
+				goToURL('manageQuiz.php');
+				$(createQuiz).css('background-color','#333');
 			});
 			
 			var viewQuiz = document.createElement('div');
@@ -158,9 +156,9 @@ var Statusbar = {
 			$('#statusbar-info').append(help);
 			$(help).addClass('statusbar-menu-item').html("<div class='statusbar-menu-title'>Help</div><div class='statusbar-menu-desc'>Get help using Quizroo</div>");
 			$(help).click(function(){
-				//goToURL('help.php');
+				goToURL('previewQuiz.php?id=1');
 				//$(help).css('background-color','#333');
-				featureUnavailable();
+				//featureUnavailable();
 			});
 			
 			var quizroo = document.createElement('div');
