@@ -3,14 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Quizroo</title>
+<title>Quizroo: Create Quiz</title>
 <?php include("inc/header-css.php");?>
+<link href="css/createQuiz.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
+<?php include("../modules/variables.php");?>
 <?php include("../modules/statusbar.php");?>
-<?php include("../modules/dashboard.php"); ?>
+<?php include("../modules/manageQuizPanel.php");?>
 <?php include("inc/footer-js.php"); ?>
-<script type="text/javascript" src="js/Dashboard.js"></script>
 </body>
 </html>

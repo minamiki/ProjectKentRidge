@@ -1,169 +1,308 @@
 // Create Quiz
 
-// variables
-var uploadfile = "uploadQuiz";
-
-// storage counters
-var resultCount = 0;
-var questionCount = 0;
-var checkTextField = 0;
-var checkTextArea = 0;
-
-// storage arrays
-var sprytextfield = new Array();
-var sprytextarea = new Array();
-var resultArray = new Array();
-var questionArray = new Array();
-
-// Object Classes
-function questionClass(){
-	this.numOptions = 2;
-}
-function resultClass(){
-	this.result = "";
-}
-
-// functions
-$(document).ready(function(){
-	// set default checks
-	sprytextfield[checkTextField] = new Spry.Widget.ValidationTextField("sprytextfield"+checkTextField, "none", {validateOn:["change"]});
-	sprytextarea[checkTextArea] = new Spry.Widget.ValidationTextarea("sprytextarea"+checkTextArea, {validateOn:["change"]});
-	checkTextField++;
-	checkTextArea++;
-});
-
-function selectImage(result, filename, id){
-	//console.log("Quiz: "+result+" "+filename+" "+id);
-	$("#showResultImage_"+result).text("Image '"+filename+"' selected");
-	$("#result_picture_"+result).val(filename);
-	$("#select_picture_"+result).val(id);
-	$('#queuestatus-'+result).text('"'+filename.substring(9)+'" will be used as the quiz image.');
-	$('#selected-image-'+result).html('<img src="../quiz_images/imgcrop.php?w=100&amp;h=75&amp;f='+filename+'" alt="" width="100" height="75" />');
-}
-
-function addResult(){
-	$.ajax({
-		type: "GET",
-		url: "../modules/createResultObject.php",
-		data: "resultNumber="+resultCount+"&unikey="+unikey+"&checkTextField="+checkTextField+"&checkTextArea="+checkTextArea+"&widgetCount="+widgetCount,
-		async: false,
-		success: function(data) {
-			$("#createResultContainer").append(data);
-			resultArray[resultCount++] = new resultClass();
-			sprytextfield[checkTextField] = new Spry.Widget.ValidationTextField("sprytextfield"+checkTextField, "none", {validateOn:["change"]});
-			sprytextarea[checkTextArea] = new Spry.Widget.ValidationTextarea("sprytextarea"+checkTextArea, {validateOn:["change"]});
-			checkTextField++;
-			checkTextArea++;
+// Quiz Validation Class
+var QuizValidate = {
+	// storage counters
+	sprytextfield: new Array(),
+	sprytextarea: new Array(),
+	
+	// init all validation objects
+	init: function(){		
+		// we scan through the page and identify all validation widgets
+		textfield = this.sprytextfield;
+		textarea = this.sprytextarea;
+		$(".sprytextfield").each(function(i){ // textfields
+			textfield[i] = new Spry.Widget.ValidationTextField($(this).attr('id'), "none", {validateOn:["change"]});
+		});
+		$(".sprytextarea").each(function(i){ // textareas
+			textarea[i] = new Spry.Widget.ValidationTextarea($(this).attr('id'), {validateOn:["change"]});
+			
+		});
+	},
+	
+	add: function(type, field_id){
+		id = this.sprytextfield.length+1;
+		if(type == "textfield"){
+			this.sprytextfield[id] = new Spry.Widget.ValidationTextField($("#sprytextfield-"+field_id).attr('id'), "none", {validateOn:["change"]});
+		}else{
+			this.sprytextarea[id] = new Spry.Widget.ValidationTextarea($("#sprytextarea-"+field_id).attr('id'), {validateOn:["change"]});
 		}
-	});
-}
-
-function updateResult(result){
-	resultArray[result-1].result = $("#result_title_"+result).val();
-}
-
-function getResultText(){
-	var textString = "";
-	for(i = 0; i < resultArray.length; i++){
-		textString += resultArray[i].result + '_';
+		return true;
+	},
+		
+	remove: function(type, id){
+		if(type == "textfield"){
+			remover = new Spry.Widget.Utils.destroyWidgets("sprytextfield-"+id);
+			return true;
+		}else{
+			remover = new Spry.Widget.Utils.destroyWidgets("sprytextarea-"+id);
+			return true;
+		}
 	}
-	return textString.substr(0, textString.length-1);
-}
-function getOptionValues(){
-	var textString = "";
-	for(i = 0; i < questionArray.length; i++){
-		textString += questionArray[i].numOptions + '_';
-	}
-	return textString.substr(0, textString.length-1);
 }
 
-function addQuestion(){
-	if(resultCount < 1){
-		alert("You need to have at least 1 result before you can create a Quiz question!");
-	}else{
+// Quiz Information class
+var QuizInfo = {
+	id: 0,
+	key: '',
+	// store the id
+	init: function(id, key){
+		this.id = id;
+		this.key = key;
+	}
+}
+
+// Quiz Result class
+var QuizResult = {
+	resultCount: 0,
+	
+	init: function(){
+		// populate the quiz
 		$.ajax({
 			type: "GET",
-			url: "../modules/createQuestionObject.php",
-			data: "questionNumber="+questionCount+"&checkTextField="+checkTextField+"&results="+escape(getResultText()),
+			url: "../modules/createResultObject.php?load",
+			data: "resultNumber="+this.resultCount+"&unikey="+QuizInfo.key+"&id="+QuizInfo.id,
+			async: false,
+			success: function(data) {
+				$("#createResultContainer").append(data);
+			}
+		});
+		// count the number of results
+		numResult = 0;
+		$(".resultWidget").each(function(i){
+			numResult++;
+			QuizValidate.add("textfield", "result_title_"+i);	// result title
+			QuizValidate.add("textarea", "result_description_"+i);	// result description
+		});
+		this.resultCount = numResult;
+		// update the count
+		this.updateCount();
+		// init the images
+		scanInitUploader();
+		
+	},
+	
+	add: function(){
+		// add the result widget
+		$.ajax({
+			type: "GET",
+			url: "../modules/createResultObject.php",
+			data: "resultNumber="+this.resultCount+"&unikey="+QuizInfo.key,
+			async: false,
+			success: function(data) {
+				$("#createResultContainer").append(data);
+			}
+		});
+		QuizValidate.add("textfield", "result_title_"+this.resultCount);	// result title
+		QuizValidate.add("textarea", "result_description_"+this.resultCount);	// result description
+		// init the picture uploader
+		initUploader(this.resultCount);
+
+		// return the value and increment
+		this.resultCount++;
+		// update the count
+		this.updateCount();
+		return this.resultCount;
+	},
+	
+	remove: function(id){
+		// unregister the validators
+		QuizValidate.remove("textfield", "result_title_"+id);		// remove title
+		QuizValidate.remove("textarea", "result_description_"+id);	// remove description
+		// is it already in the database ?
+		if($("#ur"+id).val() != undefined){
+			// remove from database
+			$.ajax({
+				type: "GET",
+				url: "../modules/createResultObject.php?delete",
+				data: "result="+$("#ur"+id).val()+"&id="+QuizInfo.id,
+				async: false,
+				success: function(data) {
+					if(data != ""){
+						alert(data);
+					}
+				}
+			});
+		}
+		// just remove the question widget
+		$("#r"+id).remove();
+		//this.resultCount--;
+		// update the count
+		this.updateCount();
+		return this.resultCount
+	},
+	
+	updateCount: function(){
+		$("#resultCount").val(this.resultCount);
+	}
+}
+
+var QuizQuestion = {
+	question: new Array(),
+	
+	init: function(){
+		// populate the questions
+		$.ajax({
+			type: "GET",
+			url: "../modules/createQuestionObject.php?load",
+			data: "questionNumber="+this.numQuestions()+"&id="+QuizInfo.id,
 			async: false,
 			success: function(data) {
 				$("#createQuestionContainer").append(data);
-				questionArray[questionCount++] = new questionClass();
-				for(i = 0; i < 3; i++){
-					sprytextfield[checkTextField] = new Spry.Widget.ValidationTextField("sprytextfield"+checkTextField, "none", {validateOn:["change"]});
-					checkTextField++;			
-				}
+			}
+		});		
+		thisQuestion = this.question;
+		// count the number of questions
+		$(".questionWidget").each(function(i){
+			thisQuestion[i] = new Array();
+			QuizValidate.add("textfield", 'q'+i); // question
+			// find out the number of options in a question
+			$(".optionWidget-"+i).each(function(j){
+				thisQuestion[i][j] = 'q'+i+'o'+j;
+				QuizValidate.add("textfield", 'q'+i+'o'+j); // option
+			});
+		});		
+		this.updateCount();
+		this.getOptionValues();
+	},
+	
+	add: function(){
+		// add the question widget
+		$.ajax({
+			type: "GET",
+			url: "../modules/createQuestionObject.php",
+			data: "questionNumber="+this.numQuestions()+"&id="+QuizInfo.id,
+			async: false,
+			success: function(data) {
+				$("#createQuestionContainer").append(data);
 			}
 		});
-	}
-}
-
-function addOption(question){
-	$.ajax({
-		type: "GET",
-		url: "../modules/createOptionObject.php",
-		data: "questionNumber="+question+"&checkTextField="+checkTextField+"&optionNumber="+questionArray[question-1].numOptions+"&results="+escape(getResultText()),
-		async: false,
-		success: function(data) {
-			$("#optionContainer_"+question).append(data);
-			questionArray[question-1].numOptions++;
-			sprytextfield[checkTextField] = new Spry.Widget.ValidationTextField("sprytextfield"+checkTextField, "none", {validateOn:["change"]});
-			checkTextField++;
+		// init the validators
+		QuizValidate.add("textfield", 'q'+this.question.length); // question
+		QuizValidate.add("textfield", 'q'+this.question.length+'o0'); // option 1
+		QuizValidate.add("textfield", 'q'+this.question.length+'o1'); // option 2
+		// update the array counts		
+		this.question[this.question.length] = new Array();
+		this.question[this.question.length-1][0] = 'q'+this.question.length+'o0';
+		this.question[this.question.length-1][1] = 'q'+this.question.length+'o1';
+		// update the page counts
+		this.updateCount();
+		this.getOptionValues();
+		return this.question.length;
+	},
+	
+	addOption: function(question_id){
+		nextOption = this.question[question_id].length;
+		// add an option widget
+		$.ajax({
+			type: "GET",
+			url: "../modules/createOptionObject.php",
+			data: "questionNumber="+question_id+"&optionNumber="+nextOption+"&id="+QuizInfo.id,
+			async: false,
+			success: function(data) {
+				$("#optionContainer_"+question_id).append(data);
+			}
+		});
+		// add an option
+		this.question[question_id][nextOption] = 'q'+question_id+'o'+nextOption;
+		QuizValidate.add("textfield", 'q'+question_id+'o'+nextOption); // one option
+		return this.question[question_id].length;
+	},
+	
+	remove: function(id){
+		// find and remove the options in it
+		for(i=0; i < this.question[id]; i++){
+			this.removeOption(id, this.question[id][i]);
 		}
-	});
-}
-
-function checkIfUploading(){
-	if($.inArray(true, isUploading) == -1){
-		return false;
-	}else{
+		// unregister the validators
+		QuizValidate.remove("textfield", "q"+id);
+		// is it already in the database ?
+		if($("#uq"+id).val() != undefined){
+			// remove from database
+			$.ajax({
+				type: "GET",
+				url: "../modules/createQuestionObject.php?delete",
+				data: "question="+$("#uq"+id).val()+"&id="+QuizInfo.id,
+				async: false,
+				success: function(data) {
+					if(data != ""){
+						alert(data);
+					}
+				}
+			});
+		}
+		// remove the question widget
+		$("#q"+id).remove();
+		delete this.question[id];
+		this.updateCount();
+		this.getOptionValues();
+		
 		return true;
+	},
+	
+	removeOption: function(question, option){
+		// unregister the validators
+		QuizValidate.remove("textfield", 'q'+question+'o'+option);
+		// is it already in the database ?
+		if($('#uq'+question+'o'+option).val() != undefined){
+			// remove from database
+			$.ajax({
+				type: "GET",
+				url: "../modules/createOptionObject.php?delete",
+				data: "option="+$('#uq'+question+'o'+option).val()+"&id="+QuizInfo.id,
+				async: false,
+				success: function(data) {
+					if(data != ""){
+						alert(data);
+					}
+				}
+			});
+		}
+		// remove the option widget
+		$('#cq'+question+'o'+option).remove();
+		delete this.question[question][option];
+		return true;
+	},
+	
+	numQuestions: function(){
+		return this.question.length;
+	},
+	
+	getOptionValues: function(){
+		var textString = "";
+
+		for(i = 0; i < this.question.length; i++){
+			if(this.question[i] != undefined){
+				textString += this.question[i].length + '_';
+			}else{
+				textString += 0 + '_';
+			}
+		}
+		returnVal = textString.substr(0, textString.length-1);
+		$("#optionCounts").val(returnVal);
+		return returnVal;
+	},
+
+	updateCount: function(){
+		$("#questionCount").val(this.question.length);
 	}
 }
-
 
 function submitCheck(value){
-	var checkFields = true;
-	// check if min fields are met
-	if(questionCount < 1){
-		checkFields = false;
-	}
-	if(resultCount < 1){
-		checkFields = false;
-	}
-	
 	// check if upload complete
-	if(value && !checkIfUploading() && checkFields){
+	if(value && !checkIfUploading()){
 		$('#submitBtn').attr("disabled", "disabled");
-		$('#resultCount').val(resultCount);
-		$('#questionCount').val(questionCount);
-		$("#optionCounts").val(getOptionValues());
+		$('#resultCount').val(QuizResult.resultCount);
+		$('#questionCount').val(QuizQuestion.numQuestions());
+		$("#optionCounts").val(QuizQuestion.getOptionValues());
 		return true;
 	}else{
 		if(checkIfUploading()){
 			alert("Photo uploads still in progress! Please wait for uploads to complete!");
-		}
-		if(!checkFields){
-			alert("You need to have a minimum of 1 result and 1 quiz question!");	
 		}
 		if(!value){
 			alert("Some of the required fields are empty! Please scroll up to check. Fields requiring attention will be highlighted red.");	
 		}
 		return false;
 	}
-}
-
-function removeField(removeID, type, num){
-	$("#"+removeID).remove();
-	
-	if(type == 'o'){
-		questionArray[num-1].numOptions--;
-	}
-	if(type == 'r'){
-		resultCount--;
-	}
-	if(type == 'q'){
-		questionCount--;
-	}
-	
 }

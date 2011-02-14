@@ -28,7 +28,7 @@
 
 #create-quiz h4 {
 	font-family: "Myriad Pro", Arial, sans-serif;
-	font-size: 22px;
+	font-size: 18px;
 	font-weight: bold;
 	color: #333;
 	margin-top: 10px;
@@ -44,7 +44,7 @@
 	text-align: right;
 	display: block;
 }
-#create-quiz p, #login p, #register p, .styleForm p {
+#create-quiz p       {
 	font-size: 14px;
 	margin-right: 15px;
 	margin-left: 15px;
@@ -52,12 +52,22 @@
 	margin-bottom: 10px;
 	color: #333;
 }
-#create-quiz input, #create-quiz textarea, #create-quiz select, #login input, #register input, .styleBtn, .styleForm {
+p.center{
+	text-align: center;
+}
+#checkQuizTable img {
+	border: 1px solid #333;
+}
+#checkQuizTable a img {
+	border: none;
+}
+
+#create-quiz input, #create-quiz textarea, #create-quiz select {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
-#create-quiz input[type='text'], #create-quiz textarea, #login input[type='text'], #login input[type='password'], #register input[type='text'], #register input[type='password'], .styleBtn, .styleForm input[type='text']{
+#create-quiz input[type='text'], #create-quiz textarea {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	padding: 5px;
@@ -69,13 +79,26 @@
 	padding: 4px;
 	border: 1px solid #CCC;
 }
-#create-quiz input[type='text'], #create-quiz textarea, #login input[type='text'], #login input[type='password'], #register input[type='text'], #register input[type='password'], .styleForm input[type='text']{
+#checkQuizTable {
+	font-size: 14px;
+}
+#checkQuizTable td {
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCC;
+}
+#checkQuizTable th {
+	color: #333;
+	background-image: url(../img/form_bg.gif);
+}
+#create-quiz input[type='text'], #create-quiz textarea {
 	width: 100%;	
 }
-#create-quiz input[type='text']:focus, #create-quiz textarea:focus, #create-quiz select:focus, #login input[type='text']:focus, #login input[type='password']:focus , #register input[type='text']:focus, #register input[type='password']:focus, .styleForm input[type='text']:focus{
+#create-quiz input[type='text']:focus, #create-quiz textarea:focus, #create-quiz select:focus {
 	border: 1px solid #F90;
 }
-#create-quiz input[type='button'], #create-quiz input[type='submit'], #login input[type='submit'], #register input[type='submit'], .styleBtn, .styleForm input[type='submit'] {
+/*
+#create-quiz input[type='button'], #create-quiz input[type='submit'] {
 	font-family: "Myriad Pro", Arial, sans-serif;
 	font-size: 16px;
 	color: #000;
@@ -87,9 +110,9 @@
 	padding-left: 12px;
 	font-weight: bold;
 }
-#create-quiz input[type='button']:hover, #create-quiz input[type='submit']:hover, #login input[type='submit']:hover, #register input[type='submit']:hover, .styleBtn:hover, .styleForm input[type='submit']:hover{
+#create-quiz input[type='button']:hover, #create-quiz input[type='submit']:hover {
 	background-color: #FC0;
-}
+}*/
 #create-quiz input[type='button'].click {
 	background-color: #FC0;
 	border-top-color: #C00;
@@ -123,9 +146,20 @@
 	color: #333;
 	font-style: italic;
 	padding-top: 2px;
+	padding-left: 5px;
 }
 #createQuiz a {
 	outline: none;
+}
+#create-quiz .orangeBtn, #created-preamble .orangeBtn{
+	background-color: #FC3;
+}
+#created-preamble span.center, #takequiz-preamble span.center{
+	display: block;
+	text-align: center;
+}
+#created-preamble p.center{
+	text-align: center;
 }
 .selectImage{
 	border: 1px solid #CCC;
@@ -135,4 +169,56 @@
 }
 #createQuiz .selected-image img {
 	border: 1px solid #CCC;
+}
+.add_container {
+	display: block;
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10px;
+	text-align: center;
+}
+#progress-container ul {
+	margin: 0px;
+	padding: 0px;
+	height: 40px;
+	background-color: #CCC;
+	color: #FFF;
+}
+#progress-container ul li {
+	float: left;
+	list-style-type: none;
+	padding-top: 10px;
+	padding-right: 40px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+}
+#progress-container .start{
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-bottomleft: 5px;
+}
+#progress-container .current {
+	background-color: #FC0;
+	color: #000;
+	background-image: url(../img/arrow_step.png);
+	background-repeat: no-repeat;
+	background-position: right;
+}
+#progress-container .final {
+	background-color: #FC0;
+	color: #000;
+}
+#progress-container .completed_last {
+	background-color: #9C0;
+	color: #000;
+	background-image: url(../img/arrow_complete.png);
+	background-repeat: no-repeat;
+	background-position: right;
+}
+#progress-container .complete_full {
+	background-color: #9C0;
+	color: #000;
+}
+#progress-container ul li strong {
+	margin-right: 6px;
 }

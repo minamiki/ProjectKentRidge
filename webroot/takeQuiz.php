@@ -11,6 +11,7 @@
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/takeQuiz.php"); ?>
 <?php include("inc/footer-js.php"); ?>
+<script type="text/javascript" src="js/Quiz.js"></script>
 <script>
 // update the slider height
 $(document).ready(function(){

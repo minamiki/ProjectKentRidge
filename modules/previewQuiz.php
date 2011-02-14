@@ -13,9 +13,9 @@
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Publish Quiz</h3>
   <p>If you feel that your quiz is ready, click the &quot;Publish Quiz&quot; button. Once your quiz is published, it will be listed on Quizroo. You will receive points when a user takes your quiz. You can get more points when they &quot;like&quot; your quiz, or no points when they &quot;dislike&quot; your quiz.</p>
-  <span class="center">
+  <p class="center">
   <input type="button" name="button" id="button" onclick="goToURL('publishQuiz.php?id=<?php echo $_GET['id']; ?>')" value="Publish Quiz!" />
-</span> </div>
+</p> </div>
 <?php } ?>
 <div id="takequiz-preview" class="frame rounded">
   <h2><?php echo $quiz->quiz_name; ?></h2>
