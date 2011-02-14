@@ -1,47 +1,20 @@
 <?php require('../Connections/quizroo.php'); ?>
 <?php require('variables.php');
-$maxRows_recommendations = $VAR_NUM_LISTINGS;
-$pageNum_recommendations = 0;
-if (isset($_GET['pageNum_recommendations'])) {
-  $pageNum_recommendations = $_GET['pageNum_recommendations'];
-}
-$startRow_recommendations = $pageNum_recommendations * $maxRows_recommendations;
-
+// retrieve recommended quizzes
 mysql_select_db($database_quizroo, $quizroo);
-$query_recommendations = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY creation_date DESC";
-$query_limit_recommendations = sprintf("%s LIMIT %d, %d", $query_recommendations, $startRow_recommendations, $maxRows_recommendations);
-$recommendations = mysql_query($query_limit_recommendations, $quizroo) or die(mysql_error());
+$query_recommendations = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY creation_date DESC LIMIT 0, %d", $VAR_NUM_LISTINGS);
+$recommendations = mysql_query($query_recommendations, $quizroo) or die(mysql_error());
 $row_recommendations = mysql_fetch_assoc($recommendations);
+$totalRows_recommendations = mysql_num_rows($recommendations);
 
-if (isset($_GET['totalRows_recommendations'])) {
-  $totalRows_recommendations = $_GET['totalRows_recommendations'];
-} else {
-  $all_recommendations = mysql_query($query_recommendations);
-  $totalRows_recommendations = mysql_num_rows($all_recommendations);
-}
-$totalPages_recommendations = ceil($totalRows_recommendations/$maxRows_recommendations)-1;
-
-$maxRows_popular = $VAR_NUM_LISTINGS;
-$pageNum_popular = 0;
-if (isset($_GET['pageNum_popular'])) {
-  $pageNum_popular = $_GET['pageNum_popular'];
-}
-$startRow_popular = $pageNum_popular * $maxRows_popular;
-
+// retrieve popular quizzes
 mysql_select_db($database_quizroo, $quizroo);
-$query_popular = "SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY RAND()";
-$query_limit_popular = sprintf("%s LIMIT %d, %d", $query_popular, $startRow_popular, $maxRows_popular);
-$popular = mysql_query($query_limit_popular, $quizroo) or die(mysql_error());
+$query_popular = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY quiz_score DESC LIMIT 0, %d", $VAR_NUM_LISTINGS);
+$popular = mysql_query($query_popular, $quizroo) or die(mysql_error());
 $row_popular = mysql_fetch_assoc($popular);
+$totalRows_popular = mysql_num_rows($popular);
 
-if (isset($_GET['totalRows_popular'])) {
-  $totalRows_popular = $_GET['totalRows_popular'];
-} else {
-  $all_popular = mysql_query($query_popular);
-  $totalRows_popular = mysql_num_rows($all_popular);
-}
-$totalPages_popular = ceil($totalRows_popular/$maxRows_popular)-1;
-
+// populate the topics panel
 mysql_select_db($database_quizroo, $quizroo);
 $query_getTopics = "SELECT * FROM q_quiz_cat";
 $getTopics = mysql_query($query_getTopics, $quizroo) or die(mysql_error());
@@ -66,12 +39,11 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
   <?php } ?>
   <div class="clear">
     <div id="recommendations" class="frame rounded left-right">
-      <h2>Recommendations</h2>
-      <?php do { ?>
+      <h2>Lastest</h2>
+      <?php if($totalRows_recommendations != 0){ do { ?>
         <div class="quiz_box clear">
           <h3><?php echo $row_recommendations['quiz_name']; ?></h3>
           <div class="thumb_box">
-            <!--<div class="quiz_rating">Overlay</div>-->
             <a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_recommendations['quiz_picture']; ?>" alt="<?php echo $row_recommendations['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_recommendations['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
             <p class="description"><?php echo substr($row_recommendations['quiz_description'], 0, 120).((strlen($row_recommendations['quiz_description']) < 120)? "" : "..."); ?></p>
@@ -81,15 +53,16 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
 			<?php }}else{ ?><p class="rating"><span class="like"><?php echo $row_recommendations['likes']; ?></span> likes, <span class="dislike"><?php echo $row_recommendations['dislikes']; ?></span> dislikes</p><?php } ?>
           </div>
         </div>
-        <?php } while ($row_recommendations = mysql_fetch_assoc($recommendations)); ?>
+        <?php } while ($row_recommendations = mysql_fetch_assoc($recommendations)); }else{ ?>
+        <p>There are no latest quizzes!</p>
+        <?php } ?>
     </div>
     <div id="popular" class="frame rounded left-right clear">
       <h2>Popular</h2>
-      <?php do { ?>
+      <?php if($totalRows_popular !=0 ){ do { ?>
         <div class="quiz_box clear">
           <h3><?php echo $row_popular['quiz_name']; ?></h3>
           <div class="thumb_box">
-            <!--<div class="quiz_rating"></div>-->
             <a href="previewQuiz.php?id=<?php echo $row_popular['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_popular['quiz_picture']; ?>" alt="<?php echo $row_popular['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_popular['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
             <p class="description"><?php echo substr($row_popular['quiz_description'], 0, 120).((strlen($row_popular['quiz_description']) < 120)? "" : "..."); ?></p>
@@ -99,15 +72,17 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
 			<?php }}else{ ?><p class="rating"><span class="like"><?php echo $row_popular['likes']; ?></span> likes, <span class="dislike"><?php echo $row_popular['dislikes']; ?></span> dislikes</p><?php } ?>
           </div>
         </div>
-        <?php } while ($row_popular = mysql_fetch_assoc($popular)); ?>
+        <?php } while ($row_popular = mysql_fetch_assoc($popular)); }else{ ?>
+        <p>There are no popular quizzes for this topic!</p>
+        <?php } ?>
     </div>
   </div>
   <?php if($VAR_SHOW_TOPICS){ ?>
   <div id="topics" class="frame rounded">
     <h2>Topics</h2>
-    <p class="description">Browse quizzes by their topic!</p>
+    <p>Taken all the latest quizzes? You can also browse other quizzes by their topic!</p>
     <?php do { ?>
-<a href="topic.php?id=<?php echo $row_getTopics['cat_id']; ?>" class="topicTitle"><?php echo $row_getTopics['cat_name']; ?></a>
+<a href="topics.php?topic=<?php echo $row_getTopics['cat_id']; ?>" class="topicTitle"><?php echo $row_getTopics['cat_name']; ?></a>
       <?php } while ($row_getTopics = mysql_fetch_assoc($getTopics)); ?>
   </div>
   <?php } ?>
@@ -115,6 +90,5 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
 <?php
 mysql_free_result($recommendations);
 mysql_free_result($popular);
-
 mysql_free_result($getTopics);
 ?>
