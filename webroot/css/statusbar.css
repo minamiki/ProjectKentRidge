@@ -150,6 +150,16 @@
 	cursor:pointer;
 }
 
+.statusbar-quiztaker-container{
+	float:left;
+	width:250px;
+}
+
+.statusbar-quizcreator-container{
+	float:right;
+	width:250px;
+}
+
 #statusbar-quizcreator{
 	float:right;
 	width:70px;
