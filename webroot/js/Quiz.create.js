@@ -216,10 +216,12 @@ var QuizQuestion = {
 	remove: function(id){
 		if(confirm("Are you sure you want to remove this question and it's options? This action cannot be undone!")){
 			// find and remove the options in it
-			for(i=0; i < this.question[id]; i++){
-				this.removeOption(id, this.question[id][i]);
+			for(i=0; i < this.question[id].length; i++){
+				if(this.question[id][i] != undefined){
+					this.removeOption(id, i, true);
+				}
 			}
-			// unregister the validators
+			// unregister the question validator
 			QuizValidate.remove("textfield", "q"+id);
 			// is it already in the database ?
 			if($("#uq"+id).val() != undefined){
@@ -248,8 +250,13 @@ var QuizQuestion = {
 		}
 	},
 	
-	removeOption: function(question, option){
-		if(confirm("Are you sure you want to remove this option? This action cannot be undone!")){
+	removeOption: function(question, option, mute){
+		if(mute){
+			ask = true;
+		}else{
+			ask = confirm("Are you sure you want to remove this option? This action cannot be undone!");
+		}
+		if(ask){
 			// unregister the validators
 			QuizValidate.remove("textfield", 'q'+question+'o'+option);
 			// is it already in the database ?
