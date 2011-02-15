@@ -30,6 +30,8 @@ $FB_CANVAS = "http://apps.facebook.com/quizroo/";
 // Prefix with "VAR_"
 //----------------------------------------
 
+// Turn on debug mode
+$VAR_SYSTEM_DEBUG = false;
 // Number of recommendations/popular quizzes to show
 $VAR_NUM_LISTINGS = 5;
 // The true URL for the application

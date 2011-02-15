@@ -1,8 +1,7 @@
-<?php require('../Connections/quizroo.php'); ?>
 <?php
+require('../Connections/quizroo.php'); 
 require('variables.php');
 require('quiz.php');
-require('calculatePoints.php');
 require('checkAchievements.php');
 
 // get the member's facebook id
@@ -29,7 +28,7 @@ for($i = 0; $i < $totalQuestionCount; $i++){
 		$validate = false;
 	}
 }
-
+// check if post data is invalid
 if(!$validate){
 	// invalid data, redirect to home
 	header("Location: index.php");
@@ -41,7 +40,7 @@ $getResults = mysql_query($query_getResults, $quizroo) or die(mysql_error());
 $row_getResults = mysql_fetch_assoc($getResults);
 $totalRows_getResults = mysql_num_rows($getResults);
 
-// store the final result into the database if published
+// check if the quiz is published
 if($quiz->isPublished()){
 	// award the quiz creator the base points
 	if(!$quiz->hasTaken($member->id)){
@@ -53,30 +52,36 @@ if($quiz->isPublished()){
 	mysql_query($query_saveResult, $quizroo) or die(mysql_error());
 }
 
+//----------------------------------------
+// Insert attempt timings into database
+// - TODO: What to do with the timings
+//----------------------------------------
+
 // get the attempt timings
 $logtime = explode(',', $_POST['logtime']);
-$logArray = array();
+$PHPstartTime = $logtime[1] * 1000;	// the logged PHP server timestamp
+$JSstartTime = $logtime[2];			// the logged Javascript timestamp
+// prepare the log array
+$logArray = array();				// to be stored
 for($i = 0, $j = 3; $i < sizeof($logtime)/3 - 1; $i++, $j+=3){
-	$logArray[$i] = array($logtime[$j], $logtime[$j+1], $logtime[$j+2]);
+	$logArray[$i] = array($logtime[$j], $logtime[$j+1], ($PHPstartTime + $logtime[$j+2] - $JSstartTime)/1000);
 }
-$PHPstartTime = $logtime[1] * 1000;
-$JSstartTime = $logtime[2];
 
-// TODO: Insert attempt timings into database
-//
+//----------------------------------------
+// Calculate points and achievements
+//----------------------------------------
 
 // prepare the achievement array for possible multiple achievements
 $achievement_array = array();
 
 // Calculate Points to award
-calculatePoints($facebookID, $quiz_id, $quiz->isPublished());
+$achievement_array = $member->calculatePoints($quiz_id, $quiz->isPublished(), $achievement_array);
 
 // Check for achievements
 checkAchievements($facebookID);
 
 //----------------------------------------
 // Retrieve Quiz results for display
-// TODO: Decouple from resultEngine
 //----------------------------------------
 
 // select the result data
@@ -142,7 +147,7 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 <div class="frame rounded">
 <h3>Result Details</h3>
 <div id="result_chart"><img src="../webroot/images/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div>
-<!--
+<?php if($VAR_SYSTEM_DEBUG){ ?>
 <table border="0" align="center" cellpadding="3" cellspacing="0">
   <tr>
     <th scope="col">Question</th>
@@ -153,10 +158,11 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
   <tr>
     <td><?php echo $attempt[0]; ?></td>
     <td><?php echo $attempt[1]; ?></td>
-    <td><?php echo date("F j, Y H:i:s", ($PHPstartTime + $attempt[2] - $JSstartTime)/1000); ?></td>
+    <td><?php echo $attempt[2]; ?></td>
   </tr>
   <?php } ?>
-</table>-->
+</table>
+<?php } ?>
 <?php } ?>
 
 </div>
@@ -165,9 +171,4 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 // Display splash screen with results
 //----------------------------------------
 $achievement_details = retrieveAchievements($achievement_array);
-?>
-<?php
-//mysql_free_result($getResults);
-//mysql_free_result($getResultChart);
-//mysql_free_result($getResultInfo);
 ?>
