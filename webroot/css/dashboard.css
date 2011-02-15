@@ -34,6 +34,14 @@
 	margin-bottom: 10px;
 	margin-left: 0px;
 }
+#topic-preamble h2 {
+	font-size: 30px;
+	margin-bottom: 0px;
+}
+#topic-preamble p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
 .thumb_box {
 	height: 68px;
 	width: 90px;
