@@ -94,7 +94,7 @@ var Statusbar = {
 			var qc_score = qc_data['quizcreator_score'];
 			var qc_today = qc_data['quizcreator_score_today'];
 			
-			var rank = Statusbar.achievements['quiztakerrank'];
+			var rank = Statusbar.achievements['rank'];
 			var rankname = rank['name'];
 			var rankdesc = rank['description'];
 			var level = rank['level'];
@@ -102,14 +102,14 @@ var Statusbar = {
 			
 			$('#statusbar-info').html(
 				"<div class='statusbar-quiztaker-container'>"+
-					"<div class='statusbar-info-title'>Quiz Taker<div class='statusbar-info-more'><a href=''>more</a></div></div>"+
+					"<div class='statusbar-info-title'>Quiz Taker</div>"+
 					"<div class='statusbar-line'>"+
 						"<div class='statusbar-score-text'>Total Points: "+qt_score+"</div>"+
 						"<div class='statusbar-score-text'>Today's Quiz Taker Points: "+qt_today+"</div>"+
 					"</div>"+
 				"</div>"+
 				"<div class='statusbar-quizcreator-container'>"+
-					"<div class='statusbar-info-title'>Quiz Creator</div>"+
+					"<div class='statusbar-info-title'>Quiz Creator<div class='statusbar-info-more'><a href=''>more</a></div></div>"+
 					"<div class='statusbar-line'>"+
 						"<div class='statusbar-score-text'>Total Popularity Points: "+qc_score+"</div>"+
 						"<div class='statusbar-score-text'>Today's Quiz Creator Points: "+qc_today+"</div>"+
@@ -436,10 +436,10 @@ var Statusbar = {
 	},
 	
 	displayBar: function(){
-		var level = Statusbar.achievements['quiztakerrank']['level'];
-		var score = Statusbar.achievements['quiztaker']['quiztaker_score'];		
-		var levelScore = Statusbar.achievements['quiztakerrank']['levelscore'];
-		var nextLevelScore = Statusbar.achievements['quiztakerrank']['nextlevelscore'];
+		var level = Statusbar.achievements['rank']['level'];
+		var score = (parseInt(Statusbar.achievements['quiztaker']['quiztaker_score'])+parseInt(Statusbar.achievements['quizcreator']['quizcreator_score']));		
+		var levelScore = Statusbar.achievements['rank']['levelscore'];
+		var nextLevelScore = Statusbar.achievements['rank']['nextlevelscore'];
 		var ratio = 0;
 		var text = '';
 		

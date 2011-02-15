@@ -30,7 +30,7 @@ function Status(){
  * @param int $memberid
  */
 function checkAchievements($memberid){
-	$result = array('overview'=>array(), 'achievements'=>array(), 'quiztakerrank'=>array(), 'quiztaker'=>array(),'quizcreator'=>array());
+	$result = array('overview'=>array(), 'achievements'=>array(), 'rank'=>array(), 'quiztaker'=>array(),'quizcreator'=>array());
 	$database = new Database();
 	
 	/*
@@ -38,7 +38,7 @@ function checkAchievements($memberid){
 	 */
 	$achievementsOverview = $database->query('SELECT fk_achievement_id,timestamp FROM g_achievements_log WHERE fk_member_id="'.$memberid.'" ORDER BY timestamp DESC LIMIT 3'); 
 	foreach($achievementsOverview as $achievementOverview){
-		$description = $database->get('g_achievements',array('image','name','description'),'id="'.$achievementsOverview[0]['fk_achievement_id'].'"');
+		$description = $database->get('g_achievements',array('image','name','description'),'id="'.$achievementOverview['fk_achievement_id'].'"');
 		array_push($result['overview'],$description[0]);
 	}
 	
@@ -47,7 +47,7 @@ function checkAchievements($memberid){
 	 */
 	$rank = $database->query('SELECT image,name,description,level FROM s_members LEFT JOIN g_achievements ON rank=g_achievements.id WHERE (member_id="'.$memberid.'")');
 	$levelscore = $database->get('g_levels',array('points'),'id='.$rank[0]['level'].' OR id='.($rank[0]['level']+1));
-	$result['quiztakerrank'] = array('image'=>$rank[0]['image'],'name'=>$rank[0]['name'],'description'=>$rank[0]['description'],'level'=>$rank[0]['level'],'levelscore'=>$levelscore[0]['points'],'nextlevelscore'=>$levelscore[1]['points']);
+	$result['rank'] = array('image'=>$rank[0]['image'],'name'=>$rank[0]['name'],'description'=>$rank[0]['description'],'level'=>$rank[0]['level'],'levelscore'=>$levelscore[0]['points'],'nextlevelscore'=>$levelscore[1]['points']);
 	
 	/*
 	 * Checks for total number of achievements.
