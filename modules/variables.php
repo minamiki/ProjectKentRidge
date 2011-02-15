@@ -1,17 +1,23 @@
-<?php
+<?php include("../Connections/quizroo.php");
+// load the values from database
+mysql_select_db($database_quizroo, $quizroo);
+$queryVars = "SELECT * FROM `s_variables`";
+$getVars = mysql_query($queryVars, $quizroo) or die(mysql_error());
+$row_getVars = mysql_fetch_assoc($getVars);
+
 //----------------------------------------
 // For game variables
 // Prefix with "GAME_"
 //----------------------------------------
 
 // The base score for awarding of points
-$GAME_BASE_POINT = 10;
+$GAME_BASE_POINT = $row_getVars['GAME_BASE_POINT'];
 // The multiplier amount for each increment
-$GAME_MULTIPLIER = 1;
+$GAME_MULTIPLIER = $row_getVars['GAME_MULTIPLIER'];
 // Whether users get points for retaking quizzes
-$GAME_REWARD_RETAKES = false;
+$GAME_REWARD_RETAKES = $row_getVars['GAME_REWARD_RETAKES'];
 // Whether users get to 'dislike' quizzes
-$GAME_ALLOW_DISLIKES = false;
+$GAME_ALLOW_DISLIKES = $row_getVars['GAME_ALLOW_DISLIKES'];
 
 //----------------------------------------
 // Facebook variables
@@ -19,11 +25,11 @@ $GAME_ALLOW_DISLIKES = false;
 //----------------------------------------
 
 // Facebook App ID
-$FB_APPID = "154849761223760";
+$FB_APPID = $row_getVars['FB_APPID'];
 // Facebook App Secret Key
-$FB_SECRET = "26cfea224822c58cd618eae900d87f69";
+$FB_SECRET = $row_getVars['FB_SECRET'];
 // Facebook Canvas URL
-$FB_CANVAS = "http://apps.facebook.com/quizroo/";
+$FB_CANVAS = $row_getVars['FB_CANVAS'];
 
 //----------------------------------------
 // Quiz/Application variables
@@ -31,20 +37,21 @@ $FB_CANVAS = "http://apps.facebook.com/quizroo/";
 //----------------------------------------
 
 // Turn on debug mode
-$VAR_SYSTEM_DEBUG = false;
+$VAR_SYSTEM_DEBUG = $row_getVars['VAR_SYSTEM_DEBUG'];
 // Number of recommendations/popular quizzes to show
-$VAR_NUM_LISTINGS = 5;
+$VAR_NUM_LISTINGS = $row_getVars['VAR_NUM_LISTINGS'];
 // The true URL for the application
-$VAR_URL = "http://quizroo.nus-hci.com/";
+$VAR_URL = $row_getVars['VAR_URL'];
 // Whether to display the recent activity panel
-$VAR_SHOW_RECENT = false;
+$VAR_SHOW_RECENT = $row_getVars['VAR_SHOW_RECENT'];
 // Whether to display the recent activity panel
-$VAR_SHOW_TOPICS = true;
+$VAR_SHOW_TOPICS = $row_getVars['VAR_SHOW_TOPICS'];
 // Minimum number of quiz results allowed
-$VAR_QUIZ_MIN_RESULT = 1;
+$VAR_QUIZ_MIN_RESULT = $row_getVars['VAR_QUIZ_MIN_RESULT'];
 // Minimum number of quiz questions allowed
-$VAR_QUIZ_MIN_QUESTIONS = 1;
+$VAR_QUIZ_MIN_QUESTIONS = $row_getVars['VAR_QUIZ_MIN_QUESTIONS'];
 // Minimum number of quiz options allowed
-$VAR_QUIZ_MIN_OPTIONS = 2;
+$VAR_QUIZ_MIN_OPTIONS = $row_getVars['VAR_QUIZ_MIN_OPTIONS'];
 
+mysql_free_result($getVars);
 ?>

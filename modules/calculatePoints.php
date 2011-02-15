@@ -10,6 +10,7 @@ function calculatePoints($facebookID, $quiz_id, $quiz_publish_status){
 	global $GAME_BASE_POINT, $GAME_MULTIPLIER, $GAME_REWARD_RETAKES, $achievement_array;
 	
 	// check if user has already taken this quiz
+	mysql_select_db($database_quizroo, $quizroo);
 	$queryCheck = sprintf("SELECT COUNT(store_id) AS count FROM q_store_result WHERE `fk_member_id` = %s AND `fk_quiz_id` = %s", $facebookID, $quiz_id);
 	$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 	$row_getResults = mysql_fetch_assoc($getResults);
