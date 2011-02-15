@@ -9,9 +9,8 @@ require 'database.php';
  * 
  * @param $memberid
  */
-function checkAchievements($memberid){
+function checkAchievements($memberid,$achievement_array){
 	
-	global $achievement_array;
 	// Use a common database connection
 	$database = new Database();
 	
@@ -71,6 +70,8 @@ function checkAchievements($memberid){
 			$achievement_array[] = 52;
 		}
 	}
+	
+	return $achievement_array;
 }
 
 function retrieveAchievements($array){

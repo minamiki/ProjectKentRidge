@@ -157,7 +157,7 @@ var Statusbar = {
 			);
 			$(manageQuiz).click(function(){
 				goToURL('manageQuiz.php');
-				$(createQuiz).css('background-color','#333');
+				$(manageQuiz).css('background-color','#333');
 			});
 			
 			var viewQuiz = document.createElement('div');
@@ -168,7 +168,7 @@ var Statusbar = {
 			);
 			$(viewQuiz).click(function(){
 				//goToURL('viewQuiz.php');
-				//$(createQuiz).css('background-color','#333');
+				//$(viewQuiz).css('background-color','#333');
 				featureUnavailable();
 			});
 			
