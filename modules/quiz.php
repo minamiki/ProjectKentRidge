@@ -18,6 +18,8 @@ class Quiz{
 	public $isPublished = NULL;
 	public $quiz_key = NULL;
 	
+	public $quiz_not_available = NULL;
+	
 	function __construct($quiz_id = NULL){
 		if($quiz_id != NULL){
 			require('../Connections/quizroo.php');
@@ -43,11 +45,24 @@ class Quiz{
 				$this->quiz_key			= $row_getQuiz['quiz_key'];
 				return true;
 			}else{
+				$this->quiz_not_available = true;
 				return false;
 			}
 		}else{
 			return false;
 		}	
+	}
+	
+	function exists(){
+		if($this->quiz_not_available){
+			return false;
+		}else{
+			if($this->isPublished == 3){
+				return false;
+			}else{
+				return true;
+			}
+		}
 	}
 	
 	// create a new quiz
@@ -81,6 +96,9 @@ class Quiz{
 		
 		mysql_free_result($resultID);
 		
+		// update the keystore
+		$this->bindImagekey($key);
+		
 		return $this->quiz_id;
 	}
 	
@@ -99,6 +117,61 @@ class Quiz{
 		mysql_query($insertSQL, $quizroo) or die(mysql_error());
 		
 		return $this->quiz_id;
+	}
+	
+	// update the quiz
+	function delete($member_id){
+		require('../Connections/quizroo.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// check if is member
+		if($this->isOwner($member_id)){
+			// remove the questions
+			$questionList = explode(',', $this->getQuestions());
+			foreach($questionList as $question){
+				if($question != ""){
+					$this->removeQuestion($question, $member_id);
+				}
+			}
+			
+			// remove the results
+			$resultList = explode(',', $this->getResults());
+			foreach($resultList as $result){
+				if($result != ""){
+					$this->removeResult($result, $member_id);
+				}
+			}
+			
+			// clean images
+			if($this->quiz_key != ""){
+				foreach(glob("../quiz_images/".$this->quiz_key."*") as $filename){
+					unlink($filename);
+				}			
+			}			
+			
+			// remove the question
+			$insertSQL = sprintf("DELETE FROM q_quizzes WHERE `quiz_id` = %d", GetSQLValueString($this->quiz_id, "int"));
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());
+			
+			$removed_id = $this->quiz_id;
+			
+			$this->quiz_id 			= NULL;
+			$this->quiz_name 		= NULL;
+			$this->quiz_description = NULL;
+			$this->fk_quiz_cat		= NULL;
+			$this->quiz_picture		= NULL;
+			$this->creation_date	= NULL;
+			$this->fk_member_id		= NULL;
+			$this->quiz_score		= NULL;
+			$this->likes			= NULL;
+			$this->dislikes			= NULL;
+			$this->isPublished		= NULL;
+			$this->quiz_key			= NULL;
+			
+			return $removed_id;	
+		}else{
+			return false;
+		}
 	}
 	
 	// create a new result
@@ -420,6 +493,26 @@ class Quiz{
 		}
 	}
 	
+	// archive the quiz
+	function archive(){
+		require('../Connections/quizroo.php');
+		require('variables.php');
+		mysql_select_db($database_quizroo, $quizroo);
+		
+		// check if the quiz is already published
+		if($this->isPublished()){		
+			// set the publish flag to 0
+			$query = sprintf("UPDATE q_quizzes SET isPublished = 3 WHERE quiz_id = %d", $this->quiz_id);
+			mysql_query($query, $quizroo) or die(mysql_error());
+			
+			$this->isPublished = 3;
+			
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	// get the rating value by a member
 	function getRating($member_id){
 		// find out the rating of this quiz
@@ -632,6 +725,15 @@ class Quiz{
 		}else{
 			return false;
 		}
+	}
+	
+	// bind a unikey with this quiz
+	function bindImagekey($unikey){
+		require('../Connections/quizroo.php');	// database connections
+		
+		mysql_select_db($database_quizroo, $quizroo);
+		$queryCheck = sprintf("UPDATE s_image_store SET `fk_quiz_id` = %d WHERE `uni_key` = %s AND `fk_member_id`= %d", $this->quiz_id, GetSQLValueString($unikey, "text"), $this->fk_member_id);
+		mysql_query($queryCheck, $quizroo) or die(mysql_error());
 	}
 }
 }

@@ -39,6 +39,7 @@ $(document).ready(function(){
 	QuizQuestion.init();	
 	<?php break; case 4: ?>
 	<?php }}else{ ?>
+	initUploader(0);
 	<?php } ?>
 });
 </script>

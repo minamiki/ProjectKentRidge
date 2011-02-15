@@ -16,7 +16,7 @@
 // update the slider height
 $(document).ready(function(){
     var question_slides = $(".question_slide");
-	var maxHeight = 400;
+	var maxHeight = 600;
      
     //Loop all the slides
     question_slides.each(function() {       
@@ -25,9 +25,10 @@ $(document).ready(function(){
             maxHeight = $(this).height();
         }
     });
-     
+	 
     //Set the height
     $("#questionContainer").height(maxHeight);
+	FB.Canvas.setAutoResize();
 });
 </script>
 </body>

@@ -4,9 +4,6 @@
 //----------------------------------------
 if(!class_exists("Member")){
 class Member{
-	// debugging mode
-	private $debug = false;
-	
 	// member facebook variables
 	public $session = NULL;
 	public $id = NULL;
@@ -27,9 +24,15 @@ class Member{
 	// - Retrieves the facebook ID
 	//----------------------------------------
 	function __construct(){
-		if(!$this->debug){	
-			require('facebook.php');				// request for facebook ID
-			require('variables.php');				// global variables
+		require('variables.php');
+		if($_SERVER['SERVER_NAME'] == "localhost"){ // if on localhost, automatically toggle facebook debug
+			$this->me = true;
+			$this->me = array('name' => "Debug Superuser");
+			$this->id = 999999999;
+			$this->register();
+		}else{
+			// Load the Facebook PHP API
+			require('facebook.php');
 			
 			// create the facebook object
 			$this->facebook = new Facebook(array(
@@ -58,10 +61,6 @@ class Member{
 				// user should login to facebook first or ask for basic authentication if needed
 				$this->authenticate();
 			}
-		}else{
-			$this->me = true;
-			$this->me = array('name' => "Debug Test User");
-			$this->id = 1;
 		}
 		
 		if($this->me){
@@ -141,6 +140,7 @@ class Member{
 	
 	//----------------------------------------
 	// check and update the member's creator score
+	// - use with caution, will reset global scores if member quizzes are removed!
 	//----------------------------------------
 	function updateCreatorScore(){
 		require('../Connections/quizroo.php');	// database connections
@@ -157,6 +157,77 @@ class Member{
 	}
 	
 	//----------------------------------------
+	// or calculation of points to award to member for taking quiz
+	// - return the level
+	//----------------------------------------
+	function calculatePoints($quiz_id, $quiz_publish_status, $achievement_array){
+		include("../Connections/quizroo.php");
+		include("variables.php");
+		
+		// check if user has already taken this quiz
+		$timesTaken = $this->timesTaken($quiz_id);
+		
+		// we follow through only if retakes are allowed and the quiz is published
+		if(($timesTaken == 1 || $GAME_REWARD_RETAKES) && $quiz_publish_status){
+			// The following factors should be fulfilled before points are awarded
+			// - first time taking this question OR always reward flag on
+			// - quiz is published
+	
+			// get the multiplier value
+			$queryCheck = sprintf("SELECT COUNT(store_id) AS count FROM `q_store_result` WHERE `fk_member_id` = %s AND DATE(`timestamp`) = DATE(NOW())", $this->id);
+			$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+			$row_getResults = mysql_fetch_assoc($getResults);
+			$todayMultiplier = $row_getResults['count'];
+			mysql_free_result($getResults);
+			
+			// calculate the points by multiplier
+			$points = $GAME_BASE_POINT + ($todayMultiplier - 1) * ($GAME_MULTIPLIER);
+			
+			// check the current member stats (for level up calculation later)
+			$old_level = $this->level;
+			$old_score = $this->quiztaker_score;
+			
+			// check if the there is a levelup:
+			///////////////////////////////////////
+			
+			// check the level table 
+			$queryCheck = sprintf("SELECT id FROM `g_levels` WHERE points <= (SELECT `quiztaker_score` FROM s_members WHERE member_id = %d)+%s ORDER BY points DESC LIMIT 0, 1", $this->id, $points);
+			$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+			$row_getResults = mysql_fetch_assoc($getResults);
+			$new_level = $row_getResults['id'];
+			mysql_free_result($getResults);
+			
+			if($new_level > $old_level){
+				// a levelup has occurred
+				$achievement_array[] = $new_level;	// provide the ID of the level acheievement
+				
+				// update the member table to reflect the new level
+				$queryUpdate = sprintf("UPDATE s_members SET quiztaker_score = quiztaker_score + %s, quiztaker_score_today = quiztaker_score_today + %s, level = %d WHERE member_id = %s", $points, $points, $new_level, $this->id);
+			}else{
+				// just update the member table to reflect the points
+				$queryUpdate = sprintf("UPDATE s_members SET quiztaker_score = quiztaker_score + %s, quiztaker_score_today = quiztaker_score_today + %s WHERE member_id = %s", $points, $points, $this->id);
+			}
+			// execute the update statement
+			mysql_query($queryUpdate, $quizroo) or die(mysql_error());	
+		}
+		// return the array
+		return $achievement_array;
+	}
+	
+	// check if user has taken quiz
+	function timesTaken($quiz_id){
+		include("../Connections/quizroo.php");
+		// check how many time user has taken this quiz
+		$queryCheck = sprintf("SELECT COUNT(store_id) AS count FROM q_store_result WHERE `fk_member_id` = %s AND `fk_quiz_id` = %s", $this->id, GetSQLValueString($quiz_id, "int"));
+		$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+		$row_getResults = mysql_fetch_assoc($getResults);
+		$timesTaken = $row_getResults['count'];	
+		mysql_free_result($getResults);
+		
+		return $timesTaken;
+	}
+	
+	//----------------------------------------
 	// Data providers
 	//----------------------------------------	
 	function getToken(){
@@ -170,6 +241,15 @@ class Member{
 	
 	function getGender(){
 		return $this->me['gender'];
+	}
+	
+	// bind a unikey with this member
+	function bindImagekey($unikey){
+		require('../Connections/quizroo.php');	// database connections
+		
+		mysql_select_db($database_quizroo, $quizroo);
+		$queryCheck = sprintf("INSERT INTO s_image_store(`uni_key`, `fk_member_id`) VALUES(%s, %d)",  GetSQLValueString($unikey, "text"), $this->id);
+		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 	}
 }
 }

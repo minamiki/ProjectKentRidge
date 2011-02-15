@@ -103,8 +103,6 @@ if(isset($_GET['load'])){
 	$member = new Member();
 	if(!$quiz->removeQuestion($_GET['question'], $member->id)){
 		echo "Delete not authorized";
-	}else{
-		echo "delete okie";
 	}
 }else{
 // get result number

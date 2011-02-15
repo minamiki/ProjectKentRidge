@@ -30,12 +30,16 @@ $FB_CANVAS = "http://apps.facebook.com/quizroo/";
 // Prefix with "VAR_"
 //----------------------------------------
 
+// Turn on debug mode
+$VAR_SYSTEM_DEBUG = false;
 // Number of recommendations/popular quizzes to show
-$VAR_NUM_LISTINGS = 4;
+$VAR_NUM_LISTINGS = 5;
 // The true URL for the application
 $VAR_URL = "http://quizroo.nus-hci.com/";
 // Whether to display the recent activity panel
 $VAR_SHOW_RECENT = false;
+// Whether to display the recent activity panel
+$VAR_SHOW_TOPICS = true;
 // Minimum number of quiz results allowed
 $VAR_QUIZ_MIN_RESULT = 1;
 // Minimum number of quiz questions allowed
