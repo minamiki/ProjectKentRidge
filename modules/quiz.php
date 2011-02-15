@@ -381,7 +381,7 @@ class Quiz{
 			$optionState = false;
 		}
 		// run through the checks, return false if failed
-		if($numResults <= $VAR_QUIZ_MIN_RESULT || $numQuestions <= $VAR_QUIZ_MIN_QUESTIONS || !$optionState){
+		if($numResults < $VAR_QUIZ_MIN_RESULT || $numQuestions < $VAR_QUIZ_MIN_QUESTIONS || !$optionState){
 			return false;
 		}else{
 			return true;
