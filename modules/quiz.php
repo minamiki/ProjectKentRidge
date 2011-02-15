@@ -612,8 +612,11 @@ class Quiz{
 		require('variables.php');
 		if($this->isPublished()){ // check if quiz is published
 			require('../Connections/quizroo.php');
-
 			mysql_select_db($database_quizroo, $quizroo);
+			
+			// store the current level of the quiz creator
+			$creator_old_level = $this->creator('level');
+			$creator_old_rank = $this->creator('rank');
 			
 			switch($type){
 				case -1: // penalty deduction for 'dislike' rating
@@ -651,16 +654,48 @@ class Quiz{
 				
 				// check if taker has already liked
 				if($this->getRating($member_id) != 1){
+					// precheck the level table to see if there's a levelup
+					$queryCheck = sprintf("SELECT id FROM `g_levels` WHERE points <= (SELECT `quiztaker_score`+`quizcreator_score` FROM s_members WHERE member_id = %d)+%s ORDER BY points DESC LIMIT 0, 1", $this->fk_member_id, $GAME_BASE_POINT);
+					$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+					$row_getCheck = mysql_fetch_assoc($getCheck);
+					$creator_new_level = $row_getCheck['id'];
+					mysql_free_result($getCheck);
+					
+					// precheck the rank table to see if there's a leveluo
+					$queryCheck = sprintf("SELECT fk_id FROM `g_ranks` WHERE `min` <= %d ORDER BY `min` DESC LIMIT 0, 1", $creator_new_level);
+					$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+					$row_getCheck = mysql_fetch_assoc($getCheck);
+					$creator_new_rank = $row_getCheck['fk_id'];
+					mysql_free_result($getCheck);
+					
+					if($creator_new_level > $creator_old_level){ // a levelup has occurred, update the achievement log
+						$queryUpdate = sprintf("INSERT INTO g_achievements_log(fk_member_id, fk_achievement_id) VALUES(%d, %d)", $this->creator('member_id'), $creator_new_level);
+						mysql_query($queryUpdate, $quizroo) or die(mysql_error());
+						
+						if($creator_new_rank > $creator_old_rank){ // a rankup also occurred, update the achievement log
+							$queryUpdate = sprintf("INSERT INTO g_achievements_log(fk_member_id, fk_achievement_id) VALUES(%d, %d)", $this->creator('member_id'), $creator_new_level);
+							mysql_query($queryUpdate, $quizroo) or die(mysql_error());
+							
+							// update the creator's points and increment the level and rank
+							$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d, level = %d, rank = %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $creator_new_level, $creator_new_rank, $this->fk_member_id);
+							mysql_query($query, $quizroo) or die(mysql_error());
+						}else{
+							// update the creator's points and increment the level
+							$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d, level = %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $creator_new_level, $this->fk_member_id);
+							mysql_query($query, $quizroo) or die(mysql_error());
+						}
+					}else{
+						// no levelup, just update the creator's points
+						$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
+						mysql_query($query, $quizroo) or die(mysql_error());
+					}
+					
 					// update the quiz score
 					if($type == 1){ // also increment the like count
 						$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score + %d, like = like + 1 WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
 					}else{ // just update the score
 						$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score + %d WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
 					}
-					mysql_query($query, $quizroo) or die(mysql_error());
-					
-					// update the creator's points
-					$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
 					mysql_query($query, $quizroo) or die(mysql_error());
 					
 					if($type == 1){			
@@ -682,13 +717,23 @@ class Quiz{
 	}
 	
 	// return the text name of the creator
-	function creator(){
+	// - Note: Field is not checked for existance!
+	function creator($field = NULL){
 		require('../Connections/quizroo.php');
 		mysql_select_db($database_quizroo, $quizroo);
-		$query = sprintf("SELECT member_name FROM s_members WHERE member_id = %d", GetSQLValueString($this->fk_member_id, "int"));
+		$query = sprintf("SELECT * FROM s_members WHERE member_id = %d", GetSQLValueString($this->fk_member_id, "int"));
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 		$row_getQuery = mysql_fetch_assoc($getQuery);
-		return $row_getQuery['member_name'];
+		
+		if($field == NULL){
+			return $row_getQuery['member_name'];
+		}else{
+			if(array_key_exists($field, $row_getQuery)){
+				return $row_getQuery[$field];
+			}else{
+				return false;
+			}
+		}
 	}
 	
 	// return the quiz topic

@@ -191,7 +191,7 @@ class Member{
 			///////////////////////////////////////
 			
 			// check the level table 
-			$queryCheck = sprintf("SELECT id FROM `g_levels` WHERE points <= (SELECT `quiztaker_score` FROM s_members WHERE member_id = %d)+%s ORDER BY points DESC LIMIT 0, 1", $this->id, $points);
+			$queryCheck = sprintf("SELECT id FROM `g_levels` WHERE points <= (SELECT `quiztaker_score`+`quizcreator_score` FROM s_members WHERE member_id = %d)+%s ORDER BY points DESC LIMIT 0, 1", $this->id, $points);
 			$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 			$row_getResults = mysql_fetch_assoc($getResults);
 			$new_level = $row_getResults['id'];
