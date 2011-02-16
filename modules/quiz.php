@@ -21,7 +21,7 @@ class Quiz{
 	public $quiz_not_available = NULL;
 	
 	function __construct($quiz_id = NULL){
-		if($quiz_id != NULL){
+		if($quiz_id != NULL && $quiz_id != ""){
 			require('../Connections/quizroo.php');
 			// populate class with quiz data			
 			mysql_select_db($database_quizroo, $quizroo);
@@ -49,6 +49,7 @@ class Quiz{
 				return false;
 			}
 		}else{
+			$this->quiz_not_available = true;
 			return false;
 		}	
 	}
