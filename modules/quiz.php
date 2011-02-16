@@ -70,10 +70,10 @@ class Quiz{
 		require('../Connections/quizroo.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
-		// insert into the quiz table
+		// insert into the quiz table (protect each insert from HTML Injection)
 		$insertSQL = sprintf("INSERT INTO q_quizzes(`quiz_name`, `quiz_description`, `fk_quiz_cat`, `quiz_picture`, `fk_member_id`, `quiz_key`) VALUES (%s, %s, %d, %s, %d, %s)",
-						   GetSQLValueString($title, "text"),
-						   GetSQLValueString($description, "text"),
+						   htmlentities(GetSQLValueString($title, "text")),
+						   htmlentities(GetSQLValueString($description, "text")),
 						   GetSQLValueString($cat, "int"),
 						   GetSQLValueString($picture, "text"),
 						   GetSQLValueString($member_id, "int"),
@@ -86,8 +86,8 @@ class Quiz{
 		$row_resultID = mysql_fetch_assoc($resultID);
 		
 		$this->quiz_id = $row_resultID['insertID'];
-		$this->quiz_name = $title;
-		$this->quiz_description = $description;
+		$this->quiz_name = htmlentities($title);
+		$this->quiz_description = htmlentities($description);
 		$this->fk_quiz_cat = $cat;
 		$this->quiz_picture = $picture;
 		$this->creation_date = $row_resultID['creation_date'];
@@ -109,8 +109,8 @@ class Quiz{
 		
 		// insert into the quiz table
 		$insertSQL = sprintf("UPDATE q_quizzes SET `quiz_name`=%s, `quiz_description`=%s, `fk_quiz_cat`=%d, `quiz_picture`=%s WHERE `quiz_id` = %d",
-						   GetSQLValueString($title, "text"),
-						   GetSQLValueString($description, "text"),
+						   htmlentities(GetSQLValueString($title, "text")),
+						   htmlentities(GetSQLValueString($description, "text")),
 						   GetSQLValueString($cat, "int"),
 						   GetSQLValueString($picture, "text"),
 						   GetSQLValueString($this->quiz_id, "int"));
@@ -181,8 +181,8 @@ class Quiz{
 		
 		// Insert the result
 		$insertSQL = sprintf("INSERT INTO q_results(`result_title`, `result_description`, `result_picture`, `fk_quiz_id`) VALUES (%s, %s, %s, %d)",
-						   GetSQLValueString($result_title, "text"),
-						   GetSQLValueString($result_description, "text"),
+						   htmlentities(GetSQLValueString($result_title, "text")),
+						   htmlentities(GetSQLValueString($result_description, "text")),
 						   GetSQLValueString($result_picture, "text"),
 						   GetSQLValueString($this->quiz_id, "int"));
 		mysql_query($insertSQL, $quizroo) or die(mysql_error());
@@ -203,8 +203,8 @@ class Quiz{
 		
 		// Insert the result
 		$insertSQL = sprintf("UPDATE q_results SET `result_title` = %s, `result_description` = %s, `result_picture` = %s WHERE `result_id` = %d",
-						   GetSQLValueString($result_title, "text"),
-						   GetSQLValueString($result_description, "text"),
+						   htmlentities(GetSQLValueString($result_title, "text")),
+						   htmlentities(GetSQLValueString($result_description, "text")),
 						   GetSQLValueString($result_picture, "text"),
 						   GetSQLValueString($result_id, "int"));
 		mysql_query($insertSQL, $quizroo) or die(mysql_error());
@@ -235,7 +235,7 @@ class Quiz{
 		
 		// insert the question
 		$insertSQL = sprintf("INSERT INTO q_questions(`question`, `fk_quiz_id`) VALUES (%s, %d)",
-					   GetSQLValueString($question, "text"),
+					   htmlentities(GetSQLValueString($question, "text")),
 					   GetSQLValueString($this->quiz_id, "int"));
 		mysql_query($insertSQL, $quizroo) or die(mysql_error());
 	
@@ -256,7 +256,7 @@ class Quiz{
 		
 		// insert the question
 		$insertSQL = sprintf("UPDATE q_questions SET `question` = %s WHERE `question_id` = %d",
-					   GetSQLValueString($question, "text"),
+					  htmlentities(GetSQLValueString($question, "text")),
 					   GetSQLValueString($question_id, "int"));
 		mysql_query($insertSQL, $quizroo) or die(mysql_error());
 		
@@ -289,7 +289,7 @@ class Quiz{
 		
 		// insert the option
 		$insertSQL = sprintf("INSERT INTO q_options(`option`, `fk_result`, `option_weightage`, `fk_question_id`) VALUES (%s, %d, %d, %d)",
-					   GetSQLValueString($option, "text"),
+					   htmlentities(GetSQLValueString($option, "text")),
 					   GetSQLValueString($result, "int"),
 					   GetSQLValueString($weightage, "int"),
 					   GetSQLValueString($question, "int"));
@@ -312,7 +312,7 @@ class Quiz{
 		
 		// insert the option
 		$insertSQL = sprintf("UPDATE q_options SET `option`=%s, `fk_result`=%d, `option_weightage`=%d WHERE option_id=%d",
-					   GetSQLValueString($option, "text"),
+					   htmlentities(GetSQLValueString($option, "text")),
 					   GetSQLValueString($result, "int"),
 					   GetSQLValueString($weightage, "int"),
 					   GetSQLValueString($option_id, "int"));
