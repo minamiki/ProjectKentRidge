@@ -11,10 +11,6 @@ $facebookID = $member->id;
 // Process the quiz results
 //----------------------------------------
 
-// get the quiz id
-$quiz_id = $_POST['quiz_id'];
-$quiz = new Quiz($quiz_id);
-
 // find out the number of questions
 $totalQuestionCount = $quiz->numQuestions();
 
@@ -48,7 +44,7 @@ if($quiz->isPublished()){
 	}
 	
 	// log the quiz taking attempt
-	$query_saveResult = sprintf("INSERT INTO q_store_result(fk_quiz_id, fk_result_id, fk_member_id) VALUES (%d, %d, %d)", GetSQLValueString($quiz_id, "int"), $row_getResults['fk_result'], $facebookID);
+	$query_saveResult = sprintf("INSERT INTO q_store_result(fk_quiz_id, fk_result_id, fk_member_id) VALUES (%d, %d, %d)", GetSQLValueString($quiz->quiz_id, "int"), $row_getResults['fk_result'], $facebookID);
 	mysql_query($query_saveResult, $quizroo) or die(mysql_error());
 }
 
@@ -75,7 +71,7 @@ for($i = 0, $j = 3; $i < sizeof($logtime)/3 - 1; $i++, $j+=3){
 $achievement_array = array();
 
 // Calculate Points to award
-$achievement_array = $member->calculatePoints($quiz_id, $quiz->isPublished(), $achievement_array);
+$achievement_array = $member->calculatePoints($quiz->quiz_id, $quiz->isPublished(), $achievement_array);
 
 // Check for achievements
 checkAchievements($facebookID);
@@ -91,7 +87,7 @@ $row_getResultInfo = mysql_fetch_assoc($getResultInfo);
 $totalRows_getResultInfo = mysql_num_rows($getResultInfo);
 
 // get results to build the pie chart
-$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", GetSQLValueString($quiz_id, "int"));
+$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", GetSQLValueString($quiz->quiz_id, "int"));
 $getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
 $row_getResultChart = mysql_fetch_assoc($getResultChart);
 $totalRows_getResultChart = mysql_num_rows($getResultChart);

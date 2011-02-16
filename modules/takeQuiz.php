@@ -1,37 +1,5 @@
 <?php require('../Connections/quizroo.php'); ?>
-<?php require('../modules/quiz.php');
-require('../modules/variables.php');
-if(isset($_GET['id'])){
-	// check if id is empty
-	if($_GET['id'] == ""){
-		// attempt to extract the other id parameter
-		$url_vars = explode('&', $_SERVER["QUERY_STRING"]);
-		$url_id = 0;
-		foreach($url_vars as $test_id){
-			if(is_numeric($test_id)){
-				$url_id = $test_id;
-				break;
-			}
-		}
-	}else{
-		// give the real id
-		$url_id = $_GET['id'];	
-	}
-}else{
-	// attempt to extract the other id parameter
-	$url_vars = explode('&', $_SERVER["QUERY_STRING"]);
-	$url_id = 0;
-	foreach($url_vars as $test_id){
-		if(is_numeric($test_id)){
-			$url_id = $test_id;
-			break;
-		}
-	}
-}
-$quiz = new Quiz($url_id);
-if(!$quiz->exists()){
-	header("Location: previewQuiz.php");
-}else{
+<?php
 mysql_select_db($database_quizroo, $quizroo);
 $query_getQuizInfo = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, creation_date, s_members.member_name, q_quiz_cat.cat_name, (SELECT COUNT(question_id) FROM q_questions WHERE fk_quiz_id = %s) AS question_count FROM q_quizzes, s_members, q_quiz_cat WHERE quiz_id = %s AND s_members.member_id = q_quizzes.fk_member_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat", GetSQLValueString($url_id, "int"),GetSQLValueString($url_id, "int"));
 $getQuizInfo = mysql_query($query_getQuizInfo, $quizroo) or die(mysql_error());
@@ -46,7 +14,6 @@ $totalRows_getQuizQuestions = mysql_num_rows($getQuizQuestions);
 
 $question_count = 1;
 ?>
-
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Take a quiz</h3>
   <p>You're now taking the quiz,<em> &quot;<?php echo $row_getQuizInfo['quiz_name']; ?>&quot;</em> by <?php echo $row_getQuizInfo['member_name']; ?>. You may stop taking the quiz anytime by navigating away from this page. No data will be collected unless you complete the quiz.</p>
@@ -69,7 +36,7 @@ $question_count = 1;
   </div>
 </div>
 <div id="takequiz-main">
-  <form name="takeQuiz" id="takeQuiz" action="quiz_result.php" method="post">
+  <form name="takeQuiz" id="takeQuiz" action="quiz_result.php?id=<?php echo $row_getQuizInfo['quiz_id']; ?>" method="post">
     <input type="hidden" name="quiz_id" value="<?php echo $row_getQuizInfo['quiz_id']; ?>" />
     <input type="hidden" name="logtime" id="logtime" value="<?php date_default_timezone_set("Asia/Singapore"); echo time(); ?>" />
     <div id="questionContainer">
@@ -126,5 +93,4 @@ $question_count = 1;
 <?php
 mysql_free_result($getQuizInfo);
 mysql_free_result($getQuizQuestions);
-} // end quiz exists
 ?>

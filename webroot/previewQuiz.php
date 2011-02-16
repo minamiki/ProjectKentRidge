@@ -44,14 +44,14 @@ if($quiz->exists()){
 <?php }else{ ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta property="og:title" content=""/> 
+<meta property="og:title" content="Quizroo Quiz"/> 
 <meta property="og:type" content="game"/>
 <meta property="og:image" content=""/> 
 <meta property="og:url" content=""/>
 <meta property="og:site_name" content="Quizroo"/>
 <meta property="fb:app_id" content="<?php echo $FB_APPID; ?>"/> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Quizroo: Quiz not found</title>
+<title>Quizroo Quiz</title>
 <?php } ?>
 <?php include("inc/header-css.php");?>
 </head>
