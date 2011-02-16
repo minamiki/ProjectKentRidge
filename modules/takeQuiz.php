@@ -1,21 +1,45 @@
 <?php require('../Connections/quizroo.php'); ?>
-<?php
-$colname_getQuizInfo = "-1";
-if (isset($_GET['id'])) {
-  $colname_getQuizInfo = $_GET['id'];
+<?php require('../modules/quiz.php');
+require('../modules/variables.php');
+if(isset($_GET['id'])){
+	// check if id is empty
+	if($_GET['id'] == ""){
+		// attempt to extract the other id parameter
+		$url_vars = explode('&', $_SERVER["QUERY_STRING"]);
+		$url_id = 0;
+		foreach($url_vars as $test_id){
+			if(is_numeric($test_id)){
+				$url_id = $test_id;
+				break;
+			}
+		}
+	}else{
+		// give the real id
+		$url_id = $_GET['id'];	
+	}
+}else{
+	// attempt to extract the other id parameter
+	$url_vars = explode('&', $_SERVER["QUERY_STRING"]);
+	$url_id = 0;
+	foreach($url_vars as $test_id){
+		if(is_numeric($test_id)){
+			$url_id = $test_id;
+			break;
+		}
+	}
 }
+$quiz = new Quiz($url_id);
+if(!$quiz->exists()){
+	header("Location: previewQuiz.php");
+}else{
 mysql_select_db($database_quizroo, $quizroo);
-$query_getQuizInfo = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, creation_date, s_members.member_name, q_quiz_cat.cat_name, (SELECT COUNT(question_id) FROM q_questions WHERE fk_quiz_id = %s) AS question_count FROM q_quizzes, s_members, q_quiz_cat WHERE quiz_id = %s AND s_members.member_id = q_quizzes.fk_member_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat", GetSQLValueString($colname_getQuizInfo, "int"),GetSQLValueString($colname_getQuizInfo, "int"));
+$query_getQuizInfo = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, creation_date, s_members.member_name, q_quiz_cat.cat_name, (SELECT COUNT(question_id) FROM q_questions WHERE fk_quiz_id = %s) AS question_count FROM q_quizzes, s_members, q_quiz_cat WHERE quiz_id = %s AND s_members.member_id = q_quizzes.fk_member_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat", GetSQLValueString($url_id, "int"),GetSQLValueString($url_id, "int"));
 $getQuizInfo = mysql_query($query_getQuizInfo, $quizroo) or die(mysql_error());
 $row_getQuizInfo = mysql_fetch_assoc($getQuizInfo);
 $totalRows_getQuizInfo = mysql_num_rows($getQuizInfo);
 
-$colname_getQuizQuestions = "-1";
-if (isset($_GET['id'])) {
-  $colname_getQuizQuestions = $_GET['id'];
-}
 mysql_select_db($database_quizroo, $quizroo);
-$query_getQuizQuestions = sprintf("SELECT * FROM q_questions WHERE fk_quiz_id = %s", GetSQLValueString($colname_getQuizQuestions, "int"));
+$query_getQuizQuestions = sprintf("SELECT * FROM q_questions WHERE fk_quiz_id = %s", GetSQLValueString($url_id, "int"));
 $getQuizQuestions = mysql_query($query_getQuizQuestions, $quizroo) or die(mysql_error());
 $row_getQuizQuestions = mysql_fetch_assoc($getQuizQuestions);
 $totalRows_getQuizQuestions = mysql_num_rows($getQuizQuestions);
@@ -102,4 +126,5 @@ $question_count = 1;
 <?php
 mysql_free_result($getQuizInfo);
 mysql_free_result($getQuizQuestions);
+} // end quiz exists
 ?>

@@ -4,7 +4,7 @@
   FB.init({ appId:<?php echo $FB_APPID ?>, cookie:true, xfbml:true });
 </script>-->
 <div id='user-actions-container' class='frame rounded clear'>
-	<div class='share-like'><fb:like href="http://apps.facebook.com/quizroo/previewQuiz.php?id=<?php echo $quiz_id ?>" show_faces="false" width="450"></fb:like></div>
+	<div class='share-like'><fb:like href="http://apps.facebook.com/quizroo/previewQuiz.php?<?php echo $quiz_id ?>&id=<?php echo $quiz_id ?>" show_faces="false" width="450"></fb:like></div>
 	<div class='recommend-dialog'>
 		<fb:serverFbml width="625px">
 		  <script type="text/fbml">
