@@ -36,7 +36,7 @@ if(isset($_GET['load'])){
       <table border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td><input name="uploader-<?php echo $result; ?>" type="button" id="uploader-<?php echo $result; ?>" /></td>
-          <td valign="middle" class="formDesc">Upload a new picture (jpg, gif only)</td>
+          <td valign="middle" class="formDesc">Upload a new picture (jpg, gif or png); You can select more than 1 file!</td>
           </tr>
     </table>
 <table border="0" cellspacing="0" cellpadding="5">
@@ -106,7 +106,7 @@ $count = 1;
       <table border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td><input name="uploader-<?php echo $result; ?>" type="button" id="uploader-<?php echo $result; ?>" /></td>
-          <td valign="middle" class="formDesc">Upload a new picture (jpg, gif only)</td>
+          <td valign="middle" class="formDesc">Upload a new picture (jpg, gif or png); You can select more than 1 file!</td>
           </tr>
     </table>
 <table border="0" cellspacing="0" cellpadding="5">

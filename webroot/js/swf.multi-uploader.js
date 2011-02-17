@@ -14,7 +14,7 @@ function initUploader(targetField){
 	$('#swfupload-control-'+targetField).swfupload({
 		upload_url: "../modules/uploadQuiz.php?unikey="+unikey,
 		file_post_name: 'uploadfile',
-		file_size_limit : "5120",
+		file_size_limit : "2048",
 		file_types : "*.jpg;*.png;*.gif",
 		file_types_description : "Image files",
 		flash_url : "swf/swfupload.swf",

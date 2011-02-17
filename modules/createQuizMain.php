@@ -78,7 +78,7 @@ if(isset($_GET['id'])){
               <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td><input name="uploader-0" type="button" id="uploader-0" /></td>
-                  <td valign="middle" class="formDesc">Upload a picture (jpg, gif only)</td>
+                  <td valign="middle" class="formDesc">Upload a picture (jpg, gif or png); You can select more than 1 file!</td>
                 </tr>
               </table>
               <table border="0" cellspacing="0" cellpadding="5">
@@ -132,7 +132,7 @@ break; case 2:
 ?>
 <div id="progress-container" class="frame rounded">
   <h3>Create Quiz: Results</h3>
-  <p>You're just <strong>3</strong> steps away from creating your own quiz! <em>Step 2</em> allows you to define the results of your quiz. Quiz results appear at the end of each quiz. Depending on what options the quiz taker has chosen, the result which carries the most weightage from the options will be the final quiz result. You can add as many results as you like! </p>
+  <p>You're just <strong>3</strong> steps away from creating your own quiz! <em>Step 2</em> allows you to define the results of your quiz. Quiz results appear at the end of each quiz. Depending on what options the quiz taker has chosen, the result which carries the most weightage from the options will be the final quiz result. You can add as many results as you like!  </p>
   <ul class="rounded">
     <li class="completed_last start"><strong>Step 1</strong> Quiz Information</li>
     <li class="current"><strong>Step 2</strong> Results</li>
@@ -362,7 +362,7 @@ $totalRows_listCat = mysql_num_rows($listCat);
               <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td><input name="uploader-0" type="button" id="uploader-0" /></td>
-                  <td valign="middle" class="formDesc">Upload a picture (jpg, gif only)</td>
+                  <td valign="middle" class="formDesc">Upload a new picture (jpg, gif or png); You can select more than 1 file!</td>
                 </tr>
               </table>
               <table border="0" cellspacing="0" cellpadding="5">
