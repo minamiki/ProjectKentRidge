@@ -10,7 +10,7 @@ var $password = "";
 var $database = "";
 
 function Database(){
-	include('../Connections/quizroo.php');	
+	include('quizrooDB.php');	
 	$this->servername = $hostname_quizroo;
 	$this->username = $username_quizroo;
 	$this->password = $password_quizroo;

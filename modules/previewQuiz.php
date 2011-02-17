@@ -1,4 +1,4 @@
-<?php require('../Connections/quizroo.php'); ?>
+<?php require('quizrooDB.php'); ?>
 <?php if($quiz->exists()){ ?>
 <?php if($quiz->isPublished()){ ?>
 <div id="takequiz-preamble" class="frame rounded">

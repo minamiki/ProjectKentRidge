@@ -1,4 +1,4 @@
-<?php require('../Connections/quizroo.php'); ?>
+<?php require('quizrooDB.php'); ?>
 <?php // additional requires
 require('uploadFunctions.php');
 require('quiz.php');

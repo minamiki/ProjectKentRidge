@@ -1,4 +1,4 @@
-<?php require('../Connections/quizroo.php'); ?>
+<?php require('quizrooDB.php'); ?>
 <?php require('variables.php');
 // retrieve recommended quizzes
 mysql_select_db($database_quizroo, $quizroo);

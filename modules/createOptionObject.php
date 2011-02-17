@@ -1,4 +1,4 @@
-<?php require("../Connections/quizroo.php");
+<?php require("quizrooDB.php");
 if(isset($_GET['delete'])){
 	// delete the option
 	require('member.php');

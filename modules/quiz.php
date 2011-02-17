@@ -22,7 +22,7 @@ class Quiz{
 	
 	function __construct($quiz_id = NULL){
 		if($quiz_id != NULL && $quiz_id != ""){
-			require('../Connections/quizroo.php');
+			require('quizrooDB.php');
 			// populate class with quiz data			
 			mysql_select_db($database_quizroo, $quizroo);
 			$queryQuiz = sprintf("SELECT * FROM q_quizzes WHERE quiz_id = %d", GetSQLValueString($quiz_id, "int"));
@@ -68,7 +68,7 @@ class Quiz{
 	
 	// create a new quiz
 	function create($title, $description, $cat, $picture, $member_id, $key){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// insert into the quiz table (protect each insert from HTML Injection)
@@ -105,7 +105,7 @@ class Quiz{
 	
 	// update the quiz
 	function update($title, $description, $cat, $picture){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// insert into the quiz table
@@ -122,7 +122,7 @@ class Quiz{
 	
 	// update the quiz
 	function delete($member_id){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// check if is member
@@ -177,7 +177,7 @@ class Quiz{
 	
 	// create a new result
 	function addResult($result_title, $result_description, $result_picture){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// Insert the result
@@ -199,7 +199,7 @@ class Quiz{
 	
 	// create a new result
 	function updateResult($result_title, $result_description, $result_picture, $result_id){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// Insert the result
@@ -215,7 +215,7 @@ class Quiz{
 	
 	// remove a new result
 	function removeResult($result_id, $memberID){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// owner check
@@ -231,7 +231,7 @@ class Quiz{
 	
 	// create a new question
 	function addQuestion($question){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// insert the question
@@ -252,7 +252,7 @@ class Quiz{
 	
 	// update a question
 	function updateQuestion($question, $question_id){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// insert the question
@@ -266,7 +266,7 @@ class Quiz{
 	
 	// remove a new question
 	function removeQuestion($question_id, $memberID){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// owner check
@@ -285,7 +285,7 @@ class Quiz{
 	
 	// create a option
 	function addOption($option, $result, $weightage, $question){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// insert the option
@@ -308,7 +308,7 @@ class Quiz{
 	
 	// update an option
 	function updateOption($option, $result, $weightage, $option_id){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// insert the option
@@ -324,7 +324,7 @@ class Quiz{
 	
 	// remove an option
 	function removeOption($option_id, $memberID){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// owner check
@@ -340,7 +340,7 @@ class Quiz{
 	
 	// return the number of question in this quiz
 	function numQuestions(){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		$query = sprintf("SELECT question_id FROM q_questions WHERE fk_quiz_id = %d", GetSQLValueString($this->quiz_id, "int"));
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
@@ -391,7 +391,7 @@ class Quiz{
 	
 	// publish the quiz
 	function publish(){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		require('variables.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
@@ -456,7 +456,7 @@ class Quiz{
 	
 	// re-publish the quiz
 	function republish(){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		require('variables.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
@@ -476,7 +476,7 @@ class Quiz{
 	
 	// unpublish the quiz
 	function unpublish(){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		require('variables.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
@@ -496,7 +496,7 @@ class Quiz{
 	
 	// archive the quiz
 	function archive(){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		require('variables.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		
@@ -517,7 +517,7 @@ class Quiz{
 	// get the rating value by a member
 	function getRating($member_id){
 		// find out the rating of this quiz
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		$query = sprintf("SELECT rating FROM q_store_rating WHERE fk_member_id = %d AND fk_quiz_id = %d", $member_id, $this->quiz_id);
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
@@ -533,7 +533,7 @@ class Quiz{
 	
 	// get the list of results belonging to this quiz
 	function getResults($type = NULL){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		$query = sprintf("SELECT result_id FROM q_results WHERE fk_quiz_id = %d", $this->quiz_id);
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
@@ -559,7 +559,7 @@ class Quiz{
 	
 	// get the list of questions belonging to this quiz
 	function getQuestions($type = NULL){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		$query = sprintf("SELECT question_id FROM q_questions WHERE fk_quiz_id = %d", $this->quiz_id);
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
@@ -585,7 +585,7 @@ class Quiz{
 	
 	// get the list of options belonging to a question
 	function getOptions($question_id, $type = NULL){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		$query = sprintf("SELECT option_id FROM q_options WHERE fk_question_id = %d", $question_id);
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
@@ -612,7 +612,7 @@ class Quiz{
 	function awardPoints($type, $member_id){
 		require('variables.php');
 		if($this->isPublished()){ // check if quiz is published
-			require('../Connections/quizroo.php');
+			require('quizrooDB.php');
 			mysql_select_db($database_quizroo, $quizroo);
 			
 			// store the current level of the quiz creator
@@ -720,7 +720,7 @@ class Quiz{
 	// return the text name of the creator
 	// - Note: Field is not checked for existance!
 	function creator($field = NULL){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		$query = sprintf("SELECT * FROM s_members WHERE member_id = %d", GetSQLValueString($this->fk_member_id, "int"));
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
@@ -739,7 +739,7 @@ class Quiz{
 	
 	// return the quiz topic
 	function category(){
-		require('../Connections/quizroo.php');
+		require('quizrooDB.php');
 		mysql_select_db($database_quizroo, $quizroo);
 		$query = sprintf("SELECT cat_name FROM q_quiz_cat WHERE cat_id = %d", GetSQLValueString($this->fk_quiz_cat, "int"));
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
@@ -758,7 +758,7 @@ class Quiz{
 	
 	// check if a user has taken quiz
 	function hasTaken($facebookID){
-		require('../Connections/quizroo.php');	// database connections
+		require('quizrooDB.php');	// database connections
 		
 		// check if user has already taken this quiz
 		$queryCheck = sprintf("SELECT COUNT(store_id) AS count FROM q_store_result WHERE `fk_member_id` = %s AND `fk_quiz_id` = %s", $facebookID, $this->quiz_id);
@@ -775,7 +775,7 @@ class Quiz{
 	
 	// bind a unikey with this quiz
 	function bindImagekey($unikey){
-		require('../Connections/quizroo.php');	// database connections
+		require('quizrooDB.php');	// database connections
 		
 		mysql_select_db($database_quizroo, $quizroo);
 		$queryCheck = sprintf("UPDATE s_image_store SET `fk_quiz_id` = %d WHERE `uni_key` = %s AND `fk_member_id`= %d", $this->quiz_id, GetSQLValueString($unikey, "text"), $this->fk_member_id);

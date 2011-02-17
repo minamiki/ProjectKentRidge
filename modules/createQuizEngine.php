@@ -1,4 +1,4 @@
-<?php require('../Connections/quizroo.php'); ?>
+<?php require('quizrooDB.php'); ?>
 <?php
 // get the member info
 require('member.php');

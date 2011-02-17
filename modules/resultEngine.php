@@ -1,5 +1,5 @@
 <?php
-require('../Connections/quizroo.php'); 
+require('quizrooDB.php'); 
 require('variables.php');
 require('quiz.php');
 require('checkAchievements.php');

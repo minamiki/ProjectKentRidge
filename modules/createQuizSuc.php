@@ -1,4 +1,4 @@
-<?php require('../Connections/quizroo.php'); ?>
+<?php require('quizrooDB.php'); ?>
 <?php require('quiz.php');
 $quiz = new Quiz($_GET['id']);
 ?>

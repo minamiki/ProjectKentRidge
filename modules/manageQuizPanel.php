@@ -1,4 +1,4 @@
-<?php require('../Connections/quizroo.php');
+<?php require('quizrooDB.php');
 require("quiz.php");
 
 $currentPage = $_SERVER["PHP_SELF"];

@@ -1,7 +1,7 @@
 <?php // get result number
 if(isset($_GET['load'])){
 	$unikey = $_GET['unikey'];
-	require('../Connections/quizroo.php');
+	require('quizrooDB.php');
 	mysql_select_db($database_quizroo, $quizroo);
 	$query = sprintf("SELECT result_id, result_title, result_description, result_picture FROM q_results WHERE fk_quiz_id = %d", GetSQLValueString($_GET['id'], "int"));
 	$getQuery = mysql_query($query, $quizroo) or die(mysql_error());

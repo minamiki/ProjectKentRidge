@@ -1,4 +1,4 @@
-<?php require('../Connections/quizroo.php'); ?>
+<?php require('quizrooDB.php'); ?>
 <?php require('variables.php');
 // hack for checking topic IDs
 if(isset($_GET['topic'])){

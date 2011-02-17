@@ -74,7 +74,7 @@ class Member{
 	// Register the user
 	//----------------------------------------
 	function register(){
-		require('../Connections/quizroo.php');	// database connections
+		require('quizrooDB.php');	// database connections
 		// check if the member is already in the database
 		mysql_select_db($database_quizroo, $quizroo);
 		$queryCheck = sprintf("SELECT * FROM s_members WHERE member_id = %s", $this->id);
@@ -143,7 +143,7 @@ class Member{
 	// - use with caution, will reset global scores if member quizzes are removed!
 	//----------------------------------------
 	function updateCreatorScore(){
-		require('../Connections/quizroo.php');	// database connections
+		require('quizrooDB.php');	// database connections
 		
 		// count all the points and update the member's creator score
 		mysql_select_db($database_quizroo, $quizroo);
@@ -161,7 +161,7 @@ class Member{
 	// - return the level
 	//----------------------------------------
 	function calculatePoints($quiz_id, $quiz_publish_status, $achievement_array){
-		include("../Connections/quizroo.php");
+		include("quizrooDB.php");
 		include("variables.php");
 		
 		// check if user has already taken this quiz
@@ -216,7 +216,7 @@ class Member{
 	
 	// check if user has taken quiz
 	function timesTaken($quiz_id){
-		include("../Connections/quizroo.php");
+		include("quizrooDB.php");
 		// check how many time user has taken this quiz
 		$queryCheck = sprintf("SELECT COUNT(store_id) AS count FROM q_store_result WHERE `fk_member_id` = %s AND `fk_quiz_id` = %s", $this->id, GetSQLValueString($quiz_id, "int"));
 		$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
@@ -245,7 +245,7 @@ class Member{
 	
 	// bind a unikey with this member
 	function bindImagekey($unikey){
-		require('../Connections/quizroo.php');	// database connections
+		require('quizrooDB.php');	// database connections
 		
 		mysql_select_db($database_quizroo, $quizroo);
 		$queryCheck = sprintf("INSERT INTO s_image_store(`uni_key`, `fk_member_id`) VALUES(%s, %d)",  GetSQLValueString($unikey, "text"), $this->id);

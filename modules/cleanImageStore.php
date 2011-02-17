@@ -1,5 +1,5 @@
 <?php // imagestore cleaner
-require('../Connections/quizroo.php');
+require('quizrooDB.php');
 // go through all the images
 
 $linked = 0;
