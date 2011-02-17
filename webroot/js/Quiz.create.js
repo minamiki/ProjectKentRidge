@@ -55,6 +55,7 @@ var QuizInfo = {
 // Quiz Result class
 var QuizResult = {
 	resultCount: 0,
+	visualCount: 0,
 	
 	init: function(){
 		// populate the quiz
@@ -64,19 +65,27 @@ var QuizResult = {
 			data: "resultNumber="+this.resultCount+"&unikey="+QuizInfo.key+"&id="+QuizInfo.id,
 			async: false,
 			success: function(data) {
-				$("#createResultContainer").append(data);
+				if(data == ""){
+					// show a tip
+					$("#resultTip").show();
+				}else{
+					$("#createResultContainer").append(data);
+				}
 			}
 		});
 		// count the number of results
 		numResult = 0;
+		visualCount = 0;
 		$(".resultWidget").each(function(i){
 			numResult++;
+			visualCount++;
 			QuizValidate.add("textfield", "result_title_"+i);	// result title
 			QuizValidate.add("textarea", "result_description_"+i);	// result description
 		});
 		this.resultCount = numResult;
 		// update the count
 		this.updateCount();
+		this.visualCount = visualCount;
 		// init the images
 		scanInitUploader();
 		
@@ -100,6 +109,10 @@ var QuizResult = {
 
 		// return the value and increment
 		this.resultCount++;
+		this.visualCount++;
+		if(this.visualCount > 0){
+			$("#resultTip").hide();
+		}
 		// update the count
 		this.updateCount();
 		return this.resultCount;
@@ -127,9 +140,13 @@ var QuizResult = {
 			}
 			// just remove the question widget
 			$("#r"+id).remove();
-			//this.resultCount--;
+			this.visualCount--;
 			// update the count
 			this.updateCount();
+			
+			if(this.visualCount == 0){
+				$("#resultTip").show();
+			}
 			return this.resultCount
 		}else{
 			return false;
@@ -143,6 +160,7 @@ var QuizResult = {
 
 var QuizQuestion = {
 	question: new Array(),
+	visualCount: 0,
 	
 	init: function(){
 		// populate the questions
@@ -152,20 +170,27 @@ var QuizQuestion = {
 			data: "questionNumber="+this.numQuestions()+"&id="+QuizInfo.id,
 			async: false,
 			success: function(data) {
-				$("#createQuestionContainer").append(data);
+				if(data == ""){
+					$("#questionTip").show();
+				}else{
+					$("#createQuestionContainer").append(data);
+				}
 			}
 		});		
 		thisQuestion = this.question;
+		visualCount = 0;
 		// count the number of questions
 		$(".questionWidget").each(function(i){
 			thisQuestion[i] = new Array();
 			QuizValidate.add("textfield", 'q'+i); // question
+			visualCount++;
 			// find out the number of options in a question
 			$(".optionWidget-"+i).each(function(j){
 				thisQuestion[i][j] = 'q'+i+'o'+j;
 				QuizValidate.add("textfield", 'q'+i+'o'+j); // option
 			});
-		});		
+		});
+		this.visualCount = visualCount;
 		this.updateCount();
 		this.getOptionValues();
 	},
@@ -191,6 +216,10 @@ var QuizQuestion = {
 		this.question[this.question.length-1][1] = 'q'+this.question.length+'o1';
 		// update the page counts
 		this.updateCount();
+		this.visualCount++;
+		if(this.visualCount > 0){
+			$("#questionTip").hide();
+		}
 		this.getOptionValues();
 		return this.question.length;
 	},
@@ -243,7 +272,10 @@ var QuizQuestion = {
 			delete this.question[id];
 			this.updateCount();
 			this.getOptionValues();
-			
+			this.visualCount--;
+			if(this.visualCount == 0){
+				$("#questionTip").show();
+			}
 			return true;
 		}else{
 			return false;

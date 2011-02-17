@@ -31,7 +31,7 @@ if(isset($_GET['load'])){
 <table width="660" border="0" align="center" cellpadding="5" cellspacing="0">
   <tr>
     <th width="30" scope="row"><a href="javascript:;" onclick="QuizQuestion.remove(<?php echo $question; ?>);"><img src="img/delete.png" alt="" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
-    <th width="100" scope="row"><label for="question_<?php echo $question; ?>">Question <?php echo $question+1; ?></label></th>
+    <th width="100" scope="row"><label for="question_<?php echo $question; ?>">Question</label></th>
     <td><span id="sprytextfield-q<?php echo $question; ?>">
       <input type="text" name="question_<?php echo $question; ?>" id="question_<?php echo $question; ?>" value="<?php echo $row_getQuery['question']; ?>" />
       <span class="textfieldRequiredMsg">A value is required.</span></span></td>
@@ -62,7 +62,7 @@ if(isset($_GET['load'])){
     <table border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
       <th width="25" scope="row"><input type="hidden" name="uq<?php echo $question; ?>o<?php echo $option; ?>" id="uq<?php echo $question; ?>o<?php echo $option; ?>" value="<?php echo $row_getOption['option_id']; ?>" /><a href="javascript:;" onclick="QuizQuestion.removeOption(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
-      <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $option; ?>" class="optionWidget-<?php echo $question; ?>">Option <?php echo $option+1; ?></label></th>
+      <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $option; ?>" class="optionWidget-<?php echo $question; ?>">Option</label></th>
       <td width="270"><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $option; ?>" class="sprytextfield">
         <input name="q<?php echo $question; ?>o<?php echo $option; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $option; ?>" value="<?php echo $row_getOption['option']; ?>" />
         <span class="textfieldRequiredMsg">Enter a value for this option!</span></span></td>
@@ -113,7 +113,7 @@ $quiz = $_GET['id'];
 <table width="660" border="0" align="center" cellpadding="5" cellspacing="0">
   <tr>
     <th width="30" scope="row"><a href="javascript:;" onclick="QuizQuestion.remove(<?php echo $question; ?>);"><img src="img/delete.png" alt="" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
-    <th width="100" scope="row"><label for="question_<?php echo $question; ?>">Question <?php echo $question+1; ?></label></th>
+    <th width="100" scope="row"><label for="question_<?php echo $question; ?>">Question</label></th>
     <td><span id="sprytextfield-q<?php echo $question; ?>">
       <input type="text" name="question_<?php echo $question; ?>" id="question_<?php echo $question; ?>" />
       <span class="textfieldRequiredMsg">A value is required.</span></span></td>
@@ -130,7 +130,7 @@ $quiz = $_GET['id'];
     </tr>
     <tr>
       <th width="25" scope="row">&nbsp;</th>
-      <th width="80" scope="row"><label for="q<?php echo $question; ?>o0" class="optionWidget-<?php echo $question; ?>">Option 1</label></th>
+      <th width="80" scope="row"><label for="q<?php echo $question; ?>o0" class="optionWidget-<?php echo $question; ?>">Option</label></th>
       <td width="270"><span id="sprytextfield-q<?php echo $question; ?>o0" class="sprytextfield">
         <input name="q<?php echo $question; ?>o0" type="text" class="optionField" id="q<?php echo $question; ?>o0" />
         <span class="textfieldRequiredMsg">Enter a value for this option!</span></span></td>
@@ -147,7 +147,7 @@ $quiz = $_GET['id'];
     </tr>
     <tr>
       <th width="25" scope="row">&nbsp;</th>
-      <th width="80" scope="row"><label for="q<?php echo $question; ?>o1" class="optionWidget-<?php echo $question; ?>">Option 2</label></th>
+      <th width="80" scope="row"><label for="q<?php echo $question; ?>o1" class="optionWidget-<?php echo $question; ?>">Option</label></th>
       <td width="270"><span id="sprytextfield-q<?php echo $question; ?>o1" class="sprytextfield">
         <input name="q<?php echo $question; ?>o1" type="text" class="optionField" id="q<?php echo $question; ?>o1" />
         <span class="textfieldRequiredMsg">Enter a value for this option!</span></span></td>

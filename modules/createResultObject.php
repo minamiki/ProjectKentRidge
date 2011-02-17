@@ -16,7 +16,7 @@ if(isset($_GET['load'])){
 <input type="hidden" name="ur<?php echo $result; ?>" id="ur<?php echo $result; ?>" value="<?php echo $row_getQuery['result_id']; ?>" />
 <table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
   <tr>
-    <th colspan="2" valign="top" scope="row"><a href="javascript:;" onclick="QuizResult.remove(<?php echo $result; ?>);"><img src="img/delete.png" alt="" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a> Result <?php echo $result+1; ?></th>
+    <th colspan="2" valign="top" scope="row"><a href="javascript:;" onclick="QuizResult.remove(<?php echo $result; ?>);"><img src="img/delete.png" alt="" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a> Result</th>
   </tr>
   <tr>
     <th width="120" valign="top" scope="row"><label for="result_title_<?php echo $result; ?>">Title</label></th>
@@ -86,7 +86,7 @@ $count = 1;
 <div id="r<?php echo $result; ?>" class="resultWidget">
 <table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
   <tr>
-    <th colspan="2" valign="top" scope="row"><a href="javascript:;" onclick="QuizResult.remove(<?php echo $result; ?>);"><img src="img/delete.png" alt="" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a> Result <?php echo $result+1; ?></th>
+    <th colspan="2" valign="top" scope="row"><a href="javascript:;" onclick="QuizResult.remove(<?php echo $result; ?>);"><img src="img/delete.png" alt="" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a> Result</th>
   </tr>
   <tr>
     <th width="120" valign="top" scope="row"><label for="result_title_<?php echo $result; ?>">Title</label></th>

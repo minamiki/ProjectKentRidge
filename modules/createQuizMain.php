@@ -143,7 +143,7 @@ break; case 2:
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=2" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
 <input type="hidden" name="id" value="<?php echo $quiz_id; ?>" />
-<div id="createResultContainer"></div>
+<div id="createResultContainer"><p id="resultTip" class="containerTip">Click on the "Add new result" button to add a result entry!</p></div>
     <div class="add_container">
       <input type="submit" name="save" id="prev" value="Previous Step" />&nbsp;
       <input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onclick="QuizResult.add()" />&nbsp;
@@ -185,7 +185,7 @@ break; case 3:
 <input type="hidden" name="id" value="<?php echo $quiz_id; ?>" />
 <input type="hidden" name="optionCounts" id="optionCounts" value="" />
 <input type="hidden" name="questionCount" id="questionCount" value="" />
-<div id="createQuestionContainer"></div>
+<div id="createQuestionContainer"><p id="questionTip" class="containerTip">Click on the "Add new question" button to add a question entry!</p></div>
     <div class="add_container">
       <input type="submit" name="save" id="prev" value="Previous Step" />&nbsp;
       <input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onclick="QuizQuestion.add()" />&nbsp;

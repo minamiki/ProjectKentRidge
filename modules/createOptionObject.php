@@ -9,8 +9,6 @@ if(isset($_GET['delete'])){
 	$member = new Member();
 	if(!$quiz->removeOption($_GET['option'], $member->id)){
 		echo "Delete not authorized";
-	}else{
-		echo "delete okie";
 	}
 }else{
 // get result number
