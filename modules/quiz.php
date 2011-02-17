@@ -619,19 +619,19 @@ class Quiz{
 			$creator_old_level = $this->creator('level');
 			$creator_old_rank = $this->creator('rank');
 			
-			switch($type){
-				case -1: // penalty deduction for 'dislike' rating
+			switch($type){				
+				case -2: // penalty deduction for 'dislike' rating
 				
 				// check if taker has already disliked
 				if($this->getRating($member_id) != -1 && $GAME_ALLOW_DISLIKE){ // also check if dislikes are allowed by the system
 					// deduct the quiz score
 					if($this->quiz_score > 0){ // check if quiz score is more than 0
 						// deduct the quiz score and increment the dislike count
-						$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score - %d, dislike = dislike + 1 WHERE quiz_id = %d", $GAME_BASE_POINT * 2, $this->quiz_id);
+						$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score - %d, dislikes = dislikes + 1 WHERE quiz_id = %d", $GAME_BASE_POINT * 2, $this->quiz_id);
 						mysql_query($query, $quizroo) or die(mysql_error());
 		
 						// update the creator's points
-						$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score - %d, quizcreator_score_today = quizcreator_score_today - %d WHERE member_id = %d", $GAME_BASE_POINT * 2, $GAME_BASE_POINT, $this->fk_member_id);
+						$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score - %d, quizcreator_score_today = quizcreator_score_today - %d WHERE member_id = %d", $GAME_BASE_POINT * 2, $GAME_BASE_POINT * 2, $this->fk_member_id);
 						mysql_query($query, $quizroo) or die(mysql_error());
 					}
 					
@@ -647,7 +647,25 @@ class Quiz{
 					}				
 				}
 				
-				break;
+				break; // end case -2
+				
+				case -1: // minus the point given during the 'like'
+				// we make sure quiz was already liked
+				if($this->getRating($member_id) == 1){ // also check if dislikes are allowed by the system
+					// deduct the quiz score
+					$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score - %d WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
+					mysql_query($query, $quizroo) or die(mysql_error());
+					
+					// update the creator's points
+					$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score - %d, quizcreator_score_today = quizcreator_score_today - %d WHERE member_id = %d", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
+					mysql_query($query, $quizroo) or die(mysql_error());
+					
+					// update member has rating of this quiz
+					$query = sprintf("DELETE FROM q_store_rating WHERE fk_quiz_id = %d AND fk_member_id = %d", $this->quiz_id, $member_id);
+					mysql_query($query, $quizroo) or die(mysql_error());
+				}
+				
+				break; // end case -1
 							
 				case 0:	// award the base points or bonus award for 'like' rating		
 				case 1: // bonus award for 'like' rating
@@ -693,11 +711,12 @@ class Quiz{
 					
 					// update the quiz score
 					if($type == 1){ // also increment the like count
-						$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score + %d, like = like + 1 WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
+						$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score + %d, likes = likes + 1 WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
+						mysql_query($query, $quizroo) or die(mysql_error());
 					}else{ // just update the score
 						$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score + %d WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
+						mysql_query($query, $quizroo) or die(mysql_error());
 					}
-					mysql_query($query, $quizroo) or die(mysql_error());
 					
 					if($type == 1){			
 						// log the id of the awarder
@@ -712,7 +731,8 @@ class Quiz{
 						}
 					}
 				}
-				break;	
+				
+				break; // end case 0, 1
 			}
 		}
 	}

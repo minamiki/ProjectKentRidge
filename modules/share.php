@@ -22,7 +22,7 @@ if($method=='results'){
 	}	
 	
 	echo json_encode($results);
-}else if(method=='rate'){
+}else if($method=='rate'){
 	$quiz_id = $_REQUEST['quiz_id'];
 	$type = $_REQUEST['type'];
 	$quiz = new Quiz($quiz_id);

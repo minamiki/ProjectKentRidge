@@ -40,14 +40,14 @@ if(!$quiz->exists()){
 	 * Subscribe to Facebook Like event to handle it for our own data. 
 	 */
 	FB.Event.subscribe('edge.create', function(response) {
-		  Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'type':1});
+		Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'type':1});
 	});
 	
 	/*
 	 * Subscribe to Facebook Unlike event to handle it for our own data. 
 	 */
 	FB.Event.subscribe('edge.remove', function(response) {
-		  Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'type':0});
+		Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'type':-1});
 	});
 </script>
 </body>
