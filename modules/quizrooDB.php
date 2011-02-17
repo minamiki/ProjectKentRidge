@@ -4,8 +4,13 @@
 # HTTP="true"
 $hostname_quizroo = "localhost";
 $database_quizroo = "quizroo";
-$username_quizroo = "root";
-$password_quizroo = "";
+if($_SERVER['SERVER_NAME'] == "localhost"){ // if on localhost, automatically toggle facebook debug
+	$username_quizroo = "root";
+	$password_quizroo = "";
+}else{
+	$username_quizroo = "quizthecat";
+	$password_quizroo = "kuizz4roo";
+}
 $quizroo = mysql_pconnect($hostname_quizroo, $username_quizroo, $password_quizroo) or trigger_error(mysql_error(),E_USER_ERROR);
 
 // MySQL SQL-injection prevention
