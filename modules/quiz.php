@@ -481,12 +481,18 @@ class Quiz{
 		mysql_select_db($database_quizroo, $quizroo);
 		
 		// check if the quiz is already published
-		if($this->isPublished()){		
-			// set the publish flag to 0
-			$query = sprintf("UPDATE q_quizzes SET isPublished = 2 WHERE quiz_id = %d", $this->quiz_id);
+		if($this->isPublished()){
+			// check if it's a draft or a published quiz
+			if($this->isPublished == 1){
+				// set the publish flag to 2
+				$query = sprintf("UPDATE q_quizzes SET isPublished = 2 WHERE quiz_id = %d", $this->quiz_id);
+				$this->isPublished = 2;
+			}else{
+				// set back to 0
+				$query = sprintf("UPDATE q_quizzes SET isPublished = 0 WHERE quiz_id = %d", $this->quiz_id);
+				$this->isPublished = 0;
+			}
 			mysql_query($query, $quizroo) or die(mysql_error());
-			
-			$this->isPublished = 2;
 			
 			return true;
 		}else{

@@ -228,3 +228,30 @@ p.center{
 	padding-bottom: 50px;
 	display: none;
 }
+.paging-table {
+	color: #CCC;
+}
+.paging-table a:link, .paging-table a:visited {
+	color: #333;
+	text-decoration: none;
+}
+.paging-table a:hover {
+	text-decoration: underline;
+}
+#checkQuizTable .status, #checkQuizTable .properties {
+	font-size: 12px;
+	margin: 0px;
+}
+#checkQuizTable .draft {
+	color: #F00;	
+}
+#checkQuizTable .published {
+	color: #990;
+}
+#checkQuizTable .modified {
+	color: #F60;
+}
+#checkQuizTable .name {
+	margin-bottom: 3px;
+	margin-top: 0px;
+}

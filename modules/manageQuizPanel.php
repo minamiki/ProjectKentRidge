@@ -11,7 +11,7 @@ if (isset($_GET['pageNum_listQuiz'])) {
 $startRow_listQuiz = $pageNum_listQuiz * $maxRows_listQuiz;
 
 mysql_select_db($database_quizroo, $quizroo);
-$query_listQuiz = sprintf("SELECT quiz_id, quiz_name, quiz_picture, creation_date, likes, quiz_score, isPublished FROM q_quizzes WHERE fk_member_id = %d AND isPublished != 3 ORDER BY creation_date DESC", $member->id);
+$query_listQuiz = sprintf("SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %d AND isPublished != 3 ORDER BY creation_date DESC", $member->id);
 $query_limit_listQuiz = sprintf("%s LIMIT %d, %d", $query_listQuiz, $startRow_listQuiz, $maxRows_listQuiz);
 $listQuiz = mysql_query($query_limit_listQuiz, $quizroo) or die(mysql_error());
 $row_listQuiz = mysql_fetch_assoc($listQuiz);
@@ -48,27 +48,40 @@ $queryString_listQuiz = sprintf("&totalRows_listQuiz=%d%s", $totalRows_listQuiz,
 <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0" id="checkQuizTable" class="rounded">
       <tr>
         <th width="80">&nbsp;</th>
-        <th>Title</th>
-        <th>Stats</th>
-        <th>Score</th>
-        <th>Likes</th>
+        <th>Quiz Information</th>
+        <th width="100">Score (Likes)</th>
         <th width="120">Created on</th>
         <th width="80">Action</th>
       </tr>
-      <?php do { $quizloop = new Quiz($row_listQuiz['quiz_id']); ?>
+      <?php do { $quizloop = new Quiz($row_listQuiz['quiz_id']); 
+	  // prepare the formatted status
+	  switch($quizloop->isPublished){
+		  case 0: $status = '<em>Status:</em> <span class="draft">Unpublished Draft</span>'; break;
+		  case 1: $status = '<em>Status:</em> <span class="published">Published</span>'; break;
+		  case 2: $status = '<em>Status:</em> <span class="modified">Unpublished Modification</span>'; break;
+		  case 3: $status = '<em>Status:</em> <span class="archived">Archived</span>'; break;
+		  default: $status = '<em>Status:</em> Limbo :/'; break;
+	  }	  
+	  ?>
         <tr>
-          <td width="80" align="center"><img src="../quiz_images/imgcrop.php?w=70&amp;h=52&amp;f=<?php echo $row_listQuiz['quiz_picture']; ?>" alt="<?php echo $row_listQuiz['quiz_picture']; ?>" width="70" height="52" border="0" title="<?php echo $row_listQuiz['quiz_name']; ?>" /></td>
-          <td><?php echo $row_listQuiz['quiz_name']; ?></td>
-          <td align="center"><?php echo "R: ".$quizloop->getResults("count")." Q:".$quizloop->getQuestions("count"); ?></td>
-          <td align="center"><?php echo $row_listQuiz['quiz_score']; ?></td>
-          <td align="center"><?php echo $row_listQuiz['likes']; ?></td>
-          <td width="120" align="center"><?php echo date("F j, Y g:ia", strtotime($row_listQuiz['creation_date'])); ?></td>
-          <td width="80" align="center"><a href="modifyQuiz.php?id=<?php echo $row_listQuiz['quiz_id']; ?>"><img src="../webroot/img/edit.png" alt="Modify" width="16" height="16" border="0" title="Modify Quiz" /></a>&nbsp;<?php if($row_listQuiz['isPublished'] == 1){ ?><a href="publishQuiz.php?unlist&id=<?php echo $row_listQuiz['quiz_id']; ?>"><img src="../webroot/img/unpublish.png" alt="Unpublish" width="16" height="16" border="0" title="Unpublish Quiz" /></a><?php }else{ ?><a href="publishQuiz.php?id=<?php echo $row_listQuiz['quiz_id']; ?>"><img src="../webroot/img/publish.png" alt="Publish" width="16" height="16" border="0" title="Publish Quiz" /></a><?php } ?>&nbsp;<a href="deleteQuiz.php?id=<?php echo $row_listQuiz['quiz_id']; ?>"><img src="../webroot/img/delete.png" alt="Delete" width="16" height="16" border="0" title="Delete Quiz" /></a></td>
+          <td width="80" align="center"><img src="../quiz_images/imgcrop.php?w=70&amp;h=52&amp;f=<?php echo $quizloop->quiz_picture; ?>" alt="<?php echo $quizloop->quiz_picture; ?>" width="70" height="52" border="0" title="<?php echo $quizloop->quiz_name; ?>" /></td>
+          <td><p class="name"><?php echo (strlen($quizloop->quiz_name) > 90) ? substr($quizloop->quiz_name, 0, 90)."..." : $quizloop->quiz_name ; ?></p><p class="properties">
+          <?php echo "<em>Results:</em> ".$quizloop->getResults("count").", <em>Questions:</em> ".$quizloop->getQuestions("count"); ?></p>
+          <p class="status"><?php echo $status; ?></p></td>
+          <td width="100" align="center"><?php echo $quizloop->quiz_score; ?> (<?php echo $quizloop->likes; ?>)</td>
+          <td width="120" align="center"><?php echo date("F j, Y g:ia", strtotime($quizloop->creation_date)); ?></td>
+          <td width="80" align="center">
+		  	<?php if($quizloop->isPublished >= 1){ ?><a href="modifyQuiz.php?id=<?php echo $quizloop->quiz_id; ?>"><img src="../webroot/img/edit.png" alt="Modify" width="16" height="16" border="0" title="Modify Quiz" /></a>
+            <?php }else{ ?><a href="createQuiz.php?step=1&id=<?php echo $quizloop->quiz_id; ?>"><img src="../webroot/img/edit.png" alt="Resume Creating" width="16" height="16" border="0" title="Resume Creating" /></a><?php } ?>&nbsp;
+			<?php if($quizloop->isPublished == 1){ ?><a href="publishQuiz.php?unlist&id=<?php echo $quizloop->quiz_id; ?>"><img src="../webroot/img/unpublish.png" alt="Unpublish" width="16" height="16" border="0" title="Unpublish Quiz" /></a>
+			<?php }else{ ?><a href="publishQuiz.php?id=<?php echo $quizloop->quiz_id; ?>"><img src="../webroot/img/publish.png" alt="Publish" width="16" height="16" border="0" title="Publish Quiz" /></a><?php } ?>&nbsp;
+            <a href="deleteQuiz.php?id=<?php echo $quizloop->quiz_id; ?>"><img src="../webroot/img/delete.png" alt="Delete" width="16" height="16" border="0" title="Delete Quiz" /></a>
+          </td>
         </tr>
         <?php } while ($row_listQuiz = mysql_fetch_assoc($listQuiz)); ?>
     </table>
   <br />
-    <table width="200" border="0" align="center">
+    <table width="200" border="0" align="center" cellpadding="5" cellspacing="0" class="paging-table" >
       <tr>
         <td><?php if ($pageNum_listQuiz > 0) { // Show if not first page ?>
             <a href="<?php printf("%s?pageNum_listQuiz=%d%s", $currentPage, 0, $queryString_listQuiz); ?>">First</a>

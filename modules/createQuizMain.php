@@ -90,7 +90,7 @@ if(isset($_GET['id'])){
               <ol id="log-0" class="log">
               </ol>
             </div>
-            <div id="pictureChoser_0"></div></td>
+            </td>
         </tr>
         <tr>
           <td class="desc"><div id="pictureChoser_0"><?php if(sizeof(glob("../quiz_images/".$unikey."*")) > 0){ ?><table border="0" cellspacing="0" cellpadding="3">
