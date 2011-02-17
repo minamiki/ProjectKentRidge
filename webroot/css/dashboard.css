@@ -112,10 +112,17 @@
 	padding-bottom: 8px;
 }
 .quiz_box h3 {
-	font-size: 14px;
+	font-size: 15px;
 	margin-top: 0px;
 	margin-bottom: 3px;
 	color: #333;
+}
+.quiz_box a:link, .quiz_box a:visited {
+	color: #333;
+	text-decoration: none;
+}
+.quiz_box a:hover {
+	text-decoration: underline;
 }
 .quiz_box:last-child {
 	border-bottom-style: none;
@@ -186,4 +193,13 @@
 }
 #topics .description {
 	font-size: 14px;
+}
+#topics a:link, #topics a:visited {
+	color: #333;
+	text-decoration: none;
+	font-size: 18px;
+	font-weight: bold;
+}
+#topics a:hover {
+	text-decoration: underline;
 }
