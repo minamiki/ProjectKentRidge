@@ -83,7 +83,7 @@ class Member{
 		$totalRows_getCheck = mysql_num_rows($getCheck);
 		
 		if($totalRows_getCheck == 0){ // user is not in the database, add user into the database
-			$queryInsert = sprintf("INSERT INTO s_members(member_id, member_name) VALUES(%s, '%s')", $this->id, $this->getName());
+			$queryInsert = sprintf("INSERT INTO s_members(member_id, member_name, join_date) VALUES(%s, '%s', NOW())", $this->id, $this->getName());
 			mysql_query($queryInsert, $quizroo) or die(mysql_error());
 			
 			// populate the user data
