@@ -2,7 +2,7 @@
 if(isset($_GET['load'])){
 	$unikey = $_GET['unikey'];
 	require('quizrooDB.php');
-	mysql_select_db($database_quizroo, $quizroo);
+	
 	$query = sprintf("SELECT result_id, result_title, result_description, result_picture FROM q_results WHERE fk_quiz_id = %d", GetSQLValueString($_GET['id'], "int"));
 	$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 	$row_getQuery = mysql_fetch_assoc($getQuery);
@@ -56,9 +56,10 @@ if(isset($_GET['load'])){
   </tr>
   <tr>
     <td><?php // return uploaded images
-foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
-<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo basename($filename); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
-<?php $count++; } ?></td>
+	if($unikey != ""){ foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
+		<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo basename($filename); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
+	<?php $count++; }} ?>
+	</td>
   </tr>
 </table><?php } ?></div></td>
   </tr>
@@ -126,9 +127,10 @@ $count = 1;
   </tr>
   <tr>
     <td><?php // return uploaded images
-foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
-<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo basename($filename); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
-<?php $count++; } ?></td>
+	if($unikey != ""){ foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
+		<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo basename($filename); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
+	<?php $count++; }} ?>
+	</td>
   </tr>
 </table><?php } ?></div></td>
   </tr>

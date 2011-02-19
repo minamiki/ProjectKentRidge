@@ -21,7 +21,6 @@ if(isset($_GET['id'])){
 	}
 	
 	// populate the categories
-	mysql_select_db($database_quizroo, $quizroo);
 	$query_listCat = "SELECT cat_id, cat_name FROM q_quiz_cat";
 	$listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
 	$row_listCat = mysql_fetch_assoc($listCat);
@@ -98,10 +97,11 @@ if(isset($_GET['id'])){
     <td><span class="formDesc">OR click on a picture below to use it as the result picture</span></td>
   </tr>
   <tr>
-    <td><?php // return uploaded images
-foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
-<a href="javascript:;" onClick="selectImage(0, '<?php echo basename($filename); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
-<?php $count++; } ?></td>
+    <td><?php // return uploaded images if(
+	if($unikey != ""){ foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
+		<a href="javascript:;" onClick="selectImage(0, '<?php echo basename($filename); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
+	<?php $count++; }} ?>
+	</td>
   </tr>
 </table><?php } ?></div></td>
         </tr>
@@ -308,7 +308,6 @@ $unikey = get_rand_id(8);
 $member->bindImagekey($unikey);
 
 // populate the categories
-mysql_select_db($database_quizroo, $quizroo);
 $query_listCat = "SELECT cat_id, cat_name FROM q_quiz_cat";
 $listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
 $row_listCat = mysql_fetch_assoc($listCat);
