@@ -85,8 +85,8 @@ function retrieveAchievements($array){
 		 * If the achievement is rank related, fetch level data.
 		 */
 		if($result[0]['type']=='3'){
-			$levelscore = $database->get('g_levels',array('points'),'id='.$result[0]['level'].' OR id='.($result[0]['level']+1).' OR id='.($result[0]['level']-1));
-			array_push($return_array, array('image'=>$result[0]['image'],'name'=>$result[0]['name'],'description'=>$result[0]['description'],'level'=>$result[0]['level'],'levelscore'=>$levelscore[0]['points'],'nextlevelscore'=>$levelscore[1]['points']));
+			$levelscore = $database->get('g_levels',array('points'),'id='.$achievement.' OR id='.($achievement+1).' OR id='.($achievement-1));
+			array_push($return_array, array('image'=>$result[0]['image'],'name'=>$result[0]['name'],'description'=>$result[0]['description'],'level'=>$achievement,'levelscore'=>$levelscore[0]['points'],'nextlevelscore'=>$levelscore[1]['points']));
 		}else{
 			array_push($return_array,$result[0]);
 		}		
