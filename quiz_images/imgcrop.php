@@ -1,6 +1,9 @@
 <?php
 header ("Content-type: image/jpeg");
 $file_name=$_GET['f'];
+if(!file_exists($file_name)){
+	$file_name="none.gif";
+}
 $crop_height=$_GET['h'];
 $crop_width=$_GET['w'];
 $file_type= explode('.', $file_name);
