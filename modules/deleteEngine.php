@@ -25,7 +25,3 @@ if($quiz->isOwner($member->id)){
   <p class="info">by <em><?php echo $quiz->creator(); ?></em> on <?php echo date("F j, Y g:ia", strtotime($quiz->creation_date)); ?> in the topic '<?php echo $quiz->category(); ?>'</p>
   <input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="goToURL('../modules/deleteQuiz.php?id=<?php echo $_GET['id']; ?>');" value="Remove this Quiz" />
 </div>
-<script type="text/javascript" src="../webroot/js/Splash.js"></script>
-<script type="text/javascript">
-	Splash.display(<?php echo $achievement_details?>);
-</script>

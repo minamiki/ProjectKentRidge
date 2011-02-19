@@ -24,7 +24,3 @@ You have successfully updated your quiz. Your quiz will now be available under t
   <p class="info">by <em><?php echo $quiz->creator(); ?></em> on <?php echo date("F j, Y g:ia", strtotime($quiz->creation_date)); ?> in the topic '<?php echo $quiz->category(); ?>'</p>
   <input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="goToURL('takeQuiz.php?id=<?php echo $_GET['id']; ?>');" value="Take Quiz now!" />
 </div>
-<script type="text/javascript" src="../webroot/js/Splash.js"></script>
-<script type="text/javascript">
-	Splash.display(<?php echo $achievement_details?>);
-</script>
