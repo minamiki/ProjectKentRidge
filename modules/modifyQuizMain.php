@@ -26,7 +26,6 @@ if(isset($_GET['id'])){
 	}
 	
 	// populate the categories
-	mysql_select_db($database_quizroo, $quizroo);
 	$query_listCat = "SELECT cat_id, cat_name FROM q_quiz_cat";
 	$listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
 	$row_listCat = mysql_fetch_assoc($listCat);

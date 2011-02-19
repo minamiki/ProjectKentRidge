@@ -1,6 +1,5 @@
 <?php require("quizrooDB.php");
 // prepare result options
-mysql_select_db($database_quizroo, $quizroo);
 $querySQL = "SELECT result_id, result_title FROM q_results WHERE fk_quiz_id = ".GetSQLValueString($_GET['id'], "int");
 $resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
 $row_resultID = mysql_fetch_assoc($resultID);
@@ -16,7 +15,7 @@ mysql_free_result($resultID);
 // check what to do
 if(isset($_GET['load'])){
 	require('quizrooDB.php');
-	mysql_select_db($database_quizroo, $quizroo);
+	
 	$query = sprintf("SELECT question_id, question, question_image, question_order FROM q_questions WHERE fk_quiz_id = %d", GetSQLValueString($_GET['id'], "int"));
 	$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 	$row_getQuery = mysql_fetch_assoc($getQuery);

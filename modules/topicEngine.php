@@ -9,7 +9,6 @@ if(isset($_GET['topic'])){
 	}
 }
 // retrieve recommended quizzes
-mysql_select_db($database_quizroo, $quizroo);
 $query_recommendations = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 AND fk_quiz_cat = %d ORDER BY creation_date DESC", GetSQLValueString($topic, "int"));
 $recommendations = mysql_query($query_recommendations, $quizroo) or die(mysql_error());
 $row_recommendations = mysql_fetch_assoc($recommendations);

@@ -12,6 +12,8 @@ if($_SERVER['SERVER_NAME'] == "localhost"){ // if on localhost, automatically to
 	$password_quizroo = "kuizz4roo";
 }
 $quizroo = mysql_pconnect($hostname_quizroo, $username_quizroo, $password_quizroo) or trigger_error(mysql_error(),E_USER_ERROR);
+// use the quizroo database
+mysql_select_db($database_quizroo, $quizroo);
 
 // MySQL SQL-injection prevention
 if (!function_exists("GetSQLValueString")) {

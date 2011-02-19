@@ -1,6 +1,5 @@
 <?php include("quizrooDB.php");
 // load the values from database
-mysql_select_db($database_quizroo, $quizroo);
 $queryVars = "SELECT * FROM `s_variables`";
 $getVars = mysql_query($queryVars, $quizroo) or die(mysql_error());
 $row_getVars = mysql_fetch_assoc($getVars);

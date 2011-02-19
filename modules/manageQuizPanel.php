@@ -10,7 +10,6 @@ if (isset($_GET['pageNum_listQuiz'])) {
 }
 $startRow_listQuiz = $pageNum_listQuiz * $maxRows_listQuiz;
 
-mysql_select_db($database_quizroo, $quizroo);
 $query_listQuiz = sprintf("SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %d AND isPublished != 3 ORDER BY creation_date DESC", $member->id);
 $query_limit_listQuiz = sprintf("%s LIMIT %d, %d", $query_listQuiz, $startRow_listQuiz, $maxRows_listQuiz);
 $listQuiz = mysql_query($query_limit_listQuiz, $quizroo) or die(mysql_error());

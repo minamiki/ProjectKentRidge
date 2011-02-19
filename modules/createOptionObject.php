@@ -17,7 +17,6 @@ $option = $_GET['optionNumber'];
 $quiz = $_GET['id'];
 
 // prepare result options
-mysql_select_db($database_quizroo, $quizroo);
 $querySQL = "SELECT result_id, result_title FROM q_results WHERE fk_quiz_id = ".GetSQLValueString($quiz, "int");
 $resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
 $row_resultID = mysql_fetch_assoc($resultID);

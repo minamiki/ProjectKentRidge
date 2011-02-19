@@ -76,7 +76,6 @@ class Member{
 	function register(){
 		require('quizrooDB.php');	// database connections
 		// check if the member is already in the database
-		mysql_select_db($database_quizroo, $quizroo);
 		$queryCheck = sprintf("SELECT * FROM s_members WHERE member_id = %s", $this->id);
 		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 		$row_getCheck = mysql_fetch_assoc($getCheck);
@@ -146,7 +145,6 @@ class Member{
 		require('quizrooDB.php');	// database connections
 		
 		// count all the points and update the member's creator score
-		mysql_select_db($database_quizroo, $quizroo);
 		$queryCheck = sprintf("SELECT COUNT(quiz_score) AS score FROM q_quizzes WHERE fk_member_id = %d", $this->id);
 		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 		$row_getCheck = mysql_fetch_assoc($getCheck);
@@ -247,7 +245,6 @@ class Member{
 	function bindImagekey($unikey){
 		require('quizrooDB.php');	// database connections
 		
-		mysql_select_db($database_quizroo, $quizroo);
 		$queryCheck = sprintf("INSERT INTO s_image_store(`uni_key`, `fk_member_id`) VALUES(%s, %d)",  GetSQLValueString($unikey, "text"), $this->id);
 		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 	}
