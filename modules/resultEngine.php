@@ -74,7 +74,7 @@ $achievement_array = array();
 $achievement_array = $member->calculatePoints($quiz->quiz_id, $quiz->isPublished(), $achievement_array);
 
 // Check for achievements
-checkAchievements($facebookID);
+$achievement_array = checkAchievements($facebookID, $achievement_array);
 
 //----------------------------------------
 // Retrieve Quiz results for display

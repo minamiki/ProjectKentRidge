@@ -28,7 +28,7 @@ if(isset($_GET['unlist'])){
 			}
 			
 			// check if there are any achievements
-			checkAchievements($member->id);
+			$achievement_array = checkAchievements($member->id, $achievement_array);
 		}
 	}
 	//----------------------------------------
@@ -51,7 +51,7 @@ if(isset($_GET['unlist'])){
 <?php if(!isset($_GET['unlist'])){ ?>
 <script type="text/javascript" src="../webroot/js/Splash.js"></script>
 <script type="text/javascript">
-	Splash.display(<?php echo $achievement_details?>);
+	Splash.display(<?php echo $achievement_details; ?>);
 </script>
 <?php } ?>
 </body>
