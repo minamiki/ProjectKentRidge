@@ -87,7 +87,7 @@ $row_getResultInfo = mysql_fetch_assoc($getResultInfo);
 $totalRows_getResultInfo = mysql_num_rows($getResultInfo);
 
 // get results to build the pie chart
-$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", GetSQLValueString($quiz->quiz_id, "int"));
+$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
 $getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
 $row_getResultChart = mysql_fetch_assoc($getResultChart);
 $totalRows_getResultChart = mysql_num_rows($getResultChart);
@@ -117,7 +117,7 @@ $totalRows_getResultChart = mysql_num_rows($getResultChart);
 		data.addRows([
 			
 			<?php do{ ?>			
-			['<?php echo $row_getResultChart['result_title']; ?>', <?php echo $row_getResultChart['count']; ?>],
+			['<?php echo str_replace("'", "\\'", $row_getResultChart['result_title']); ?>', <?php echo $row_getResultChart['count']; ?>],
 			<?php }while($row_getResultChart = mysql_fetch_assoc($getResultChart)); ?>
 			
 		]);
@@ -142,7 +142,7 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 <?php if($quiz->isPublished() && $totalRows_getResultChart != 0){ ?>
 <div class="frame rounded">
 <h3>Result Details</h3>
-<div id="result_chart"><img src="../webroot/images/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div>
+<div id="result_chart"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div>
 <?php if($VAR_SYSTEM_DEBUG){ ?>
 <table border="0" align="center" cellpadding="3" cellspacing="0">
   <tr>
