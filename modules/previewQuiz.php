@@ -1,10 +1,18 @@
 <?php require('quizrooDB.php'); ?>
 <?php if($quiz->exists()){ ?>
 <?php if($quiz->isPublished()){ ?>
+<?php if($quiz->hasTaken($member->id)){ ?>
+<div id="takequiz-preamble" class="frame rounded">
+  <h3>Retake a quiz</h3>
+  <p>Hey! It seems that you've already taken this quiz before. In order to keep things fair, retaking quizzes won't earn you any points : / You can 'like' this quiz below if you didn't the last time you took it!</p>
+  <p>Again, here's some information about the quiz! You can decide whether to retake this quiz. This quiz contains <strong><?php echo $quiz->numQuestions(); ?> questions</strong>.</p>
+</div>
+<?php }else{ ?>
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Take a quiz</h3>
   <p>Here's some information about the quiz! You can decide whether to take this quiz. This quiz contains <strong><?php echo $quiz->numQuestions(); ?> questions</strong>.</p>
 </div>
+<?php } ?>
 <?php }else{ ?>
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Preview Quiz</h3>
@@ -19,6 +27,10 @@
   <p class="info">by <em><?php echo $quiz->creator(); ?></em> on <?php echo date("F j, Y g:ia", strtotime($quiz->creation_date)); ?> in the topic '<?php echo $quiz->category(); ?>'</p>
   <input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="goToURL('takeQuiz.php?id=<?php echo $_GET['id']; ?>');" value="Take Quiz now!" />
 </div>
+<?php if($quiz->hasTaken($member->id)){ ?>
+<!-- Include user sharing interface for liking, posting feed and recommending to friends -->
+<?php include('sharingInterface.php') ?>
+<?php } ?>
 <?php if($quiz->isOwner($member->id) && !$quiz->isPublished()){ ?>
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Publish this quiz!</h3>

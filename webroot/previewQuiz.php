@@ -60,5 +60,28 @@ if($quiz->exists()){
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/previewQuiz.php"); ?>
 <?php include("inc/footer-js.php"); ?>
+<?php if($quiz->hasTaken($member->id)){ ?>
+<!-- Include user sharing interface for liking, posting feed and recommending to friends -->
+<script type="text/javascript" src="js/Share.js"></script>
+<script>
+	Share.recommend($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>});
+	//Share.checkLike(<?php $quiz->isPublished() ?>);
+</script>
+<script type="text/javascript">
+	/*
+	 * Subscribe to Facebook Like event to handle it for our own data. 
+	 */
+	FB.Event.subscribe('edge.create', function(response) {
+		Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'type':1});
+	});
+	
+	/*
+	 * Subscribe to Facebook Unlike event to handle it for our own data. 
+	 */
+	FB.Event.subscribe('edge.remove', function(response) {
+		Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'type':-1});
+	});
+</script>
+<?php } ?>
 </body>
 </html>
