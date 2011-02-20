@@ -277,13 +277,13 @@ class System{
 		
 		echo "// Quiz Information\n";
 		echo sprintf("Total %d quizzes, with %d published, %d drafts/unpublished, %d being modified and %d archived.\n", $this->quiz_total, $this->quiz_published, $this->quiz_draft, $this->quiz_modify, $this->quiz_archive);
-		echo sprintf("%d new quizzes created today, with %d published.\n", $this->getTodayStat('quizzes_all'), $this->getTodayStat('quizzes_published'));
-		echo sprintf("%d quizzes were taken today, with %d unique attempts.\n", $this->getTodayStat('total_takes'), $this->getTodayStat('unique_takes'));
-		echo sprintf("%d quizzes were liked today.\n\n", $this->getTodayStat('ratings'));
+		echo sprintf("%d new quizzes were created today, with %d published.\n", $this->getTodayStat('quizzes_all'), $this->getTodayStat('quizzes_published'));
+		echo sprintf("Quizzes were taken %d times today, with %d unique attempts.\n", $this->getTodayStat('total_takes'), $this->getTodayStat('unique_takes'));
+		echo sprintf("Quizzes were liked %d times today.\n\n", $this->getTodayStat('ratings'));
 		
 		echo "// Quiz Anatomy\n";
 		echo sprintf("Each quiz has an average of %.2f questions.\n", $this->getAverageStat('questions'));
-		echo sprintf("Each question has an average of %.2f questions.\n", $this->getAverageStat('options'));
+		echo sprintf("Each question has an average of %.2f options.\n", $this->getAverageStat('options'));
 		echo sprintf("Each quiz has an average of %.2f likes.\n", $this->getAverageStat('likes'));
 		echo sprintf("Each quiz has an average of %.2f points.\n", $this->getAverageStat('quiz_score'));
 		echo sprintf("Each quiz was taken an average of %.2f times.\n\n", $this->getAverageStat('quiz_taken'));
