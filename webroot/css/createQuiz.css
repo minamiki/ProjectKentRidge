@@ -55,12 +55,6 @@
 p.center{
 	text-align: center;
 }
-#checkQuizTable img {
-	border: 1px solid #333;
-}
-#checkQuizTable a img {
-	border: none;
-}
 
 #create-quiz input, #create-quiz textarea, #create-quiz select {
 	-webkit-border-radius: 3px;
@@ -78,18 +72,6 @@ p.center{
 	font-size: 14px;
 	padding: 4px;
 	border: 1px solid #CCC;
-}
-#checkQuizTable {
-	font-size: 14px;
-}
-#checkQuizTable td {
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
-	border-bottom-color: #CCC;
-}
-#checkQuizTable th {
-	color: #333;
-	background-image: url(../img/form_bg.gif);
 }
 #create-quiz input[type='text'], #create-quiz textarea {
 	width: 100%;	
@@ -238,8 +220,27 @@ p.center{
 .paging-table a:hover {
 	text-decoration: underline;
 }
-#checkQuizTable .status, #checkQuizTable .properties {
+#checkQuizTable {
 	font-size: 12px;
+	font-family: Verdana, Geneva, sans-serif;
+}
+#checkQuizTable td {
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCC;
+}
+#checkQuizTable th {
+	color: #333;
+	background-image: url(../img/form_bg.gif);
+}
+#checkQuizTable img {
+	border: 1px solid #333;
+}
+#checkQuizTable a img {
+	border: none;
+}
+#checkQuizTable .status, #checkQuizTable .properties {
+	font-size: 10px;
 	margin: 0px;
 }
 #checkQuizTable .draft {
