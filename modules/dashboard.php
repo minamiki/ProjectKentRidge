@@ -36,7 +36,7 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
   <?php } ?>
   <div class="clear">
     <div id="recommendations" class="frame rounded left-right">
-      <h2>Lastest</h2>
+      <h2>Latest</h2>
       <?php if($totalRows_recommendations != 0){ do { ?>
         <div class="quiz_box clear">
           <h3><a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><?php echo $row_recommendations['quiz_name']; ?></a></h3>
