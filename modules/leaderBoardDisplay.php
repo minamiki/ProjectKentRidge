@@ -7,13 +7,10 @@ $systemStats = new System();
 $systemStats->getMemberStats();
 
 // fetch the topic information
-$query_getRanking = "SELECT member_id, member_name, level, g_achievements.name as rank_name, quiztaker_score+quizcreator_score AS score, quiztaker_score, quizcreator_score FROM s_members, g_achievements WHERE s_members.rank = g_achievements.id AND member_id NOT IN (SELECT member_id FROM s_members WHERE isAdmin = 1) ORDER BY score DESC LIMIT 0, 10";
+$query_getRanking = "SELECT @rownum:=@rownum+1 ranking, member_id, member_name, level, g_achievements.name as rank_name, quiztaker_score+quizcreator_score AS score, quiztaker_score, quizcreator_score FROM s_members, g_achievements, (SELECT @rownum:=0) numbering WHERE s_members.rank = g_achievements.id AND member_id NOT IN (SELECT member_id FROM s_members WHERE isAdmin = 1) ORDER BY score DESC LIMIT 0, 10";
 $getRanking = mysql_query($query_getRanking, $quizroo) or die(mysql_error());
 $row_getRanking = mysql_fetch_assoc($getRanking);
 $totalRows_getRanking = mysql_num_rows($getRanking);
-
-// init the rank count
-$rank_count = 1;
 ?>
 <div id="leaderboard-preamble" class="frame rounded">
   <h2>Leader Board</h2>
@@ -65,7 +62,7 @@ $rank_count = 1;
     </div>
   </div>
   <div id="ranking" class="frame rounded right">
-    <h2>Member Ranking    </h2>
+    <h2>Top 10 Member Ranking</h2>
     <table width="100%" border="0" cellpadding="4" cellspacing="0" id="rankTable">
       <tr>
         <th width="55" scope="col">Rank</th>
@@ -75,8 +72,8 @@ $rank_count = 1;
       </tr>
       <?php do{ ?>
       <tr>
-        <td width="55" align="center" scope="row" class="ranking"><?php echo $rank_count; ?></td>
-        <td width="60" align="center" scope="row"><img name="" src="http://graph.facebook.com/<?php echo $row_getRanking['member_id']; ?>/picture" width="50" height="50" alt="" /></td>
+        <td width="55" align="center" scope="row" class="ranking"><?php echo $row_getRanking['ranking']; ?></td>
+        <td width="60" align="center" scope="row"><img src="http://graph.facebook.com/<?php echo $row_getRanking['member_id']; ?>/picture" width="50" height="50" alt="<?php echo $row_getRanking['member_name']; ?>" title="<?php echo $row_getRanking['member_name']; ?>" /></td>
         <td><p class="member-name"><?php echo $row_getRanking['member_name']; ?></p>
         <p class="member-level"><?php echo $row_getRanking['rank_name']; ?> (Level <?php echo $row_getRanking['level']; ?>)</p></td>
         <td align="center"><p class="score"><?php echo $row_getRanking['score']; ?></p>
