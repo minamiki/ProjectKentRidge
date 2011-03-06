@@ -54,6 +54,7 @@ if($quiz->exists()){
 <title>Quizroo Quiz</title>
 <?php } ?>
 <?php include("inc/header-css.php");?>
+<link href="css/quiz.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>

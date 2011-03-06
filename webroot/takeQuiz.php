@@ -45,6 +45,7 @@ if(!$quiz->exists()){
 <meta property="fb:app_id" content="<?php echo $FB_APPID; ?>"/> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php include("inc/header-css.php");?>
+<link href="css/quiz.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>

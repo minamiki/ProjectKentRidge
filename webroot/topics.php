@@ -5,6 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Quizroo Topics</title>
 <?php include("inc/header-css.php");?>
+<link href="css/dashboard.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>

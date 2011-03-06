@@ -24,6 +24,13 @@ html, body {
 	background-image: url(../img/statusbar_background_gradient.png);
 	background-repeat: repeat-x;
 	background-position: bottom;
+	
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
 }
 .frame h3 {
 	font-size: 18px;

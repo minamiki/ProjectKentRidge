@@ -18,6 +18,7 @@ if(!$quiz->exists()){
 <meta property="og:site_name" content="Quizroo"/>
 <meta property="fb:app_id" content="<?php echo $FB_APPID; ?>"/> 
 <?php include("inc/header-css.php");?>
+<link href="css/quiz.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
