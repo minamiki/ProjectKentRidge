@@ -7,6 +7,9 @@ $system = new System();
 // display stats
 $system->displayStats();
 
+// log the member stats
+$system->logMemberStats();
+
 // reset the daily scores
 $system->resetDailyScore();
 
