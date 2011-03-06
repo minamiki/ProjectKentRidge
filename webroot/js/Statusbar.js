@@ -188,14 +188,13 @@ var Statusbar = {
 			
 			var leaderboard = document.createElement('div');
 			$('#statusbar-info').append(leaderboard);
-			$(invite).addClass('statusbar-menu-item').html(
+			$(leaderboard).addClass('statusbar-menu-item').html(
 				"<div class='statusbar-menu-title'>Leaderboard</div>"+
 				"<div class='statusbar-menu-desc'>View the top-ranked players</div>"
 			);
-			$(invite).click(function(){
+			$(leaderboard).click(function(){
 				goToURL('leaderBoard.php');
 				$(leaderboard).css('background-color','#333');
-				featureUnavailable();
 			});
 			
 			var invite = document.createElement('div');
