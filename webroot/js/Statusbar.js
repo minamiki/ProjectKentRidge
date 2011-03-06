@@ -160,6 +160,7 @@ var Statusbar = {
 				$(manageQuiz).css('background-color','#333');
 			});
 			
+			/*
 			var viewQuiz = document.createElement('div');
 			$('#statusbar-info').append(viewQuiz);
 			$(viewQuiz).addClass('statusbar-menu-item').html(
@@ -171,7 +172,7 @@ var Statusbar = {
 				//$(viewQuiz).css('background-color','#333');
 				featureUnavailable();
 			});
-			
+			*/
 		}else if(option=='statusbar-friends'){
 			$('#statusbar-info').addClass('statusbar-menu').html("");
 			
@@ -183,6 +184,18 @@ var Statusbar = {
 			);
 			$(overview).click(function(){
 				featureUnavailable();	
+			});
+			
+			var leaderboard = document.createElement('div');
+			$('#statusbar-info').append(leaderboard);
+			$(invite).addClass('statusbar-menu-item').html(
+				"<div class='statusbar-menu-title'>Leaderboard</div>"+
+				"<div class='statusbar-menu-desc'>View the top-ranked players</div>"
+			);
+			$(invite).click(function(){
+				goToURL('leaderBoard.php');
+				$(leaderboard).css('background-color','#333');
+				featureUnavailable();
 			});
 			
 			var invite = document.createElement('div');
