@@ -248,6 +248,22 @@ class Member{
 		$queryCheck = sprintf("INSERT INTO s_image_store(`uni_key`, `fk_member_id`) VALUES(%s, %d)",  GetSQLValueString($unikey, "text"), $this->id);
 		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 	}
+	
+	// get their ranking
+	function getRanking(){
+		require('quizrooDB.php');	// database connections
+		
+		// find out the rank
+		$queryRanking = sprintf("SELECT ranking FROM (
+SELECT @rownum:=@rownum+1 ranking, member_id, quiztaker_score+quizcreator_score AS score FROM s_members, (SELECT @rownum:=0) numbering WHERE member_id NOT IN (SELECT member_id FROM s_members WHERE isAdmin = 1) ORDER BY score DESC) ranks
+WHERE member_id = %d", $this->id);
+		$getRanking = mysql_query($queryRanking, $quizroo) or die(mysql_error());
+		$row_getRanking = mysql_fetch_assoc($getRanking);
+		$ranking = $row_getRanking['ranking'];	
+		mysql_free_result($getRanking);
+		
+		return $ranking;
+	}
 }
 }
 
