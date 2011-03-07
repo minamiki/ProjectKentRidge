@@ -90,7 +90,7 @@ function readAchievements($memberid){
 
 function clearSystemNotification($memberid){
 	$database = new Database();
-	$result = $database->update('s_notifications','fk_member_id',$memberid,array('isRead'),array('1'));
+	$result = $database->update('s_notifications_log','fk_member_id',$memberid,array('isRead'),array('1'));
 	if($result==1){
 		return 'success';
 	}else{

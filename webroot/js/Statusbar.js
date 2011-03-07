@@ -74,10 +74,15 @@ var Statusbar = {
 				var label = systemnote['label'];
 				var color = systemnote['color'];			
 				var date = Statusbar.convertDate(systemnote['timestamp']);
+				var newstring = "";
+				
+				if(Statusbar.checkNotWeekOld(systemnote['timestamp'])){
+					newstring = "<div class='statusbar-newtext'>NEW</div>";
+				}
 				
 				$('#statusbar-info').append(
 					"<div class='statusbar-unit-line clear'>"+
-						"<div class='statusbar-time'>"+Statusbar.displayDate(date,'notification')+"</div>"+
+						"<div class='statusbar-time'>"+Statusbar.displayDate(date,'notification')+" "+newstring+"</div>"+
 						"<div class='statusbar-label' style='background-color: #"+color+"'>"+label+"</div>"+
 						"<div class='statusbar-system-notification>"+note+"</div>"+
 					"</div>"
@@ -89,10 +94,15 @@ var Statusbar = {
 				var label = systemnote['label'];
 				var color = systemnote['color'];			
 				var date = Statusbar.convertDate(systemnote['timestamp']);
+				var newstring = "";
+				
+				if(systemnote.isRead==0){
+					newstring = "<div class='statusbar-newtext'>NEW</div>";
+				}
 				
 				$('#statusbar-info').append(
 					"<div class='statusbar-unit-line clear'>"+
-						"<div class='statusbar-time'>"+Statusbar.displayDate(date,'notification')+"</div>"+
+						"<div class='statusbar-time'>"+Statusbar.displayDate(date,'notification')+" "+newstring+"</div>"+
 						"<div class='statusbar-label' style='background-color: #"+color+"'>"+label+"</div>"+
 						"<div class='statusbar-system-notification>"+note+"</div>"+
 					"</div>"
@@ -386,7 +396,9 @@ var Statusbar = {
 			});
 			
 			$.each(system,function(i,systemnote){
-				count++
+				if(Statusbar.checkNotWeekOld(systemnote.timestamp)){
+					count++;
+				}
 			});
 			
 			if(count==0){
@@ -419,6 +431,14 @@ var Statusbar = {
 			$('#notification-system-count').hide();
 		}
 		});
+	},
+	
+	/*
+	 * Checks if a timestamp is less than a week old.
+	 */
+	checkNotWeekOld: function(timestamp){
+		now = new Date();
+		return (now.getTime()-Statusbar.convertDate(timestamp).getTime())<604800000
 	},
 	
 	/*

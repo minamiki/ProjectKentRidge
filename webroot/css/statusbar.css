@@ -94,6 +94,12 @@
 	background-repeat: no-repeat;
 }
 
+.statusbar-newtext{
+	float:right;
+	color:#ff6c00;
+	padding: 0px 3px;
+}
+
 #statusbar-achievements{
 	width:230px;
 	height:50px;
