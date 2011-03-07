@@ -19,6 +19,23 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
 <div class="clear">
   <div id="fun-facts" class="frame rounded left">
     <h2>Fun Facts</h2>
+    <p class="fact">Each member has</p>
+    <div class="factbox rounded">
+      <p class="unit">an average score of</p>
+      <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('member_score')) ?></div>
+      <p class="factDesc">Points</p>
+    </div>
+    <div class="factbox rounded">
+      <p class="unit">taken an average of</p>
+      <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('member_take_quiz')) ?></div>
+      <p class="factDesc">Quizzes</p>
+    </div>
+    <div class="factbox rounded">
+      <p class="unit">created and average of</p>
+      <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('member_create_quiz')) ?></div>
+      <p class="factDesc">Quizzes</p>
+    </div>
+
     <p class="fact">Each quiz</p>
     <div class="factbox rounded">
       <p class="unit">has an average of</p>
@@ -42,23 +59,6 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
       <p class="unit">was taken</p>
       <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('quiz_taken')); ?></div>
       <p class="factDesc">Times</p>
-    </div>
-    <p class="fact">Each member
-  has</p>
-    <div class="factbox rounded">
-      <p class="unit">an average score of</p>
-      <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('member_score')) ?></div>
-      <p class="factDesc">Points</p>
-    </div>
-    <div class="factbox rounded">
-      <p class="unit">taken an average of</p>
-      <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('member_take_quiz')) ?></div>
-      <p class="factDesc">Quizzes</p>
-    </div>
-    <div class="factbox rounded">
-      <p class="unit">created and average of</p>
-      <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('member_create_quiz')) ?></div>
-      <p class="factDesc">Quizzes</p>
     </div>
   </div>
   <div id="ranking" class="frame rounded right">
