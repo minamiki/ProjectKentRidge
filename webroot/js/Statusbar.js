@@ -426,10 +426,6 @@ var Statusbar = {
 	 */
 	clearSystemNotification: function(){
 		$.getJSON(Statusbar.pathToSrc+'updateStatus.php/',{method:'clear-system-notification'},function(data){
-		if(data=='success'){
-			$('#notification-system-count').html(0);
-			$('#notification-system-count').hide();
-		}
 		});
 	},
 	
