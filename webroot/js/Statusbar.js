@@ -57,15 +57,19 @@ var Statusbar = {
 			});
 		}else if(option=='notification-system'){
 			var data = Statusbar.systemNotification;
+			var others = data.others;
+			var system = data.system;
+			
 			$('#statusbar-info').append(
 			"<div class='statusbar-info-title'>"+
-				"System Notifications"+
+				"Notifications"+
 				"<div class='statusbar-info-more'>"+
 					"<a href=''>more</a>"+
 				"</div>"+
 			"</div>"
 			);
-			$.each(data,function(i,systemnote){
+			
+			$.each(system,function(i,systemnote){
 				var note = systemnote['notification'];
 				var label = systemnote['label'];
 				var color = systemnote['color'];			
@@ -79,9 +83,25 @@ var Statusbar = {
 					"</div>"
 				);
 			});
-			if(data==''){
+			
+			$.each(others,function(i,systemnote){
+				var note = systemnote['notification'];
+				var label = systemnote['label'];
+				var color = systemnote['color'];			
+				var date = Statusbar.convertDate(systemnote['timestamp']);
+				
 				$('#statusbar-info').append(
-					"<div class='statusbar-unit-line'>There are no new notifications</div>"
+					"<div class='statusbar-unit-line clear'>"+
+						"<div class='statusbar-time'>"+Statusbar.displayDate(date,'notification')+"</div>"+
+						"<div class='statusbar-label' style='background-color: #"+color+"'>"+label+"</div>"+
+						"<div class='statusbar-system-notification>"+note+"</div>"+
+					"</div>"
+				);
+			});
+			
+			if(others=='' && system==''){
+				$('#statusbar-info').append(
+					"<div class='statusbar-unit-line'>There are no recent notifications</div>"
 				);
 			}
 			Statusbar.clearSystemNotification();
@@ -355,16 +375,26 @@ var Statusbar = {
 	 */
 	updateSystemNotification: function(){
 		$.getJSON(Statusbar.pathToSrc+'updateStatus.php/',{method:'system-notification'},function(data){
-			var count = data.length;
+			var others = data.others;
+			var system = data.system;
+			var count = 0;
+			
+			$.each(others,function(i,othersnote){
+				if(othersnote.isRead==0){
+					count++
+				}
+			});
+			
+			$.each(system,function(i,systemnote){
+				count++
+			});
+			
 			if(count==0){
 				$('#notification-system-count').hide();	
-			}else if(count>9){
-				$('#notification-system-count').show();
-				count = "···"
 			}else{
 				$('#notification-system-count').show();
 			}
-			$("#notification-system-count").html(count);
+			$("#notification-system-count").html('NEW');
 			Statusbar.systemNotification = data;
 		});
 	},

@@ -6,8 +6,8 @@
     <a href="index.php" id="statusbar-logo" title="Quizroo"><span>Quizroo</span></a>
     <div id="statusbar-divider"></div>
 	<div id="statusbar-notification">
-        <div id="notification-system"  class="statusbar-element" title="System Notifications">
-        <div id="notification-system-count" class="notification-count">0</div>
+        <div id="notification-system"  class="statusbar-element" title="Notifications">
+        <div id="notification-system-count" class="notification-count"></div>
         </div>
     </div>
     <div id="statusbar-divider"></div>

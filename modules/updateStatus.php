@@ -69,10 +69,13 @@ function checkAchievements($memberid){
 function checkSystem($memberid){
 	$database = new Database();
 
-	$systemnotes = $database->query('SELECT notification, label, timestamp, color FROM s_notifications LEFT JOIN s_notifications_labels ON s_notifications.fk_label_id = s_notifications_labels.id WHERE fk_member_id='.$memberid);
+	$othernotes = $database->query('SELECT notification, label, timestamp, color, fk_from_id, isRead FROM s_notifications_log LEFT JOIN s_notifications_labels ON s_notifications_log.fk_label_id = s_notifications_labels.id WHERE fk_member_id='.$memberid.' ORDER BY timestamp DESC LIMIT 3');	
+	$systemnotes = $database->query('SELECT notification, label, timestamp, color FROM s_notifications LEFT JOIN s_notifications_labels ON s_notifications.fk_label_id = s_notifications_labels.id WHERE isVisible=1');
 	//.' AND isRead=0'
+
+	$notes = array("others"=>$othernotes,"system"=>$systemnotes);
 	
-	return $systemnotes;
+	return $notes;
 }
 
 function readAchievements($memberid){

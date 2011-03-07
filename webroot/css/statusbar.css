@@ -87,11 +87,10 @@
 	width:25px;
 	height:25px;
 	margin:0px 0px;
-	padding-top: 4px;
+	padding-top: 0px;
 	font-size:12px;
 	font-weight:bold;
 	color:#ff6c00;
-	background-image: url(../img/notification-count.png);
 	background-repeat: no-repeat;
 }
 
