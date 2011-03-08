@@ -93,6 +93,7 @@
 	color: #F90;
 	margin: 0px;
 	font-weight: bold;
+	cursor: help;
 }
 #rankTable .breakdown-score {
 	font-family: Verdana, Geneva, sans-serif;
