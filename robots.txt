@@ -1,0 +1,3 @@
+# search engines shouldn't index quizroo for now
+User-agent: *
+Disallow: /
