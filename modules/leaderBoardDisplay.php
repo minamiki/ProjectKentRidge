@@ -84,5 +84,5 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
   </div>
 </div>
 <?php
-mysql_free_result($getTopics);
+mysql_free_result($getRanking);
 ?>
