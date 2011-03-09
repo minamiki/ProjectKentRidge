@@ -241,6 +241,7 @@
 	border: 1px solid #000;
 }
 #result-panel .description {
+	text-align: center;
 	font-size: 14px;
 }
 #result-panel h2 {
