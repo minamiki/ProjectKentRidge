@@ -7,6 +7,22 @@
 	<div class='share-like'>
     	<fb:like show_faces="no" href="http://apps.facebook.com/quizroo/previewQuiz.php?<?php echo $quiz->quiz_id; ?>" width="450" height="80"></fb:like>
 	</div>
+    <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+		<script type="text/javascript">
+        /*
+         * Subscribe to Facebook Like event to handle it for our own data. 
+         */
+        FB.Event.subscribe('edge.create', function(response) {
+            Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'type':1});
+        });
+        
+        /*
+         * Subscribe to Facebook Unlike event to handle it for our own data. 
+         */
+        FB.Event.subscribe('edge.remove', function(response) {
+            Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'type':-1});
+        });
+	</script>
 	<div class='recommend-dialog'>
 		<fb:serverFbml width="625px">
 		  <script type="text/fbml">
