@@ -370,6 +370,11 @@ WHERE member_id = %d", $this->id);
 		
 		return $resultCount;
 	}
+	
+	// check if is admin
+	function isAdmin(){
+		return $this->isAdmin;
+	}
 }
 }
 

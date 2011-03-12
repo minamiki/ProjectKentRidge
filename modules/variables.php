@@ -35,8 +35,8 @@ $FB_CANVAS = $row_getVars['FB_CANVAS'];
 // Prefix with "VAR_"
 //----------------------------------------
 
-// Turn on debug mode
-$VAR_SYSTEM_DEBUG = $row_getVars['VAR_SYSTEM_DEBUG'];
+// Turn on maintenance mode
+$VAR_SYSTEM_MAINTENANCE = $row_getVars['VAR_SYSTEM_MAINTENANCE'];
 // Number of recommendations/popular quizzes to show
 $VAR_NUM_LISTINGS = $row_getVars['VAR_NUM_LISTINGS'];
 // Number of quizzes to include in the pool of popular quizzes
