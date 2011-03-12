@@ -29,7 +29,8 @@ if(isset($_GET['id'])){
 	}
 }
 $quiz = new Quiz($url_id);
-if($quiz->exists()){
+$quiz_state = $quiz->exists();
+if($quiz_state){
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -61,7 +62,7 @@ if($quiz->exists()){
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/previewQuiz.php"); ?>
 <?php include("inc/footer-js.php"); ?>
-<?php if($quiz->hasTaken($member->id)){ ?>
+<?php if($quiz_state){ if($quiz->hasTaken($member->id)){ ?>
 <!-- Include user sharing interface for liking, posting feed and recommending to friends -->
 <script type="text/javascript" src="js/Share.js"></script>
 <script>
@@ -83,6 +84,6 @@ if($quiz->exists()){
 		Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'type':-1});
 	});
 </script>
-<?php } ?>
+<?php }} ?>
 </body>
 </html>
