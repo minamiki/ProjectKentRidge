@@ -7,7 +7,7 @@ $row_recommendations = mysql_fetch_assoc($recommendations);
 $totalRows_recommendations = mysql_num_rows($recommendations);
 
 // retrieve popular quizzes
-$query_popular = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, fk_quiz_cat, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY quiz_score DESC LIMIT 0, %d", $VAR_NUM_LISTINGS);
+$query_popular = sprintf("SELECT * FROM (SELECT quiz_id, quiz_name, quiz_description, quiz_picture, fk_quiz_cat, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY quiz_score DESC LIMIT 0, %d) t ORDER BY RAND() LIMIT 0, %d", $VAR_NUM_POPULAR_POOL, $VAR_NUM_LISTINGS);
 $popular = mysql_query($query_popular, $quizroo) or die(mysql_error());
 $row_popular = mysql_fetch_assoc($popular);
 $totalRows_popular = mysql_num_rows($popular);

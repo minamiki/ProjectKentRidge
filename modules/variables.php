@@ -39,6 +39,8 @@ $FB_CANVAS = $row_getVars['FB_CANVAS'];
 $VAR_SYSTEM_DEBUG = $row_getVars['VAR_SYSTEM_DEBUG'];
 // Number of recommendations/popular quizzes to show
 $VAR_NUM_LISTINGS = $row_getVars['VAR_NUM_LISTINGS'];
+// Number of quizzes to include in the pool of popular quizzes
+$VAR_NUM_POPULAR_POOL = $row_getVars['VAR_NUM_POPULAR_POOL'];
 // The true URL for the application
 $VAR_URL = $row_getVars['VAR_URL'];
 // Whether to display the recent activity panel
