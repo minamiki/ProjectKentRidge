@@ -18,6 +18,9 @@ class Member{
 	public $quiztaker_score_today = NULL;
 	public $quizcreator_score_today = NULL;	
 	
+	// member type
+	private $isAdmin = NULL;
+	
 	//----------------------------------------
 	// Class constructer which
 	// - Populates the facebook $me object
@@ -91,7 +94,8 @@ class Member{
 			$this->quiztaker_score = 0;
 			$this->quizcreator_score = 0;
 			$this->quiztaker_score_today = 0;
-			$this->quizcreator_score_today = 0;	
+			$this->quizcreator_score_today = 0;
+			$this->isAdmin = false;
 		}else{
 			// populate the user data
 			$this->level = $row_getCheck['level'];
@@ -99,7 +103,8 @@ class Member{
 			$this->quiztaker_score = $row_getCheck['quiztaker_score'];
 			$this->quizcreator_score = $row_getCheck['quizcreator_score'];
 			$this->quiztaker_score_today = $row_getCheck['quiztaker_score_today'];
-			$this->quizcreator_score_today = $row_getCheck['quizcreator_score_today'];	
+			$this->quizcreator_score_today = $row_getCheck['quizcreator_score_today'];
+			$this->isAdmin = $row_getCheck['isAdmin'];
 		}	
 	}
 	
@@ -254,15 +259,116 @@ class Member{
 		require('quizrooDB.php');	// database connections
 		
 		// find out the rank
-		$queryRanking = sprintf("SELECT ranking FROM (
+		if($this->isAdmin){
+			$queryRanking = sprintf("SELECT ranking FROM (
+SELECT @rownum:=@rownum+1 ranking, member_id, quiztaker_score+quizcreator_score AS score FROM s_members, (SELECT @rownum:=0) numbering ORDER BY score DESC) ranks
+WHERE member_id = %d", $this->id);		
+		}else{
+			$queryRanking = sprintf("SELECT ranking FROM (
 SELECT @rownum:=@rownum+1 ranking, member_id, quiztaker_score+quizcreator_score AS score FROM s_members, (SELECT @rownum:=0) numbering WHERE member_id NOT IN (SELECT member_id FROM s_members WHERE isAdmin = 1) ORDER BY score DESC) ranks
-WHERE member_id = %d", $this->id);
+WHERE member_id = %d", $this->id);		
+		}
 		$getRanking = mysql_query($queryRanking, $quizroo) or die(mysql_error());
 		$row_getRanking = mysql_fetch_assoc($getRanking);
 		$ranking = $row_getRanking['ranking'];	
 		mysql_free_result($getRanking);
 		
 		return $ranking;
+	}
+	
+	// get leaderboard stats
+	function getLeaderBoardStat($rank){
+		require('quizrooDB.php');	// database connections
+		
+		if($this->isAdmin){
+			$query_getRanking = sprintf("SELECT * FROM (SELECT @rownum:=@rownum+1 ranking, member_id, member_name, level, g_achievements.name as rank_name, quiztaker_score+quizcreator_score AS score, quiztaker_score, quizcreator_score FROM s_members, g_achievements, (SELECT @rownum:=0) numbering WHERE s_members.rank = g_achievements.id ORDER BY score DESC) ranks WHERE ranking = %d", $rank);
+		}else{
+			$query_getRanking = sprintf("SELECT * FROM (SELECT @rownum:=@rownum+1 ranking, member_id, member_name, level, g_achievements.name as rank_name, quiztaker_score+quizcreator_score AS score, quiztaker_score, quizcreator_score FROM s_members, g_achievements, (SELECT @rownum:=0) numbering WHERE s_members.rank = g_achievements.id AND member_id NOT IN (SELECT member_id FROM s_members WHERE isAdmin = 1) ORDER BY score DESC) ranks WHERE ranking = %d", $rank);
+		}
+		$getRanking = mysql_query($query_getRanking, $quizroo) or die(mysql_error());
+		$row_getRanking = mysql_fetch_assoc($getRanking);
+		$totalRows_getRanking = mysql_num_rows($getRanking);
+		mysql_free_result($getRanking);
+		
+		// only return the array of ranking exists
+		if($totalRows_getRanking != 0){
+			return $row_getRanking;
+		}else{
+			return NULL;
+		}
+	}
+	
+	// get stats
+	function getStats($type){
+		require('quizrooDB.php');	// database connections
+		
+		switch($type){
+			// Total Created Quizzes
+			case "quizzes_total":
+			$queryStat = sprintf("SELECT COUNT(quiz_id) AS count FROM q_quizzes WHERE fk_member_id = %d", $this->id);
+			break;
+			
+			// Number of drafts
+			case "quizzes_draft":
+			$queryStat = sprintf("SELECT COUNT(quiz_id) AS count FROM q_quizzes WHERE fk_member_id = %d AND isPublished = 0", $this->id);
+			break;
+
+			// Published quizzes
+			case "quizzes_published":
+			$queryStat = sprintf("SELECT COUNT(quiz_id) AS count FROM q_quizzes WHERE fk_member_id = %d AND isPublished = 1", $this->id);
+			break;
+			
+			// Quizzes under modification
+			case "quizzes_modify":
+			$queryStat = sprintf("SELECT COUNT(quiz_id) AS count FROM q_quizzes WHERE fk_member_id = %d AND isPublished = 2", $this->id);
+			break;
+			
+			// Number of archived quizzes
+			case "quizzes_archived":
+			$queryStat = sprintf("SELECT COUNT(quiz_id) AS count FROM q_quizzes WHERE fk_member_id = %d AND isPublished = 3", $this->id);
+			break;
+			
+			// Total number of questions for quizzes created
+			case "questions":
+			$queryStat = sprintf("SELECT COUNT(question_id) AS count FROM q_questions WHERE fk_quiz_id IN (SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %d)", $this->id);
+			break;
+			
+			// Total number of options for quizzes created
+			case "options":
+			$queryStat = sprintf("SELECT COUNT(option_id) AS count FROM q_options WHERE fk_question_id IN (SELECT question_id FROM q_questions WHERE fk_quiz_id IN (SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %d))", $this->id);
+			break;
+			
+			// Total likes from quizzes
+			case "likes":
+			$queryStat = sprintf("SELECT SUM(likes) AS count FROM q_quizzes WHERE fk_member_id = %d", $this->id);
+			break;
+			
+			// Quiz taker points
+			case "taker_points":
+			$queryStat = sprintf("SELECT quiztaker_score AS count FROM s_members WHERE fk_member_id = %d", $this->id);
+			break;
+			
+			// Quiz creator points
+			case "creator_points":
+			$queryStat = sprintf("SELECT quizcreator_score AS count FROM s_members WHERE fk_member_id = %d", $this->id);
+			break;
+			
+			// Number of quiz taking attempts
+			case "taken_quizzes_total":
+			$queryStat = sprintf("SELECT COUNT(store_id) AS count FROM q_store_result WHERE fk_member_id = %d", $this->id);
+			break;
+			
+			// Number of unique quiz taking attempts
+			case "taken_quizzes_unique":
+			$queryStat = sprintf("SELECT COUNT(*) AS count FROM (SELECT store_id FROM q_store_result WHERE fk_member_id = %d GROUP BY fk_quiz_id) t", $this->id);
+			break;
+		}
+		$getStat = mysql_query($queryStat, $quizroo) or die(mysql_error());
+		$row_getStat = mysql_fetch_assoc($getStat);
+		$resultCount = $row_getStat['count'];
+		mysql_free_result($getStat);
+		
+		return $resultCount;
 	}
 }
 }
