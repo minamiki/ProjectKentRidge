@@ -11,12 +11,6 @@ if(!$quiz->exists()){
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Quizroo: <?php echo $quiz->quiz_name; ?></title>
-<meta property="og:title" content="<?php echo $quiz->quiz_name; ?>"/>
-<meta property="og:type" content="game"/>
-<meta property="og:image" content="<?php echo $VAR_URL."quiz_images/imgcrop.php?w=50&amp;h=50&amp;f=".$quiz->quiz_picture; ?>"/> 
-<meta property="og:url" content="<?php echo $FB_CANVAS."previewQuiz.php?id=".$quiz->quiz_id; ?>"/>
-<meta property="og:site_name" content="Quizroo"/>
-<meta property="fb:app_id" content="<?php echo $FB_APPID; ?>"/> 
 <?php include("inc/header-css.php");?>
 <link href="css/quiz.css" rel="stylesheet" type="text/css" />
 </head>

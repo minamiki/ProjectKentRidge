@@ -40,9 +40,14 @@
 </p> </div>
 <?php }}else{ ?>
 <div id="takequiz-preamble" class="frame rounded">
-  <h3>Quiz not found</h3>
+  <h3>Opps, quiz not found!</h3>
   <p>Sorry! The quiz that you're looking for may no be available. Please check the ID of the quiz again.</p>
-  <p>If you believe that this is the correct ID, the owner could have removed the quiz.</p>
+  <p>The reason you're seeing this error could be due to:</p>
+  <ul>
+    <li>The URL is incorrect or doesn't  contain the ID of the quiz</li>
+    <li>No quiz with this ID exists</li>
+    <li>The owner could have removed the quiz</li>
+    <li>The quiz was taken down due to violations of  rules at Quizroo</li>
+  </ul>
 </div>
 <?php } ?>
-

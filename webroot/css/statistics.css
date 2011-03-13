@@ -103,6 +103,18 @@
 	color: #666;
 	font-style: italic;
 }
+#rankTable .compare {
+	color: #CCC;
+}
+#rankTable .compareImg {
+	opacity: 0.5;
+	background-color: #CCC;
+}
+
+#rankTable .compare-box td {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
 .frame h2 {
 	font-size: 18px;
 	color: #900;
@@ -111,11 +123,11 @@
 	margin-bottom: 10px;
 	margin-left: 0px;
 }
-#leaderboard-preamble h2 {
+#statistics-preamble h2 {
 	font-size: 30px;
 	margin-bottom: 0px;
 }
-#leaderboard-preamble p {
+#statistics-preamble p {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }

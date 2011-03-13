@@ -76,10 +76,10 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
         <td width="60" align="center" scope="row"><img src="http://graph.facebook.com/<?php echo $row_getRanking['member_id']; ?>/picture" width="50" height="50" alt="<?php echo $row_getRanking['member_name']; ?>" title="<?php echo $row_getRanking['member_name']; ?>" /></td>
         <td><p class="member-name"><?php echo $row_getRanking['member_name']; ?></p>
         <p class="member-level"><?php echo $row_getRanking['rank_name']; ?> (Level <?php echo $row_getRanking['level']; ?>)</p></td>
-        <td align="center"><p class="score"><?php echo $row_getRanking['score']; ?></p>
+        <td align="center"><p class="score" title="Psss.. extra credit of <?php echo sprintf("%.2f", ($row_getRanking['quizcreator_score'] > 0) ? log($row_getRanking['quizcreator_score'])/5 : 0); ?>"><?php echo $row_getRanking['score']; ?></p>
         <p class="breakdown-score">Taker: <?php echo $row_getRanking['quiztaker_score']; ?>, Creator: <?php echo $row_getRanking['quizcreator_score']; ?></p></td>
       </tr>
-      <?php $rank_count++; }while($row_getRanking = mysql_fetch_assoc($getRanking)); ?>
+      <?php }while($row_getRanking = mysql_fetch_assoc($getRanking)); ?>
     </table>
   </div>
 </div>

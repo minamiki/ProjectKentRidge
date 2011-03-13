@@ -1,7 +1,6 @@
 <?php
 require('quizrooDB.php'); 
 require('variables.php');
-require('quiz.php');
 require('checkAchievements.php');
 
 // get the member's facebook id

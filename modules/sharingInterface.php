@@ -1,11 +1,7 @@
-<!--<script src="http://connect.facebook.net/en_US/all.js"></script>
-<div id="fb-root"></div>
-<script>
-  FB.init({ appId:<?php echo $FB_APPID ?>, cookie:true, xfbml:true });
-</script>-->
+<?php include("variables.php"); ?>
 <div id='user-actions-container' class='frame rounded clear'>
 	<div class='share-like'>
-    	<fb:like show_faces="no" href="http://apps.facebook.com/quizroo/previewQuiz.php?<?php echo $quiz->quiz_id; ?>" width="450" height="80"></fb:like>
+        <fb:like href="http://quizroo.nus-hci.com/webroot/quiz.php?id=<?php echo $quiz->quiz_id; ?>" show_faces="false" width="450"></fb:like>
 	</div>
     <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
 		<script type="text/javascript">

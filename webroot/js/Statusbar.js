@@ -249,9 +249,8 @@ var Statusbar = {
 				"<div class='statusbar-menu-desc'>View statistics for your activities</div>"
 			);
 			$(stats).click(function(){
-				//goToURL('statistics.php');
-				//$(stats).css('background-color','#333');
-				featureUnavailable();
+				goToURL('statistics.php');
+				$(stats).css('background-color','#333');
 			});
 			
 			var history = document.createElement('div');
