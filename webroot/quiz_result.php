@@ -23,22 +23,6 @@ if(!$quiz->exists()){
 <script type="text/javascript">
 	Splash.display(<?php echo $achievement_details?>);
 </script>
-<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-<script type="text/javascript">
-	/*
-	 * Subscribe to Facebook Like event to handle it for our own data. 
-	 */
-	FB.Event.subscribe('edge.create', function(response) {
-		Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'type':1});
-	});
-	
-	/*
-	 * Subscribe to Facebook Unlike event to handle it for our own data. 
-	 */
-	FB.Event.subscribe('edge.remove', function(response) {
-		Share.rate($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'type':-1});
-	});
-</script>
 <script type="text/javascript" src="js/Share.js"></script>
 <script>
 	Share.recommend($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>});
