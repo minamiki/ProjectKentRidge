@@ -636,7 +636,7 @@ class Quiz{
 				// we make sure quiz was already liked
 				if($this->getRating($member_id) == 1){ // also check if dislikes are allowed by the system
 					// deduct the quiz score
-					$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score - %d WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
+					$query = sprintf("UPDATE q_quizzes SET quiz_score = quiz_score - %d, likes = likes - 1 WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
 					mysql_query($query, $quizroo) or die(mysql_error());
 					
 					// update the creator's points
