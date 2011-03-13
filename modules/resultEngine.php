@@ -122,7 +122,7 @@ $totalRows_getResultChart = mysql_num_rows($getResultChart);
 		]);
 		
 		var chart = new google.visualization.PieChart(document.getElementById('result_chart'));
-		chart.draw(data, {width: 700, height: 300, title: 'People per Result'});
+		chart.draw(data, {width: 700, height: 300, title: 'People per Result', backgroundColor:'transparent'});
 	}
 </script>
 <?php } ?>

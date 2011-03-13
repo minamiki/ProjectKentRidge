@@ -56,7 +56,7 @@ $count = 0;
 		]);
 		
 		var chart = new google.visualization.PieChart(document.getElementById('topic_chart'));
-		chart.draw(data, {width: 540, height: 250, title: 'Attempts per Topic'});
+		chart.draw(data, {width: 540, height: 250, title: 'Attempts per Topic', backgroundColor:'transparent'});
 	}
 	
 	function drawTakeQuizHistoryChart(){
@@ -71,7 +71,7 @@ $count = 0;
 		<?php $count++; }while($row_getTakeQuiz = mysql_fetch_assoc($getTakeQuiz)); ?>
 
         var chart = new google.visualization.LineChart(document.getElementById('takeHistory_chart'));
-        chart.draw(data, {width: 540, height: 240, title: 'Quizzes Taken over the past week', legend: 'none'});
+        chart.draw(data, {width: 540, height: 240, title: 'Quizzes Taken over the past week', legend: 'none', backgroundColor:'transparent'});
 	}
 </script>
 <div id="statistics-preamble" class="frame rounded">
