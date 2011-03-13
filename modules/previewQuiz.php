@@ -1,4 +1,4 @@
-<?php require('quizrooDB.php'); ?>
+<?php require('../modules/quizrooDB.php'); ?>
 <?php if($quiz->exists()){ ?>
 <?php if($quiz->isPublished()){ ?>
 <?php if($quiz->hasTaken($member->id)){ ?>

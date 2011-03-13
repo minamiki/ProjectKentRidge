@@ -1,4 +1,4 @@
-<?php require('quizrooDB.php'); ?>
+<?php require('../modules/quizrooDB.php'); ?>
 <?php
 $query_getQuizInfo = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, creation_date, s_members.member_name, q_quiz_cat.cat_name, (SELECT COUNT(question_id) FROM q_questions WHERE fk_quiz_id = %s) AS question_count FROM q_quizzes, s_members, q_quiz_cat WHERE quiz_id = %s AND s_members.member_id = q_quizzes.fk_member_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat", GetSQLValueString($url_id, "int"),GetSQLValueString($url_id, "int"));
 $getQuizInfo = mysql_query($query_getQuizInfo, $quizroo) or die(mysql_error());

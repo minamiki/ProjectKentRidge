@@ -1,5 +1,6 @@
-<?php require('quizrooDB.php');
-require("quiz.php");
+<?php
+require('../modules/quizrooDB.php');
+require('../modules/quiz.php');
 
 $currentPage = $_SERVER["PHP_SELF"];
 

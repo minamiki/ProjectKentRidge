@@ -1,7 +1,7 @@
-<?php require('quizrooDB.php'); ?>
 <?php
-require('variables.php');
-require('system.php');
+require('../modules/quizrooDB.php');
+require('../modules/variables.php');
+require('../modules/system.php');
 
 $systemStats = new System();
 $systemStats->getMemberStats();

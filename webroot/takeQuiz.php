@@ -1,5 +1,6 @@
-<?php include("inc/header-php.php"); ?>
-<?php require('../modules/quiz.php');
+<?php
+require('inc/header-php.php');
+require('../modules/quiz.php');
 require('../modules/variables.php');
 if(isset($_GET['id'])){
 	// check if id is empty

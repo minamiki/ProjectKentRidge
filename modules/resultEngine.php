@@ -1,7 +1,7 @@
 <?php
-require('quizrooDB.php'); 
-require('variables.php');
-require('checkAchievements.php');
+require('../modules/quizrooDB.php'); 
+require('../modules/variables.php');
+require('../modules/checkAchievements.php');
 
 // get the member's facebook id
 $facebookID = $member->id;

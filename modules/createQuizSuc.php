@@ -1,5 +1,5 @@
-<?php require('quizrooDB.php'); ?>
-<?php require('quiz.php');
+<?php require('../modules/quizrooDB.php'); ?>
+<?php require("../modules/quiz.php");
 $quiz = new Quiz($_GET['id']);
 ?>
 <div id="created-preamble" class="frame rounded">

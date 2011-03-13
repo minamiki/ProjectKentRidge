@@ -1,5 +1,5 @@
-<?php require('quizrooDB.php'); ?>
-<?php require('variables.php');
+<?php require('../modules/quizrooDB.php'); ?>
+<?php require('../modules/variables.php');
 // retrieve recommended quizzes
 $query_recommendations = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, fk_quiz_cat, member_name, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY creation_date DESC LIMIT 0, %d", $VAR_NUM_LISTINGS);
 $recommendations = mysql_query($query_recommendations, $quizroo) or die(mysql_error());

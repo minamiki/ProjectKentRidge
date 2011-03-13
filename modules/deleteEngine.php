@@ -2,7 +2,7 @@
 //----------------------------------------
 // Publish the quiz
 //----------------------------------------
-include('quiz.php');
+include('../modules/quiz.php');
 $quiz = new Quiz($_GET['id']);
 
 // check if member is owner of the quiz

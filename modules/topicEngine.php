@@ -1,5 +1,6 @@
-<?php require('quizrooDB.php'); ?>
-<?php require('variables.php');
+<?php
+require('../modules/quizrooDB.php');
+require('../modules/variables.php');
 // hack for checking topic IDs
 if(isset($_GET['topic'])){
 	if($_GET['topic'] >= 1 && $_GET['topic'] <= 8){

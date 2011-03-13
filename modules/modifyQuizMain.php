@@ -1,7 +1,7 @@
-<?php require('quizrooDB.php'); ?>
-<?php // additional requires
-require('uploadFunctions.php');
-require('quiz.php');
+<?php
+require('../modules/quizrooDB.php');
+require('../modules/uploadFunctions.php');
+require("../modules/quiz.php");
 
 if(isset($_GET['step'])){
 	$step = $_GET['step'];

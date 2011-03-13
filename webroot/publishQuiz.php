@@ -1,5 +1,5 @@
-<?php include("inc/header-php.php"); ?>
 <?php
+include("inc/header-php.php");
 include('../modules/quiz.php');
 $quiz = new Quiz($_GET['id']);
 // Unpublish the quiz

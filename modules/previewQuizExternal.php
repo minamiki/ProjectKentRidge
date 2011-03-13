@@ -1,4 +1,4 @@
-<?php require('quizrooDB.php'); ?>
+<?php require('../modules/quizrooDB.php'); ?>
 <?php if($quiz->exists()){ ?>
 <div id="takequiz-preview" class="frame rounded"><div class="logo"> <img src="../webroot/img/quizroo-logo.png" width="130" height="50" /></div>
 <h2><?php echo $quiz->quiz_name; ?></h2>

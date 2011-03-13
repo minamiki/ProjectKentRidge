@@ -1,5 +1,5 @@
 <?php
-require('quizrooDB.php'); 
+require('../modules/quizrooDB.php'); 
 
 // get the member rank
 $member_rank = $member->getRanking();

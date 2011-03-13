@@ -1,5 +1,5 @@
-<?php include("inc/header-php.php"); ?>
-<?php // populate the quiz information for facebook
+<?php
+require("inc/header-php.php");
 require("../modules/quiz.php");
 require('../modules/variables.php');
 $quiz = new Quiz($_POST['quiz_id']);
