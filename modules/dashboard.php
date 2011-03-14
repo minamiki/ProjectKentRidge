@@ -83,6 +83,11 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
       <?php } while ($row_getTopics = mysql_fetch_assoc($getTopics)); ?>
   </div>
   <?php } ?>
+  <div id="social" class="frame rounded">
+    <h2>Social</h2>
+    <p>Visit our <a href="http://www.facebook.com/apps/application.php?id=154849761223760" target="_blank">facebook page</a> for updates! Discuss what you like about Quizroo! <a href="http://www.twitter.com/quizroo" target="_blank"><img src="http://twitter-badges.s3.amazonaws.com/follow_us-b.png" alt="Follow minamiki on Twitter" border="0" align="absmiddle"/></a></p>
+    <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fapps%2Fapplication.php%3Fid%3D154849761223760&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;font&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>
+  </div>
 </div>
 <?php
 mysql_free_result($recommendations);
