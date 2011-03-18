@@ -7,7 +7,7 @@
   <?php } ?>
   <p class="description"><?php echo $quiz->quiz_description; ?></p>
   <p class="info">by <em><?php echo $quiz->creator(); ?></em> on <?php echo date("F j, Y g:ia", strtotime($quiz->creation_date)); ?> in the topic '<?php echo $quiz->category(); ?>'</p>
-<input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="goToURL('previewQuiz.php?id=<?php echo $_GET['id']; ?>');" value="Take this Quiz @ Quizroo" />
+<input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="goToURL('http://apps.facebook.com/quizroo/previewQuiz.php?id=<?php echo $_GET['id']; ?>');" value="Take this Quiz @ Quizroo" />
   <p class="info">(You will be directed to the Facebook Appliction, <a href="http://apps.facebook.com/quizroo">Quizroo</a>)</p>
 </div>
 <?php if($quiz->isOwner($member->id) && !$quiz->isPublished()){ ?>
