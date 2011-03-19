@@ -11,6 +11,7 @@ class Member{
 	public $facebook = NULL;
 	
 	// member data
+	public $qname = NULL;
 	public $level = NULL;
 	public $rank = NULL;
 	public $quiztaker_score = NULL;
@@ -89,6 +90,7 @@ class Member{
 			mysql_query($queryInsert, $quizroo) or die(mysql_error());
 			
 			// populate the user data
+			$this->qname = "";
 			$this->level = 0;
 			$this->rank = 0;
 			$this->quiztaker_score = 0;
@@ -98,6 +100,7 @@ class Member{
 			$this->isAdmin = false;
 		}else{
 			// populate the user data
+			$this->qname = $row_getCheck['member_name'];
 			$this->level = $row_getCheck['level'];
 			$this->rank = $row_getCheck['rank'];
 			$this->quiztaker_score = $row_getCheck['quiztaker_score'];
@@ -123,8 +126,9 @@ class Member{
 		, 'cancel_url' => null
 		, 'req_perms'  => $permissions
 		));
-		
+
 		// redirect the user
+		header('P3P:CP="QZR"');
 		echo '<script type="text/javascript">top.location.href = "'.$url.'";</script>';
 	}
 	
