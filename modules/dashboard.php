@@ -34,6 +34,12 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
     </div>
   </div>
   <?php } ?>
+  <?php if($VAR_SYSTEM_MAINTENANCE){ ?>
+  <div class="frame rounded">
+  	<h2>Maintenance Mode is ON</h2>
+    <p>Remember to turn it off after carrying out the required maintenance!</p>
+  </div>
+  <?php } ?>
   <div class="clear">
     <div id="recommendations" class="frame rounded left-right">
       <h2>Latest</h2>
