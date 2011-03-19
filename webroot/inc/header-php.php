@@ -1,4 +1,5 @@
 <?php
+header('P3P:CP="QZR"');
 require("../modules/member.php");
 require("../modules/variables.php");
 
