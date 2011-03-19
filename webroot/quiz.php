@@ -22,7 +22,7 @@ $quiz_state = $quiz->exists();
 if($quiz_state){ ?>
 <title>Quizroo Quiz: <?php echo $quiz->quiz_name; ?></title>
 <meta property="og:title" content="<?php echo $quiz->quiz_name; ?>" />
-<meta property="og:type" content="game" />
+<meta property="og:type" content="article" />
 <meta property="og:image" content="<?php echo $VAR_URL."quiz_images/imgcrop.php?w=50&amp;h=50&amp;f=".$quiz->quiz_picture; ?>" /> 
 <meta property="og:url" content="http://quizroo.nus-hci.com/webroot/quiz.php?id=<?php echo $quiz->quiz_id; ?>" />
 <meta property="og:site_name" content="Quizroo" />
