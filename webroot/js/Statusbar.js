@@ -360,16 +360,16 @@ var Statusbar = {
 	},
 	
 		
-	update: function(){
-		Statusbar.updateAchievements();
-		Statusbar.updateSystemNotification();
+	update: function(member_id){
+		Statusbar.updateAchievements(member_id);
+		Statusbar.updateSystemNotification(member_id);
 	},
 	
 	/*
 	 * Retrieves achievements from database and stores it locally. Updates ui accordingly.
 	 */
-	updateAchievements: function(){
-		$.getJSON(Statusbar.pathToSrc+'updateStatus.php/',{method:'achievements'},function(data){
+	updateAchievements: function(member_id){
+		$.getJSON(Statusbar.pathToSrc+'updateStatus.php/',{method:'achievements', member:member_id},function(data){
 			Statusbar.achievements = data;
 			$('#statusbar-achievements-count').html(Statusbar.handleCount(data['achievements']['score'])).contents().stretch({max:18});
 			$('#statusbar-quiztaker-count-total').html(Statusbar.handleCount(data['quiztaker']['quiztaker_score'])).contents().stretch({max:14});
@@ -382,8 +382,8 @@ var Statusbar = {
 	/*
 	 * Retrieves system notifications from database and stores it locally. Updates ui accordingly.
 	 */
-	updateSystemNotification: function(){
-		$.getJSON(Statusbar.pathToSrc+'updateStatus.php/',{method:'system-notification'},function(data){
+	updateSystemNotification: function(member_id){
+		$.getJSON(Statusbar.pathToSrc+'updateStatus.php/',{method:'system-notification', member:member_id},function(data){
 			var others = data.others;
 			var system = data.system;
 			var count = 0;
@@ -413,8 +413,8 @@ var Statusbar = {
 	/*
 	 * Updates the database to mark all achievemtents as read. (not used)
 	 */
-	readAchievements: function(){
-		$.getJSON(Statusbar.pathToSrc+'updateStatus.php/',{method:'read-achievements'},function(data){
+	readAchievements: function(member_id){
+		$.getJSON(Statusbar.pathToSrc+'updateStatus.php/',{method:'read-achievements', member:member_id},function(data){
 		if(data=='success'){
 		}
 		});
@@ -423,8 +423,8 @@ var Statusbar = {
 	/*
 	 * Updates the database to mark all system notifications as read and updates ui.
 	 */
-	clearSystemNotification: function(){
-		$.getJSON(Statusbar.pathToSrc+'updateStatus.php/',{method:'clear-system-notification'},function(data){
+	clearSystemNotification: function(member_id){
+		$.getJSON(Statusbar.pathToSrc+'updateStatus.php/',{method:'clear-system-notification', member:member_id},function(data){
 		});
 	},
 	

@@ -25,7 +25,7 @@ function gotoTop(){
 <script type="text/javascript" src="js/jquery-ui-1.8.9.js"></script>
 <script type="text/javascript" src="js/jquery.stretch-0.9.3.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
-<script type="text/javascript" src="js/Statusbar.js"></script>
+<script type="text/javascript" src="js/Statusbar.js?temp-refresh"></script>
 <script type="text/javascript" src="js/Share.js"></script>
 <script>
 //======================================================
@@ -33,11 +33,11 @@ function gotoTop(){
 //======================================================
 $(document).ready(function(){
 	// status bar handlers
-	Statusbar.update();
+	Statusbar.update(<?php echo $member->id; ?>);
 	//Share.results({'quiz_id':19,'result_id':35});
 	
 	$('#notification-system').click(function(){
-		Statusbar.updateSystemNotification();
+		Statusbar.updateSystemNotification(<?php echo $member->id; ?>);
 		Statusbar.displayInformation('notification-system');
 	});
 	$('#statusbar-achievements-logo').click(function(){
