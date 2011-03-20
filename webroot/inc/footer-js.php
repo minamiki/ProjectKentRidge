@@ -1,26 +1,4 @@
-<div id="fb-root"></div>
-<?php // load variables 
-require("../modules/variables.php"); ?>
-<script>
-//======================================================
-// Load and initialize the facebook javascript framework
-//======================================================
-window.fbAsyncInit = function(){
-	FB.init({appId: '<?php echo $FB_APPID; ?>', session: <?php echo json_encode($member->session); ?>, status: true, cookie: true, xfbml: true});
-	// Enable canvas height auto-resize
-	//FB.Canvas.setSize({ height: 500 });
-	FB.Canvas.setAutoResize();
-};
-(function(){
-	var e = document.createElement('script'); e.async = true;
-	e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-	document.getElementById('fb-root').appendChild(e);
-}());
-function gotoTop(){
-	//FB.Canvas.setSize({ height: 400 });
-	//FB.Canvas.setAutoResize();
-}
-</script>
+<?php require("../modules/variables.php"); ?>
 <script type="text/javascript" src="js/jquery-1.4.4.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.9.js"></script>
 <script type="text/javascript" src="js/jquery.stretch-0.9.3.min.js"></script>
@@ -34,7 +12,6 @@ function gotoTop(){
 $(document).ready(function(){
 	// status bar handlers
 	Statusbar.update(<?php echo $member->id; ?>);
-	//Share.results({'quiz_id':19,'result_id':35});
 	
 	$('#notification-system').click(function(){
 		Statusbar.updateSystemNotification(<?php echo $member->id; ?>);
@@ -72,4 +49,35 @@ $(document).ready(function(){
 	$('#splash').height($('body').height());
 });
 
+//======================================================
+// Load and initialize the facebook javascript framework
+//======================================================
+window.fbAsyncInit = function(){
+	FB.init({appId: '<?php echo $FB_APPID; ?>', session: <?php echo json_encode($member->session); ?>, status: true, cookie: true, xfbml: true});
+
+	// Enable canvas height auto-resize
+	FB.Canvas.setAutoResize();
+	
+	if(isSharing != undefined){
+		if(isSharing){
+			// Subscribe to Facebook Like event to handle it for our own data. 
+			FB.Event.subscribe('edge.create', function(response) {
+				Share.rate($('#user-actions-container'),{'quiz_id': <?php echo (isset($quiz)) ? $quiz->quiz_id : 0; ?>,'type':1});
+			});
+			// Subscribe to Facebook Unlike event to handle it for our own data. 
+			FB.Event.subscribe('edge.remove', function(response) {
+				Share.rate($('#user-actions-container'),{'quiz_id': <?php echo (isset($quiz)) ? $quiz->quiz_id : 0; ?>,'type':-1});
+			});
+		}
+	}
+};
+
+//======================================================
+// Loads the Facebook Javacript API
+//======================================================
+(function(){
+	var e = document.createElement('script'); e.async = true;
+	e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+	document.getElementById('fb-root').appendChild(e);
+}());
 </script>
