@@ -45,15 +45,18 @@ $quiz_state = $quiz->exists();
 </head>
 
 <body>
+<div id="fb-root"></div>
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/previewQuiz.php"); ?>
 <?php include("inc/footer-js.php"); ?>
 <?php if($quiz_state){ if($quiz->hasTaken($member->id)){ ?>
-<!-- Include user sharing interface for liking, posting feed and recommending to friends -->
-<script type="text/javascript" src="js/Share.js"></script>
-<script>
+<script type="text/javascript">
+$(document).ready(function(){
+	// Enable recommendation of quiz
 	Share.recommend($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>});
+});
 </script>
 <?php }} ?>
 </body>
 </html>
+

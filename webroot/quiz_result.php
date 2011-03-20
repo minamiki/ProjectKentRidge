@@ -16,6 +16,7 @@ if(!$quiz->exists()){
 </head>
 
 <body>
+<div id="fb-root"></div>
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/resultEngine.php"); ?>
 <?php include("inc/footer-js.php"); ?>
@@ -23,10 +24,14 @@ if(!$quiz->exists()){
 <script type="text/javascript">
 	Splash.display(<?php echo $achievement_details?>);
 </script>
-<script type="text/javascript" src="js/Share.js"></script>
-<script>
+<script type="text/javascript">
+$(document).ready(function(){
+	// Enable recommendation of quiz
 	Share.recommend($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>});
+	// Enable sharing of quiz results on facebook wall
 	Share.results($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'result_id':<?php echo $row_getResults['fk_result'] ?>});
+});
+</script>
 </script>
 </body>
 </html>
