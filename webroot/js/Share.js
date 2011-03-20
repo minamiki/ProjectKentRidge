@@ -30,10 +30,9 @@ var Share = {
 		FB.ui(
 		   {
 			 method: 'feed',
-			 name: ('I got '+result_title+' in '+quiz_name),
+			 name: ('I got "'+result_title+'" in "'+quiz_name+'"'),
 			 link: (Share.rootPath+'previewQuiz.php?id='+quiz_id),
-			 picture: ('http://www.ewsme.com/Quizroo/quiz_images/'+result_picture),
-			 //Share.rootPath+'quiz_images/imgcrop.php?w=320&amp;h=213&amp;f='+result_picture
+			 picture: ('http://quizroo.nus-hci.com/quiz_images/imgcrop.php?w=80&h=80&f='+result_picture),
 			 caption: (result_title),
 			 description: (result_description),
 		   },
