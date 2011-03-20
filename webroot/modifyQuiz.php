@@ -12,6 +12,7 @@
 </head>
 
 <body>
+<div id="fb-root"></div>
 <?php include("../modules/variables.php");?>
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/modifyQuizMain.php"); ?>

@@ -9,6 +9,7 @@
 </head>
 
 <body>
+<div id="fb-root"></div>
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/dashboard.php"); ?>
 <?php include("inc/footer-js.php"); ?>

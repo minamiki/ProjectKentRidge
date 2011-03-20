@@ -43,6 +43,7 @@ if(!$quiz->exists()){
 </head>
 
 <body>
+<div id="fb-root"></div>
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/takeQuiz.php"); ?>
 <?php include("inc/footer-js.php"); ?>

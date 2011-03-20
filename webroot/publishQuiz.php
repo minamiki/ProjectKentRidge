@@ -46,6 +46,7 @@ if(isset($_GET['unlist'])){
 </head>
 
 <body>
+<div id="fb-root"></div>
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/publishEngine.php"); ?>
 <?php include("inc/footer-js.php"); ?>
