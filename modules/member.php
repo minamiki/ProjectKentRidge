@@ -9,6 +9,7 @@ class Member{
 	public $id = NULL;
 	public $me = NULL;
 	public $facebook = NULL;
+	public $friends = NULL;
 	
 	// member data
 	public $qname = NULL;
@@ -22,6 +23,7 @@ class Member{
 	// member type
 	private $isAdmin = NULL;
 	public $isActive = NULL;
+	public $memExist = false;
 	
 	//----------------------------------------
 	// Class constructer which
@@ -55,6 +57,7 @@ class Member{
 					try{
 						$this->id = $this->facebook->getUser();		// get the user's facebook ID
 						$this->me = $this->facebook->api('/me');	// populate the facebook $me object
+						$this->friends = $this->facebook->api('/me/friends');
 						
 						// register the user into our database if required
 						$this->register();
@@ -77,14 +80,17 @@ class Member{
 		}else{
 			// skip authorization and just load the member data
 			$this->id = $member_id;
-			$this->register();
+			// check if member exists
+			if($this->register(true)){ // also sets the flag for member existance
+				$this->register(); // load member data
+			}
 		}
 	}
 	
 	//----------------------------------------
 	// Register the user
 	//----------------------------------------
-	function register(){
+	function register($check = false){
 		require('quizrooDB.php');	// database connections
 		// check if the member is already in the database
 		$queryCheck = sprintf("SELECT * FROM s_members WHERE member_id = %s", $this->id);
@@ -93,33 +99,45 @@ class Member{
 		$totalRows_getCheck = mysql_num_rows($getCheck);
 		
 		if($totalRows_getCheck == 0){ // user is not in the database, add user into the database
-			$queryInsert = sprintf("INSERT INTO s_members(member_id, member_name, join_date) VALUES(%s, '%s', NOW())", $this->id, $this->getName());
-			mysql_query($queryInsert, $quizroo) or die(mysql_error());
-			
-			// populate the user data
-			$this->qname = $this->getName();
-			$this->level = 0;
-			$this->rank = 0;
-			$this->quiztaker_score = 0;
-			$this->quizcreator_score = 0;
-			$this->quiztaker_score_today = 0;
-			$this->quizcreator_score_today = 0;
-			$this->isAdmin = 0;
-			$this->isActive = 1;
+			if($check){
+				$this->memExist = false;
+				return false;
+			}else{
+				$queryInsert = sprintf("INSERT INTO s_members(member_id, member_name, join_date) VALUES(%s, '%s', NOW())", $this->id, $this->getName());
+				mysql_query($queryInsert, $quizroo) or die(mysql_error());
+				
+				// populate the user data
+				$this->qname = $this->getName();
+				$this->level = 0;
+				$this->rank = 0;
+				$this->quiztaker_score = 0;
+				$this->quizcreator_score = 0;
+				$this->quiztaker_score_today = 0;
+				$this->quizcreator_score_today = 0;
+				$this->isAdmin = 0;
+				$this->isActive = 1;
+				$this->memExist = true;
+			}
 		}else{
-			$queryUpdate = sprintf("UPDATE s_members SET isActive = 1 WHERE member_id = %s", $this->id);
-			mysql_query($queryUpdate, $quizroo) or die(mysql_error());
-			
-			// populate the user data
-			$this->qname = $row_getCheck['member_name'];
-			$this->level = $row_getCheck['level'];
-			$this->rank = $row_getCheck['rank'];
-			$this->quiztaker_score = $row_getCheck['quiztaker_score'];
-			$this->quizcreator_score = $row_getCheck['quizcreator_score'];
-			$this->quiztaker_score_today = $row_getCheck['quiztaker_score_today'];
-			$this->quizcreator_score_today = $row_getCheck['quizcreator_score_today'];
-			$this->isAdmin = $row_getCheck['isAdmin'];
-			$this->isActive = $row_getCheck['isActive'];
+			if($check){
+				$this->memExist = true;
+				return true;
+			}else{
+				$queryUpdate = sprintf("UPDATE s_members SET isActive = 1 WHERE member_id = %s", $this->id);
+				mysql_query($queryUpdate, $quizroo) or die(mysql_error());
+				
+				// populate the user data
+				$this->qname = $row_getCheck['member_name'];
+				$this->level = $row_getCheck['level'];
+				$this->rank = $row_getCheck['rank'];
+				$this->quiztaker_score = $row_getCheck['quiztaker_score'];
+				$this->quizcreator_score = $row_getCheck['quizcreator_score'];
+				$this->quiztaker_score_today = $row_getCheck['quiztaker_score_today'];
+				$this->quizcreator_score_today = $row_getCheck['quizcreator_score_today'];
+				$this->isAdmin = $row_getCheck['isAdmin'];
+				$this->isActive = $row_getCheck['isActive'];
+				$this->memExist = true;
+			}
 		}	
 	}
 	
@@ -263,6 +281,20 @@ class Member{
 	function getGender(){
 		return $this->me['gender'];
 	}
+	
+	function getFriends(){
+		return $this->friends;
+	}
+	
+	function isFriend($member_id){
+		$isFriend = false;
+		for($i = 0; $i < sizeof($this->friends['data']); $i++){
+			if($this->friends['data'][$i]['id'] == $member_id){
+				$isFriend = true;
+			}
+		}
+		return $isFriend;
+	}		
 	
 	// bind a unikey with this member
 	function bindImagekey($unikey){
