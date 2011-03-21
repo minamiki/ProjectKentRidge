@@ -41,6 +41,7 @@
 <?php }}else{ ?>
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Opps, quiz not found!</h3>
+  <span class="logo"><img src="../webroot/img/quizroo-question.png" alt="Member not found" width="248" height="236" /></span>
   <p>Sorry! The quiz that you're looking for may no be available. Please check the ID of the quiz again.</p>
   <p>The reason you're seeing this error could be due to:</p>
   <ul>

@@ -86,6 +86,10 @@ input[type='submit'].btnDisabled, input[type='button'].btnDisabled, input[type='
 	margin-right: auto;
 	margin-left: auto;
 }
+#takequiz-preamble .logo {
+	display: block;
+	text-align: center;
+}
 #takequiz-preview .description {
 	font-size: 14px;
 	text-align: justify;
