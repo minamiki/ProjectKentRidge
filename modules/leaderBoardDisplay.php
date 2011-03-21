@@ -62,7 +62,7 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
     </div>
   </div>
   <div id="ranking" class="frame rounded right">
-    <h2>Top 10 Member Ranking</h2>
+    <h2>Top 10 Member Rankings</h2>
     <table width="100%" border="0" cellpadding="4" cellspacing="0" id="rankTable">
       <tr>
         <th width="55" scope="col">Rank</th>
@@ -73,7 +73,7 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
       <?php do{ ?>
       <tr>
         <td width="55" align="center" scope="row" class="ranking"><?php echo $row_getRanking['ranking']; ?></td>
-        <td width="60" align="center" scope="row"><img src="http://graph.facebook.com/<?php echo $row_getRanking['member_id']; ?>/picture" width="50" height="50" alt="<?php echo $row_getRanking['member_name']; ?>" title="<?php echo $row_getRanking['member_name']; ?>" /></td>
+        <td width="60" align="center" scope="row"><a href="../webroot/viewMember.php?id=<?php echo $row_getRanking['member_id']; ?>"><img src="http://graph.facebook.com/<?php echo $row_getRanking['member_id']; ?>/picture" alt="<?php echo $row_getRanking['member_name']; ?>" width="50" height="50" border="0" title="<?php echo $row_getRanking['member_name']; ?>" /></a></td>
         <td><p class="member-name"><?php echo $row_getRanking['member_name']; ?></p>
         <p class="member-level"><?php echo $row_getRanking['rank_name']; ?> (Level <?php echo $row_getRanking['level']; ?>)</p></td>
         <td align="center"><p class="score" title="Psss.. extra credit of <?php echo sprintf("%.2f", ($row_getRanking['quizcreator_score'] > 0) ? log($row_getRanking['quizcreator_score'])/5 : 0); ?>"><?php echo $row_getRanking['score']; ?></p>
