@@ -174,17 +174,17 @@ if($view_member->memExist){
     <?php if($friend){ ?>
     <div class="factbox rounded">
       <p class="unit">with </p>
-      <div class="factValue"><?php echo sprintf("%d", $member->getStats('quizzes_published')) ?></div>
+      <div class="factValue"><?php echo sprintf("%d", $view_member->getStats('quizzes_published')) ?></div>
       <p class="factDesc">Published</p>
     </div>
     <p class="fact"><?php echo ucfirst($gender[0]); ?> has</p>
     <div class="factbox rounded">
       <p class="unit">a total of</p>
-	  <div class="factValue"><?php echo sprintf("%d", $member->getStats('taken_quizzes_total')) ?></div>
+	  <div class="factValue"><?php echo sprintf("%d", $view_member->getStats('taken_quizzes_total')) ?></div>
     <p class="factDesc">Quiz Attempts</p></div>
     <div class="factbox rounded">
       <p class="unit">with </p>
-      <div class="factValue"><?php echo sprintf("%d", $member->getStats('taken_quizzes_unique')) ?></div>
+      <div class="factValue"><?php echo sprintf("%d", $view_member->getStats('taken_quizzes_unique')) ?></div>
       <p class="factDesc">Unique Attempts</p>
     </div>
     <?php } ?>
@@ -192,16 +192,16 @@ if($view_member->memExist){
     <?php if($friend){ ?>
     <div class="factbox rounded">
       <p class="unit">has an average of</p>
-      <div class="factValue"><?php echo sprintf("%.2f", $member->getStats('questions')/$quiz_total) ?></div>
+      <div class="factValue"><?php echo sprintf("%.2f", $view_member->getStats('questions')/$quiz_total) ?></div>
       <p class="factDesc">Questions</p></div>
     <div class="factbox rounded">
       <p class="unit">has an average of</p>
-      <div class="factValue"><?php echo sprintf("%.2f", $member->getStats('options')/$quiz_total) ?></div>
+      <div class="factValue"><?php echo sprintf("%.2f", $view_member->getStats('options')/$quiz_total) ?></div>
     <p class="factDesc">Options</p></div>
     <?php } ?>
     <div class="factbox rounded">
       <p class="unit">has an average of</p>
-      <div class="factValue"><?php echo sprintf("%.2f", $member->getStats('likes')/$quiz_total) ?></div>
+      <div class="factValue"><?php echo sprintf("%.2f", $view_member->getStats('likes')/$quiz_total) ?></div>
       <p class="factDesc">Likes</p>
     </div>
   </div>
