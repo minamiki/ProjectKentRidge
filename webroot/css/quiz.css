@@ -251,3 +251,6 @@
 #result-panel h2 {
 	color: #F60;
 }
+#takequiz-preview .info a:link, #takequiz-preview .info a:visited {
+	color: #333;
+}
