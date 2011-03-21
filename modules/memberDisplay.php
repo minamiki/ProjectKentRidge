@@ -247,11 +247,11 @@ if($view_member->memExist){
   <?php if($friend){ ?>
   <div id="topic-breakdown" class="frame rounded right">
     <h2>Quiz Taking Topic Breakdown</h2>
-    <div id="topic_chart"></div>
+    <div id="topic_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
   </div>
   <div id="taking-history" class="frame rounded right">
     <h2>Quiz Taking History</h2>
-    <div id="takeHistory_chart"></div>
+    <div id="takeHistory_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
   </div>
   <?php } ?>
 </div>
