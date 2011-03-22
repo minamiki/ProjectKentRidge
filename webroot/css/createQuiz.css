@@ -109,11 +109,14 @@ p.center{
 	background-color: #CCC;
 	color: #FFF;
 }
+#create-quiz .questionField {
+	width: 98% !important;
+}
 #create-quiz .optionField {
-	width: 250px !important;
+	width: 95% !important;
 }
 #create-quiz .optionSelect {
-	width: 150px;
+	width: 98% !important;;
 }
 #createQuiz .desc {
 	font-size: 12px;
