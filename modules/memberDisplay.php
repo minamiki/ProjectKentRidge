@@ -34,7 +34,15 @@ if($view_member->memExist){
 	}
 	
 	// check if this member is a friend
-	$friend = $member->isFriend($view_member->id);
+	$self = false;
+	if($member->isFriend($view_member->id) || $member->id == $view_member->id){
+		$friend = true;
+		if($member->id == $view_member->id){
+			$self = true;
+		}
+	}else{
+		$friend = false;
+	}
 
 	// the rank above
 	$row_getAboveRank = $view_member->getLeaderBoardStat($member_rank-1);
@@ -120,7 +128,14 @@ if($view_member->memExist){
 <?php }else{ ?>
 <div id="viewMember-preamble" class="frame rounded">
   <h2><?php echo $view_member->qname; ?></h2>
-  <p>Here's some information about this member. You can see the latest quizzes created by this member. You can see more information if this member is your friend! (In facebook)</p>
+  <?php if($friend){ ?>
+  <?php if($self){ ?>
+  <p>Hey.. you're looking at yourself! In this case, this page is the same as your statistics page! On top of that, you get to see your latest and popular quizzes though :)</p>  
+  <?php }else{ ?>
+  <p>Here's some information about your friend, <?php echo $view_member->qname; ?>. You can see the latest quizzes created by <?php echo $gender[1]; ?>. You can also see <?php echo $gender[1]; ?> quiz taking habits and history, just like your statistics page!</p>
+  <?php }}else{ ?>
+  <p>Here's some information about this member. You can see the latest quizzes created by this member. You can see more information if this member is your friend! (In facebook)</p>  
+  <?php } ?>
 </div>
 <div id="member-quizzes" class="clear">
   <div id="latest-quizzes" class="frame rounded left">
@@ -165,7 +180,7 @@ if($view_member->memExist){
 <div class="clear">
   <div id="fun-facts" class="frame rounded left">
     <h2>Fun Facts</h2>
-    <p class="fact"><?php echo ucfirst($gender[0]); ?> has created</p>
+    <p class="fact"><?php echo ($self) ? "You have" : ucfirst($gender[0])." has"; ?> created</p>
     <div class="factbox rounded">
       <p class="unit">a total of</p>
       <div class="factValue"><?php echo sprintf("%d", $quiz_total) ?></div>
@@ -177,7 +192,7 @@ if($view_member->memExist){
       <div class="factValue"><?php echo sprintf("%d", $view_member->getStats('quizzes_published')) ?></div>
       <p class="factDesc">Published</p>
     </div>
-    <p class="fact"><?php echo ucfirst($gender[0]); ?> has</p>
+    <p class="fact"><?php echo ($self) ? "You have" : ucfirst($gender[0])." has"; ?></p>
     <div class="factbox rounded">
       <p class="unit">a total of</p>
 	  <div class="factValue"><?php echo sprintf("%d", $view_member->getStats('taken_quizzes_total')) ?></div>
@@ -188,7 +203,7 @@ if($view_member->memExist){
       <p class="factDesc">Unique Attempts</p>
     </div>
     <?php } ?>
-    <p class="fact"><?php echo ucfirst($gender[1]); ?> quizzes</p>
+    <p class="fact"><?php echo ($self) ? "Your" : ucfirst($gender[1]); ?> quizzes</p>
     <?php if($friend){ ?>
     <div class="factbox rounded">
       <p class="unit">has an average of</p>
