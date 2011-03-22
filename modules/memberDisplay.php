@@ -54,6 +54,16 @@ if($view_member->memExist){
 	// total quizzes
 	$quiz_total = $view_member->getStats('quizzes_total');
 	
+	if($quiz_total != 0){
+		$question_avg = sprintf("%.2f", $view_member->getStats('questions')/$quiz_total);
+		$option_avg = sprintf("%.2f", $view_member->getStats('options')/$quiz_total);
+		$like_avg = sprintf("%.2f", $view_member->getStats('likes')/$quiz_total);
+	}else{
+		$question_avg = 0;
+		$option_avg = 0;
+		$like_avg = 0;
+	}
+	
 	if($friend){
 		// topic pie chart
 		$topicQuery = sprintf("SELECT COUNT(fk_quiz_cat) AS count, cat_name FROM (SELECT store_id, fk_quiz_id, fk_quiz_cat, cat_name FROM q_store_result, q_quizzes, q_quiz_cat WHERE q_quizzes.quiz_id = q_store_result.fk_quiz_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat AND q_store_result.fk_member_id = %s GROUP BY q_store_result.fk_quiz_id) t GROUP BY fk_quiz_cat", $view_member->id);
@@ -207,16 +217,16 @@ if($view_member->memExist){
     <?php if($friend){ ?>
     <div class="factbox rounded">
       <p class="unit">has an average of</p>
-      <div class="factValue"><?php echo sprintf("%.2f", $view_member->getStats('questions')/$quiz_total) ?></div>
+      <div class="factValue"><?php echo $question_avg; ?></div>
       <p class="factDesc">Questions</p></div>
     <div class="factbox rounded">
       <p class="unit">has an average of</p>
-      <div class="factValue"><?php echo sprintf("%.2f", $view_member->getStats('options')/$quiz_total) ?></div>
+      <div class="factValue"><?php echo $option_avg; ?></div>
     <p class="factDesc">Options</p></div>
     <?php } ?>
     <div class="factbox rounded">
       <p class="unit">has an average of</p>
-      <div class="factValue"><?php echo sprintf("%.2f", $view_member->getStats('likes')/$quiz_total) ?></div>
+      <div class="factValue"><?php echo $like_avg; ?></div>
       <p class="factDesc">Likes</p>
     </div>
   </div>
