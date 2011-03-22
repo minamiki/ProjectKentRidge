@@ -592,6 +592,25 @@ class Quiz{
 		}
 	}
 	
+	// get the list of attempts for this quiz
+	function getAttempts($unique = false){
+		require('quizrooDB.php');
+		if($unique){
+			$query = sprintf("SELECT COUNT(*) as count FROM (SELECT store_id FROM q_store_result WHERE fk_quiz_id = %s GROUP BY fk_member_id) t", $this->quiz_id);
+		}else{
+			$query = sprintf("SELECT COUNT(*) as count FROM (SELECT store_id FROM q_store_result WHERE fk_quiz_id = %s) t", $this->quiz_id);
+		}
+		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
+		$row_getQuery = mysql_fetch_assoc($getQuery);
+		$totalRows_getQuery = mysql_num_rows($getQuery);
+		
+		if($totalRows_getQuery == 0){
+			return 0;
+		}else{
+			return $row_getQuery['count'];
+		}
+	}
+	
 	// award points based on like(1), dislike(-1) or neutral(0)
 	function awardPoints($type, $member_id){
 		require('variables.php');

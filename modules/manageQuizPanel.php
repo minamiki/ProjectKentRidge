@@ -65,9 +65,9 @@ $queryString_listQuiz = sprintf("&totalRows_listQuiz=%d%s", $totalRows_listQuiz,
 	  ?>
         <tr>
           <td width="80" align="center"><img src="../quiz_images/imgcrop.php?w=70&amp;h=52&amp;f=<?php echo $quizloop->quiz_picture; ?>" alt="<?php echo $quizloop->quiz_picture; ?>" width="70" height="52" border="0" title="<?php echo $quizloop->quiz_name; ?>" /></td>
-          <td><p class="name"><?php echo (strlen($quizloop->quiz_name) > 90) ? substr($quizloop->quiz_name, 0, 90)."..." : $quizloop->quiz_name ; ?></p><p class="properties">
-          <?php echo "<em>Results:</em> ".$quizloop->getResults("count").", <em>Questions:</em> ".$quizloop->getQuestions("count"); ?></p>
-          <p class="status"><?php echo $status; ?></p></td>
+          <td><p class="name"><?php echo (strlen($quizloop->quiz_name) > 90) ? substr($quizloop->quiz_name, 0, 90)."..." : $quizloop->quiz_name ; ?></p>
+            <p class="status"><?php echo $status; ?></p>
+          <p class="details"><img src="../webroot/img/chart.png" alt="View Details" width="16" height="16" border="0" align="absmiddle" /> <a href="viewQuizDetails.php?id=<?php echo $quizloop->quiz_id; ?>">View detail statistics for this quiz</a></p></td>
           <td width="100" align="center"><?php echo $quizloop->quiz_score; ?> (<?php echo $quizloop->likes; ?>)</td>
           <td width="120" align="center"><?php echo date("F j, Y g:ia", strtotime($quizloop->creation_date)); ?></td>
           <td width="80" align="center">
