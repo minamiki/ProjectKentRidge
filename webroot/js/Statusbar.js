@@ -84,7 +84,7 @@ var Statusbar = {
 					"<div class='statusbar-unit-line clear'>"+
 						"<div class='statusbar-time'>"+Statusbar.displayDate(date,'notification')+" "+newstring+"</div>"+
 						"<div class='statusbar-label' style='background-color: #"+color+"'>"+label+"</div>"+
-						"<div class='statusbar-system-notification>"+note+"</div>"+
+						"<div class='statusbar-system-notification'>"+note+"</div>"+
 					"</div>"
 				);
 			});
@@ -104,7 +104,7 @@ var Statusbar = {
 					"<div class='statusbar-unit-line clear'>"+
 						"<div class='statusbar-time'>"+Statusbar.displayDate(date,'notification')+" "+newstring+"</div>"+
 						"<div class='statusbar-label' style='background-color: #"+color+"'>"+label+"</div>"+
-						"<div class='statusbar-system-notification>"+note+"</div>"+
+						"<div class='statusbar-system-notification'>"+note+"</div>"+
 					"</div>"
 				);
 			});
