@@ -63,3 +63,10 @@ input[type='submit']:hover, input[type='button']:hover {
 input[type='submit'].btnDisabled, input[type='button'].btnDisabled, input[type='submit'].btnDisabled:hover, input[type='button'].btnDisabled:hover {
 	background-color: #F66; !important;
 }
+#loader-box {
+	width: 100%;
+	display: block;
+	text-align: center;
+	padding-top: 50px;
+	padding-bottom: 50px;
+}

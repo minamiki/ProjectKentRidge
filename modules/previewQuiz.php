@@ -24,7 +24,7 @@
   <img src="../quiz_images/imgcrop.php?w=320&amp;h=213&amp;f=<?php echo $quiz->quiz_picture; ?>" width="320" height="213" alt="" />
   <?php } ?>
   <p class="description"><?php echo $quiz->quiz_description; ?></p>
-  <p class="info">by <em><?php echo $quiz->creator(); ?></em> on <?php echo date("F j, Y g:ia", strtotime($quiz->creation_date)); ?> in the topic '<?php echo $quiz->category(); ?>'</p>
+  <p class="info">by <em><a href="viewMember.php?id=<?php echo $quiz->fk_member_id; ?>"><?php echo $quiz->creator(); ?></a></em> on <?php echo date("F j, Y g:ia", strtotime($quiz->creation_date)); ?> in the topic <a href="topics.php?topic=<?php echo $quiz->fk_quiz_cat; ?>"><em><?php echo $quiz->category(); ?></em></a></p>
   <input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="goToURL('takeQuiz.php?id=<?php echo $_GET['id']; ?>');" value="Take Quiz now!" />
 </div>
 <?php if($quiz->hasTaken($member->id)){ ?>
@@ -41,6 +41,7 @@
 <?php }}else{ ?>
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Opps, quiz not found!</h3>
+  <span class="logo"><img src="../webroot/img/quizroo-question.png" alt="Member not found" width="248" height="236" /></span>
   <p>Sorry! The quiz that you're looking for may no be available. Please check the ID of the quiz again.</p>
   <p>The reason you're seeing this error could be due to:</p>
   <ul>

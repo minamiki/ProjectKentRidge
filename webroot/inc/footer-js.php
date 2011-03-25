@@ -58,7 +58,7 @@ window.fbAsyncInit = function(){
 	// Enable canvas height auto-resize
 	FB.Canvas.setAutoResize();
 	
-	if(isSharing != undefined){
+	if(typeof(isSharing) != 'undefined'){
 		if(isSharing){
 			// Subscribe to Facebook Like event to handle it for our own data. 
 			FB.Event.subscribe('edge.create', function(response) {

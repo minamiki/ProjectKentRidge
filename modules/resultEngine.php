@@ -141,8 +141,8 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 <?php if($quiz->isPublished() && $totalRows_getResultChart != 0){ ?>
 <div class="frame rounded">
 <h3>Result Details</h3>
-<div id="result_chart"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div>
-<?php if($VAR_SYSTEM_DEBUG){ ?>
+<div id="result_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
+<?php if($VAR_SYSTEM_MAINTENANCE){ ?>
 <table border="0" align="center" cellpadding="3" cellspacing="0">
   <tr>
     <th scope="col">Question</th>

@@ -64,7 +64,6 @@ $(document).ready(function(){
 	 
     //Set the height
     $("#questionContainer").height(maxHeight);
-	FB.Canvas.setAutoResize();
 });
 </script>
 </body>

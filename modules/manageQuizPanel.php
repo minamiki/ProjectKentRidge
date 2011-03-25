@@ -11,7 +11,7 @@ if (isset($_GET['pageNum_listQuiz'])) {
 }
 $startRow_listQuiz = $pageNum_listQuiz * $maxRows_listQuiz;
 
-$query_listQuiz = sprintf("SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %d AND isPublished != 3 ORDER BY creation_date DESC", $member->id);
+$query_listQuiz = sprintf("SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %s AND isPublished != 3 ORDER BY creation_date DESC", $member->id);
 $query_limit_listQuiz = sprintf("%s LIMIT %d, %d", $query_listQuiz, $startRow_listQuiz, $maxRows_listQuiz);
 $listQuiz = mysql_query($query_limit_listQuiz, $quizroo) or die(mysql_error());
 $row_listQuiz = mysql_fetch_assoc($listQuiz);
@@ -65,9 +65,9 @@ $queryString_listQuiz = sprintf("&totalRows_listQuiz=%d%s", $totalRows_listQuiz,
 	  ?>
         <tr>
           <td width="80" align="center"><img src="../quiz_images/imgcrop.php?w=70&amp;h=52&amp;f=<?php echo $quizloop->quiz_picture; ?>" alt="<?php echo $quizloop->quiz_picture; ?>" width="70" height="52" border="0" title="<?php echo $quizloop->quiz_name; ?>" /></td>
-          <td><p class="name"><?php echo (strlen($quizloop->quiz_name) > 90) ? substr($quizloop->quiz_name, 0, 90)."..." : $quizloop->quiz_name ; ?></p><p class="properties">
-          <?php echo "<em>Results:</em> ".$quizloop->getResults("count").", <em>Questions:</em> ".$quizloop->getQuestions("count"); ?></p>
-          <p class="status"><?php echo $status; ?></p></td>
+          <td><p class="name"><?php echo (strlen($quizloop->quiz_name) > 90) ? substr($quizloop->quiz_name, 0, 90)."..." : $quizloop->quiz_name ; ?></p>
+            <p class="status"><?php echo $status; ?></p>
+          <p class="details"><img src="../webroot/img/chart.png" alt="View Details" width="16" height="16" border="0" align="absmiddle" /> <a href="viewQuizDetails.php?id=<?php echo $quizloop->quiz_id; ?>">View detailed statistics for this quiz</a></p></td>
           <td width="100" align="center"><?php echo $quizloop->quiz_score; ?> (<?php echo $quizloop->likes; ?>)</td>
           <td width="120" align="center"><?php echo date("F j, Y g:ia", strtotime($quizloop->creation_date)); ?></td>
           <td width="80" align="center">

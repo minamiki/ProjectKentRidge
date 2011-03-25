@@ -30,14 +30,14 @@ do{
 mysql_free_result($resultID);
 ?>
 <div id="cq<?php echo $question; ?>o<?php echo $option; ?>">
-<table border="0" align="center" cellpadding="5" cellspacing="0">
+<table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
   <tr>
     <th width="25" scope="row"><a href="javascript:;" onclick="QuizQuestion.removeOption(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
-    <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $option; ?>">Option <?php echo $option+1; ?></label></th>
-    <td width="270"><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $option; ?>" class="sprytextfield">
+    <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $option; ?>">Option</label></th>
+    <td><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $option; ?>" class="sprytextfield">
       <input name="q<?php echo $question; ?>o<?php echo $option; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $option; ?>" />
     <span class="textfieldRequiredMsg">Enter a value for this option!</span></span></td>
-    <td width="120"><select name="q<?php echo $question; ?>r<?php echo $option; ?>" class="optionSelect" id="q<?php echo $question; ?>r<?php echo $option; ?>">
+    <td width="150"><select name="q<?php echo $question; ?>r<?php echo $option; ?>" class="optionSelect" id="q<?php echo $question; ?>r<?php echo $option; ?>">
 	  <?php foreach($results as $item){ ?>
       <option value="<?php echo $item[0]; ?>"><?php echo $item[1]; ?></option>
       <?php } ?>

@@ -109,11 +109,14 @@ p.center{
 	background-color: #CCC;
 	color: #FFF;
 }
+#create-quiz .questionField {
+	width: 98% !important;
+}
 #create-quiz .optionField {
-	width: 250px !important;
+	width: 95% !important;
 }
 #create-quiz .optionSelect {
-	width: 150px;
+	width: 98% !important;;
 }
 #createQuiz .desc {
 	font-size: 12px;
@@ -255,4 +258,20 @@ p.center{
 #checkQuizTable .name {
 	margin-bottom: 3px;
 	margin-top: 0px;
+}
+#checkQuizTable .details {
+	margin-bottom: 3px;
+	margin-top: 3px;
+	font-size: 10px;
+}
+#checkQuizTable .details img {
+	border: none;
+}
+#checkQuizTable .details a:link, #checkQuizTable .details a:visited {
+	text-decoration: none;
+	color: #333;
+}
+#checkQuizTable .details a:hover {
+	text-decoration: underline;
+	color: #333;
 }

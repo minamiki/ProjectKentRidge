@@ -15,13 +15,13 @@ $row_getBelowRank = $member->getLeaderBoardStat($member_rank+1);
 $quiz_total = $member->getStats('quizzes_total');
 
 // topic pie chart
-$topicQuery = sprintf("SELECT COUNT(fk_quiz_cat) AS count, cat_name FROM (SELECT store_id, fk_quiz_id, fk_quiz_cat, cat_name FROM q_store_result, q_quizzes, q_quiz_cat WHERE q_quizzes.quiz_id = q_store_result.fk_quiz_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat AND q_store_result.fk_member_id = %d GROUP BY q_store_result.fk_quiz_id) t GROUP BY fk_quiz_cat", $member->id);
+$topicQuery = sprintf("SELECT COUNT(fk_quiz_cat) AS count, cat_name FROM (SELECT store_id, fk_quiz_id, fk_quiz_cat, cat_name FROM q_store_result, q_quizzes, q_quiz_cat WHERE q_quizzes.quiz_id = q_store_result.fk_quiz_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat AND q_store_result.fk_member_id = %s GROUP BY q_store_result.fk_quiz_id) t GROUP BY fk_quiz_cat", $member->id);
 $getTopics = mysql_query($topicQuery, $quizroo) or die(mysql_error());
 $row_getTopics = mysql_fetch_assoc($getTopics);
 $totalRows_getTopics = mysql_num_rows($getTopics);
 
 // take quiz history
-$takeQuizQuery = sprintf("SELECT count, r.takeDate FROM (SELECT takeDate FROM (SELECT DATE(timestamp) AS takeDate FROM `q_store_result` GROUP BY DATE(timestamp) ORDER BY takeDate DESC LIMIT 0, 7) t ORDER BY takeDate) r LEFT JOIN (SELECT COUNT(store_id) AS count, DATE(timestamp) As takeDate FROM `q_store_result` WHERE `fk_member_id` = %d GROUP BY DATE(timestamp)
+$takeQuizQuery = sprintf("SELECT count, r.takeDate FROM (SELECT takeDate FROM (SELECT DATE(timestamp) AS takeDate FROM `q_store_result` GROUP BY DATE(timestamp) ORDER BY takeDate DESC LIMIT 0, 7) t ORDER BY takeDate) r LEFT JOIN (SELECT COUNT(store_id) AS count, DATE(timestamp) As takeDate FROM `q_store_result` WHERE `fk_member_id` = %s GROUP BY DATE(timestamp)
 ) a ON r.takedate = a.takeDate", $member->id);
 $getTakeQuiz = mysql_query($takeQuizQuery, $quizroo) or die(mysql_error());
 $row_getTakeQuiz = mysql_fetch_assoc($getTakeQuiz);
@@ -158,10 +158,10 @@ $count = 0;
   </div>
   <div class="frame rounded right">
     <h2>Quiz Taking Topic Breakdown</h2>
-    <div id="topic_chart"></div>
+    <div id="topic_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
   </div>
   <div class="frame rounded right">
     <h2>Quiz Taking History</h2>
-    <div id="takeHistory_chart"></div>
+    <div id="takeHistory_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
   </div>
 </div>
