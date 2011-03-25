@@ -13,6 +13,21 @@
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/dashboard.php"); ?>
 <?php include("inc/footer-js.php"); ?>
+<?php include('../modules/checkAchievements.php')?>
+<?php
+// get the member's facebook id
+$facebookID = $member->id;
+$achievement_array = array();
+// Check for achievements
+$achievement_array = checkAchievements($facebookID, $achievement_array);
+echo $achievement_array;
+// Retrieve details of achievements
+$achievement_details = retrieveAchievements($achievement_array);
+?>
 <script type="text/javascript" src="js/Dashboard.js"></script>
+<script type="text/javascript" src="js/Splash.js"></script>
+<script type="text/javascript">
+Splash.display(<?php echo $achievement_details?>);
+</script>
 </body>
 </html>

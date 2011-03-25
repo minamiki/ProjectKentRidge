@@ -32,7 +32,6 @@ $(document).ready(function(){
 	Share.results($('#user-actions-container'),{'quiz_id': <?php echo $quiz->quiz_id ?>,'result_id':<?php echo $row_getResults['fk_result'] ?>});
 });
 </script>
-</script>
 </body>
 </html>
 <?php } ?>
