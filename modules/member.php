@@ -395,12 +395,17 @@ WHERE member_id = %s", $this->id);
 			
 			// Quiz taker points
 			case "taker_points":
-			$queryStat = sprintf("SELECT quiztaker_score AS count FROM s_members WHERE fk_member_id = %s", $this->id);
+			$queryStat = sprintf("SELECT quiztaker_score AS count FROM s_members WHERE member_id = %s", $this->id);
 			break;
 			
 			// Quiz creator points
 			case "creator_points":
-			$queryStat = sprintf("SELECT quizcreator_score AS count FROM s_members WHERE fk_member_id = %s", $this->id);
+			$queryStat = sprintf("SELECT quizcreator_score AS count FROM s_members WHERE member_id = %s", $this->id);
+			break;
+			
+			// Achievements
+			case "achievements":
+			$queryStat = sprintf("SELECT COUNT(name) AS count FROM g_achievements_log, g_achievements WHERE fk_achievement_id = g_achievements.id AND fk_member_id = %s AND g_achievements.type != 3", $this->id);
 			break;
 			
 			// Number of quiz taking attempts
