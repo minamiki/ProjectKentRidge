@@ -131,3 +131,26 @@
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
+.achievement-box {
+	border: 3px solid #FC0;
+	padding: 12px;
+	width: 130px;
+	height: 105px;
+	text-align: center;
+	float: left;
+	margin: 10px;
+	cursor: help;
+}
+.achievement-name {
+	text-align: center;
+	display: block;
+	font-weight: bold;
+	margin-top: 5px;
+}
+#none-box {
+	width: 100%;
+	display: block;
+	text-align: center;
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
