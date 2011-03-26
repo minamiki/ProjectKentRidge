@@ -190,8 +190,44 @@
 	color: #333;
 	text-decoration: none;
 	font-size: 18px;
-	font-weight: bold;
+ 	font-weight: bold;
 }
 #topics a:hover {
 	text-decoration: underline;
+}
+#topics-bar {
+	background-color: #666;
+	font-size: 12px;
+	height: 26px;
+	font-family: Verdana, Geneva, sans-serif;
+	padding-left: 10px;
+	background-image: url(../img/statusbar_background_gradient_black.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
+	font-weight: bold;
+}
+#topics-bar ul {
+	margin: 0px;
+	padding-top: 5px;
+	padding-right: 0px;
+	padding-bottom: 5px;
+	padding-left: 0px;
+}
+#topics-bar ul li {
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+#topics-bar a:link, #topics-bar a:visited {
+	text-decoration: none;
+	color: #FFF;
+	padding-top: 5px;
+	padding-right: 15px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+}
+#topics-bar a:hover {
+	color: #FFF;
+	background-color: #666;
 }

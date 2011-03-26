@@ -40,6 +40,15 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
     <p>Remember to turn it off after carrying out the required maintenance!</p>
   </div>
   <?php } ?>
+  <?php if(isset($_GET['bar'])){ ?>
+  <div id="topics-bar" class="rounded clear">
+  	<ul>
+    <?php do { ?>
+    <li><a href="topics.php?topic=<?php echo $row_getTopics['cat_id']; ?>&bar" class="topicTitle"><?php echo $row_getTopics['cat_name']; ?></a></li>
+  	<?php } while ($row_getTopics = mysql_fetch_assoc($getTopics)); ?>
+    </ul>
+  </div>
+  <?php } ?>
   <div class="clear">
     <div id="recommendations" class="frame rounded left-right">
       <h2>Latest</h2>
@@ -80,7 +89,7 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
         <?php } ?>
     </div>
   </div>
-  <?php if($VAR_SHOW_TOPICS){ ?>
+  <?php if(!isset($_GET['bar'])){ ?>
   <div id="topics" class="frame rounded">
     <h2>Topics</h2>
     <p>Taken all the latest quizzes? You can also browse other quizzes by their topic!</p>
