@@ -66,14 +66,14 @@ function checkAchievements($memberid,$achievement_array){
 	/*
 	 * Category based achievements
 	 */
-	$results = $database->query('SELECT COUNT(DISTINCT fk_quiz_cat) as categories FROM q_store_result LEFT JOIN q_quizzes ON fk_quiz_id=quiz_id WHERE q_store_result.fk_member_id='.$memberid);		
-	$categories = $results[0]['categories'];
 	
 	/*
 	 *  Curiousity killed the cat
 	 *  Completed at least 1 quiz each from 2 categories
 	 */
 	if(!in_array('52',$achievements)){
+		$results = $database->query('SELECT COUNT(DISTINCT fk_quiz_cat) as categories FROM q_store_result LEFT JOIN q_quizzes ON fk_quiz_id=quiz_id WHERE q_store_result.fk_member_id='.$memberid);		
+		$categories = $results[0]['categories'];
 		if($categories>=2){
 			$database->save('g_achievements_log',array('fk_member_id','fk_achievement_id'),array($memberid,52));
 			$achievement_array[] = 52;
@@ -85,6 +85,8 @@ function checkAchievements($memberid,$achievement_array){
 	 * Completed  at least 1 quiz each from 4 categories
 	 */
 	if(!in_array('53',$achievements)){
+		$results = $database->query('SELECT COUNT(DISTINCT fk_quiz_cat) as categories FROM q_store_result LEFT JOIN q_quizzes ON fk_quiz_id=quiz_id WHERE q_store_result.fk_member_id='.$memberid);		
+		$categories = $results[0]['categories'];
 		if($categories>=4){
 			$database->save('g_achievements_log',array('fk_member_id','fk_achievement_id'),array($memberid,53));
 			$achievement_array[] = 53;
@@ -397,7 +399,7 @@ function checkAchievements($memberid,$achievement_array){
 	 * Completed 21 quizzes in 24 hours
 	 */
 	if(!in_array('76',$achievements)){
-		$results = $database->query('SELECT COUNT(DISTINCT fk_quiz_id) AS count FROM `q_store_result` WHERE `fk_member_id`='.$memberid.' AND DATE(`timestamp`) > DATE_SUB(NOW(), INTERVAL 1 DAY)');
+		$results = $database->query('SELECT COUNT(DISTINCT fk_quiz_id) AS count FROM `q_store_result` WHERE `fk_member_id`='.$memberid.' AND `timestamp` > DATE_SUB(NOW(), INTERVAL 1 DAY)');
 		$count = $results[0]['count'];
 		if($count>=21){
 			$database->save('g_achievements_log',array('fk_member_id','fk_achievement_id'),array($memberid,76));
@@ -410,7 +412,7 @@ function checkAchievements($memberid,$achievement_array){
 	 * Completed 42 quizzes in 24 hours
 	 */	
 	if(!in_array('77',$achievements)){
-		$results = $database->query('SELECT COUNT(DISTINCT fk_quiz_id) AS count FROM `q_store_result` WHERE `fk_member_id`='.$memberid.' AND DATE(`timestamp`) > DATE_SUB(NOW(), INTERVAL 1 DAY)');
+		$results = $database->query('SELECT COUNT(DISTINCT fk_quiz_id) AS count FROM `q_store_result` WHERE `fk_member_id`='.$memberid.' AND `timestamp` > DATE_SUB(NOW(), INTERVAL 1 DAY)');
 		$count = $results[0]['count'];
 		if($count>=42){
 			$database->save('g_achievements_log',array('fk_member_id','fk_achievement_id'),array($memberid,77));
