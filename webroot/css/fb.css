@@ -9,23 +9,20 @@ html, body {
 .rounded {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	-o-border-radius: 5px;
 	border-radius: 5px;
 }
 .clear:after {
-    content: "&nbsp;";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
+	content: "&nbsp;";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
 }
 .frame {
 	border:solid 2px #E0E0E0;
 	background-image: url(../img/statusbar_background_gradient.png);
 	background-repeat: repeat-x;
 	background-position: bottom;
-	
-	margin-bottom: 10px;
 	margin-top: 10px;
 	padding-top: 5px;
 	padding-right: 10px;
@@ -54,7 +51,6 @@ input[type='submit'], input[type='button'] {
 	
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-	-o-border-radius: 3px;
 	border-radius: 3px;
 }
 input[type='submit']:hover, input[type='button']:hover {
