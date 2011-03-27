@@ -9,6 +9,8 @@ var Splash = {
 			var splash = document.createElement('div');
 			
 			$('body').append(splash);
+			$(splash).hide();
+			$(splash).fadeIn();
 			$(splash).attr('id','splash');
 			$(splash).html('<div id="splash-content"><div class="splash-info-subtitle">New Achievements Unlocked</div></div>');
 			$('#splash-content').hide();
