@@ -26,23 +26,8 @@ $query_getTopics = sprintf("SELECT * FROM q_quiz_cat WHERE cat_id = %d", GetSQLV
 $getTopics = mysql_query($query_getTopics, $quizroo) or die(mysql_error());
 $row_getTopics = mysql_fetch_assoc($getTopics);
 $totalRows_getTopics = mysql_num_rows($getTopics);
-
-// populate the topics panel
-$query_getTopicsAll = "SELECT * FROM q_quiz_cat";
-$getTopicsAll = mysql_query($query_getTopicsAll, $quizroo) or die(mysql_error());
-$row_getTopicsAll = mysql_fetch_assoc($getTopicsAll);
-$totalRows_getTopicsAll = mysql_num_rows($getTopicsAll);
 ?>
 <div id="dashboard-container">
-  <?php if(isset($_GET['bar'])){ ?>
-  <div id="topics-bar" class="rounded clear">
-  	<ul>
-    <?php do { ?>
-    <li><a href="topics.php?topic=<?php echo $row_getTopicsAll['cat_id']; ?>&bar" class="topicTitle"><?php echo $row_getTopicsAll['cat_name']; ?></a></li>
-  	<?php } while ($row_getTopicsAll = mysql_fetch_assoc($getTopicsAll)); ?>
-    </ul>
-  </div>
-  <?php } ?>
   <div id="topic-preamble" class="frame rounded">
     <h2><?php echo $row_getTopics['cat_name']; ?></h2>
 	<p><?php echo $row_getTopics['cat_desc']; ?></p>
@@ -88,19 +73,8 @@ $totalRows_getTopicsAll = mysql_num_rows($getTopicsAll);
         <?php } ?>
     </div>
   </div>
-  <?php if(!isset($_GET['bar'])){ ?>
-  <div id="topics" class="frame rounded">
-    <h2>Other Topics</h2>
-    <p>Taken all the latest quizzes in this topic? You can also browse other quizzes in other  topics!</p>
-    <?php do { ?>
-<a href="topics.php?topic=<?php echo $row_getTopicsAll['cat_id']; ?>" class="topicTitle"><?php echo $row_getTopicsAll['cat_name']; ?></a>
-      <?php } while ($row_getTopicsAll = mysql_fetch_assoc($getTopicsAll)); ?>
-  </div>
-  <?php } ?>
 </div>
 <?php
 mysql_free_result($recommendations);
 mysql_free_result($popular);
-mysql_free_result($getTopics);
-mysql_free_result($getTopicsALL);
 ?>

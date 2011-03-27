@@ -6,12 +6,26 @@
 	background-image: url(../img/statusbar_background_gradient.png);
 	background-repeat: repeat-x;
 	vertical-align:middle;
-	border:solid 2px #E0E0E0;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	text-align:center;
 	vertical-align:middle;
+	border-top-width: 2px;
+	border-right-width: 2px;
+	border-left-width: 2px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #E0E0E0;
+	border-right-color: #E0E0E0;
+	border-left-color: #E0E0E0;
+	border-bottom-width: 1px;
+	border-bottom-color: #E0E0E0;
 }
 
 #statusbar-divider{
@@ -558,4 +572,68 @@
 	width: 100%;
 	top: 0px;
 	text-align: center;
+}
+
+/* Topic Bar */
+#topics-bar {
+	background-color: #777;
+	height: 26px;
+	font-family: "Myriad Pro", Arial, sans-serif;
+	font-size: 13px;
+	letter-spacing: 1.3px;
+	padding-left: 10px;
+	background-repeat: repeat-x;
+	background-position: bottom;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	overflow: hidden;
+}
+#topics-bar ul {
+	margin: 0px;
+	padding-top: 5px;
+	padding-right: 0px;
+	padding-bottom: 5px;
+	padding-left: 0px;
+}
+#topics-bar ul li {
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+#topics-bar a:link, #topics-bar a:visited {
+	text-decoration: none;
+	color: #FFF;
+	padding-top: 6px;
+	padding-right: 15px;
+	padding-bottom: 6px;
+	padding-left: 15px;
+}
+#topics-bar a.current, #topics-bar a.current:hover {
+	color: #333;
+	cursor: default;
+}
+#topics-bar a:hover {
+	color: #F90;
+}
+#topics-bar ul li .icon span {
+	opacity: 0.0;
+}
+#topics-bar a.icon:link, #topics a.icon:visited {
+	background-image: url(../img/home-icon.png);
+	background-repeat: no-repeat;
+	padding-top: 6px;
+	padding-right: 10px;
+	padding-bottom: 6px;
+	padding-left: 10px;
+	height: 20px;
+	width: 20px;
+	background-position: 6px 6px;
+}
+#topics-bar a.icon:hover {
+	background-position: -20px 6px;
 }

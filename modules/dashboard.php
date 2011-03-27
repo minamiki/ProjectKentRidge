@@ -11,12 +11,6 @@ $query_popular = sprintf("SELECT * FROM (SELECT quiz_id, quiz_name, quiz_descrip
 $popular = mysql_query($query_popular, $quizroo) or die(mysql_error());
 $row_popular = mysql_fetch_assoc($popular);
 $totalRows_popular = mysql_num_rows($popular);
-
-// populate the topics panel
-$query_getTopics = "SELECT * FROM q_quiz_cat";
-$getTopics = mysql_query($query_getTopics, $quizroo) or die(mysql_error());
-$row_getTopics = mysql_fetch_assoc($getTopics);
-$totalRows_getTopics = mysql_num_rows($getTopics);
 ?>
 <div id="dashboard-container">
   <?php if($VAR_SHOW_RECENT){ ?>
@@ -38,15 +32,6 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
   <div class="frame rounded">
   	<h2>Maintenance Mode is ON</h2>
     <p>Remember to turn it off after carrying out the required maintenance!</p>
-  </div>
-  <?php } ?>
-  <?php if(isset($_GET['bar'])){ ?>
-  <div id="topics-bar" class="rounded clear">
-  	<ul>
-    <?php do { ?>
-    <li><a href="topics.php?topic=<?php echo $row_getTopics['cat_id']; ?>&bar" class="topicTitle"><?php echo $row_getTopics['cat_name']; ?></a></li>
-  	<?php } while ($row_getTopics = mysql_fetch_assoc($getTopics)); ?>
-    </ul>
   </div>
   <?php } ?>
   <div class="clear">
@@ -89,15 +74,6 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
         <?php } ?>
     </div>
   </div>
-  <?php if(!isset($_GET['bar'])){ ?>
-  <div id="topics" class="frame rounded">
-    <h2>Topics</h2>
-    <p>Taken all the latest quizzes? You can also browse other quizzes by their topic!</p>
-    <?php do { ?>
-<a href="topics.php?topic=<?php echo $row_getTopics['cat_id']; ?>" class="topicTitle"><?php echo $row_getTopics['cat_name']; ?></a>
-      <?php } while ($row_getTopics = mysql_fetch_assoc($getTopics)); ?>
-  </div>
-  <?php } ?>
   <div id="social" class="frame rounded">
     <h2>Social</h2>
     <p>Visit our <a href="http://www.facebook.com/apps/application.php?id=154849761223760" target="_blank">facebook page</a> for updates! Discuss what you like about Quizroo! <a href="http://www.twitter.com/quizroo" target="_blank"><img src="http://twitter-badges.s3.amazonaws.com/follow_us-b.png" alt="Follow minamiki on Twitter" border="0" align="absmiddle"/></a></p>
@@ -107,5 +83,4 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
 <?php
 mysql_free_result($recommendations);
 mysql_free_result($popular);
-mysql_free_result($getTopics);
 ?>
