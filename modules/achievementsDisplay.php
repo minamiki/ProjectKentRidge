@@ -38,8 +38,8 @@ $totalRows_getAchievements = mysql_num_rows($getAchievements);
   <div class="frame rounded right">
     <h2>Your Achievements</h2>
     <?php if($totalRows_getAchievements != 0){ do{ ?>
-    <div class="achievement-box" title="">
-	    <span class="achievement-time"><?php echo date('d M Y @ H:m:s',strtotime($row_getAchievements['timestamp'])); ?></span>
+    <div class="achievement-box clear">
+	    <div class="achievement-time"><span><?php echo date('d M Y @ H:m:s',strtotime($row_getAchievements['timestamp'])); ?></span></div>
     	<div class="achievement-image">
     		<img src="../webroot/img/<?php echo $row_getAchievements['image']; ?>" width="70" height="70" alt="<?php echo $row_getAchievements['name']; ?>" />
     	</div>
