@@ -79,9 +79,9 @@
 .achievement-box {
 	padding: 0px 10px 10px;
 	width: 500px;
-	text-align: center;
 	margin: 10px;
 	border-bottom: thin #999 dotted;
+	text-align: center;
 	clear: both;
 }
 .achievement-time {
@@ -107,7 +107,9 @@
 	font-weight: bold;
 }
 .achievement-description {
-	margin-top:10px;
+	text-align: left;
+	display: block;
+	margin-top: 5px;
 }
 #none-box {
 	width: 100%;
