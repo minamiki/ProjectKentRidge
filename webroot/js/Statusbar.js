@@ -23,7 +23,7 @@ var Statusbar = {
 			var totalachievements = Statusbar.achievements['achievements']['score'];
 			var score = parseInt(Statusbar.achievements['quiztaker']['quiztaker_score'])+parseInt(Statusbar.achievements['quizcreator']['quizcreator_score']);
 			$('#statusbar-info').html(
-				"<div class='statusbar-info-title'>Achievements<div class='statusbar-info-more'><a href=''>more</a></div></div>"+
+				"<div class='statusbar-info-title'>Achievements<div class='statusbar-info-more-show'><a href='achievements.php'>view all achievements</a></div></div>"+
 				"<div class='statusbar-score-text'>Number of Achievements: "+totalachievements+"</div>"+
 				"<div class='statusbar-score-text'>Total Quiz Points: "+score+"</div>"+
 				"<div class='statusbar-info-subtitle'>Most Recent Achievements</div>"
@@ -253,6 +253,18 @@ var Statusbar = {
 				$(stats).css('background-color','#333');
 			});
 			
+			var achievements = document.createElement('div');
+			$('#statusbar-info').append(achievements);
+			$(achievements).addClass('statusbar-menu-item').html(
+				"<div class='statusbar-menu-title'>Achievements</div>"+
+				"<div class='statusbar-menu-desc'>View information about your achievements</div>"
+			);
+			$(achievements).click(function(){
+				goToURL('achievements.php');
+				$(achievements).css('background-color','#333');
+			});
+			
+			/*
 			var history = document.createElement('div');
 			$('#statusbar-info').append(history);
 			$(history).addClass('statusbar-menu-item').html(
@@ -264,6 +276,7 @@ var Statusbar = {
 				//$(history).css('background-color','#333');
 				featureUnavailable();
 			});
+			*/
 			
 			var settings = document.createElement('div');
 			$('#statusbar-info').append(settings);

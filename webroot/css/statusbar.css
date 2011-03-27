@@ -486,6 +486,19 @@
 	visibility: hidden;	
 }
 
+.statusbar-info-more-show{
+	float: right;
+	font-size: 14px;
+	font-weight: normal;
+	vertical-align: bottom;
+	height: 100%;
+}
+
+.statusbar-info-more-show a{
+	color: #CCC;
+}
+
+
 .statusbar-info-more a:visited{
 	color: #CCC;
 	visibility: hidden;
