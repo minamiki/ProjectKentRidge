@@ -1,4 +1,4 @@
-@charset "utf-8";
+/* CSS for achievements.php */
 .frame {
 	margin-bottom: 10px;
 	margin-top: 10px;
@@ -60,61 +60,6 @@
 	text-align: center;
 	display: block;
 }
-#rankTable th{
-	background-image: url(../img/form_bg.gif);
-}
-#rankTable td {
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
-	border-bottom-color: #CCC;
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
-#rankTable .ranking {
-	font-weight: bold;
-	color: #F90;
-}
-#rankTable img {
-	border: 1px solid #666;
-}
-#rankTable .member-name {
-	margin: 0px;
-}
-#rankTable .member-level {
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 10px;
-	margin-top: 3px;
-	margin-bottom: 0px;
-	font-style: italic;
-	color: #666;
-}
-#rankTable .score {
-	font-size: 20px;
-	color: #F90;
-	margin: 0px;
-	font-weight: bold;
-	cursor: help;
-}
-#rankTable .breakdown-score {
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 10px;
-	margin-top: 3px;
-	margin-bottom: 0px;
-	color: #666;
-	font-style: italic;
-}
-#rankTable .compare {
-	color: #CCC;
-}
-#rankTable .compareImg {
-	opacity: 0.5;
-	background-color: #CCC;
-}
-
-#rankTable .compare-box td {
-	padding-top: 3px;
-	padding-bottom: 3px;
-}
 .frame h2 {
 	font-size: 18px;
 	color: #900;
@@ -123,13 +68,48 @@
 	margin-bottom: 10px;
 	margin-left: 0px;
 }
-#statistics-preamble h2 {
+#achievements-preamble h2 {
 	font-size: 30px;
 	margin-bottom: 0px;
 }
-#statistics-preamble p {
+#achievements-preamble p {
 	margin-top: 5px;
 	margin-bottom: 5px;
+}
+.achievement-box {
+	padding: 0px 10px 10px;
+	width: 500px;
+	height: 90px;
+	text-align: center;
+	margin: 10px;
+	border-bottom: thin #999 dotted;
+}
+.achievement-time {
+	float: left;
+	width: 500px;
+	margin: 0px;
+	padding-bottom: 10px;
+	text-align: right;
+	font-size: 12px;
+	color: #666;
+	clear: both;
+}
+.achievement-image {
+	width: 130px;
+	float: left;
+}
+.achievement-details {
+	float: left;
+	width: 370px;
+	padding-top: 10px;
+}
+.achievement-name {
+	text-align: center;
+	display: block;
+	font-weight: bold;
+}
+.achievement-description {
+	margin-top:10px;
 }
 #none-box {
 	width: 100%;

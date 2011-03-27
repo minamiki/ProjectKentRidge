@@ -28,11 +28,6 @@ $row_getTakeQuiz = mysql_fetch_assoc($getTakeQuiz);
 $totalRows_getTakeQuiz = mysql_num_rows($getTakeQuiz);
 $count = 0;
 
-// get the list of achievements
-$getAchievementsQuery = sprintf("SELECT name, description, image, timestamp FROM g_achievements_log, g_achievements WHERE fk_achievement_id = g_achievements.id AND fk_member_id = %s AND g_achievements.type != 3 ORDER BY timestamp DESC", $member->id);
-$getAchievements = mysql_query($getAchievementsQuery, $quizroo) or die(mysql_error());
-$row_getAchievements = mysql_fetch_assoc($getAchievements);
-$totalRows_getAchievements = mysql_num_rows($getAchievements);
 ?>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -122,12 +117,6 @@ $totalRows_getAchievements = mysql_num_rows($getAchievements);
       <div class="factValue"><?php echo sprintf("%.2f", $member->getStats('likes')/$quiz_total); ?></div>
       <p class="factDesc">Likes</p>
     </div>
-    <p class="fact">You've got</p>
-    <div class="factbox rounded">
-      <p class="unit">a total of</p>
-      <div class="factValue"><?php echo sprintf("%d", $member->getStats('achievements')); ?></div>
-      <p class="factDesc">Achievements</p>
-    </div>
     <div class="factbox rounded">
       <p class="unit">a total of</p>
       <div class="factValue"><?php echo sprintf("%d", $member->getStats('taker_points') + $member->getStats('creator_points')); ?></div>
@@ -180,14 +169,5 @@ $totalRows_getAchievements = mysql_num_rows($getAchievements);
   <div class="frame rounded right">
     <h2>Quiz Taking History</h2>
     <div id="takeHistory_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
-  </div>
-  <div class="frame rounded right">
-    <h2>Your Achievements</h2>
-    <?php if($totalRows_getAchievements != 0){ do{ ?>
-    <div class="achievement-box rounded" title="<?php echo $row_getAchievements['description']; ?>"><img src="../webroot/img/<?php echo $row_getAchievements['image']; ?>" width="70" height="70" alt="<?php echo $row_getAchievements['name']; ?>" /><span class="achievement-name"><?php echo $row_getAchievements['name']; ?></span>
-    </div>
-	<?php }while($row_getAchievements = mysql_fetch_assoc($getAchievements)); }else{ ?>
-    <div id="none-box">You have no achievements yet!</div>
-    <?php } ?>
   </div>
 </div>
