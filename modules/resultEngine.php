@@ -86,7 +86,8 @@ $row_getResultInfo = mysql_fetch_assoc($getResultInfo);
 $totalRows_getResultInfo = mysql_num_rows($getResultInfo);
 
 // get results to build the pie chart
-$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
+//$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
+$query_getResultChart = sprintf("SELECT count, result_title FROM (SELECT COUNT(*) AS count, fk_result_id FROM q_store_result WHERE q_store_result.fk_quiz_id = %d GROUP BY fk_result_id) r RIGHT JOIN (SELECT result_id, result_title FROM q_results WHERE fk_quiz_id = %d) t ON r.fk_result_id = t.result_id", $quiz->quiz_id, $quiz->quiz_id);
 $getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
 $row_getResultChart = mysql_fetch_assoc($getResultChart);
 $totalRows_getResultChart = mysql_num_rows($getResultChart);
@@ -112,17 +113,17 @@ $totalRows_getResultChart = mysql_num_rows($getResultChart);
 	function drawDeviceChart() {
 		var data = new google.visualization.DataTable();
 		data.addColumn('string', 'Result');
-		data.addColumn('number', 'People');
+		data.addColumn('number', 'Attempts');
 		data.addRows([
 			
 			<?php do{ ?>			
-			['<?php echo str_replace("'", "\\'", $row_getResultChart['result_title']); ?>', <?php echo $row_getResultChart['count']; ?>],
+			['<?php echo str_replace("'", "\\'", $row_getResultChart['result_title']); ?>', <?php echo ($row_getResultChart['count'] != NULL) ? $row_getResultChart['count'] : 0.0001; ?>],
 			<?php }while($row_getResultChart = mysql_fetch_assoc($getResultChart)); ?>
 			
 		]);
 		
 		var chart = new google.visualization.PieChart(document.getElementById('result_chart'));
-		chart.draw(data, {width: 700, height: 300, title: 'People per Result', backgroundColor:'transparent'});
+		chart.draw(data, {width: 700, height: 300, title: 'Attempts per Result', backgroundColor:'transparent'});
 	}
 </script>
 <?php } ?>
