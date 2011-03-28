@@ -84,10 +84,8 @@ if($view_member->memExist){
 <?php if($friend){ ?>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
-	google.load('visualization', '1', {'packages':['corechart']});
-	google.load("jquery", "1.4.2");
-	google.load("jqueryui", "1.8.5");
-	
+google.load('visualization', '1', {'packages':['corechart']});
+$(document).ready(function(){
 	google.setOnLoadCallback(function(){
 		drawCharts();
 	});
@@ -127,6 +125,7 @@ if($view_member->memExist){
         var chart = new google.visualization.LineChart(document.getElementById('takeHistory_chart'));
         chart.draw(data, {width: 540, height: 240, title: 'Quizzes Taken over the past week', legend: 'none', backgroundColor:'transparent'});
 	}
+});
 </script>
 <?php } ?>
 <?php if($view_member->memExist == false){ ?>

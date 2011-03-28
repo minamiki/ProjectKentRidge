@@ -95,10 +95,8 @@ $totalRows_getResultChart = mysql_num_rows($getResultChart);
 <?php if($quiz->isPublished() && $totalRows_getResultChart != 0){ ?>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
-	google.load('visualization', '1', {'packages':['corechart']});
-	google.load("jquery", "1.4.2");
-	google.load("jqueryui", "1.8.5");
-	
+google.load('visualization', '1', {'packages':['corechart']});
+$(document).ready(function(){
 	google.setOnLoadCallback(function(){
 		drawCharts();
 		
@@ -125,6 +123,7 @@ $totalRows_getResultChart = mysql_num_rows($getResultChart);
 		var chart = new google.visualization.PieChart(document.getElementById('result_chart'));
 		chart.draw(data, {width: 700, height: 300, title: 'Attempts per Result', backgroundColor:'transparent'});
 	}
+});
 </script>
 <?php } ?>
 <div class="frame rounded">
