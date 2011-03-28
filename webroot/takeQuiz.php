@@ -29,9 +29,23 @@ if(isset($_GET['id'])){
 		}
 	}
 }
+$valid = false;
 $quiz = new Quiz($url_id);
-if(!$quiz->exists()){
-	header("Location: previewQuiz.php");
+// check if quiz exists
+if($quiz->exists()){
+	// check if quiz has questions!
+	if($quiz->numQuestions() > 0){
+		$valid = true;
+	}else{
+		$valid = false;
+	}
+}
+if(!$valid){
+	if($quiz->exists()){
+		header("Location: previewQuiz.php?id=".$quiz->quiz_id);
+	}else{
+		header("Location: previewQuiz.php");
+	}
 }else{ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
