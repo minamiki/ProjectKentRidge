@@ -11,7 +11,7 @@ var Splash = {
 			$('body').append(splash);
 			$(splash).attr('id','splash');
 			$(splash).html('<div id="splash-content"><div class="splash-info-subtitle">New Achievements Unlocked</div></div>');
-			
+			$('#splash-content').hide();
 			// For each achievement, add it to the splash screen
 			$.each(new_achievements,function(i,achievement){
 				var image = achievement.image;
@@ -27,8 +27,10 @@ var Splash = {
 			});
 			
 			$('#splash-content').append('<div id="splash-dismiss">Dismiss</div>');
+			$('#splash-content').slideDown('slow');
 			$('#splash-content').click(function(){
-				$('#splash').hide();
+				$('#splash-content').slideUp('slow');
+				$('#splash').fadeOut();
 			});
 		}
 	},

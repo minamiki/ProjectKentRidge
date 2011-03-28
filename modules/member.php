@@ -417,6 +417,11 @@ WHERE member_id = %s", $this->id);
 			case "taken_quizzes_unique":
 			$queryStat = sprintf("SELECT COUNT(*) AS count FROM (SELECT store_id FROM q_store_result WHERE fk_member_id = %s GROUP BY fk_quiz_id) t", $this->id);
 			break;
+			
+			// Level
+			case "level":
+			$queryStat = sprintf("SELECT level AS count FROM s_members WHERE member_id = %s", $this->id);
+			break;			
 		}
 		$getStat = mysql_query($queryStat, $quizroo) or die(mysql_error());
 		$row_getStat = mysql_fetch_assoc($getStat);
