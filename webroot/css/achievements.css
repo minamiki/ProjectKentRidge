@@ -24,6 +24,9 @@
 	display: block;
 	padding: 10px;
 }
+.stayright {
+	float: right;	
+}
 #fun-facts .fact {
 	font-size: 16px;
 	margin-top: 0px;
