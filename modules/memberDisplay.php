@@ -123,7 +123,7 @@ $(document).ready(function(){
 		<?php $count++; }while($row_getTakeQuiz = mysql_fetch_assoc($getTakeQuiz)); ?>
 
         var chart = new google.visualization.LineChart(document.getElementById('takeHistory_chart'));
-        chart.draw(data, {width: 540, height: 240, title: 'Quizzes Taken over the past week', legend: 'none', backgroundColor:'transparent'});
+        chart.draw(data, {width: 540, height: 240, title: 'Quiz attempts over the past week', legend: 'none', backgroundColor:'transparent'});
 	}
 });
 </script>
