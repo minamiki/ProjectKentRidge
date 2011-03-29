@@ -31,10 +31,8 @@ $count = 0;
 ?>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
-	google.load('visualization', '1', {'packages':['corechart']});
-	google.load("jquery", "1.4.2");
-	google.load("jqueryui", "1.8.5");
-	
+google.load('visualization', '1', {'packages':['corechart']});
+$(document).ready(function(){
 	google.setOnLoadCallback(function(){
 		drawCharts();
 	});
@@ -72,8 +70,9 @@ $count = 0;
 		<?php $count++; }while($row_getTakeQuiz = mysql_fetch_assoc($getTakeQuiz)); ?>
 
         var chart = new google.visualization.LineChart(document.getElementById('takeHistory_chart'));
-        chart.draw(data, {width: 540, height: 240, title: 'Quizzes Taken over the past week', legend: 'none', backgroundColor:'transparent'});
+        chart.draw(data, {width: 540, height: 240, title: 'Quiz attempts over the past week', legend: 'none', backgroundColor:'transparent'});
 	}
+});
 </script>
 <div id="statistics-preamble" class="frame rounded">
   <h2>Statistics</h2>
@@ -121,6 +120,12 @@ $count = 0;
       <p class="unit">a total of</p>
       <div class="factValue"><?php echo sprintf("%d", $member->getStats('taker_points') + $member->getStats('creator_points')); ?></div>
       <p class="factDesc">Points</p>
+    </div>
+    <p class="fact">Your bonuses</p>
+    <div class="factbox rounded">
+      <p class="unit">includes a</p>
+      <div class="factValue"><?php echo sprintf("%.1f", $member->getMultiplier("display")); ?></div>
+      <p class="factDesc">Multiplier</p>
     </div>
   </div>
   <div id="ranking" class="frame rounded right">

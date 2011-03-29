@@ -69,48 +69,49 @@ if($quiz->exists()){
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
 google.load('visualization', '1', {'packages':['corechart']});
-
-google.setOnLoadCallback(function(){
-	drawCharts();
+$(document).ready(function(){
+	google.setOnLoadCallback(function(){
+		drawCharts();
+	});
+	
+	function drawCharts() {
+		<?php if($totalRows_getResultChart != 0){ ?>
+		drawTopicBreakdownChart();
+		<?php } ?>
+		drawTakeQuizHistoryChart();
+	}
+	
+	function drawTopicBreakdownChart() {
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Result');
+		data.addColumn('number', 'People');
+		data.addRows([
+			
+			<?php do{ ?>			
+			['<?php echo str_replace("'", "\\'", $row_getResultChart['result_title']); ?>', <?php echo $row_getResultChart['count']; ?>],
+			<?php }while($row_getResultChart = mysql_fetch_assoc($getResultChart)); ?>
+			
+		]);
+		
+		var chart = new google.visualization.PieChart(document.getElementById('topic_chart'));
+		chart.draw(data, {width: 540, height: 250, title: 'Attempts per Result', backgroundColor:'transparent'});
+	}
+	
+	function drawTakeQuizHistoryChart(){
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Date');
+		data.addColumn('number', 'Quiz Attempts');
+		data.addRows(<?php echo $totalRows_getTakeQuiz; ?>);
+		
+		<?php do{ ?>
+		data.setValue(<?php echo $count; ?>, 0, '<?php echo date("F j", strtotime($row_getTakeQuiz['takeDate'])); ?>');
+		data.setValue(<?php echo $count; ?>, 1, <?php echo ($row_getTakeQuiz['count']== NULL) ? 0: $row_getTakeQuiz['count'] ; ?>);
+		<?php $count++; }while($row_getTakeQuiz = mysql_fetch_assoc($getTakeQuiz)); ?>
+	
+		var chart = new google.visualization.LineChart(document.getElementById('takeHistory_chart'));
+		chart.draw(data, {width: 540, height: 240, title: 'Quiz attempts over the past week', legend: 'none', backgroundColor:'transparent'});
+	}
 });
-
-function drawCharts() {
-	<?php if($totalRows_getResultChart != 0){ ?>
-	drawTopicBreakdownChart();
-	<?php } ?>
-	drawTakeQuizHistoryChart();
-}
-
-function drawTopicBreakdownChart() {
-	var data = new google.visualization.DataTable();
-	data.addColumn('string', 'Result');
-	data.addColumn('number', 'People');
-	data.addRows([
-		
-		<?php do{ ?>			
-		['<?php echo str_replace("'", "\\'", $row_getResultChart['result_title']); ?>', <?php echo $row_getResultChart['count']; ?>],
-		<?php }while($row_getResultChart = mysql_fetch_assoc($getResultChart)); ?>
-		
-	]);
-	
-	var chart = new google.visualization.PieChart(document.getElementById('topic_chart'));
-	chart.draw(data, {width: 540, height: 250, title: 'Attempts per Result', backgroundColor:'transparent'});
-}
-
-function drawTakeQuizHistoryChart(){
-	var data = new google.visualization.DataTable();
-	data.addColumn('string', 'Date');
-	data.addColumn('number', 'Quiz Attempts');
-	data.addRows(<?php echo $totalRows_getTakeQuiz; ?>);
-	
-	<?php do{ ?>
-	data.setValue(<?php echo $count; ?>, 0, '<?php echo date("F j", strtotime($row_getTakeQuiz['takeDate'])); ?>');
-	data.setValue(<?php echo $count; ?>, 1, <?php echo ($row_getTakeQuiz['count']== NULL) ? 0: $row_getTakeQuiz['count'] ; ?>);
-	<?php $count++; }while($row_getTakeQuiz = mysql_fetch_assoc($getTakeQuiz)); ?>
-
-	var chart = new google.visualization.LineChart(document.getElementById('takeHistory_chart'));
-	chart.draw(data, {width: 540, height: 240, title: 'Quizzes attempts over the past week', legend: 'none', backgroundColor:'transparent'});
-}
 </script>
 <?php if($quiz->exists() == false){ ?>
 <div id="viewMember-preamble" class="frame rounded">

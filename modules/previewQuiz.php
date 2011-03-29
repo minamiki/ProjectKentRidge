@@ -16,7 +16,12 @@
 <?php }else{ ?>
 <div id="takequiz-preamble" class="frame rounded">
   <h3>Preview Quiz</h3>
-  <p>This is an <strong>unpublished</strong> quiz! You can still try out the quiz and get results, but you <em>will not</em> receive any points for it! Here's some information about the quiz! This quiz contains <strong><?php echo $quiz->numQuestions(); ?> questions</strong>.</p></div>
+  <?php if($quiz->numQuestions() > 0){ ?>
+  <p>This is an <strong>unpublished</strong> quiz! You can still try out the quiz and get results, but you <em>will not</em> receive any points for it! Here's some information about the quiz! This quiz contains <strong><?php echo $quiz->numQuestions(); ?> questions</strong>.</p>
+  <?php }else{ ?>
+   <p>This is an <strong>unpublished or draft</strong> quiz! Unfortunately, no questions have been created for it yet :( We can't let you take a quiz with no questions!
+  <?php } ?>
+  </div>
 <?php } ?>
 <div id="takequiz-preview" class="frame rounded">
   <h2><?php echo $quiz->quiz_name; ?></h2>
@@ -25,7 +30,11 @@
   <?php } ?>
   <p class="description"><?php echo $quiz->quiz_description; ?></p>
   <p class="info">by <em><a href="viewMember.php?id=<?php echo $quiz->fk_member_id; ?>"><?php echo $quiz->creator(); ?></a></em> on <?php echo date("F j, Y g:ia", strtotime($quiz->creation_date)); ?> in the topic <a href="topics.php?topic=<?php echo $quiz->fk_quiz_cat; ?>"><em><?php echo $quiz->category(); ?></em></a></p>
+  <?php if($quiz->numQuestions() > 0){ ?>
   <input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="goToURL('takeQuiz.php?id=<?php echo $_GET['id']; ?>');" value="Take Quiz now!" />
+  <?php }else{ ?>
+  <input name="takeQuizBtn" type="button" class="btnDisabled" id="takeQuizBtn" value="This quiz has no questions!" />
+  <?php } ?>
 </div>
 <?php if($quiz->hasTaken($member->id)){ ?>
 <!-- Include user sharing interface for liking, posting feed and recommending to friends -->
