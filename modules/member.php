@@ -79,7 +79,11 @@ class Member{
 			}
 		}else{
 			// skip authorization and just load the member data
-			$this->id = $member_id;
+			if(is_numeric($member_id)){
+				$this->id = $member_id;
+			}else{
+				$this->id = 0;
+			}
 			// check if member exists
 			if($this->register(true)){ // also sets the flag for member existance
 				$this->register(); // load member data
@@ -103,7 +107,7 @@ class Member{
 				$this->memExist = false;
 				return false;
 			}else{
-				$queryInsert = sprintf("INSERT INTO s_members(member_id, member_name, join_date) VALUES(%s, '%s', NOW())", $this->id, $this->getName());
+				$queryInsert = sprintf("INSERT INTO s_members(member_id, member_name, join_date) VALUES(%s, %s, NOW())", $this->id, GetSQLValueString($this->getName(), "text"));
 				mysql_query($queryInsert, $quizroo) or die(mysql_error());
 				
 				// populate the user data
