@@ -14,6 +14,7 @@ if($_SERVER['SERVER_NAME'] == "localhost"){ // if on localhost, automatically to
 $quizroo = mysql_pconnect($hostname_quizroo, $username_quizroo, $password_quizroo) or trigger_error(mysql_error(),E_USER_ERROR);
 // use the quizroo database
 mysql_select_db($database_quizroo, $quizroo);
+mysql_query("SET NAMES 'utf8'", $quizroo) or die(mysql_error());
 
 // MySQL SQL-injection prevention
 if (!function_exists("GetSQLValueString")) {
