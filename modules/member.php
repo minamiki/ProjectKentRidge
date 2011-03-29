@@ -213,14 +213,10 @@ class Member{
 			// - quiz is published
 	
 			// get the multiplier value
-			$queryCheck = sprintf("SELECT COUNT(store_id) AS count FROM `q_store_result` WHERE `fk_member_id` = %s AND DATE(`timestamp`) = DATE(NOW())", $this->id);
-			$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
-			$row_getResults = mysql_fetch_assoc($getResults);
-			$todayMultiplier = $row_getResults['count'];
-			mysql_free_result($getResults);
+			$multiplier = $this->getMultiplier();
 			
 			// calculate the points by multiplier
-			$points = $GAME_BASE_POINT + ($todayMultiplier - 1) * ($GAME_MULTIPLIER);
+			$points = $GAME_BASE_POINT + ($multiplier - 1) * ($GAME_MULTIPLIER);
 			
 			// check the current member stats (for level up calculation later)
 			$old_level = $this->level;
@@ -302,6 +298,29 @@ class Member{
 		
 		$queryCheck = sprintf("INSERT INTO s_image_store(`uni_key`, `fk_member_id`) VALUES(%s, %d)",  GetSQLValueString($unikey, "text"), $this->id);
 		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+	}
+	
+	// get multiplier
+	function getMultiplier($type = NULL){
+		require('quizrooDB.php');	// database connections
+		include("variables.php");
+		
+		// get the multiplier value
+		if($GAME_MULTIPLIER_TYPE == "WEEK"){
+			$queryCheck = sprintf("SELECT COUNT(DISTINCT fk_quiz_id) AS count FROM `q_store_result` WHERE `fk_member_id` = %s AND WEEK(`timestamp`) = WEEK(NOW())", $this->id);
+		}else{
+			$queryCheck = sprintf("SELECT COUNT(DISTINCT fk_quiz_id) AS count FROM `q_store_result` WHERE `fk_member_id` = %s AND DATE(`timestamp`) = DATE(NOW())", $this->id);			
+		}
+		$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+		$row_getResults = mysql_fetch_assoc($getResults);
+		$multiplier = $row_getResults['count'];
+		mysql_free_result($getResults);
+		if($type == "display"){
+			//return ($multiplier - 1) * ($GAME_MULTIPLIER);
+			return ($GAME_BASE_POINT+($multiplier - 1))/$GAME_BASE_POINT;
+		}else{
+			return $multiplier;
+		}
 	}
 	
 	// get their ranking

@@ -13,6 +13,8 @@ $row_getVars = mysql_fetch_assoc($getVars);
 $GAME_BASE_POINT = $row_getVars['GAME_BASE_POINT'];
 // The multiplier amount for each increment
 $GAME_MULTIPLIER = $row_getVars['GAME_MULTIPLIER'];
+// The multiplier type
+$GAME_MULTIPLIER_TYPE = $row_getVars['GAME_MULTIPLIER_TYPE'];
 // Whether users get points for retaking quizzes
 $GAME_REWARD_RETAKES = $row_getVars['GAME_REWARD_RETAKES'];
 // Whether users get to 'dislike' quizzes
