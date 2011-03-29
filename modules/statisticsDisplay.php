@@ -121,6 +121,12 @@ $(document).ready(function(){
       <div class="factValue"><?php echo sprintf("%d", $member->getStats('taker_points') + $member->getStats('creator_points')); ?></div>
       <p class="factDesc">Points</p>
     </div>
+    <p class="fact">Your bonuses</p>
+    <div class="factbox rounded">
+      <p class="unit">includes a</p>
+      <div class="factValue"><?php echo sprintf("%.1f", $member->getMultiplier("display")); ?></div>
+      <p class="factDesc">Multiplier</p>
+    </div>
   </div>
   <div id="ranking" class="frame rounded right">
     <h2>Your Ranking</h2>
