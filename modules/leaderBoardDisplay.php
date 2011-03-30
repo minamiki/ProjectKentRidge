@@ -17,8 +17,9 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
   <p>Find out how you fare against other Quizroo members! You can also get to know interesting facts about the quiz system on Quizzroo!</p>
 </div>
 <div class="clear">
-  <div id="fun-facts" class="frame rounded left">
+  <div id="fun-facts" class="framePanel rounded left">
     <h2>Fun Facts</h2>
+    <div class="content-container">
     <p class="fact">Each member has</p>
     <div class="factbox rounded">
       <p class="unit">an average score of</p>
@@ -60,9 +61,11 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
       <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('quiz_taken')); ?></div>
       <p class="factDesc">Times</p>
     </div>
+    </div>
   </div>
-  <div id="ranking" class="frame rounded right">
+  <div id="ranking" class="framePanel rounded right">
     <h2>Top 10 Member Rankings</h2>
+    <div class="content-container">
     <table width="100%" border="0" cellpadding="4" cellspacing="0" id="rankTable">
       <tr>
         <th width="55" scope="col">Rank</th>
@@ -81,6 +84,7 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
       </tr>
       <?php }while($row_getRanking = mysql_fetch_assoc($getRanking)); ?>
     </table>
+    </div>
   </div>
 </div>
 <?php

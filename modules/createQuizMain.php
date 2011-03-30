@@ -30,8 +30,9 @@ if(isset($_GET['id'])){
 	die("No quiz was specified");
 }
 ?>
-<div id="progress-container" class="frame rounded">
-  <h3>Create Quiz: Quiz Information</h3>
+<div id="progress-container" class="framePanel rounded">
+  <h2>Create Quiz: Quiz Information</h2>
+  <div class="content-container">
   <p>You're just <strong>4</strong> steps away from creating your own quiz! <em>Step 1</em> contains all the basic information we need to help you setup your quiz. It allows you to tell a potential quiz taker what insights your quiz intends to deliver.</p>
   <p>If you have prepared several images for quiz, you can upload them all at once! You can choose which images to use at every step of the creation process.</p>
   <ul class="rounded">
@@ -40,6 +41,7 @@ if(isset($_GET['id'])){
     <li><strong>Step 3</strong> Question</li>
     <li><strong>Step 4</strong> Publish</li>
   </ul>
+  </div>
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=1" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
@@ -130,8 +132,9 @@ break; case 2:
 		die("No quiz was specified");
 	}
 ?>
-<div id="progress-container" class="frame rounded">
-  <h3>Create Quiz: Results</h3>
+<div id="progress-container" class="framePanel rounded">
+  <h2>Create Quiz: Results</h2>
+  <div class="content-container">
   <p>You're just <strong>3</strong> steps away from creating your own quiz! <em>Step 2</em> allows you to define the results of your quiz. Quiz results appear at the end of each quiz. Depending on what options the quiz taker has chosen, the result which carries the most weightage from the options will be the final quiz result. You can add as many results as you like!  </p>
   <ul class="rounded">
     <li class="completed_last start"><strong>Step 1</strong> Quiz Information</li>
@@ -139,6 +142,7 @@ break; case 2:
     <li><strong>Step 3</strong> Question</li>
     <li><strong>Step 4</strong> Publish</li>
   </ul>
+  </div>
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=2" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
@@ -170,8 +174,9 @@ break; case 3:
 		die("No quiz was specified");
 	}
 ?>
-<div id="progress-container" class="frame rounded">
-  <h3>Create Quiz: Questions</h3>
+<div id="progress-container" class="framePanel rounded">
+  <h2>Create Quiz: Questions</h2>
+  <div class="content-container">
   <p>You're just <strong>2</strong> steps away from creating your own quiz! <em>Step 3</em> allows you to populate your quiz with questions. You can provide several options for quiz takers to choose for each question. You should also specify the weightage of each option - how each option contributes to a result. </p>
   <ul class="rounded">
     <li class="complete_full start"><strong>Step 1</strong> Quiz Information</li>
@@ -179,6 +184,7 @@ break; case 3:
     <li class="current"><strong>Step 3</strong> Question</li>
     <li><strong>Step 4</strong> Publish</li>
   </ul>
+  </div>
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=3" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
@@ -247,8 +253,9 @@ break; case 4:
 		die("No quiz was specified");
 	}
 ?>
-<div id="progress-container" class="frame rounded">
-  <h3>Create Quiz: Publish</h3>
+<div id="progress-container" class="framePanel rounded">
+  <h2>Create Quiz: Publish</h2>
+  <div class="content-container">
   <p>You're just <strong>1</strong> step away from creating your own quiz! The  table below shows the review of your quiz.</p>
   <ul class="rounded final">
     <li class="complete_full start"><strong>Step 1</strong> Quiz Information</li>
@@ -256,6 +263,7 @@ break; case 4:
     <li class="completed_last"><strong>Step 3</strong> Question</li>
     <li class="final"><strong>Step 4</strong> Publish</li>
   </ul>
+  </div>
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=4" method="post" name="createQuiz" id="createQuiz">
@@ -313,8 +321,9 @@ $listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
 $row_listCat = mysql_fetch_assoc($listCat);
 $totalRows_listCat = mysql_num_rows($listCat);
 ?>
-<div id="progress-container" class="frame rounded">
-  <h3>Create Quiz</h3>
+<div id="progress-container" class="framePanel rounded">
+  <h2>Create Quiz</h2>
+  <div class="content-container">
   <p>You're just <strong>4</strong> steps away from creating your own quiz! <em>Step 1</em> contains all the basic information we need to help you setup your quiz. If you have prepared several images for quiz, you can upload them all at once! You can choose which images to use at every step of the creation process.</p>
   <ul class="rounded">
     <li class="current start"><strong>Step 1</strong> Quiz Information</li>
@@ -322,6 +331,7 @@ $totalRows_listCat = mysql_num_rows($listCat);
     <li><strong>Step 3</strong> Question</li>
     <li><strong>Step 4</strong> Publish</li>
   </ul>
+  </div>
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=1" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">

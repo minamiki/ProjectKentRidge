@@ -25,11 +25,16 @@
 #takequiz-preamble #incomplete p {
 	margin: 2px;
 }
+#takequiz-preamble ul li {
+	font-size: 14px;
+}
 #takequiz-preview {
 	text-align: center;
 }
 #takequiz-preview h2 {
 	color: #036;
+	margin-top: 10px;
+	margin-bottom: 5px;
 }
 #takequiz-preview .description {
 	font-size: 14px;
@@ -39,6 +44,9 @@
 	font-family: Verdana, Geneva, sans-serif;
 	font-size: 10px;
 	color: #666;
+}
+#takequiz-preview .info a:link, #takequiz-preview .info a:visited {
+	color: #333;
 }
 #takequiz-preview img {
 	border: 1px solid #000;
@@ -64,20 +72,6 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-}
-#progress_panel {
-	background-color: #333;
-	-webkit-border-radius: 10px;
-	-webkit-box-shadow: 1px 1px 2px #3b3b3b;
-	-moz-border-radius: 10px;
-	-moz-box-shadow: 1px 1px 2px #3b3b3b;
-	-o-box-shadow: 1px 1px 2px #3b3b3b;
-	border-radius: 10px;
-	padding-top: 7px;
-	padding-right: 10px;
-	padding-bottom: 3px;
-	padding-left: 10px;
-	position: relative;
 }
 #question_paging {
 	position: absolute;
@@ -106,6 +100,17 @@
 #question_paging span:last-child {
 	margin-right: 0px;
 }
+#question_paging span.active {
+	background-color: #F60 !important;
+	color: #FFF;
+}
+#question_paging span.completed {
+	background-color: #360;
+	color: #FFF;
+}
+#question_navigation {
+	margin-top: 30px;
+}
 #final-bulb {
 	background-color: #FFF;
 	color: #000;
@@ -133,23 +138,12 @@
 .center {
 	text-align: center;
 }
-#question_paging span.active {
-	background-color: #F60 !important;
-	color: #FFF;
-}
-#question_paging span.completed {
-	background-color: #360;
-	color: #FFF;
-}
 
 #question_reel div {
 	float: left;
 	display: block;
 	height: auto;
 	width: 700px;
-}
-#question_navigation {
-	margin-top: 30px;
 }
 
 .question_slide label {
@@ -207,6 +201,21 @@
 	margin-bottom: 8px;
 	margin-left: 10px;
 }
+#progress_panel {
+	background-color: #333;
+	-webkit-border-radius: 10px;
+	-webkit-box-shadow: 1px 1px 2px #3b3b3b;
+	-moz-border-radius: 10px;
+	-moz-box-shadow: 1px 1px 2px #3b3b3b;
+	-o-box-shadow: 1px 1px 2px #3b3b3b;
+	border-radius: 10px;
+	padding-top: 7px;
+	padding-right: 10px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	position: relative;
+	margin-top: 10px;
+}
 #progress_text {
 	margin-top: 0px;
 	margin-bottom: 0px;
@@ -241,6 +250,11 @@
 #result-panel {
 	text-align: center;
 }
+#result-panel h2 {
+	color: #F60;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
 #result-panel img {
 	border: 1px solid #000;
 }
@@ -248,9 +262,7 @@
 	text-align: center;
 	font-size: 14px;
 }
-#result-panel h2 {
-	color: #F60;
-}
-#takequiz-preview .info a:link, #takequiz-preview .info a:visited {
-	color: #333;
+#title_quiz_result p {
+	margin-top: 5px;
+	margin-bottom: 5px;
 }

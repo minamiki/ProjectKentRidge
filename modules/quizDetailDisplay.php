@@ -114,25 +114,32 @@ $(document).ready(function(){
 });
 </script>
 <?php if($quiz->exists() == false){ ?>
-<div id="viewMember-preamble" class="frame rounded">
-  <h3>Quiz not found!</h3>
+<div id="viewMember-preamble" class="framePanel rounded">
+  <h2>Quiz not found!</h2>
+  <div class="content-container">
   <span class="logo"><img src="../webroot/img/quizroo-question.png" alt="Member not found" width="248" height="236" /></span>
   <p>Sorry! The quiz you are looking for does not seem to be in our system! Are you sure you have followed the right link?</p>
+  </div>
 </div>
 <?php }else{ if($quiz->isOwner($member->id) == false){ ?>
-<div id="viewMember-preamble" class="frame rounded">
-  <h3>You're not the owner!</h3>
+<div id="viewMember-preamble" class="framePanel rounded">
+  <h2>You're not the owner!</h2>
+  <div class="content-container">
   <span class="logo"><img src="../webroot/img/quizroo-question.png" alt="Member not found" width="248" height="236" /></span>
   <p>Sorry! It seems that you did not create this quiz! Only quiz owners can see their quiz statistics. Are you sure you have followed the right link?</p>
+  </div>
 </div>
 <?php }else{ ?>
-<div id="viewMember-preamble" class="frame rounded">
+<div id="viewMember-preamble" class="framePanel rounded">
   <h2>Quiz Information</h2>
+  <div class="content-container">
   <p>Here's some detailed statistics about your quiz, &quot;<strong><?php echo $quiz->quiz_name; ?></strong>&quot;, which was created on <?php echo date("F j, Y g:ia", strtotime($quiz->creation_date)); ?>. It's current status is <em><?php echo $status; ?></em>.</p>
+  </div>
 </div>
 <div class="clear">
-  <div id="fun-facts" class="frame rounded left">
+  <div id="fun-facts" class="framePanel rounded left">
     <h2>Statistics</h2>
+    <div class="content-container">
     <p class="fact">This quiz has</p>
     <div class="factbox rounded">
       <p class="unit">a total of</p>
@@ -166,20 +173,26 @@ $(document).ready(function(){
       <div class="factValue"><?php echo $quiz->getResults('count'); ?></div>
       <p class="factDesc">Results</p>
     </div>
+    </div>
   </div>
   <?php if($totalRows_getResultChart != 0){ ?>
-  <div id="topic-breakdown" class="frame rounded right">
+  <div id="topic-breakdown" class="framePanel rounded right">
     <h2>Quiz Results Breakdown</h2>
+    <div class="content-container">
     <div id="topic_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
+    </div>
   </div>
   <?php } ?>
-  <div id="taking-history" class="frame rounded right">
+  <div id="taking-history" class="framePanel rounded right">
     <h2>Quiz Activity History</h2>
+    <div class="content-container">
     <div id="takeHistory_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
+    </div>
   </div>
   <?php if($totalRows_getquizLog != 0){ ?>
-  <div id="ranking" class="frame rounded right">
+  <div id="ranking" class="framePanel rounded right">
     <h2>Latest 10 Quiz Takers</h2>
+    <div class="content-container">
     <table width="100%" border="0" cellpadding="4" cellspacing="0" id="rankTable">
       <tr>
         <th scope="col">Taker</th>
@@ -196,5 +209,6 @@ $(document).ready(function(){
     </table>
   </div>
   <?php } ?>
+  </div>
 </div>
 <?php }} ?>

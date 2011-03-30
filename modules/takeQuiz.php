@@ -12,8 +12,9 @@ $totalRows_getQuizQuestions = mysql_num_rows($getQuizQuestions);
 
 $question_count = 1;
 ?>
-<div id="takequiz-preamble" class="frame rounded">
-  <h3>Take a quiz</h3>
+<div id="takequiz-preamble" class="framePanel rounded">
+  <h2>Take a quiz</h2>
+  <div class="content-container">
   <p>You're now taking the quiz,<em> &quot;<?php echo $row_getQuizInfo['quiz_name']; ?>&quot;</em> by <?php echo $row_getQuizInfo['member_name']; ?>. You may stop taking the quiz anytime by navigating away from this page. No data will be collected unless you complete the quiz.</p>
   <div id="progress_panel">
       <div id="question_paging">
@@ -31,6 +32,7 @@ $question_count = 1;
   <div id="incomplete" class="rounded">
     <p>Questions marked with a white circle are not answered!</p>
     <p>Use the &quot;Previous&quot; and &quot;Next&quot; buttons to navigate between questions.</p>
+  </div>
   </div>
 </div>
 <div id="takequiz-main">

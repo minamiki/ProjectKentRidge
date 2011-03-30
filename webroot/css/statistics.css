@@ -10,19 +10,19 @@
 .left {
 	margin-bottom: 10px;
 	margin-top: 0px;
-	width: 150px;
 	float: left;
 	display: block;
-	padding: 10px;
 	margin-right: 10px;
 }
 .right {
 	margin-bottom: 10px;
 	margin-top: 0px;
-	width: 550px;
 	float: left;
 	display: block;
-	padding: 10px;
+	width: 570px;
+}
+#fun-facts {
+	width: 170px;
 }
 #fun-facts .fact {
 	font-size: 16px;
@@ -61,14 +61,16 @@
 	display: block;
 }
 #rankTable th{
-	background-image: url(../img/form_bg.gif);
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E0E0E0;
 }
 #rankTable td {
 	border-bottom-width: 1px;
 	border-bottom-style: dotted;
 	border-bottom-color: #CCC;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 #rankTable .ranking {
 	font-weight: bold;

@@ -33,8 +33,9 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
 	<p><?php echo $row_getTopics['cat_desc']; ?></p>
   </div>
   <div class="clear">
-    <div id="recommendations" class="frame rounded left-right">
+    <div id="recommendations" class="framePanel rounded left-right">
       <h2>Latest</h2>
+      <div class="repeat-container">
       <?php if($totalRows_recommendations != 0){ do { ?>
         <div class="quiz_box clear">
           <h3><a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><?php echo $row_recommendations['quiz_name']; ?></a></h3>
@@ -52,9 +53,11 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
         <?php } while ($row_recommendations = mysql_fetch_assoc($recommendations)); }else{ ?>
         <p>There are no latest quizzes for this topic!</p>
         <?php } ?>
+        </div>
     </div>
-    <div id="popular" class="frame rounded left-right clear">
+    <div id="popular" class="framePanel rounded left-right clear">
       <h2>Popular</h2>
+      <div class="repeat-container">
       <?php if($totalRows_popular !=0 ){ do { ?>
         <div class="quiz_box clear">
           <h3><a href="previewQuiz.php?id=<?php echo $row_popular['quiz_id']; ?>"><?php echo $row_popular['quiz_name']; ?></a></h3>
@@ -71,6 +74,7 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
         <?php } while ($row_popular = mysql_fetch_assoc($popular)); }else{ ?>
         <p>There are no popular quizzes for this topic!</p>
         <?php } ?>
+        </div>
     </div>
   </div>
 </div>

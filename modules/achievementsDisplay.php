@@ -13,8 +13,9 @@ $totalRows_getAchievements = mysql_num_rows($getAchievements);
 </div>
 <!-- Display side bar (fun facts) -->
 <div class="clear">
-  <div id="fun-facts" class="frame rounded left">
+  <div id="fun-facts" class="framePanel rounded left">
     <h2>Fun Facts</h2>
+    <div class="content-container">
     <p class="fact">You've got</p>
     <div class="factbox rounded">
       <p class="unit">a total of</p>
@@ -32,11 +33,13 @@ $totalRows_getAchievements = mysql_num_rows($getAchievements);
       <div class="factValue"><?php echo sprintf("%d", $member->getStats('level')); ?></div>
       <p class="factDesc"></p>
     </div>
+    </div>
   </div>
   
   <!-- Display achievements -->
-  <div class="frame rounded right">
+  <div class="framePanel rounded right">
     <h2>Your Achievements</h2>
+    <div class="content-container">
     <?php if($totalRows_getAchievements != 0){ do{ ?>
     <div class="achievement-box clear">
 	    <div class="achievement-time"><span><?php echo date('d M Y @ H:m:s',strtotime($row_getAchievements['timestamp'])); ?></span></div>
@@ -51,5 +54,6 @@ $totalRows_getAchievements = mysql_num_rows($getAchievements);
 	<?php }while($row_getAchievements = mysql_fetch_assoc($getAchievements)); }else{ ?>
     <div id="none-box">You have no achievements yet!</div>
     <?php } ?>
+    </div>
   </div>
 </div>

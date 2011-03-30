@@ -29,6 +29,41 @@ html, body {
 	padding-bottom: 10px;
 	padding-left: 10px;
 }
+.frame p {
+	font-size: 14px;
+}
+.framePanel {
+	border:solid 2px #E0E0E0;
+	background-image: url(../img/statusbar_background_gradient.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
+	margin-top: 10px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 10px;
+	padding-left: 0px;
+}
+.framePanel h2 {
+	font-size: 17px;
+	color: #000;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 10px;
+	margin-left: 0px;
+	padding-left: 10px;
+	background-color: #E0E0E0;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background-image: url(../img/form_bg.gif);
+	font-weight: normal;
+	letter-spacing: 0.5px;	
+}
+.framePanel p {
+	font-size: 14px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
 .frame h3 {
 	font-size: 18px;
 	color: #900;
@@ -65,4 +100,12 @@ input[type='submit'].btnDisabled, input[type='button'].btnDisabled, input[type='
 	text-align: center;
 	padding-top: 50px;
 	padding-bottom: 50px;
+}
+#user-actions-container {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+.content-container {
+	padding-right: 10px;
+	padding-left: 10px;
 }

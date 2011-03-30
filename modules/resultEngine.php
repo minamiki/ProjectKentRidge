@@ -126,21 +126,25 @@ $(document).ready(function(){
 });
 </script>
 <?php } ?>
-<div class="frame rounded">
-<h3 id="title_quiz_result">Quiz Results</h3>
-Here's the result of the quiz! Do remember to rate the quiz below. You can also see how others have fared while taking this quiz.</div>
+<div class="framePanel rounded">
+<h2>Quiz Results</h2>
+<div class="content-container">
+<p>Here's the result of the quiz! You can 'Like' this quiz or recommend it to your friends! You can also see how others have fared while taking this quiz.</p>
+</div>
+</div>
 <div id="result-panel" class="frame rounded">
 <h2><?php echo $row_getResultInfo['result_title']; ?></h2>
 <?php if($row_getResultInfo['result_picture'] != "none.gif"){ ?>
 <img src="../quiz_images/imgcrop.php?w=320&amp;h=213&amp;f=<?php echo $row_getResultInfo['result_picture']; ?>" width="320" height="213" alt="" /><?php } ?>
   <p class="description"><?php echo $row_getResultInfo['result_description']; ?></p>
-</div>
-
 <!-- Include user sharing interface for liking, posting feed and recommending to friends -->
 <?php include('sharingInterface.php') ?>
+</div>
+
 <?php if($quiz->isPublished() && $totalRows_getResultChart != 0){ ?>
-<div class="frame rounded">
-<h3>Result Details</h3>
+<div class="framePanel rounded">
+<h2>Result Details</h2>
+<div class="content-container">
 <div id="result_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
 <?php if($VAR_SYSTEM_MAINTENANCE){ ?>
 <table border="0" align="center" cellpadding="3" cellspacing="0">
@@ -159,7 +163,7 @@ Here's the result of the quiz! Do remember to rate the quiz below. You can also 
 </table>
 <?php } ?>
 <?php } ?>
-
+</div>
 </div>
 <?php
 //----------------------------------------

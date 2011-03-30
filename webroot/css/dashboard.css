@@ -2,31 +2,19 @@
 #dashboard-container {
 	margin-bottom: 10px;
 }
-.left-right {
-	margin-top: 10px;
-	padding-top: 5px;
-	padding-right: 10px;
-	padding-bottom: 10px;
-	padding-left: 10px;
-	width: 351px;
-	float: left;
-	display: block;
+#dashboard-container h2 {
+	font-size: 17px;
+	color: #000;
 }
 
 #recommendations {
 	margin-right: 10px;		
 }
-#dashboard-container h2 {
-	font-size: 18px;
-	color: #900;
-	margin-top: 5px;
-	margin-right: 0px;
-	margin-bottom: 10px;
-	margin-left: 0px;
-}
 #topic-preamble h2 {
 	font-size: 30px;
 	margin-bottom: 0px;
+	color: #900;
+	margin-top: 0px;
 }
 #topic-preamble p {
 	margin-top: 5px;
@@ -41,6 +29,13 @@
 	margin-top: 4px;
 	border: 1px solid #000;
 	margin-bottom: 12px;
+}
+.left-right {
+	margin-top: 10px;
+	padding-bottom: 10px;
+	width: 371px;
+	float: left;
+	display: block;
 }
 .quiz_rating  {
 	position: absolute;
@@ -193,6 +188,15 @@
 #topics a:hover {
 	text-decoration: underline;
 }
+#social h2 {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+}
 #social p {
 	margin-bottom: 0px;
+}
+#dashboard-container .repeat-container {
+	padding-right: 10px;
+	padding-left: 10px;
 }

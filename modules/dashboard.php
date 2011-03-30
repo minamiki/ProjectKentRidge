@@ -30,13 +30,14 @@ $totalRows_popular = mysql_num_rows($popular);
   <?php } ?>
   <?php if($VAR_SYSTEM_MAINTENANCE){ ?>
   <div class="frame rounded">
-  	<h2>Maintenance Mode is ON</h2>
+  	<h2 class="panelHeader">Maintenance Mode is ON</h2>
     <p>Remember to turn it off after carrying out the required maintenance!</p>
   </div>
   <?php } ?>
   <div class="clear">
-    <div id="recommendations" class="frame rounded left-right">
+    <div id="recommendations" class="framePanel rounded left-right">
       <h2>Latest</h2>
+      <div class="repeat-container">
       <?php if($totalRows_recommendations != 0){ do { ?>
         <div class="quiz_box clear">
           <h3><a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><?php echo $row_recommendations['quiz_name']; ?></a></h3>
@@ -53,9 +54,11 @@ $totalRows_popular = mysql_num_rows($popular);
         <?php } while ($row_recommendations = mysql_fetch_assoc($recommendations)); }else{ ?>
         <p>There are no latest quizzes!</p>
         <?php } ?>
+        </div>
     </div>
-    <div id="popular" class="frame rounded left-right clear">
+    <div id="popular" class="framePanel rounded left-right clear">
       <h2>Popular</h2>
+      <div class="repeat-container">
       <?php if($totalRows_popular !=0 ){ do { ?>
         <div class="quiz_box clear">
           <h3><a href="previewQuiz.php?id=<?php echo $row_popular['quiz_id']; ?>"><?php echo $row_popular['quiz_name']; ?></a></h3>
@@ -72,12 +75,15 @@ $totalRows_popular = mysql_num_rows($popular);
         <?php } while ($row_popular = mysql_fetch_assoc($popular)); }else{ ?>
         <p>There are no popular quizzes for this topic!</p>
         <?php } ?>
+        </div>
     </div>
   </div>
-  <div id="social" class="frame rounded">
+  <div id="social" class="framePanel rounded">
     <h2>Social</h2>
+    <div class="content-container">
     <p>Visit our <a href="http://www.facebook.com/apps/application.php?id=154849761223760" target="_blank">facebook page</a> for updates! Discuss what you like about Quizroo! <a href="http://www.twitter.com/quizroo" target="_blank"><img src="http://twitter-badges.s3.amazonaws.com/follow_us-b.png" alt="Follow Quizroo on Twitter" border="0" align="absmiddle"/></a></p>
     <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fapps%2Fapplication.php%3Fid%3D154849761223760&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;font&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>
+    </div>
   </div>
 </div>
 <?php

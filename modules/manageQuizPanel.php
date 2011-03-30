@@ -40,9 +40,11 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 $queryString_listQuiz = sprintf("&totalRows_listQuiz=%d%s", $totalRows_listQuiz, $queryString_listQuiz);
 ?>
-<div class="frame rounded">
-  <h3>Manage Quizzes</h3>
+<div class="framePanel rounded">
+  <h2>Manage Quizzes</h2>
+  <div class="content-container">
   <p>You can make changes to your quizzes by clicking the <img src="../webroot/img/edit.png" alt="Modify" width="16" height="16" border="0" title="Modify Quiz" /> button associated with that quiz. You can also publish or unpublish your quizzes.</p>
+  </div>
 </div>
 <div class="frame rounded">
 <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0" id="checkQuizTable" class="rounded">

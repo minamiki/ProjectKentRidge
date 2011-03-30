@@ -79,8 +79,9 @@ $(document).ready(function(){
   <p>Get detail reports on your activity on Quizroo! Your ranking shows your rank on the Quizroo Leaderboard. Try to overtake the player just above you! The quiz topic and history charts provides interesting information on your quiz taking habits.</p>
 </div>
 <div class="clear">
-  <div id="fun-facts" class="frame rounded left">
+  <div id="fun-facts" class="framePanel rounded left">
     <h2>Fun Facts</h2>
+    <div class="content-container">
     <p class="fact">You have created</p>
     <div class="factbox rounded">
       <p class="unit">a total of</p>
@@ -127,9 +128,11 @@ $(document).ready(function(){
       <div class="factValue"><?php echo sprintf("%.1f", $member->getMultiplier("display")); ?></div>
       <p class="factDesc">Multiplier</p>
     </div>
+    </div>
   </div>
-  <div id="ranking" class="frame rounded right">
+  <div id="ranking" class="framePanel rounded right">
     <h2>Your Ranking</h2>
+    <div class="content-container">
     <table width="100%" border="0" cellpadding="4" cellspacing="0" id="rankTable">
       <tr>
         <th width="55" scope="col">Rank</th>
@@ -166,13 +169,18 @@ $(document).ready(function(){
       </tr>
       <?php } ?>
     </table>
+    </div>
   </div>
-  <div class="frame rounded right">
+  <div class="framePanel rounded right">
     <h2>Quiz Taking Topic Breakdown</h2>
+    <div class="content-container">
     <div id="topic_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
+    </div>
   </div>
-  <div class="frame rounded right">
+  <div class="framePanel rounded right">
     <h2>Quiz Taking History</h2>
+    <div class="content-container">
     <div id="takeHistory_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
+    </div>
   </div>
 </div>

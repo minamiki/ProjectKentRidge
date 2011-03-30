@@ -1,7 +1,6 @@
 @charset "utf-8";
-#viewMember-preamble h2 {
-	font-size: 30px;
-	margin-bottom: 0px;
+#viewMember-preamble {
+	margin-bottom: 10px;
 }
 #viewMember-preamble p {
 	margin-top: 5px;
@@ -24,24 +23,17 @@
 	margin-top: 0px;
 	float: left;
 	display: block;
-	padding: 10px;
 	margin-right: 10px;
-}
-#ranking {
-	width: 550px;
-}
-#topic-breakdown, #taking-history {
-	width: 550px;
 }
 .right {
 	margin-bottom: 10px;
 	margin-top: 0px;
 	float: left;
 	display: block;
-	padding: 10px;
+	width: 570px;
 }
 #fun-facts {
-	width: 150px;
+	width: 170px;
 }
 #fun-facts .fact {
 	font-size: 16px;
@@ -80,7 +72,9 @@
 	display: block;
 }
 #rankTable th{
-	background-image: url(../img/form_bg.gif);
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E0E0E0;
 }
 #rankTable td {
 	border-bottom-width: 1px;

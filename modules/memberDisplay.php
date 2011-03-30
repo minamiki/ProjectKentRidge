@@ -129,10 +129,12 @@ $(document).ready(function(){
 </script>
 <?php } ?>
 <?php if($view_member->memExist == false){ ?>
-<div id="viewMember-preamble" class="frame rounded">
-  <h3>Quizroo Member not found!</h3>
+<div id="viewMember-preamble" class="framePanel rounded">
+  <h2>Quizroo Member not found!</h2>
+  <div class="content-container">
   <span class="logo"><img src="../webroot/img/quizroo-question.png" alt="Member not found" width="248" height="236" /></span>
   <p>Sorry! The member you are looking for does not seem to be in our system! Are you sure you have followed the right link?</p>
+  </div>
 </div>
 <?php }else{ ?>
 <div id="viewMember-preamble" class="frame rounded">
@@ -147,8 +149,9 @@ $(document).ready(function(){
   <?php } ?>
 </div>
 <div id="member-quizzes" class="clear">
-  <div id="latest-quizzes" class="frame rounded left">
+  <div id="latest-quizzes" class="framePanel rounded left-right">
     <h2>Latest Quizzes</h2>
+    <div class="content-container">
       <?php if($totalRows_latest != 0){ do { ?>
         <div class="quiz_box clear">
           <h3><a href="previewQuiz.php?id=<?php echo $row_latest['quiz_id']; ?>"><?php echo $row_latest['quiz_name']; ?></a></h3>
@@ -165,9 +168,11 @@ $(document).ready(function(){
         <?php } while ($row_latest = mysql_fetch_assoc($latest)); }else{ ?>
         <p>There are no latest quizzes!</p>
         <?php } ?>
+      </div>
   </div>
-  <div id="popular-quizzes" class="frame rounded right">
+  <div id="popular-quizzes" class="framePanel rounded left-right clear">
     <h2>Popular Quizzes</h2>
+    <div class="content-container">
       <?php if($totalRows_popular != 0){ do { ?>
         <div class="quiz_box clear">
           <h3><a href="previewQuiz.php?id=<?php echo $row_popular['quiz_id']; ?>"><?php echo $row_popular['quiz_name']; ?></a></h3>
@@ -184,11 +189,13 @@ $(document).ready(function(){
         <?php } while ($row_popular = mysql_fetch_assoc($popular)); }else{ ?>
         <p>There are no popular quizzes!</p>
         <?php } ?>
+     </div>
   </div>
 </div>
 <div class="clear">
-  <div id="fun-facts" class="frame rounded left">
+  <div id="fun-facts" class="framePanel rounded left">
     <h2>Fun Facts</h2>
+    <div class="content-container">
     <p class="fact"><?php echo ($self) ? "You have" : ucfirst($gender[0])." has"; ?> created</p>
     <div class="factbox rounded">
       <p class="unit">a total of</p>
@@ -228,9 +235,11 @@ $(document).ready(function(){
       <div class="factValue"><?php echo $like_avg; ?></div>
       <p class="factDesc">Likes</p>
     </div>
+    </div>
   </div>
-  <div id="ranking" class="frame rounded right">
+  <div id="ranking" class="framePanel rounded right">
     <h2><?php echo $view_member->qname; ?>'s Ranking</h2>
+    <div class="content-container">
     <table width="100%" border="0" cellpadding="4" cellspacing="0" id="rankTable">
       <tr>
         <th width="55" scope="col">Rank</th>
@@ -267,15 +276,20 @@ $(document).ready(function(){
       </tr>
       <?php } ?>
     </table>
+    </div>
   </div>
   <?php if($friend){ ?>
-  <div id="topic-breakdown" class="frame rounded right">
+  <div id="topic-breakdown" class="framePanel rounded right">
     <h2>Quiz Taking Topic Breakdown</h2>
+    <div class="content-container">
     <div id="topic_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
+    </div>
   </div>
-  <div id="taking-history" class="frame rounded right">
+  <div id="taking-history" class="framePanel rounded right">
     <h2>Quiz Taking History</h2>
+    <div class="content-container">
     <div id="takeHistory_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
+    </div>
   </div>
   <?php } ?>
 </div>

@@ -1,5 +1,5 @@
 <?php include("variables.php"); ?>
-<div id='user-actions-container' class='frame rounded clear'>
+<div id='user-actions-container' class='clear'>
     <script>isSharing = true</script>
     <div class='share-like'>
         <!-- XFBML -->

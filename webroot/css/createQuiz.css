@@ -234,7 +234,9 @@ p.center{
 }
 #checkQuizTable th {
 	color: #333;
-	background-image: url(../img/form_bg.gif);
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E0E0E0;
 }
 #checkQuizTable img {
 	border: 1px solid #333;
