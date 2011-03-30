@@ -10,22 +10,19 @@
 .left {
 	margin-bottom: 10px;
 	margin-top: 0px;
+	width: 150px;
 	float: left;
 	display: block;
+	padding: 10px;
 	margin-right: 10px;
 }
 .right {
 	margin-bottom: 10px;
 	margin-top: 0px;
+	width: 550px;
 	float: left;
 	display: block;
-	width: 570px;
-}
-#fun-facts {
-	width: 170px;
-}
-.stayright {
-	float: right;	
+	padding: 10px;
 }
 #fun-facts .fact {
 	font-size: 16px;
@@ -71,53 +68,6 @@
 	margin-bottom: 10px;
 	margin-left: 0px;
 }
-#achievements-preamble h2 {
-	font-size: 30px;
-	margin-bottom: 0px;
-}
-#achievements-preamble p {
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-.achievement-box {
-	padding: 0px 10px 10px;
-	width: 500px;
-	margin: 10px;
-	border-bottom: thin #999 dotted;
+.recommend-dialog {
 	text-align: center;
-	clear: both;
-}
-.achievement-time {
-	width: 500px;
-	margin: 0px;
-	padding-bottom: 5px;
-	text-align: right;
-	font-size: 12px;
-	color: #666;
-}
-.achievement-image {
-	width: 130px;
-	float: left;
-}
-.achievement-details {
-	float: left;
-	width: 370px;
-	padding-top: 10px;
-}
-.achievement-name {
-	text-align: center;
-	display: block;
-	font-weight: bold;
-}
-.achievement-description {
-	text-align: left;
-	display: block;
-	margin-top: 5px;
-}
-#none-box {
-	width: 100%;
-	display: block;
-	text-align: center;
-	padding-top: 50px;
-	padding-bottom: 50px;
 }

@@ -234,9 +234,8 @@ var Statusbar = {
 				"<div class='statusbar-menu-desc'>Invite your friends to Quizroo</div>"
 			);
 			$(invite).click(function(){
-				//goToURL('inviteFriends.php');
-				//$(invite).css('background-color','#333');
-				featureUnavailable();
+				goToURL('inviteFriends.php');
+				$(invite).css('background-color','#333');
 			});
 			
 		}else if(option=='statusbar-profile'){
@@ -277,7 +276,7 @@ var Statusbar = {
 				featureUnavailable();
 			});
 			*/
-			
+			/*
 			var settings = document.createElement('div');
 			$('#statusbar-info').append(settings);
 			$(settings).addClass('statusbar-menu-item').html(
@@ -289,6 +288,7 @@ var Statusbar = {
 				//$(settings).css('background-color','#333');
 				featureUnavailable();
 			});
+			*/
 		}else if(option=='statusbar-about'){
 			$('#statusbar-info').addClass('statusbar-menu').html(
 			""
@@ -309,13 +309,11 @@ var Statusbar = {
 			var quizroo = document.createElement('div');
 			$('#statusbar-info').append(quizroo);
 			$(quizroo).addClass('statusbar-menu-item').html(
-				"<div class='statusbar-menu-title'>Quizroo</div>"+
-				"<div class='statusbar-menu-desc'>Know more about Quizroo</div>"
+				"<div class='statusbar-menu-title'>NUS-HCI</div>"+
+				"<div class='statusbar-menu-desc'>Know more about the developers of Quizroo</div>"
 			);
 			$(quizroo).click(function(){
-				//goToURL('quizroo.php');
-				//$(quizroo).css('background-color','#333');
-				featureUnavailable();
+				window.open('http://hci.comp.nus.edu.sg/main/');
 			});
 		}else if(option=='statusbar-search'){
 			/*
