@@ -7,22 +7,25 @@
 	padding-bottom: 10px;
 	padding-left: 10px;
 }
+#facts-shares {
+	margin-top: 10px;
+}
 .left {
 	margin-bottom: 10px;
 	margin-top: 0px;
-	width: 150px;
 	float: left;
 	display: block;
-	padding: 10px;
 	margin-right: 10px;
 }
 .right {
 	margin-bottom: 10px;
 	margin-top: 0px;
-	width: 550px;
 	float: left;
 	display: block;
-	padding: 10px;
+	width: 570px;
+}
+#fun-facts {
+	width: 170px;
 }
 #fun-facts .fact {
 	font-size: 16px;

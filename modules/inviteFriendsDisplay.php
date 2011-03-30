@@ -6,15 +6,18 @@
 //$row_getAchievements = mysql_fetch_assoc($getMembers);
 ?>
 <!-- Display title and description -->
-<div class="frame rounded">
+<div class="framePanel rounded">
   <h2>Invite your friends</h2>
+  <div class="content-container">
   <p>Share our app with your friends to get more people to take your quizzes. More people in Quizroo means more quizzes to take.</p> 
   <p>You can invite your friends through a wall post, or by sending them a request. You can also invite them to take a quiz through any of the quiz preview pages.</p>
+  </div>
 </div>
 <!-- Display side bar (fun facts) -->
-<div class="clear">
-  <div id="fun-facts" class="frame rounded left">
+<div id="facts-shares" class="clear">
+  <div id="fun-facts" class="framePanel rounded left">
     <h2>Fun Facts</h2>
+    <div class="content-container">
     <!--
     <p class="fact">We've got</p>
     <div class="factbox rounded">
@@ -25,20 +28,25 @@
     -->
     <p class="fact">Quizroo</p>
     <div class="factbox rounded">
-      <p class="unit">a product of</p>
+      <p class="unit">is a product of</p>
       <div class="factValue">NUS-HCI</div>
       <p class="factDesc">Labs</p>
+    </div>
     </div>
   </div>
   
   <!-- Display sharing options -->
-  <div class="frame rounded right">
+  <div class="framePanel rounded right">
   <h2>Share Quizroo via your wall</h2>
+  <div class="content-container">
   <div id="share-quizroo-button" class="share-button">Post a message on your wall</div>
   </div>
-  <div class="frame rounded right">
+  </div>
+  <div class="framePanel rounded right">
   <h2>Share Quizroo via requests</h2>
+  <div class="content-container">
   <div id="request-quizroo-button" class="share-button">Send requests to your friends</div>
+  </div>
   </div>
 </div>
 <script type="text/javascript">

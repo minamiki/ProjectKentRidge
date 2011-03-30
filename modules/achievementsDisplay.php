@@ -65,8 +65,9 @@ $totalRows_getOtherAchievements = mysql_num_rows($getOtherAchievements);
   </div>
   
     <!-- Display achievements not yet achieved-->
-  <div class="frame rounded right stayright">
+  <div class="framePanel rounded right stayright">
     <h2>Achievements To Unlock</h2>
+    <div class="content-container">
     <?php if($totalRows_getOtherAchievements != 0){ do{ ?>
     <div class="achievement-box clear">
     	<div class="achievement-image">
@@ -80,5 +81,6 @@ $totalRows_getOtherAchievements = mysql_num_rows($getOtherAchievements);
 	<?php }while($row_getOtherAchievements = mysql_fetch_assoc($getOtherAchievements)); }else{ ?>
     <div id="none-box"><p>To find out more about how to get more achievements, <a href="http://www.twitter.com/quizroo" target="_blank"><img src="http://twitter-badges.s3.amazonaws.com/follow_us-b.png" alt="Follow Quizroo on Twitter" border="0" align="absmiddle"/></a></p></div>
     <?php } ?>
+    </div>
   </div>
 </div>
