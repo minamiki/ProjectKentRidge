@@ -1,5 +1,6 @@
 <link rel="shortcut icon" href="img/favicon.ico" />
 <link href="css/fb.css" rel="stylesheet" type="text/css" />
+<!--[if IE]><link href="css/fb-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
 <link href="css/statusbar.css" rel="stylesheet" type="text/css" />
 <link href="css/jquery-ui-1.8.9.css" rel="stylesheet" type="text/css" />
 <link href="css/splash.css" rel="stylesheet" type="text/css" />
