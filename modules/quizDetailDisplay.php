@@ -86,11 +86,13 @@ $(document).ready(function(){
 		data.addColumn('string', 'Result');
 		data.addColumn('number', 'People');
 		data.addRows([
-			
-			<?php do{ ?>			
-			['<?php echo str_replace("'", "\\'", $row_getResultChart['result_title']); ?>', <?php echo $row_getResultChart['count']; ?>],
-			<?php }while($row_getResultChart = mysql_fetch_assoc($getResultChart)); ?>
-			
+			<?php
+			$chartData = "";
+			do{
+				$chartData .= "['".str_replace("'", "\\'", $row_getResultChart['result_title'])."', ".$row_getResultChart['count']."],";
+			}while($row_getResultChart = mysql_fetch_assoc($getResultChart));
+			echo substr($chartData, 0, -1);
+			 ?>
 		]);
 		
 		var chart = new google.visualization.PieChart(document.getElementById('topic_chart'));

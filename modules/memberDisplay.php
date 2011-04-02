@@ -100,11 +100,13 @@ $(document).ready(function(){
 		data.addColumn('string', 'Topic');
 		data.addColumn('number', 'Attempts');
 		data.addRows([
-			
-			<?php do{ ?>			
-			['<?php echo $row_getTopics['cat_name']; ?>', <?php echo $row_getTopics['count']; ?>],
-			<?php }while($row_getTopics = mysql_fetch_assoc($getTopics)); ?>
-			
+			<?php
+			$chartData = "";
+			do{
+				$chartData .= "['".$row_getTopics['cat_name']."', ".$row_getTopics['count']."],";
+			}while($row_getTopics = mysql_fetch_assoc($getTopics));
+			echo substr($chartData, 0, -1);
+			 ?>
 		]);
 		
 		var chart = new google.visualization.PieChart(document.getElementById('topic_chart'));
