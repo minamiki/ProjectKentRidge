@@ -7,15 +7,16 @@ $row_recommendations = mysql_fetch_assoc($recommendations);
 $totalRows_recommendations = mysql_num_rows($recommendations);
 
 // retrieve popular quizzes
-$query_popular = sprintf("SELECT * FROM (SELECT quiz_id, quiz_name, quiz_description, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY quiz_score DESC LIMIT 0, %d) t ORDER BY RAND() LIMIT 0, %d", $VAR_NUM_POPULAR_POOL, $VAR_NUM_LISTINGS);
+$query_popular = sprintf("SELECT * FROM (SELECT quiz_id, quiz_name, quiz_description, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, dislikes, quiz_score * (IF(likes > 0, likes, 0.5)) AS rankscore FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY rankscore DESC LIMIT 0, %d) t ORDER BY RAND() LIMIT 0, %d", $VAR_NUM_POPULAR_POOL, $VAR_NUM_LISTINGS);
 $popular = mysql_query($query_popular, $quizroo) or die(mysql_error());
 $row_popular = mysql_fetch_assoc($popular);
 $totalRows_popular = mysql_num_rows($popular);
 ?>
 <div id="dashboard-container">
   <?php if($VAR_SHOW_RECENT){ ?>
-  <div id="recent" class="frame rounded"> <a href="javascript:;" id="recent-toggle">More</a>
+  <div id="recent" class="framePanel rounded"> <a href="javascript:;" id="recent-toggle">More</a>
     <h2>Recent Activity</h2>
+    <div class="content-container">
     <div class="recent-feed"><span class="topic quiz">New Quiz</span><span class="event"><a href="javascript:;">Jing Ting</a> has created a new quiz, <a href="javascript:;">&quot;Why like that?&quot;</a> under <a href="javascript:;">Entertainment</a>.</span></div>
     <div class="recent-feed"><span class="topic achievement">New Achievement</span><span class="event"><a href="javascript:;">Kristal</a> has been awarded the &quot;Rookie</span>&quot; achievement!</div>
     <div class="recent-feed"><span class="topic friend">Friend</span><a href="javascript:;">Chris Chua</a> has added you as a friend!</div>
@@ -26,12 +27,15 @@ $totalRows_popular = mysql_num_rows($popular);
       <div class="recent-feed"><span class="topic quiz">New Quiz</span><span class="event"><a href="javascript:;">Jing Ting</a> has created a new quiz, <a href="javascript:;">&quot;Why like that?&quot;</a> under <a href="javascript:;">Entertainment</a>.</span></div>
       <div class="recent-feed"><span class="topic achievement">New Achievement</span><span class="event"><a href="javascript:;">Kristal</a> has been awarded the &quot;Rookie</span>&quot; achievement!</div>
     </div>
+    </div>
   </div>
   <?php } ?>
   <?php if($VAR_SYSTEM_MAINTENANCE){ ?>
-  <div class="frame rounded">
+  <div class="framePanel rounded">
   	<h2 class="panelHeader">Maintenance Mode is ON</h2>
+    <div class="content-container">
     <p>Remember to turn it off after carrying out the required maintenance!</p>
+    </div>
   </div>
   <?php } ?>
   <div class="clear">
@@ -44,7 +48,7 @@ $totalRows_popular = mysql_num_rows($popular);
           <div class="thumb_box">
             <a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_recommendations['quiz_picture']; ?>" alt="<?php echo $row_recommendations['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_recommendations['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
-            <p class="description"><?php echo substr($row_recommendations['quiz_description'], 0, 120).((strlen($row_recommendations['quiz_description']) < 120)? "" : "..."); ?></p>
+            <p class="description"><?php echo substr($row_recommendations['quiz_description'], 0, 110).((strlen($row_recommendations['quiz_description']) < 110)? "" : "..."); ?></p>
             <p class="source">from <a href="topics.php?topic=<?php echo $row_recommendations['fk_quiz_cat']; ?>"><?php echo $row_recommendations['cat_name']; ?></a>  by <a href="viewMember.php?id=<?php echo $row_recommendations['fk_member_id']; ?>"><?php echo $row_recommendations['member_name']; ?></a></p>
 			<?php if(!$GAME_ALLOW_DISLIKES){ if($row_recommendations['likes'] > 0){ ?>
             <p class="rating"><span class="like"><?php echo $row_recommendations['likes']; ?></span> <?php echo ($row_recommendations['likes'] > 1) ? "people like" : "person likes"; ?> this</p>

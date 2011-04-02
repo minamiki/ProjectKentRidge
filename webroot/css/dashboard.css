@@ -52,7 +52,7 @@
 	padding-left: 3px;
 }
 .quiz_details   {
-	width: 230px;
+	width: 240px;
 	float: left;
 }
 .quiz_details .like {
@@ -89,7 +89,7 @@
 .quiz_box {
 	margin-top: 5px;
 	margin-bottom: 5px;
-	min-height: 85px;
+	min-height: 100px;
 	border-bottom-width: 1px;
 	border-bottom-style: dotted;
 	border-bottom-color: #999;
