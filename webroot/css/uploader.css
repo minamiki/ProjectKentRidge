@@ -27,7 +27,7 @@
 	background:#fff;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
-	-o-border-radius: 3px;
+	border-radius: 3px;
 }
 .log li .progress {
 	width:0%;
@@ -42,7 +42,7 @@
 	border:1px solid #339933;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
-	-o-border-radius: 3px;
+	border-radius: 3px;
 	background:#ccf9b9;
 }
 .log li span.cancel {

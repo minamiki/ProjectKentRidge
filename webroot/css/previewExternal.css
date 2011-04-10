@@ -11,7 +11,6 @@ html, body {
 .rounded {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	-o-border-radius: 5px;
 	border-radius: 5px;
 }
 .clear:after {

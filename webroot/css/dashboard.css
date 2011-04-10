@@ -6,6 +6,10 @@
 	font-size: 17px;
 	color: #000;
 }
+.repeat-container {
+	padding-right: 10px;
+	padding-left: 10px;
+}
 
 #recommendations {
 	margin-right: 10px;		
@@ -216,8 +220,4 @@
 }
 #social p {
 	margin-bottom: 0px;
-}
-#dashboard-container .repeat-container {
-	padding-right: 10px;
-	padding-left: 10px;
 }
