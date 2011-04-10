@@ -19,8 +19,7 @@ $question_count = 1;
   <div id="progress_panel">
       <div id="question_paging">
         <?php for($i = 0; $i < $totalRows_getQuizQuestions; $i++) { ?>
-        <!--<a href="#" rel="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></a>--> 
-        <span title="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></span>
+        <a href="javascript:;" title="Jump to Question <?php echo ($i+1); ?>" rel="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></a>
         <?php } ?>
       </div>
       <span id="final-bulb">&#10003;</span>
