@@ -26,8 +26,13 @@ function initUploader(targetField){
 	})
 	.bind('fileQueued', function(event, file){
 		var targetWidget = file.id.split("_")[1];
+		if((file.name).length > 30){
+			display_filename = (file.name).substr(0, 30)+"..";
+		}else{
+			display_filename = file.name;
+		}
 		var listitem='<li id="'+file.id+'" >'+
-			'File: <em>'+file.name+'</em> ('+Math.round(file.size/1024)+' KB) <span class="progressvalue" ></span>'+
+			'File: <em>'+display_filename+'</em> ('+Math.round(file.size/1024)+' KB) <span class="progressvalue" ></span>'+
 			'<div class="progressbar" ><div class="progress" ></div></div>'+
 			'<p class="status" >Pending</p>'+
 			'<span class="cancel">&nbsp;</span>'+
@@ -77,7 +82,12 @@ function initUploader(targetField){
 			updateWidgets();
 			$('#quizImagePreview-'+targetWidget).html('<img name="quizImagePreview-'+targetWidget+'" src="../quiz_images/imgcrop.php?w=180&h=120&f='+unikey+'_'+file.name+'" width="180" height="120" title="You can change this image in the upload image section" />');
 			// update the result image
-			$('#queuestatus-'+targetWidget).text('"'+file.name+'" will be used as the quiz image.');
+			if((file.name).length > 30){
+				display_filename = (file.name).substr(0, 30)+"..";
+			}else{
+				display_filename = file.name;
+			}
+			$('#queuestatus-'+targetWidget).text('Image "'+display_filename+'" will be used.');
 			$('#selected-image-'+targetWidget).html('<img src="../quiz_images/imgcrop.php?w=100&amp;h=75&amp;f='+unikey+'_'+file.name+'" alt="" width="100" height="75" />');
 		//}
 		$('li#'+file.id).slideUp('slow');
@@ -118,7 +128,12 @@ function updateWidgets(){
 function setAsMain(filename, unikey){
 	$('#quiz_picture').val(unikey+"_"+filename);
 	$('#quizImagePreview').html('<img name="quizImagePreview" src="../quiz_images/imgcrop.php?w=180&h=120&f='+unikey+'_'+filename+'" width="180" height="120" title="You can change this image in the upload image section" />');
-	$('#queuestatus').text('"'+filename+'" will be used as the quiz image.');
+	if(filename.length > 30){
+		display_filename = filename.substr(0, 30)+"..";
+	}else{
+		display_filename = filename;
+	}
+	$('#queuestatus').text('Image "'+display_filename+'" will be used.');
 }	
 function successSubmit(value)
 {
@@ -139,8 +154,13 @@ function selectImage(result, filename){
 	$("#showResultImage_"+result).text("Image '"+filename+"' selected");
 	$("#result_picture_"+result).val(filename);
 	imagefilename = filename.substring(9);
+	if(imagefilename.length > 30){
+		display_filename = filename.substr(0, 30)+"..";
+	}else{
+		display_filename = filename;
+	}
 	if(imagefilename != ""){
-		$('#queuestatus-'+result).text('"'+imagefilename+'" will be used as the quiz image.');
+		$('#queuestatus-'+result).text('Image "'+display_filename+'" will be used.');
 	}else{
 		$('#queuestatus-'+result).text('No image was chosen for this result.');
 	}	
