@@ -15,6 +15,7 @@ $query_listQuiz = sprintf("SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %s
 $query_limit_listQuiz = sprintf("%s LIMIT %d, %d", $query_listQuiz, $startRow_listQuiz, $maxRows_listQuiz);
 $listQuiz = mysql_query($query_limit_listQuiz, $quizroo) or die(mysql_error());
 $row_listQuiz = mysql_fetch_assoc($listQuiz);
+$totalRows__listQuiz = mysql_num_rows($listQuiz);
 
 if (isset($_GET['totalRows_listQuiz'])) {
   $totalRows_listQuiz = $_GET['totalRows_listQuiz'];
@@ -47,6 +48,7 @@ $queryString_listQuiz = sprintf("&totalRows_listQuiz=%d%s", $totalRows_listQuiz,
   </div>
 </div>
 <div class="frame rounded">
+<?php if($totalRows__listQuiz != 0){ ?>
 <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0" id="checkQuizTable" class="rounded">
       <tr>
         <th width="80">&nbsp;</th>
@@ -100,6 +102,9 @@ $queryString_listQuiz = sprintf("&totalRows_listQuiz=%d%s", $totalRows_listQuiz,
       </tr>
     </table>
 <p class="center">Quizzes <?php echo ($startRow_listQuiz + 1) ?> to <?php echo min($startRow_listQuiz + $maxRows_listQuiz, $totalRows_listQuiz) ?> of <?php echo $totalRows_listQuiz ?></p>
+<?php }else{ ?>
+<p id="loader-box" class="center">You do not have any quizzes! <a href="createQuiz.php">Create</a> one now!</p>
+<?php } ?>
 </div>
 <?php
 mysql_free_result($listQuiz);
