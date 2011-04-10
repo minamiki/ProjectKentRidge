@@ -7,7 +7,8 @@ if(!$quiz->exists()){
 	header("Location: previewQuiz.php");
 }else{ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<![if !IE]><html xmlns="http://www.w3.org/1999/xhtml"><![endif]>
+<!--[if lt IE 9]><html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml"><![endif]-->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Quizroo: <?php echo $quiz->quiz_name; ?></title>
