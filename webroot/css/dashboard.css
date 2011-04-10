@@ -124,9 +124,6 @@
 	margin-bottom: 5px;
 	padding-top: 3px;
 	padding-bottom: 3px;
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
-	border-bottom-color: #CCC;
 	display: block;
 }
 #recent .recent-feed .topic   {
@@ -139,6 +136,23 @@
 	padding-bottom: 3px;
 	padding-left: 5px;
 }
+#recent .recent-feed span a:link, #recent .recent-feed span a:visited{
+	text-decoration: none;
+	font-weight: bold;
+	color: #333;
+}
+#recent .recent-feed span a:hover{
+	text-decoration: underline;
+}
+#recent .recent-feed .recent-bottom {
+	width: 100%;
+	height: 10px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCC;
+}
 #recent .friend {
 	background-color: #09F;
 }
@@ -147,6 +161,11 @@
 }
 #recent .quiz {
 	background-color: #6C3;
+}
+#recent .recent-feed .recent-bottom .timestamp {
+	float: right;
+	margin-right: 10px;
+	font-size: 10px;
 }
 #recent #recent-extended {
 	display: none;
