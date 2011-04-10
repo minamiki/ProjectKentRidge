@@ -116,6 +116,7 @@ $recent_activities = array_slice($recent_activities,0,$NUM_RECENT_DISPLAY);
 
 <div id="recent" class="framePanel rounded"> <a href="javascript:;" id="recent-toggle">More</a>
 	<h2>Recent Activity</h2>
+	<div class="content-container">
 	<?php 
 	$activity_count = 0;
 	if(count($recent_activities)!=0){
@@ -162,6 +163,7 @@ $recent_activities = array_slice($recent_activities,0,$NUM_RECENT_DISPLAY);
 			$('#recent').hide();
 		</script>
 	<?php }?>
+	</div>
 	</div>
 </div>
 <!--<div id="recent" class="frame rounded"> <a href="javascript:;" id="recent-toggle">More</a>-->
