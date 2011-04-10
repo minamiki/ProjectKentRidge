@@ -131,6 +131,7 @@
 	margin-right: 10px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
+	border-radius: 2px;
 	padding-top: 3px;
 	padding-right: 5px;
 	padding-bottom: 3px;
@@ -183,6 +184,7 @@
 	right: 10px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+	border-radius: 5px;
 	border:solid 2px #E0E0E0;
 	font-size: 12px;
 	font-weight: bold;
