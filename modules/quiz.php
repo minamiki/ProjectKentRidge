@@ -102,32 +102,37 @@ class Quiz{
 	}
 	
 	// update the quiz
-	function update($title, $description, $cat, $picture){
-		require('quizrooDB.php');
-		
-		// insert into the quiz table
-		$insertSQL = sprintf("UPDATE q_quizzes SET `quiz_name`=%s, `quiz_description`=%s, `fk_quiz_cat`=%d, `quiz_picture`=%s WHERE `quiz_id` = %d",
-						   htmlentities(GetSQLValueString($title, "text")),
-						   htmlentities(GetSQLValueString($description, "text")),
-						   GetSQLValueString($cat, "int"),
-						   GetSQLValueString($picture, "text"),
-						   GetSQLValueString($this->quiz_id, "int"));
-		mysql_query($insertSQL, $quizroo) or die(mysql_error());
-		
-		return $this->quiz_id;
-	}
-	
-	// update the quiz
-	function delete($member_id){
+	function update($title, $description, $cat, $picture, $memberID){
 		require('quizrooDB.php');
 		
 		// check if is member
-		if($this->isOwner($member_id)){
+		if($this->isOwner($memberID)){
+			// insert into the quiz table
+			$insertSQL = sprintf("UPDATE q_quizzes SET `quiz_name`=%s, `quiz_description`=%s, `fk_quiz_cat`=%d, `quiz_picture`=%s WHERE `quiz_id` = %d",
+							   htmlentities(GetSQLValueString($title, "text")),
+							   htmlentities(GetSQLValueString($description, "text")),
+							   GetSQLValueString($cat, "int"),
+							   GetSQLValueString($picture, "text"),
+							   GetSQLValueString($this->quiz_id, "int"));
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());
+			
+			return $this->quiz_id;
+		}else{
+			return false;
+		}
+	}
+	
+	// delete the quiz
+	function delete($memberID){
+		require('quizrooDB.php');
+		
+		// check if is member
+		if($this->isOwner($memberID)){
 			// remove the questions
 			$questionList = explode(',', $this->getQuestions());
 			foreach($questionList as $question){
 				if($question != ""){
-					$this->removeQuestion($question, $member_id);
+					$this->removeQuestion($question, $memberID);
 				}
 			}
 			
@@ -135,7 +140,7 @@ class Quiz{
 			$resultList = explode(',', $this->getResults());
 			foreach($resultList as $result){
 				if($result != ""){
-					$this->removeResult($result, $member_id);
+					$this->removeResult($result, $memberID);
 				}
 			}
 			
@@ -172,39 +177,49 @@ class Quiz{
 	}
 	
 	// create a new result
-	function addResult($result_title, $result_description, $result_picture){
+	function addResult($result_title, $result_description, $result_picture, $memberID){
 		require('quizrooDB.php');
 		
-		// Insert the result
-		$insertSQL = sprintf("INSERT INTO q_results(`result_title`, `result_description`, `result_picture`, `fk_quiz_id`) VALUES (%s, %s, %s, %d)",
-						   htmlentities(GetSQLValueString($result_title, "text")),
-						   htmlentities(GetSQLValueString($result_description, "text")),
-						   GetSQLValueString($result_picture, "text"),
-						   GetSQLValueString($this->quiz_id, "int"));
-		mysql_query($insertSQL, $quizroo) or die(mysql_error());
-		
-		// find the result id
-		$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
-		$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
-		$row_resultID = mysql_fetch_assoc($resultID);
-		mysql_free_result($resultID);
-		
-		return $row_resultID['insertID'];
+		// check if is member
+		if($this->isOwner($memberID)){
+			// Insert the result
+			$insertSQL = sprintf("INSERT INTO q_results(`result_title`, `result_description`, `result_picture`, `fk_quiz_id`) VALUES (%s, %s, %s, %d)",
+							   htmlentities(GetSQLValueString($result_title, "text")),
+							   htmlentities(GetSQLValueString($result_description, "text")),
+							   GetSQLValueString($result_picture, "text"),
+							   GetSQLValueString($this->quiz_id, "int"));
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());
+			
+			// find the result id
+			$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
+			$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
+			$row_resultID = mysql_fetch_assoc($resultID);
+			mysql_free_result($resultID);
+			
+			return $row_resultID['insertID'];
+		}else{
+			return false;
+		}
 	}
 	
 	// create a new result
-	function updateResult($result_title, $result_description, $result_picture, $result_id){
+	function updateResult($result_title, $result_description, $result_picture, $result_id, $memberID){
 		require('quizrooDB.php');
 		
-		// Insert the result
-		$insertSQL = sprintf("UPDATE q_results SET `result_title` = %s, `result_description` = %s, `result_picture` = %s WHERE `result_id` = %d",
-						   htmlentities(GetSQLValueString($result_title, "text")),
-						   htmlentities(GetSQLValueString($result_description, "text")),
-						   GetSQLValueString($result_picture, "text"),
-						   GetSQLValueString($result_id, "int"));
-		mysql_query($insertSQL, $quizroo) or die(mysql_error());
-		
-		return $result_id;
+		// check if is member
+		if($this->isOwner($memberID)){
+			// Insert the result
+			$insertSQL = sprintf("UPDATE q_results SET `result_title` = %s, `result_description` = %s, `result_picture` = %s WHERE `result_id` = %d",
+							   htmlentities(GetSQLValueString($result_title, "text")),
+							   htmlentities(GetSQLValueString($result_description, "text")),
+							   GetSQLValueString($result_picture, "text"),
+							   GetSQLValueString($result_id, "int"));
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());
+			
+			return $result_id;
+		}else{
+			return false;
+		}
 	}
 	
 	// remove a new result
@@ -223,36 +238,46 @@ class Quiz{
 	}
 	
 	// create a new question
-	function addQuestion($question){
+	function addQuestion($question, $memberID){
 		require('quizrooDB.php');
 		
-		// insert the question
-		$insertSQL = sprintf("INSERT INTO q_questions(`question`, `fk_quiz_id`) VALUES (%s, %d)",
-					   htmlentities(GetSQLValueString($question, "text")),
-					   GetSQLValueString($this->quiz_id, "int"));
-		mysql_query($insertSQL, $quizroo) or die(mysql_error());
-	
-		// find the question id
-		$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
-		$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
-		$row_resultID = mysql_fetch_assoc($resultID);
-		$currentQuestionID = $row_resultID['insertID'];
-		mysql_free_result($resultID);
+		// check if is member
+		if($this->isOwner($memberID)){
+			// insert the question
+			$insertSQL = sprintf("INSERT INTO q_questions(`question`, `fk_quiz_id`) VALUES (%s, %d)",
+						   htmlentities(GetSQLValueString($question, "text")),
+						   GetSQLValueString($this->quiz_id, "int"));
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());
 		
-		return $row_resultID['insertID'];
+			// find the question id
+			$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
+			$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
+			$row_resultID = mysql_fetch_assoc($resultID);
+			$currentQuestionID = $row_resultID['insertID'];
+			mysql_free_result($resultID);
+			
+			return $row_resultID['insertID'];
+		}else{
+			return false;
+		}
 	}
 	
 	// update a question
-	function updateQuestion($question, $question_id){
+	function updateQuestion($question, $question_id, $memberID){
 		require('quizrooDB.php');
 		
-		// insert the question
-		$insertSQL = sprintf("UPDATE q_questions SET `question` = %s WHERE `question_id` = %d",
-					  htmlentities(GetSQLValueString($question, "text")),
-					   GetSQLValueString($question_id, "int"));
-		mysql_query($insertSQL, $quizroo) or die(mysql_error());
-		
-		return $question_id;
+		// check if is member
+		if($this->isOwner($memberID)){
+			// insert the question
+			$insertSQL = sprintf("UPDATE q_questions SET `question` = %s WHERE `question_id` = %d",
+						  htmlentities(GetSQLValueString($question, "text")),
+						   GetSQLValueString($question_id, "int"));
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());
+			
+			return $question_id;
+		}else{
+			return false;
+		}
 	}
 	
 	// remove a new question
@@ -274,40 +299,50 @@ class Quiz{
 	}
 	
 	// create a option
-	function addOption($option, $result, $weightage, $question){
+	function addOption($option, $result, $weightage, $question, $memberID){
 		require('quizrooDB.php');
 		
-		// insert the option
-		$insertSQL = sprintf("INSERT INTO q_options(`option`, `fk_result`, `option_weightage`, `fk_question_id`) VALUES (%s, %d, %d, %d)",
-					   htmlentities(GetSQLValueString($option, "text")),
-					   GetSQLValueString($result, "int"),
-					   GetSQLValueString($weightage, "int"),
-					   GetSQLValueString($question, "int"));
-		mysql_query($insertSQL, $quizroo) or die(mysql_error());
-	
-		// find the question id
-		$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
-		$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
-		$row_resultID = mysql_fetch_assoc($resultID);
-		$currentQuestionID = $row_resultID['insertID'];
-		mysql_free_result($resultID);
+		// check if is member
+		if($this->isOwner($memberID)){
+			// insert the option
+			$insertSQL = sprintf("INSERT INTO q_options(`option`, `fk_result`, `option_weightage`, `fk_question_id`) VALUES (%s, %d, %d, %d)",
+						   htmlentities(GetSQLValueString($option, "text")),
+						   GetSQLValueString($result, "int"),
+						   GetSQLValueString($weightage, "int"),
+						   GetSQLValueString($question, "int"));
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());
 		
-		return $row_resultID['insertID'];
+			// find the question id
+			$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
+			$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
+			$row_resultID = mysql_fetch_assoc($resultID);
+			$currentQuestionID = $row_resultID['insertID'];
+			mysql_free_result($resultID);
+			
+			return $row_resultID['insertID'];
+		}else{
+			return false;
+		}
 	}
 	
 	// update an option
-	function updateOption($option, $result, $weightage, $option_id){
+	function updateOption($option, $result, $weightage, $option_id, $memberID){
 		require('quizrooDB.php');
 		
-		// insert the option
-		$insertSQL = sprintf("UPDATE q_options SET `option`=%s, `fk_result`=%d, `option_weightage`=%d WHERE option_id=%d",
-					   htmlentities(GetSQLValueString($option, "text")),
-					   GetSQLValueString($result, "int"),
-					   GetSQLValueString($weightage, "int"),
-					   GetSQLValueString($option_id, "int"));
-		mysql_query($insertSQL, $quizroo) or die(mysql_error());
-		
-		return $option_id;
+		// check if is member
+		if($this->isOwner($memberID)){
+			// insert the option
+			$insertSQL = sprintf("UPDATE q_options SET `option`=%s, `fk_result`=%d, `option_weightage`=%d WHERE option_id=%d",
+						   htmlentities(GetSQLValueString($option, "text")),
+						   GetSQLValueString($result, "int"),
+						   GetSQLValueString($weightage, "int"),
+						   GetSQLValueString($option_id, "int"));
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());
+			
+			return $option_id;
+		}else{
+			return false;
+		}
 	}
 	
 	// remove an option
@@ -376,76 +411,81 @@ class Quiz{
 	}
 	
 	// publish the quiz
-	function publish(){
+	function publish($memberID){
 		require('quizrooDB.php');
 		require('variables.php');
 		
-		// check if the quiz is already published
-		if(!$this->isPublished()){
-			// run through the checks, return false if failed
-			if(!$this->checkPublish()){
-				return false;
-			}
-			
-			// check if coming from edits
-			if($this->isPublished == 0){				
-				// set the publish flag to 1 and award the first creation score
-				$query = sprintf("UPDATE q_quizzes SET isPublished = 1, quiz_score = %d WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
-				mysql_query($query, $quizroo) or die(mysql_error());
-				$this->isPublished = 1;
+		// check ig quiz belongs to member
+		if($this->isOwner($memberID)){
+			// check if the quiz is already published
+			if(!$this->isPublished()){
+				// run through the checks, return false if failed
+				if(!$this->checkPublish()){
+					return -2;
+				}
 				
-				// check the current member stats (for level up calculation later)
-				$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `s_members` WHERE `member_id` = %d", $this->fk_member_id);
-				$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
-				$row_getResults = mysql_fetch_assoc($getResults);
-				$old_level = $row_getResults['level'];
-				$old_score = $row_getResults['quiztaker_score'];
-				mysql_free_result($getResults);
-				
-				// update the member's creation score
-				$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %s", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
-				mysql_query($query, $quizroo) or die(mysql_error());
-				
-				// check if the there is a levelup:
-				///////////////////////////////////////
-				
-				// check the level table 
-				$queryLevel = sprintf("SELECT id FROM `g_levels` WHERE points <= %d ORDER BY points DESC LIMIT 0, 1", $old_score + $GAME_BASE_POINT);
-				$getLevel = mysql_query($queryLevel, $quizroo) or die(mysql_error());
-				$row_getLevel = mysql_fetch_assoc($getLevel);
-				$new_level = $row_getLevel['id'];
-				
-				if($new_level > $old_level){ // a levelup has occurred
-					// update the member table to reflect the new level
-					$queryUpdate = sprintf("UPDATE s_members SET level = %d WHERE member_id = %s", $new_level, $this->fk_member_id);
-					mysql_query($queryUpdate, $quizroo) or die(mysql_error());	
+				// check if coming from edits
+				if($this->isPublished == 0){				
+					// set the publish flag to 1 and award the first creation score
+					$query = sprintf("UPDATE q_quizzes SET isPublished = 1, quiz_score = %d WHERE quiz_id = %d", $GAME_BASE_POINT, $this->quiz_id);
+					mysql_query($query, $quizroo) or die(mysql_error());
+					$this->isPublished = 1;
 					
-					// return the ID of the level acheievement
-					return $new_level;	
+					// check the current member stats (for level up calculation later)
+					$queryCheck = sprintf("SELECT `level`, quiztaker_score FROM `s_members` WHERE `member_id` = %d", $this->fk_member_id);
+					$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
+					$row_getResults = mysql_fetch_assoc($getResults);
+					$old_level = $row_getResults['level'];
+					$old_score = $row_getResults['quiztaker_score'];
+					mysql_free_result($getResults);
+					
+					// update the member's creation score
+					$query = sprintf("UPDATE s_members SET quizcreator_score = quizcreator_score + %d, quizcreator_score_today = quizcreator_score_today + %d WHERE member_id = %s", $GAME_BASE_POINT, $GAME_BASE_POINT, $this->fk_member_id);
+					mysql_query($query, $quizroo) or die(mysql_error());
+					
+					// check if the there is a levelup:
+					///////////////////////////////////////
+					
+					// check the level table 
+					$queryLevel = sprintf("SELECT id FROM `g_levels` WHERE points <= %d ORDER BY points DESC LIMIT 0, 1", $old_score + $GAME_BASE_POINT);
+					$getLevel = mysql_query($queryLevel, $quizroo) or die(mysql_error());
+					$row_getLevel = mysql_fetch_assoc($getLevel);
+					$new_level = $row_getLevel['id'];
+					
+					if($new_level > $old_level){ // a levelup has occurred
+						// update the member table to reflect the new level
+						$queryUpdate = sprintf("UPDATE s_members SET level = %d WHERE member_id = %s", $new_level, $this->fk_member_id);
+						mysql_query($queryUpdate, $quizroo) or die(mysql_error());	
+						
+						// return the ID of the level acheievement
+						return $new_level;	
+					}else{
+						return -1;
+					}
 				}else{
+					// set the publish flag to 1
+					$query = sprintf("UPDATE q_quizzes SET isPublished = 1 WHERE quiz_id = %d", $this->quiz_id);
+					mysql_query($query, $quizroo) or die(mysql_error());
+					$this->isPublished = 1;
+					
 					return -1;
 				}
 			}else{
-				// set the publish flag to 1
-				$query = sprintf("UPDATE q_quizzes SET isPublished = 1 WHERE quiz_id = %d", $this->quiz_id);
-				mysql_query($query, $quizroo) or die(mysql_error());
-				$this->isPublished = 1;
-				
+				// already published, do nothing
 				return -1;
 			}
 		}else{
-			// already published, do nothing
-			return -1;
+			return false;
 		}
 	}
 	
 	// re-publish the quiz
-	function republish(){
+	function republish($memberID){
 		require('quizrooDB.php');
 		require('variables.php');
 		
 		// check if the quiz is already published
-		if(!$this->isPublished()){		
+		if(!$this->isPublished() && $this->isOwner($memberID)){		
 			// set the publish flag to 1
 			$query = sprintf("UPDATE q_quizzes SET isPublished = 1 WHERE quiz_id = %d", $this->quiz_id);
 			mysql_query($query, $quizroo) or die(mysql_error());
@@ -459,12 +499,12 @@ class Quiz{
 	}
 	
 	// unpublish the quiz
-	function unpublish(){
+	function unpublish($memberID){
 		require('quizrooDB.php');
 		require('variables.php');
 		
 		// check if the quiz is already published
-		if($this->isPublished()){
+		if($this->isPublished() && $this->isOwner($memberID)){
 			// check if it's a draft or a published quiz
 			if($this->isPublished == 1){
 				// set the publish flag to 2
@@ -484,12 +524,12 @@ class Quiz{
 	}
 	
 	// archive the quiz
-	function archive(){
+	function archive($memberID){
 		require('quizrooDB.php');
 		require('variables.php');
 		
 		// check if the quiz is already published
-		if($this->isPublished()){		
+		if($this->isPublished() && $this->isOwner($memberID)){		
 			// set the publish flag to 0
 			$query = sprintf("UPDATE q_quizzes SET isPublished = 3 WHERE quiz_id = %d", $this->quiz_id);
 			mysql_query($query, $quizroo) or die(mysql_error());

@@ -4,31 +4,32 @@ require('../modules/uploadFunctions.php');
 require("../modules/quiz.php");
 
 if(isset($_GET['step'])){
-?>
-<?php // THE FIRST STEP (Returning): Quiz Information
-switch($_GET['step']){ case 1:
-
-// get the unikey and quiz id
+// now check whether this quiz actually belongs to this user
 if(isset($_GET['id'])){
-	$quiz_id = $_GET['id'];
-	$quiz = new Quiz($quiz_id);
-	
-	// now check whether this quiz actually belongs to this user
-	if($quiz->isOwner($member->id)){
+	$quiz = new Quiz($_GET['id']);
+	if($quiz->exists() && $quiz->isOwner($member->id)){
+		$quiz_state = true;
+		// unpublish the quiz
+		$quiz->unpublish($member->id);
 		$unikey = $quiz->quiz_key;
 	}else{
-		die("Authentication Failure");
+		$quiz_state = false;
+		unset($quiz);
 	}
-	
+}else{	
+	$quiz_state = false;
+	unset($quiz);
+}
+
+if($quiz_state){
+
+// THE FIRST STEP (Returning): Quiz Information
+switch($_GET['step']){ case 1:
 	// populate the categories
 	$query_listCat = "SELECT cat_id, cat_name FROM q_quiz_cat";
 	$listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
 	$row_listCat = mysql_fetch_assoc($listCat);
 	$totalRows_listCat = mysql_num_rows($listCat);
-}else{
-	// find a way to post and error
-	die("No quiz was specified");
-}
 ?>
 <div id="progress-container" class="framePanel rounded">
   <h2>Create Quiz: Quiz Information</h2>
@@ -45,7 +46,8 @@ if(isset($_GET['id'])){
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=1" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-    <input type="hidden" name="id" value="<?php echo $quiz_id; ?>" />
+    <input type="hidden" name="id" value="<?php echo $quiz->quiz_id; ?>" />
+    <input type="hidden" name="unikey" value="<?php echo $unikey; ?>" />
     <table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
           <th width="120" valign="top" scope="row"><label for="quiz_title">Title</label></th>
@@ -96,12 +98,13 @@ if(isset($_GET['id'])){
         <tr>
           <td class="desc"><div id="pictureChoser_0"><?php if(sizeof(glob("../quiz_images/".$unikey."*")) > 0){ ?><table border="0" cellspacing="0" cellpadding="3">
   <tr>
-    <td><span class="formDesc">OR click on a picture below to use it as the result picture</span></td>
+    <td><span class="formDesc">OR click on a picture below to use it as the quiz picture</span></td>
   </tr>
   <tr>
     <td><?php // return uploaded images if(
+	$count = 0;
 	if($unikey != ""){ foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
-		<a href="javascript:;" onClick="selectImage(0, '<?php echo basename($filename); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
+		<a href="javascript:;" onClick="selectImage(0, '<?php echo str_replace("'", "\\'", basename($filename)); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="d<?php echo $count; ?>" class="selectImage"></a>
 	<?php $count++; }} ?>
 	</td>
   </tr>
@@ -116,21 +119,6 @@ if(isset($_GET['id'])){
 </div>
 <?php // THE SECOND STEP: Quiz Results
 break; case 2:
-	// get the unikey and quiz id
-	if(isset($_GET['id'])){
-		$quiz_id = $_GET['id'];
-		$quiz = new Quiz($quiz_id);
-		
-		// now check whether this quiz actually belongs to this user
-		if($quiz->isOwner($member->id)){
-			$unikey = $quiz->quiz_key;
-		}else{
-			die("Authentication Failure");
-		}
-	}else{
-		// find a way to post and error
-		die("No quiz was specified");
-	}
 ?>
 <div id="progress-container" class="framePanel rounded">
   <h2>Create Quiz: Results</h2>
@@ -146,7 +134,7 @@ break; case 2:
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=2" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-<input type="hidden" name="id" value="<?php echo $quiz_id; ?>" />
+<input type="hidden" name="id" value="<?php echo $quiz->quiz_id; ?>" />
 <div id="createResultContainer"><p id="resultTip" class="containerTip">Click on the "Add new result" button to add a result entry!</p></div>
     <div class="add_container">
       <input type="submit" name="save" id="prev" value="Previous Step" />&nbsp;
@@ -158,21 +146,6 @@ break; case 2:
 </div>
 <?php // THE THIRD STEP: Quiz Questions
 break; case 3:
-	// get the unikey and quiz id
-	if(isset($_GET['id'])){
-		$quiz_id = $_GET['id'];
-		$quiz = new Quiz($quiz_id);
-		
-		// now check whether this quiz actually belongs to this user
-		if($quiz->isOwner($member->id)){
-			$unikey = $quiz->quiz_key;
-		}else{
-			die("Authentication Failure");
-		}
-	}else{
-		// find a way to post and error
-		die("No quiz was specified");
-	}
 ?>
 <div id="progress-container" class="framePanel rounded">
   <h2>Create Quiz: Questions</h2>
@@ -188,7 +161,7 @@ break; case 3:
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=3" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-<input type="hidden" name="id" value="<?php echo $quiz_id; ?>" />
+<input type="hidden" name="id" value="<?php echo $quiz->quiz_id; ?>" />
 <input type="hidden" name="optionCounts" id="optionCounts" value="" />
 <input type="hidden" name="questionCount" id="questionCount" value="" />
 <div id="createQuestionContainer"><p id="questionTip" class="containerTip">Click on the "Add new question" button to add a question entry!</p></div>
@@ -201,56 +174,39 @@ break; case 3:
 </div>
 <?php // THE FOURTH STEP: Confirm and publish
 break; case 4:
-	// get the unikey and quiz id
-	if(isset($_GET['id'])){
-		$quiz_id = $_GET['id'];
-		$quiz = new Quiz($quiz_id);
+	require("../modules/variables.php");
 		
-		// now check whether this quiz actually belongs to this user
-		if($quiz->isOwner($member->id)){
-			$unikey = $quiz->quiz_key;
-		}else{
-			die("Authentication Failure");
-		}
-		
-		$unikey = $quiz->quiz_key;
-		require("../modules/variables.php");
-			
-		// check the number of results
-		$numResults = $quiz->getResults("count");		
-		// check the number of questions
-		$numQuestions = $quiz->getQuestions("count");
-		// check the number of options
-		$listQuestion = explode(',', $quiz->getQuestions());
-		$totalOptions = 0;
-		
-		if($numQuestions != 0){
-			$questionState = true;
-			$optionState = true;
-			foreach($listQuestion as $question){
-				// check the number of options for this question
-				$numOptions = $quiz->getOptions($question, "count");
-				if($numOptions < $VAR_QUIZ_MIN_OPTIONS){
-					$optionState = false;
-				}
-				$totalOptions += $numOptions;
+	// check the number of results
+	$numResults = $quiz->getResults("count");		
+	// check the number of questions
+	$numQuestions = $quiz->getQuestions("count");
+	// check the number of options
+	$listQuestion = explode(',', $quiz->getQuestions());
+	$totalOptions = 0;
+	
+	if($numQuestions != 0){
+		$questionState = true;
+		$optionState = true;
+		foreach($listQuestion as $question){
+			// check the number of options for this question
+			$numOptions = $quiz->getOptions($question, "count");
+			if($numOptions < $VAR_QUIZ_MIN_OPTIONS){
+				$optionState = false;
 			}
+			$totalOptions += $numOptions;
 		}
-		
-		if($numQuestions != 0){
-			$averageOptionCount = $totalOptions / $numQuestions;
-		}else{
-			$averageOptionCount = 0;
-		}
-		
-		if(!$quiz->checkPublish()){
-			$quizState = false;
-		}else{
-			$quizState = true;
-		}
+	}
+	
+	if($numQuestions != 0){
+		$averageOptionCount = $totalOptions / $numQuestions;
 	}else{
-		// find a way to post and error
-		die("No quiz was specified");
+		$averageOptionCount = 0;
+	}
+	
+	if(!$quiz->checkPublish()){
+		$quizState = false;
+	}else{
+		$quizState = true;
 	}
 ?>
 <div id="progress-container" class="framePanel rounded">
@@ -267,7 +223,7 @@ break; case 4:
 </div>
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=4" method="post" name="createQuiz" id="createQuiz">
-<input type="hidden" name="id" value="<?php echo $quiz_id; ?>" />
+<input type="hidden" name="id" value="<?php echo $quiz->quiz_id; ?>" />
 <table border="0" align="center" cellpadding="5" cellspacing="0" id="checkQuizTable">
       <tr>
         <th scope="col">&nbsp;</th>
@@ -309,11 +265,28 @@ break; case 4:
   </form>
 </div>
 <?php // THE FIRST STEP
-break;} }else{ 
+break;}
+}else{ ?>
+<div id="takequiz-preamble" class="framePanel rounded">
+  <h2>Opps, quiz not found!</h2>
+  <div class="content-container"> <span class="logo"><img src="../webroot/img/quizroo-question.png" alt="Member not found" width="248" height="236" /></span>
+    <p>Sorry! The quiz that you're looking for may no be available. Please check the ID of the quiz again.</p>
+    <p>The reason you're seeing this error could be due to:</p>
+    <ul>
+      <li>The URL is incorrect or doesn't  contain the ID of the quiz</li>
+      <li>No quiz with this ID exists</li>
+      <li>The owner could have removed the quiz</li>
+      <li>The quiz was taken down due to violations of  rules at Quizroo</li>
+    </ul>
+  </div>
+</div>
+<?php }}else{ 
 // generate a one time hash key for the upload, (this hash key will stay with the quiz throughout the entire creation process)
 $unikey = get_rand_id(8);
 // bind it to a member
 $member->bindImagekey($unikey);
+// since it's a new quiz, state is always true
+$quiz_state = true;
 
 // populate the categories
 $query_listCat = "SELECT cat_id, cat_name FROM q_quiz_cat";

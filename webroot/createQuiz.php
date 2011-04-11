@@ -26,12 +26,13 @@ var unikey = "<?php echo $unikey ?>";
 </script>
 <script src="js/Quiz.create.js" type="text/javascript"></script>
 <script src="js/swf.multi-uploader.js" type="text/javascript"></script>
+<?php if(isset($quiz_state)){ if($quiz_state){?>
 <script type="text/javascript">
 $(document).ready(function(){
 	// init the validators
 	QuizValidate.init();
 	<?php if(isset($_GET['step'])){ ?>
-	QuizInfo.init(<?php echo $quiz_id; ?>, '<?php echo $unikey; ?>');
+	QuizInfo.init(<?php echo $quiz->quiz_id; ?>, '<?php echo $unikey; ?>');
 	<?php switch($_GET['step']){ case 1: ?>
 	scanInitUploader();
 	<?php break; case 2: ?>
@@ -44,5 +45,6 @@ $(document).ready(function(){
 	<?php } ?>
 });
 </script>
+<?php }} ?>
 </body>
 </html>

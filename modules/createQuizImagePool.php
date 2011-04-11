@@ -7,7 +7,7 @@
 $result = $_GET['resultNumber'];
 $count = 1;
 foreach(glob("../quiz_images/".$_GET['unikey']."*") as $filename){ ?>
-<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo basename($filename); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
+<a href="javascript:;" onClick="selectImage(<?php echo $result; ?>, '<?php echo str_replace("'", "\\'", basename($filename)); ?>')"><img src="../quiz_images/imgcrop.php?w=80&h=60&f=<?php echo basename($filename); ?>" width="80" height="60" id="r<?php echo $result; ?>i<?php echo $count; ?>" class="selectImage"></a>
 <?php $count++; } ?></td>
   </tr>
 </table>

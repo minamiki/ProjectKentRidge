@@ -30,7 +30,7 @@ var unikey = "<?php echo $unikey ?>";
 $(document).ready(function(){
 	// init the validators
 	QuizValidate.init();
-	QuizInfo.init(<?php echo $quiz_id; ?>, '<?php echo $unikey; ?>');
+	QuizInfo.init(<?php echo $quiz->quiz_id; ?>, '<?php echo $unikey; ?>');
 	<?php switch($step){ case 1: ?>
 	scanInitUploader();
 	<?php break; case 2: ?>

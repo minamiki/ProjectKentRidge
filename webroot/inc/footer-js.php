@@ -54,6 +54,8 @@ window.fbAsyncInit = function(){
 
 	// Enable canvas height auto-resize
 	FB.Canvas.setAutoResize();
+	// always scroll to top when loading a new page
+	FB.Canvas.scrollTo(0,0);
 	
 	if(typeof(isSharing) != 'undefined'){
 		if(isSharing){
