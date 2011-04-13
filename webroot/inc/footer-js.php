@@ -14,8 +14,8 @@ $(document).ready(function(){
 		Statusbar.updateSystemNotification(<?php echo $member->id; ?>);
 		Statusbar.displayInformation('notification-system');
 	});
-	$('#statusbar-achievements-logo').click(function(){
-		Statusbar.displayInformation('statusbar-achievements-logo');
+	$('#statusbar-achievements').click(function(){
+		Statusbar.displayInformation('statusbar-achievements');
 	});
 	$('#statusbar-scores').click(function(){
 		Statusbar.displayInformation('statusbar-scores');

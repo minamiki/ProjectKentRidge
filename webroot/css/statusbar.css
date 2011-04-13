@@ -114,20 +114,25 @@
 	padding: 0px 3px;
 }
 
-#statusbar-achievements{
+#statusbar-game{
 	width:230px;
 	height:50px;
 	padding:0px;
 	float:left;
 }
-
-#statusbar-achievements-logo{
-	float:right;
-	margin:0px 0px 0px 5px;
+#statusbar-achievements{
 	width:85px;
 	height:50px;
-	background-image: url(../img/achievements.png);
+	padding:0px;
+	float:right;
 	cursor:pointer;
+	margin:0px 0px 0px 5px;
+}
+#statusbar-achievements-logo{
+	float:right;
+	width:50px;
+	height:50px;
+	background-image: url(../img/achievements.png);
 	background-repeat: no-repeat;
 }
 
@@ -135,7 +140,7 @@
 	float:right;
 	margin:0px 0px 5px 0px;
 	padding:14px 0px;
-	width:40px;
+	width:35px;
 	height:22px;
 	font-size:18px;
 	font-weight:bold;
@@ -260,7 +265,7 @@
 }
 
 .statusbar-searchmenu-button-selected{
-	background-position: 50px;
+	background-position: -50px;
 }
 
 .statusbar-searchmenu-button span{
@@ -290,6 +295,7 @@
 	-webkit-box-shadow: 2px 2px 2px #3b3b3b;
 	box-shadow: 2px 2px 2px #3b3b3b;
 	cursor: pointer;
+	background-position: -50px;
 }
 
 .statusbar-highlighted div{
@@ -521,26 +527,34 @@
 	width: 28px;
 	height: 24px;
 	float: right;
+	cursor: pointer;
 	background-color: #CCC;
 	border-collapse: collapse;
-	-moz-border-radius-topright: 3px;
-	-webkit-border-top-right-radius:: 3px;
-	border-top-right-radius: 3px;
-	-moz-border-radius-bottomright: 3px;
-	-webkit-border-top-left-radius: 3px;
-	border-top-left-radius: 3px;
+	-moz-border-radius: 0 3px 3px 0;
+	-webkit-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+}
+
+#statusbar-search-button:hover{
+	background-color: #B5B5B5;
 }
 
 #statusbar-search-textfield{
-	width: 268px;
+	width: 259px;
 	height: 18px;
+	margin-left: 3px;
+	padding: 1px 3px;
 	border: solid 2px #CCC;
+	-moz-border-radius: 4px 0px 0px 4px;
+	-webkit-border-radius: 4px 0px 0px 4px;
+	border-radius: 4px 0px 0px 4px;
 }
 
 .statusbar-search-icon{
 	width: 24px;
 	height: 24px;
-	background-image: url(../img/search-small.png);	
+	background-image: url(../img/search-small.png);
+	background-position:right;	
 }
 
 .statusbar-search-icon span{
