@@ -10,6 +10,7 @@ class Member{
 	public $me = NULL;
 	public $facebook = NULL;
 	public $friends = NULL;
+	public $friendsArray = NULL;
 	
 	// member data
 	public $qname = NULL;
@@ -37,6 +38,8 @@ class Member{
 				$this->me = true;
 				$this->me = array('name' => "Debug Superuser");
 				$this->id = 999999999;
+				//$this->friends = array('data'=>array(array('name'=>"Debug Superuser",'id'=>"750200398"),array('name'=>"Debug Superuser",'id'=>"581124362")));
+				$this->friends = array();
 				$this->register();
 			}else{
 				// Load the Facebook PHP API
@@ -58,6 +61,8 @@ class Member{
 						$this->id = $this->facebook->getUser();		// get the user's facebook ID
 						$this->me = $this->facebook->api('/me');	// populate the facebook $me object
 						$this->friends = $this->facebook->api('/me/friends');
+						// generate friends array;
+						$this->friendsArray = array();
 						
 						// register the user into our database if required
 						$this->register();
@@ -284,6 +289,16 @@ class Member{
 	
 	function getFriends(){
 		return $this->friends;
+	}
+	
+	function getFriendsArray(){
+		if($this->friendsArray==NULL){
+			$this->friendsArray = array();
+			for($i = 0; $i < sizeof($this->friends['data']); $i++){
+				$this->friendsArray[] = $this->friends['data'][$i]['id'];
+			}
+		}
+		return $this->friendsArray;
 	}
 	
 	function isFriend($member_id){
