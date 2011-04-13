@@ -21,7 +21,7 @@ if(isset($_GET['topic'])){
       </div>
     </div>
     <div id="statusbar-divider"></div>
-    <div id="statusbar-achievements">
+    <div id="statusbar-game">
       <div id="statusbar-scores" class="statusbar-element">
         <div id="statusbar-quizcreator">
           <div id="statusbar-quizcreator-logo" title="Quiz Creator"></div>
@@ -36,9 +36,10 @@ if(isset($_GET['topic'])){
           </div>
         </div>
       </div>
-      <div id="statusbar-achievements-logo" class="statusbar-element" title="Achievements">
+      <div id="statusbar-achievements" class="statusbar-element" title="Achievements">
         <div id="statusbar-achievements-count"><div class="stretch--resizer" style="margin: 0pt; padding: 0pt; white-space: nowrap; overflow: hidden; font-size: 17px; word-spacing: 0px;" type="statusbar"><span class="stretch--handle" style="margin: 0pt; padding: 0pt;" type="statusbar"><?php echo $member->getStats('achievements'); ?></span></div>
         </div>
+        <div id="statusbar-achievements-logo"></div>
       </div>
     </div>
     <div id="statusbar-divider"></div>

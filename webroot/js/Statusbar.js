@@ -18,7 +18,7 @@ var Statusbar = {
 		 /*
 		  * Display information 
 		  */
-		if(option=='statusbar-achievements-logo'){
+		if(option=='statusbar-achievements'){
 			var data = Statusbar.achievements['overview'];
 			var totalachievements = Statusbar.achievements['achievements']['score'];
 			var score = parseInt(Statusbar.achievements['quiztaker']['quiztaker_score'])+parseInt(Statusbar.achievements['quizcreator']['quizcreator_score']);
@@ -316,13 +316,11 @@ var Statusbar = {
 				window.open('http://hci.comp.nus.edu.sg/main/');
 			});
 		}else if(option=='statusbar-search'){
-			/*
-			$('#statusbar-searchmenu-button').toggleClass('statusbar-searchmenu-button-selected');
+			//$('#statusbar-search').addClass('statusbar-searchmenu-button-selected');
 			$('#statusbar-info').addClass('statusbar-menu').addClass('statusbar-menu-search').html(
-			"<div class='statusbar-search-bar'><input id='statusbar-search-textfield' type='text'/><div id='statusbar-search-button'><div class='statusbar-search-icon'><span>search</span></div></div></div>"
+			"<div class='statusbar-search-bar'><form id='statusbar-search-form' action='search.php' method='get' enctype='application/x-www-form-urlencoded' target='_self'><input id='statusbar-search-textfield' name='searchQuery' type='text'/><div id='statusbar-search-button'><div class='statusbar-search-icon'><span>search</span></div></form></div></div>"
 			);
-			*/
-			featureUnavailable();
+			$('.statusbar-search-icon').click(function(){$('#statusbar-search-form').submit();});
 		}
 		
 		/*
@@ -337,18 +335,18 @@ var Statusbar = {
 			// and another menu is chosen.
 			$('.statusbar-highlighted').removeClass('statusbar-highlighted');
 			$('#'+option).addClass('statusbar-highlighted');
-			$('#'+option).attr("type","statusbar");
-			$('#'+option).find('*').attr("type","statusbar");
-			$('#statusbar-info').attr("type","statusbar");
-			$('#statusbar-info').find('*').attr("type","statusbar");
+			$('#'+option).attr("statusbar","statusbar");
+			$('#'+option).find('*').attr("statusbar","statusbar");
+			$('#statusbar-info').attr("statusbar","statusbar");
+			$('#statusbar-info').find('*').attr("statusbar","statusbar");
 		}else{
-			// Show drop down menu with animation sine it is hidden.
+			// Show drop down menu with animation since it is hidden.
 			$('#'+option).addClass('statusbar-highlighted');
 			$('#statusbar-info').slideDown('fast');
-			$('#'+option).attr("type","statusbar");	
-			$('#'+option).find('*').attr("type","statusbar");	
-			$('#statusbar-info').attr("type","statusbar");
-			$('#statusbar-info').find('*').attr("type","statusbar");				
+			$('#'+option).attr("statusbar","statusbar");	
+			$('#'+option).find('*').attr("statusbar","statusbar");	
+			$('#statusbar-info').attr("statusbar","statusbar");
+			$('#statusbar-info').find('*').attr("statusbar","statusbar");				
 		}
 			
 	},
@@ -358,14 +356,14 @@ var Statusbar = {
 	 */
 	hideInfo: function(){
 		$('.statusbar-highlighted').removeClass('statusbar-highlighted');
-			$('#statusbar-info').slideUp('fast');
+		$('#statusbar-info').slideUp('fast');
 	},
 	
 	/*
 	 * Dismiss drop down menu if a click is performed outside of statusbar elements.
 	 */
 	triggerHideInfo: function(event){	
-		if(!($(event.target).attr("type")=="statusbar")){
+		if(!($(event.target).attr("statusbar")=="statusbar")){
 			Statusbar.hideInfo();
 		}
 	},
