@@ -79,3 +79,7 @@
 #search-preamble label {
 	cursor: help;
 }
+#search-preamble .sql {
+	font-family: Consolas;
+	font-size: 10px;
+}

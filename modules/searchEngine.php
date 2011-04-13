@@ -1,5 +1,6 @@
 <?php
 require('../modules/quizrooDB.php'); 
+require('../modules/inc/class.stemmer.inc'); 
 
 // check if query is blank
 if(isset($_GET['searchQuery'])){
@@ -7,6 +8,13 @@ if(isset($_GET['searchQuery'])){
 		$currentPage = $_SERVER["PHP_SELF"];
 		
 		$searchQuery = $_GET['searchQuery'];
+		
+		// split it up into tokens
+		// $tokenArray = explode(' ', $searchQuery);
+		
+		// prepare the Porter Stemmer
+		$stemmer = new Stemmer();
+		$tokenArray = $stemmer->stem_list($searchQuery);
 		
 		// search modifiers
 		if(isset($_GET['searchType'])){
@@ -35,11 +43,31 @@ if(isset($_GET['searchQuery'])){
 				$query_listQuiz = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, (MATCH(quiz_name, quiz_description) AGAINST(%s WITH QUERY EXPANSION)) AS score FROM q_quizzes, q_quiz_cat, s_members WHERE MATCH(quiz_name, quiz_description) AGAINST(%s WITH QUERY EXPANSION) AND member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY score DESC", GetSQLValueString($_GET['searchQuery'], "text"), GetSQLValueString($_GET['searchQuery'], "text"));
 			}
 		}else{
-			$liked_query = GetSQLValueString("[[:<:]]".$_GET['searchQuery']."[[:>:]]", "text");
 			if($searchOption == 0){
-				$query_listQuiz = sprintf("SELECT q.quiz_id, q.quiz_name, q.quiz_description, q.quiz_picture, q.fk_quiz_cat, m.member_name, fk_member_id, c.cat_name, q.likes FROM q_quizzes q, q_quiz_cat c, s_members m WHERE (q.quiz_name REGEXP %s OR q.quiz_description REGEXP %s) AND m.member_id = q.fk_member_id AND c.cat_id = q.fk_quiz_cat AND q.isPublished = 1", $liked_query, $liked_query);
+				$query_sql = "";
+				// loop through the token array and add it to the sql string
+				foreach($tokenArray as $keyword){
+					$liked_query = GetSQLValueString("[[:<:]]".$keyword.".*[[:>:]]", "text");
+					$query_sql .= sprintf("q.quiz_name REGEXP %s OR q.quiz_description REGEXP %s OR ", $liked_query, $liked_query);
+				}
+				$query_sql = substr($query_sql, 0, -4);
+				$query_listQuiz = sprintf("SELECT q.quiz_id, q.quiz_name, q.quiz_description, q.quiz_picture, q.fk_quiz_cat, m.member_name, fk_member_id, c.cat_name, q.likes FROM q_quizzes q, q_quiz_cat c, s_members m WHERE (%s) AND m.member_id = q.fk_member_id AND c.cat_id = q.fk_quiz_cat AND q.isPublished = 1", $query_sql);
 			}else{
-				$query_listQuiz = sprintf("SELECT q.quiz_id, q.quiz_name, q.quiz_description, q.quiz_picture, q.fk_quiz_cat, m.member_name, fk_member_id, c.cat_name, q.likes FROM q_quizzes q, q_quiz_cat c, s_members m WHERE (q.quiz_name REGEXP %s OR q.quiz_description REGEXP %s OR q.quiz_id IN(SELECT quiz_id FROM q_quizzes, q_questions WHERE question REGEXP %s AND fk_quiz_id = quiz_id) OR q.quiz_id IN(SELECT quiz_id FROM q_quizzes, q_questions, q_options WHERE `option` REGEXP %s AND fk_quiz_id = quiz_id AND fk_question_id = question_id)) AND m.member_id = q.fk_member_id AND c.cat_id = q.fk_quiz_cat AND q.isPublished = 1", $liked_query, $liked_query, $liked_query, $liked_query);
+				$query_sql_1 = "";
+				$query_sql_2 = "";
+				$query_sql_3 = "";
+				// loop through the token array and add it to the sql string
+				foreach($tokenArray as $keyword){
+					$liked_query = GetSQLValueString("[[:<:]]".$keyword.".*[[:>:]]", "text");
+					$query_sql_1 .= sprintf("q.quiz_name REGEXP %s OR q.quiz_description REGEXP %s OR ", $liked_query, $liked_query);
+					$query_sql_2 .= sprintf("question REGEXP %s OR ", $liked_query);
+					$query_sql_3 .= sprintf("`option` REGEXP %s OR ", $liked_query);
+				}
+				$query_sql_1 = substr($query_sql_1, 0, -4);
+				$query_sql_2 = substr($query_sql_2, 0, -4);
+				$query_sql_3 = substr($query_sql_3, 0, -4);
+
+				$query_listQuiz = sprintf("SELECT q.quiz_id, q.quiz_name, q.quiz_description, q.quiz_picture, q.fk_quiz_cat, m.member_name, fk_member_id, c.cat_name, q.likes FROM q_quizzes q, q_quiz_cat c, s_members m WHERE (%s OR q.quiz_id IN(SELECT quiz_id FROM q_quizzes, q_questions WHERE (%s) AND fk_quiz_id = quiz_id) OR q.quiz_id IN(SELECT quiz_id FROM q_quizzes, q_questions, q_options WHERE (%s) AND fk_quiz_id = quiz_id AND fk_question_id = question_id)) AND m.member_id = q.fk_member_id AND c.cat_id = q.fk_quiz_cat AND q.isPublished = 1", $query_sql_1, $query_sql_2, $query_sql_3);
 			}
 		}
 		$query_limit_listQuiz = sprintf("%s LIMIT %d, %d", $query_listQuiz, $startRow_listQuiz, $maxRows_listQuiz);
@@ -82,6 +110,7 @@ if(isset($_GET['searchQuery'])){
   <h2>Search</h2>
   <div class="content-container">
     <form id="search" name="search" method="get" action="search.php">
+      <?php if(isset($_GET['sql'])){ ?><input type="hidden" name="sql" id="sql" value="on" /><?php } ?>
       <table width="100%" border="0" cellspacing="0" cellpadding="3">
         <tr>
           <td><span id="sprytextfield1">
@@ -106,6 +135,11 @@ if(isset($_GET['searchQuery'])){
         <?php if($searchQuery != "" && $totalRows_listQuiz != 0){ ?>
         <tr>
           <td colspan="4"><p>Your search returned <?php echo ($totalRows_listQuiz > 1) ? $totalRows_listQuiz." quizzes." : $totalRows_listQuiz." quiz."; ?></p></td>
+        </tr>
+        <?php } ?>
+        <?php if($searchQuery != "" && isset($_GET['sql'])){ ?>
+        <tr>
+          <td colspan="4"><p class="sql"><?php echo $query_listQuiz; ?></p></td>
         </tr>
         <?php } ?>
       </table>
