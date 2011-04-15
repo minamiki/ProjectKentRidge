@@ -6,6 +6,8 @@
 <title>Quizroo: Member Statistics</title>
 <?php include("inc/header-css.php");?>
 <link href="css/statistics.css" rel="stylesheet" type="text/css" />
+<link href="css/recent.css" rel="stylesheet" type="text/css" />
+<link href="css/paging.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -13,5 +15,6 @@
 <?php include("../modules/statusbar.php");?>
 <?php include("../modules/statisticsDisplay.php"); ?>
 <?php include("inc/footer-js.php"); ?>
+<script type="text/javascript" src="js/Dashboard.js"></script>
 </body>
 </html>

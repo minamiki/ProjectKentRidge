@@ -7,6 +7,7 @@
 <title>Quizroo</title>
 <?php include("inc/header-css.php");?>
 <link href="css/dashboard.css" rel="stylesheet" type="text/css" />
+<link href="css/recent.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>

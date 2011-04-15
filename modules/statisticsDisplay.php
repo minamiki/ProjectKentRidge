@@ -1,5 +1,5 @@
 <?php
-require('../modules/quizrooDB.php'); 
+require('../modules/quizrooDB.php');
 
 // get the member rank
 $member_rank = $member->getRanking();
@@ -77,9 +77,10 @@ $(document).ready(function(){
 });
 </script>
 <div id="statistics-preamble" class="frame rounded">
-  <h2>Statistics</h2>
+  <h2>My Profile</h2>
   <p>Get detail reports on your activity on Quizroo! Your ranking shows your rank on the Quizroo Leaderboard. Try to overtake the player just above you! The quiz topic and history charts provides interesting information on your quiz taking habits.</p>
 </div>
+<?php require('../modules/recentActivityProfile.php'); ?>
 <div class="clear">
   <div id="fun-facts" class="framePanel rounded left">
     <h2>Fun Facts</h2>

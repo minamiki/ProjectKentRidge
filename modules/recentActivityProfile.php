@@ -1,13 +1,9 @@
-<?php require('../modules/quizrooDB.php'); ?>
 <?php require('../modules/variables.php'); ?>
 <?php
-// Number of activities per sub-type
-$NUM_RECENT_SAMPLES = 10;
 // Number of activities to display, with a maximum of all samples
-$NUM_RECENT_DISPLAY = 20;
+$NUM_RECENT_DISPLAY = 10;
 // Minimum number of activities to show when hidden
 $NUM_RECENT_SHOW = 3;
-
 
 /*
  * Types of activities to retrieve
@@ -24,7 +20,7 @@ $facebookID = $member->id;
 /*
  * Get results of quizzes user took
  */
-$query_user_results = sprintf("SELECT quiz_id, quiz_name, result_title, timestamp FROM q_store_result,q_quizzes,q_results WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = %s ORDER BY q_store_result.timestamp DESC LIMIT %d", $facebookID, $NUM_RECENT_SAMPLES);
+$query_user_results = sprintf("SELECT quiz_id, quiz_name, result_title, timestamp FROM q_store_result,q_quizzes,q_results WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = %s ORDER BY q_store_result.timestamp DESC", $facebookID);
 $user_results = mysql_query($query_user_results, $quizroo) or die(mysql_error());
 $row_user_results = mysql_fetch_assoc($user_results);
 $totalRows_user_results = mysql_num_rows($user_results);
@@ -41,7 +37,7 @@ if($totalRows_user_results != 0) { do {
 /*
  * Get achievements user received
  */
-$query_user_achievements = sprintf("SELECT name, description, type, timestamp FROM g_achievements_log, g_achievements WHERE g_achievements_log.fk_achievement_id=g_achievements.id AND fk_member_id = %s ORDER BY g_achievements_log.timestamp DESC LIMIT %d", $facebookID, $NUM_RECENT_SAMPLES);
+$query_user_achievements = sprintf("SELECT name, description, type, timestamp FROM g_achievements_log, g_achievements WHERE g_achievements_log.fk_achievement_id=g_achievements.id AND fk_member_id = %s ORDER BY g_achievements_log.timestamp DESC", $facebookID);
 $user_achievements = mysql_query($query_user_achievements, $quizroo) or die(mysql_error());
 $row_user_achievements = mysql_fetch_assoc($user_achievements);
 $totalRows_user_achievements = mysql_num_rows($user_achievements);
@@ -65,7 +61,7 @@ if(count($friends)!=0){
 	/*
  	 * Get all results of quizzes of friends taken within a 1 week interval (to limit results returned)
  	 */
-	$query_all_results = sprintf("SELECT quiz_id, quiz_name, result_title, member_id, member_name, timestamp FROM q_store_result,q_quizzes,q_results,s_members WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = member_id AND timestamp > DATE_SUB(NOW(), INTERVAL 1 MONTH) AND q_store_result.fk_member_id IN %s ORDER BY q_store_result.timestamp DESC",$friends);
+	$query_all_results = sprintf("SELECT quiz_id, quiz_name, result_title, member_id, member_name, timestamp FROM q_store_result,q_quizzes,q_results,s_members WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = member_id AND q_store_result.fk_member_id IN %s ORDER BY q_store_result.timestamp DESC",$friends);
 	$all_results = mysql_query($query_all_results, $quizroo) or die(mysql_error());
 	$row_all_results = mysql_fetch_assoc($all_results);
 	$totalRows_all_results = mysql_num_rows($all_results);
@@ -80,13 +76,13 @@ if(count($friends)!=0){
 		$timestamp = strtotime($row_all_results['timestamp']);
 		$recent_activities[] = array('information'=>$row_all_results,'timestamp'=>(int) date('U',$timestamp),'type'=>0);
 		$friends_results++;
-	}while ($friends_results < $NUM_RECENT_SAMPLES && ($row_all_results = mysql_fetch_assoc($all_results)));	
+	}while ($row_all_results = mysql_fetch_assoc($all_results));	
 	}
 
 	/*
 	 * Get all achievements within a 1 week interval (to limit results returned)
 	 */
-	$query_all_achievements = sprintf("SELECT name, description, member_id, member_name, timestamp FROM g_achievements_log, g_achievements,s_members WHERE g_achievements_log.fk_achievement_id=g_achievements.id AND type<>3 AND g_achievements_log.fk_member_id = member_id AND timestamp > DATE_SUB(NOW(), INTERVAL 1 MONTH) AND g_achievements_log.fk_member_id IN %s ORDER BY g_achievements_log.timestamp DESC",$friends);
+	$query_all_achievements = sprintf("SELECT name, description, member_id, member_name, timestamp FROM g_achievements_log, g_achievements,s_members WHERE g_achievements_log.fk_achievement_id=g_achievements.id AND type<>3 AND g_achievements_log.fk_member_id = member_id AND g_achievements_log.fk_member_id IN %s ORDER BY g_achievements_log.timestamp DESC",$friends);
 	$all_achievements = mysql_query($query_all_achievements, $quizroo) or die(mysql_error());
 	$row_all_achievements = mysql_fetch_assoc($all_achievements);
 	$totalRows_all_achievements = mysql_num_rows($all_achievements);
@@ -101,7 +97,7 @@ if(count($friends)!=0){
 		$timestamp = strtotime($row_all_achievements['timestamp']);
 		$recent_activities[] = array('information'=>$row_all_achievements,'timestamp'=>(int) date('U',$timestamp),'type'=>1);
 		$friends_achievements++;
-	}while ($friends_achievements < $NUM_RECENT_SAMPLES && ($row_all_achievements = mysql_fetch_assoc($all_achievements)));	
+	}while ($row_all_achievements = mysql_fetch_assoc($all_achievements));	
 	}
 }
 
@@ -113,14 +109,33 @@ foreach($recent_activities as $key => $row) {
 }
 array_multisort($time, SORT_DESC, $recent_activities);
 
-$recent_activities = array_slice($recent_activities,0,$NUM_RECENT_DISPLAY);
+/*
+ * For Pagination
+ */ 
+// get the entry and page
+if(isset($_GET['rp'])){
+	$current_page = $_GET['rp'];
+	$current_entry = $current_page * 10;
+}else{
+	$current_page = 0;
+	$current_entry = 0;
+}
+// store the total keys
+$recent_total = sizeof($recent_activities);
+$recent_total_pages = ceil($recent_total / (float)$NUM_RECENT_DISPLAY);
+// slice the array according to page
+$recent_activities = array_slice($recent_activities, $current_entry, $NUM_RECENT_DISPLAY, true);
+// store the array keys
+$recent_keys = array_keys($recent_activities);
+$first_entry = $recent_keys[0];
+$last_entry = $recent_keys[$NUM_RECENT_DISPLAY-1];
 ?>
 
 <!--Display the panels-->
 <div id="recent" class="framePanel rounded">
 	<a href="javascript:;" id="recent-toggle">More</a>
 	<h2>Recent Activity</h2>
-	<div class="content-container">
+	<div id="event-content" class="content-container">
 	<?php 
 	$activity_count = 0;
 	if(count($recent_activities)!=0){
@@ -131,7 +146,7 @@ $recent_activities = array_slice($recent_activities,0,$NUM_RECENT_DISPLAY);
 		$activity_count++;
 		
 		if($activity['type']==0){	
-			if($activity['information']['member_id']){
+			if(isset($activity['information']['member_id'])){
 			?>
 	<div class="recent-feed"><span class="topic quiz">Quiz</span>
 	  <div class="event  quiz-event">
@@ -154,7 +169,7 @@ $recent_activities = array_slice($recent_activities,0,$NUM_RECENT_DISPLAY);
 	  </div>
 	<?php } ?>
 		<?php }else if($activity['type']==1){
-			if($activity['information']['member_id']){ ?>
+			if(isset($activity['information']['member_id'])){ ?>
 		<div class="recent-feed"><span class="topic achievement">Achievement</span>
 		  <div class="event achievement-event">
 		    <div class="text-flow"><a href="viewMember.php?id=<?php echo $activity['information']['member_id']; ?>"><?php echo $activity['information']['member_name'] ?></a> unlocked the <a href="achievements.php"><?php echo $activity['information']['name'] ?></a> achievement.</div>
@@ -188,22 +203,117 @@ $recent_activities = array_slice($recent_activities,0,$NUM_RECENT_DISPLAY);
 				<?php }?>
 			<?php } ?>
 		<?php }else if($activity['type']==2){?>
-		
-		<?php }else if($activity['type']==3){?>	
+		<!-- Type 2 activitiy stuff here -->
+		<?php }else if($activity['type']==3){?>
+        <!-- Type 3 activity stuff here -->
 		<?php }?>
-	<?php }
-	}else{ ?>
+	<?php } ?>
+    <!-- Start Paging Table -->
+    <div id="paging">
+      <table border="0" align="center" cellpadding="5" cellspacing="0">
+        <tr>
+          <td><?php if ($first_entry > 0) { // Show if not first page ?>
+            <a href="javascript:;" class="paging-goto" rel="0">First</a>
+            <?php }else{ ?>
+            <a href="javascript:;" class="disabled">First</a>
+            <?php } // Show if not first page ?></td>
+          <td><?php if ($first_entry > 0) { // Show if not first page ?>
+            <a href="javascript:;" class="paging-goto" rel="<?php echo $current_page-1; ?>">Previous</a>
+            <?php }else{ ?>
+            <a href="javascript:;" class="disabled">Previous</a>
+            <?php } // Show if not first page ?></td>
+          <td>&nbsp;</td>
+          <td><?php // calculate the page range
+			if($recent_total_pages > 9){
+				if($current_page > 4){
+					if($current_page + 4 <= $recent_total_pages){
+						$startpage = $current_page - 4;
+						$maxpage = $current_page + 5;
+					}else{
+						$maxpage = $recent_total_pages;
+						$startpage = $recent_total_pages - 9;
+					}
+				}else{
+					$startpage = 0;
+					$maxpage = 9;
+				}
+			}else{
+				$startpage = 0;
+				$maxpage = $recent_total_pages;
+			}
+			// display the pages
+			for($i = $startpage; $i < $maxpage; $i++){ ?>
+            <?php if($i != $current_page){ ?>
+            <a href="javascript:;" rel="<?php echo $i; ?>" class="paging-goto"><?php echo $i+1; ?></a>
+            <?php }else{ ?>
+            <a href="javascript:;" class="disabled"><?php echo $i+1; ?></a>
+            <?php }} ?></td>
+          <td>&nbsp;</td>
+          <td><?php if ($current_page < $recent_total_pages-1) { // Show if not last page ?>
+            <a href="javascript:;" class="paging-goto" rel="<?php echo $current_page+1; ?>">Next</a>
+            <?php }else{ ?>
+            <a href="javascript:;" class="disabled">Next</a>
+            <?php } // Show if not last page ?></td>
+          <td><?php if ($current_page < $recent_total_pages-1) { // Show if not last page ?>
+            <a href="javascript:;" class="paging-goto" rel="<?php echo $recent_total_pages; ?>">Last</a>
+            <?php }else{ ?>
+            <a href="javascript:;" class="disabled">Last</a>
+            <?php } // Show if not last page ?></td>
+        </tr>
+      </table>
+    </div>
+    <!-- End Paging Table -->
+    </div>
+    <?php }else{ ?>
 		<script type="text/javascript">
-			$('#recent').hide();
-		</script>
+            $('#recent').hide();
+        </script>
 	<?php }?>
 	</div>
-	</div>
 </div>
-<?php 
-if(count($recent_activities)<=$NUM_RECENT_SHOW){
-?>
-	<script type="text/javascript">
-		$('#recent-toggle').hide();
-	</script>
+<?php if(count($recent_activities)<=$NUM_RECENT_SHOW){ ?>
+<script type="text/javascript">
+	$('#recent-toggle').hide();
+</script>
 <?php }?>
+<script type="text/javascript">
+$(document).ready(function(){
+	// Load the new page
+	function loadEvents(page){
+		$.get('../modules/recentActivityLoader.php?rp='+page, function(data){
+			$("#event-content").html(data);
+		});	
+	}
+	$(".paging-goto").live("click", function(){
+		var clickedItem = $(this).attr("rel");
+		console.log("Goto: " + clickedItem);
+		loadEvents(clickedItem);
+		return false;
+		$('#recent-toggle').show();
+	});
+	/*
+	$("#paging-first").click(function(){
+		console.log("First");
+	});
+	// Page to First Trigger
+	$("#paging-prev").click(function(){
+		console.log("Previous");
+	});
+	// Page to Next Trigger
+	$("#paging-next").click(function(){
+		console.log("Next");
+	});
+	// Page to Last Trigger
+	$("#paging-last").click(function(){
+		console.log("Last");
+	});
+	$(".paging-goto").click(function(){
+		var clickedItem = $(this).attr("rel");
+		console.log("Goto: " + clickedItem);
+		loadEvents(clickedItem-1);
+		return false;
+		$('#recent-toggle').show();
+	});
+	*/
+});
+</script>
