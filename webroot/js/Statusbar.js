@@ -244,11 +244,11 @@ var Statusbar = {
 			var stats = document.createElement('div');
 			$('#statusbar-info').append(stats);
 			$(stats).addClass('statusbar-menu-item').html(
-				"<div class='statusbar-menu-title'>Statistics</div>"+
+				"<div class='statusbar-menu-title'>My Profile</div>"+
 				"<div class='statusbar-menu-desc'>View statistics for your activities</div>"
 			);
 			$(stats).click(function(){
-				goToURL('statistics.php');
+				goToURL('profile.php');
 				$(stats).css('background-color','#333');
 			});
 			

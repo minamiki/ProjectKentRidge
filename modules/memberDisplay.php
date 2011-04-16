@@ -143,9 +143,9 @@ $(document).ready(function(){
   <h2><?php echo $view_member->qname; ?></h2>
   <?php if($friend){ ?>
   <?php if($self){ ?>
-  <p>Hey.. you're looking at yourself! In this case, this page is the same as your statistics page! On top of that, you get to see your latest and popular quizzes though :)</p>  
+  <p>Hey.. you're looking at yourself! In this case, this page is the same as your profile page! On top of that, you get to see your latest and popular quizzes though :)</p>  
   <?php }else{ ?>
-  <p>Here's some information about your friend, <?php echo $view_member->qname; ?>. You can see the latest quizzes created by <?php echo $gender[1]; ?>. You can also see <?php echo $gender[1]; ?> quiz taking habits and history, just like your statistics page!</p>
+  <p>Here's some information about your friend, <?php echo $view_member->qname; ?>. You can see the latest quizzes created by <?php echo $gender[1]; ?>. You can also see <?php echo $gender[1]; ?> quiz taking habits and history, just like your profile page!</p>
   <?php }}else{ ?>
   <p>Here's some information about this member. You can see the latest quizzes created by this member. You can see more information if this member is your friend! (In facebook)</p>  
   <?php } ?>
