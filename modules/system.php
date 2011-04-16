@@ -36,24 +36,41 @@ class System{
 	}
 	
 	// function get member stats
-	function getMemberStats($date = NULL){
+	function getMemberStats($friend_list = NULL, $date = NULL){
 		require('quizrooDB.php');
 		
 		if($date == NULL){
 			// Get fresh stats
-			$query = "SELECT
-			(SELECT COUNT(member_id) FROM s_members WHERE isAdmin = 0) AS member_count,
-			(SELECT SUM(quiztaker_score) + SUM(quizcreator_score) FROM s_members WHERE isAdmin = 0) AS member_total_score,
-			(SELECT COUNT(quiz_id) FROM q_quizzes) AS quiz_total,
-			(SELECT COUNT(quiz_id) FROM q_quizzes WHERE isPublished = 0) AS quiz_draft,
-			(SELECT COUNT(quiz_id) FROM q_quizzes WHERE isPublished = 1) AS quiz_published,
-			(SELECT COUNT(quiz_id) FROM q_quizzes WHERE isPublished = 2) AS quiz_modify,
-			(SELECT COUNT(quiz_id) FROM q_quizzes WHERE isPublished = 3) AS quiz_archive,
-			(SELECT SUM(quiz_score) FROM q_quizzes WHERE isPublished = 1) AS quiz_total_score,
-			(SELECT COUNT(store_id) FROM q_store_result) AS quiz_total_taken,
-			(SELECT SUM(likes) FROM q_quizzes WHERE isPublished = 1) AS quiz_total_likes,
-			(SELECT COUNT(question_id) FROM q_quizzes, q_questions WHERE isPublished = 1 AND fk_quiz_id = quiz_id) AS quiz_total_questions,
-			(SELECT COUNT(option_id) FROM q_options, q_questions, q_quizzes WHERE isPublished = 1 AND fk_quiz_id = quiz_id AND fk_question_id = question_id) AS quiz_total_options";
+			if($friend_list == NULL){
+				$query = "SELECT
+				(SELECT COUNT(member_id) FROM s_members WHERE isAdmin = 0) AS member_count,
+				(SELECT SUM(quiztaker_score) + SUM(quizcreator_score) FROM s_members WHERE isAdmin = 0) AS member_total_score,
+				(SELECT COUNT(quiz_id) FROM q_quizzes) AS quiz_total,
+				(SELECT COUNT(quiz_id) FROM q_quizzes WHERE isPublished = 0) AS quiz_draft,
+				(SELECT COUNT(quiz_id) FROM q_quizzes WHERE isPublished = 1) AS quiz_published,
+				(SELECT COUNT(quiz_id) FROM q_quizzes WHERE isPublished = 2) AS quiz_modify,
+				(SELECT COUNT(quiz_id) FROM q_quizzes WHERE isPublished = 3) AS quiz_archive,
+				(SELECT SUM(quiz_score) FROM q_quizzes WHERE isPublished = 1) AS quiz_total_score,
+				(SELECT COUNT(store_id) FROM q_store_result) AS quiz_total_taken,
+				(SELECT SUM(likes) FROM q_quizzes WHERE isPublished = 1) AS quiz_total_likes,
+				(SELECT COUNT(question_id) FROM q_quizzes, q_questions WHERE isPublished = 1 AND fk_quiz_id = quiz_id) AS quiz_total_questions,
+				(SELECT COUNT(option_id) FROM q_options, q_questions, q_quizzes WHERE isPublished = 1 AND fk_quiz_id = quiz_id AND fk_question_id = question_id) AS quiz_total_options";
+			}else{
+				// Get fresh friends stats
+				$query = sprintf("SELECT
+				(SELECT COUNT(member_id) FROM s_members WHERE member_id IN(%s)) AS member_count,
+				(SELECT SUM(quiztaker_score) + SUM(quizcreator_score) FROM s_members WHERE member_id IN(%s)) AS member_total_score,
+				(SELECT COUNT(quiz_id) FROM q_quizzes WHERE fk_member_id IN(%s)) AS quiz_total,
+				(SELECT COUNT(quiz_id) FROM q_quizzes WHERE fk_member_id IN(%s) AND isPublished = 0) AS quiz_draft,
+				(SELECT COUNT(quiz_id) FROM q_quizzes WHERE fk_member_id IN(%s) AND isPublished = 1) AS quiz_published,
+				(SELECT COUNT(quiz_id) FROM q_quizzes WHERE fk_member_id IN(%s) AND isPublished = 2) AS quiz_modify,
+				(SELECT COUNT(quiz_id) FROM q_quizzes WHERE fk_member_id IN(%s) AND isPublished = 3) AS quiz_archive,
+				(SELECT SUM(quiz_score) FROM q_quizzes WHERE fk_member_id IN(%s) AND isPublished = 1) AS quiz_total_score,
+				(SELECT COUNT(store_id) FROM q_store_result WHERE fk_member_id IN(%s)) AS quiz_total_taken,
+				(SELECT SUM(likes) FROM q_quizzes WHERE fk_member_id IN(%s) AND isPublished = 1) AS quiz_total_likes,
+				(SELECT COUNT(question_id) FROM q_quizzes, q_questions WHERE fk_member_id IN(%s) AND isPublished = 1 AND fk_quiz_id = quiz_id) AS quiz_total_questions,
+				(SELECT COUNT(option_id) FROM q_options, q_questions, q_quizzes WHERE fk_member_id IN(%s) AND isPublished = 1 AND fk_quiz_id = quiz_id AND fk_question_id = question_id) AS quiz_total_options", $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list);
+			}
 			$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 			$row_getQuery = mysql_fetch_assoc($getQuery);
 			

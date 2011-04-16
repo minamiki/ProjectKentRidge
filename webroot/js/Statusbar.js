@@ -213,7 +213,8 @@ var Statusbar = {
 				"<div class='statusbar-menu-desc'>View information about your friends</div>"
 			);
 			$(overview).click(function(){
-				featureUnavailable();	
+				goToURL('friends.php');
+				$(overview).css('background-color','#333');
 			});
 			
 			var leaderboard = document.createElement('div');
