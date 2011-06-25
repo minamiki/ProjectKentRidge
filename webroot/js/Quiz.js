@@ -20,7 +20,7 @@ $(document).ready(function() {
 	
 	// set the margin for the indicators
 	var numQuestions = $("#question_paging a").length
-	var margin = (690 - (numQuestions * 15)) / numQuestions;
+	var margin = (690 - (numQuestions * 16)) / numQuestions;
 	
 	// also store the number of questions for error checking later
 	var questionArray = new Array(numQuestions);
@@ -104,7 +104,7 @@ $(document).ready(function() {
 	
 	// Next Button
 	$("[id^=nextBtn]").click(function() {
-		console.log("Going to next slide");
+		//console.log("Going to next slide");
 		$active = $('#question_paging a.active');
 		updateProgress();
 		$active = $('#question_paging a.active').next();
@@ -117,7 +117,7 @@ $(document).ready(function() {
 	
 	// Previous Button
 	$("[id^=prevBtn]").click(function() {
-		console.log("Going to next slide");
+		//console.log("Going to next slide");
 		$active = $('#question_paging a.active');
 		updateProgress();
 		$active = $('#question_paging a.active').prev();
@@ -130,7 +130,7 @@ $(document).ready(function() {
 	
 	//On Click
 	$("#question_paging a").click(function() {
-		console.log("Jumping to slide");
+		//console.log("Jumping to slide");
 		$active = $(this);
 		updateProgress();
 		rotate(); //Trigger rotation immediately
