@@ -131,7 +131,7 @@ $recent_activities = array_slice($recent_activities,0,$NUM_RECENT_DISPLAY);
 		$activity_count++;
 		
 		if($activity['type']==0){	
-			if($activity['information']['member_id']){
+			if(isset($activity['information']['member_id'])){
 			?>
 	<div class="recent-feed"><span class="topic quiz">Quiz</span>
 	  <div class="event  quiz-event">
@@ -154,7 +154,7 @@ $recent_activities = array_slice($recent_activities,0,$NUM_RECENT_DISPLAY);
 	  </div>
 	<?php } ?>
 		<?php }else if($activity['type']==1){
-			if($activity['information']['member_id']){ ?>
+			if(isset($activity['information']['member_id'])){ ?>
 		<div class="recent-feed"><span class="topic achievement">Achievement</span>
 		  <div class="event achievement-event">
 		    <div class="text-flow"><a href="viewMember.php?id=<?php echo $activity['information']['member_id']; ?>"><?php echo $activity['information']['member_name'] ?></a> unlocked the <a href="achievements.php"><?php echo $activity['information']['name'] ?></a> achievement.</div>

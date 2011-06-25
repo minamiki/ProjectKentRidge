@@ -38,8 +38,8 @@ class Member{
 				$this->me = true;
 				$this->me = array('name' => "Debug Superuser");
 				$this->id = 999999999;
-				//$this->friends = array('data'=>array(array('name'=>"Debug Superuser",'id'=>"750200398"),array('name'=>"Debug Superuser",'id'=>"581124362")));
-				$this->friends = array();
+				$this->friends = array('data'=>array(array('name'=>"Debug Superuser",'id'=>"750200398"),array('name'=>"Debug Superuser",'id'=>"581124362")));
+				//$this->friends = array();
 				$this->register();
 			}else{
 				// Load the Facebook PHP API
