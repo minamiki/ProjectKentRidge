@@ -1,1 +1,1 @@
-<?php /*nothing*/ header("Location: webroot/index.php"); ?>
+<?php /*nothing-testing*/ header("Location: webroot/index.php"); ?>
