@@ -106,8 +106,12 @@
 	margin-bottom: 3px;
 	color: #333;
 }
-.quiz_box a:link, .quiz_box a:visited {
+.quiz_box a:link {
 	color: #333;
+	text-decoration: none;
+}
+.quiz_box a:visited {
+	color: #999;
 	text-decoration: none;
 }
 .quiz_box a:hover {
