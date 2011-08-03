@@ -1,4 +1,11 @@
 <?php // Quizroo Fact Class
+//fn to reset daily quiz taker and creator scores
+//fn to get members stats (overall/specific member), get from log if date stated
+//fn to insert daily stats into db
+//fn to get overall avg of stated stat in entire quizroo
+//fn to get today's stats depending on the stat stated
+//fn to find unused images and delete them
+//fn to display system report in text format
 
 if(!class_exists("System")){
 class System{
@@ -38,9 +45,8 @@ class System{
 	// function get member stats
 	function getMemberStats($friend_list = NULL, $date = NULL){
 		require('quizrooDB.php');
-		
 		if($date == NULL){
-			// Get fresh stats
+			// Get fresh stats from db
 			if($friend_list == NULL){
 				$query = "SELECT
 				(SELECT COUNT(member_id) FROM s_members WHERE isAdmin = 0) AS member_count,
@@ -55,7 +61,7 @@ class System{
 				(SELECT SUM(likes) FROM q_quizzes WHERE isPublished = 1) AS quiz_total_likes,
 				(SELECT COUNT(question_id) FROM q_quizzes, q_questions WHERE isPublished = 1 AND fk_quiz_id = quiz_id) AS quiz_total_questions,
 				(SELECT COUNT(option_id) FROM q_options, q_questions, q_quizzes WHERE isPublished = 1 AND fk_quiz_id = quiz_id AND fk_question_id = question_id) AS quiz_total_options";
-			}else{
+			}else{ //if friend list stated
 				// Get fresh friends stats
 				$query = sprintf("SELECT
 				(SELECT COUNT(member_id) FROM s_members WHERE member_id IN(%s)) AS member_count,
@@ -78,20 +84,20 @@ class System{
 			$getCount = mysql_query($queryCount, $quizroo) or die(mysql_error());
 			//$row_getCount = mysql_fetch_assoc($getCount);
 			$this->quiz_total_taken_unique = mysql_num_rows($getCount);
-		}else{
+		}else{ //if date stated
 			// get from log
 			$query = sprintf("SELECT * FROM s_dailystats WHERE DATE(log_timestamp) = DATE('%s') ORDER BY log_timestamp DESC LIMIT 0, 1", $date);
 			$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 			$row_getQuery = mysql_fetch_assoc($getQuery);
 			$totalrow_getQuery = mysql_num_rows($getQuery);
-			
+			//if nothing is retrieved
 			if($totalrow_getQuery == 0){
 				return false;
 			}	
 			$this->quiz_total_taken_unique = $row_getQuery['quiz_total_taken_unique'];
 		}
 		
-		// assign the values
+		// assign the values from db
 		$this->member_count = $row_getQuery['member_count'];
 		$this->member_total_score = $row_getQuery['member_total_score'];
 		$this->quiz_total = $row_getQuery['quiz_total'];
@@ -240,7 +246,7 @@ class System{
 		return $row_getQuery['count'];
 	}
 	
-	// 
+	
 	function cleanImageStore($action = NULL){
 		require('quizrooDB.php');
 		
@@ -254,7 +260,7 @@ class System{
 		$totalRows_getImageKey = mysql_num_rows($getImageKey);
 		
 		do{
-			// find the orphaned images
+			// find the orphaned images and remove them
 			if($row_getImageKey['uni_key'] != ""){
 				foreach(glob("../quiz_images/".$row_getImageKey['uni_key']."*") as $filename){
 					if($action == "remove"){

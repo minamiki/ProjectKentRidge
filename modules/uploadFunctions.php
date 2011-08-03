@@ -1,7 +1,12 @@
 <?php
+
+//fn to convert 1-36 into corresponding alphabet and digits
+//fn to randomise an id
+//fn to get image type
+
 function assign_rand_value($num)
 {
-// accepts 1 - 36
+// accepts 1 - 36 and converts into corresponding alphabet and digits
   switch($num)
   {
     case "1":
@@ -117,7 +122,7 @@ return $rand_value;
 }
 
 function get_rand_id($length)
-{
+{ //randomise an id
   if($length>0) 
   { 
   $rand_id="";
@@ -130,6 +135,8 @@ function get_rand_id($length)
   }
 return $rand_id;
 }
+
+//fn to get image type
 if(!function_exists('exif_imagetype')){
   function exif_imagetype($filename){
 	  if((list($width, $height, $type, $attr) = getimagesize($filename)) !== false){

@@ -1,4 +1,11 @@
 <?php
+//get topic id from address bar
+//retrieve latest and popular quizzes by topic from db
+//retrieve categories from db as a string, fetch the result row as an associative array, return num rows
+//get topic information from db
+//display topic name and description
+//display quizzes for latest and popular by topic. including title, image, description, creator, rating
+
 require('../modules/quizrooDB.php');
 require('../modules/variables.php');
 // hack for checking topic IDs
@@ -28,18 +35,20 @@ $row_getTopics = mysql_fetch_assoc($getTopics);
 $totalRows_getTopics = mysql_num_rows($getTopics);
 ?>
 <div id="dashboard-container">
+<!-- display topic name and description -->
   <div id="topic-preamble" class="frame rounded">
     <h2><?php echo $row_getTopics['cat_name']; ?></h2>
 	<p><?php echo $row_getTopics['cat_desc']; ?></p>
   </div>
   <div class="clear">
     <div id="recommendations" class="framePanel rounded left-right">
+	<!-- display quizzes for latest. including title, image, description, creator, rating -->
       <h2>Latest</h2>
       <div class="repeat-container">
       <?php if($totalRows_recommendations != 0){ do { ?>
         <div class="quiz_box clear">
-          <h3><a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><?php echo $row_recommendations['quiz_name']; ?></a></h3>
-          <div class="thumb_box">
+			<h3><a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><?php echo $row_recommendations['quiz_name']; ?></a></h3>
+				<div class="thumb_box">
             <!--<div class="quiz_rating">Overlay</div>-->
             <a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_recommendations['quiz_picture']; ?>" alt="<?php echo $row_recommendations['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_recommendations['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
@@ -55,6 +64,7 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
         <?php } ?>
         </div>
     </div>
+	<!--display quizzes for popular. including title, image, description, creator, rating-->
     <div id="popular" class="framePanel rounded left-right clear">
       <h2>Popular</h2>
       <div class="repeat-container">

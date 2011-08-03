@@ -3,6 +3,17 @@ require('../modules/quizrooDB.php');
 require('../modules/variables.php');
 require('../modules/checkAchievements.php');
 
+//collect final answers of each qns
+//calculate result from weightage
+//if quiz is published, award creator points
+//log user quiz taking attempt into db
+//check and prepare possible achievements unlock
+//get user's results from db
+//get all results taken of quiz to display as a chart
+//draw and display the chart
+//display quiz results
+//display loading of chart
+
 // get the member's facebook id
 $facebookID = $member->id;
 
@@ -107,7 +118,7 @@ $(document).ready(function(){
 	function drawCharts() {
 		drawDeviceChart();
 	}
-	
+	//draw chart of percentage of ppl who gets each result
 	function drawDeviceChart() {
 		var data = new google.visualization.DataTable();
 		data.addColumn('string', 'Result');
@@ -129,7 +140,7 @@ $(document).ready(function(){
 </script>
 <?php } ?>
 <div class="framePanel rounded">
-<h2>Quiz Results</h2>
+<h2>Quiz Results</h2> <!-- display for the quiz results-->
 <div class="content-container">
 <p>Here's the result of the quiz! You can 'Like' this quiz or recommend it to your friends! You can also see how others have fared while taking this quiz.</p>
 </div>
@@ -142,7 +153,7 @@ $(document).ready(function(){
 <!-- Include user sharing interface for liking, posting feed and recommending to friends -->
 <?php include('sharingInterface.php') ?>
 </div>
-
+<!-- load the chart -->
 <?php if($quiz->isPublished() && $totalRows_getResultChart != 0){ ?>
 <div class="framePanel rounded">
 <h2>Result Details</h2>

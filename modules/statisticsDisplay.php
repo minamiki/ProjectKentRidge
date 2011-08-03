@@ -1,5 +1,13 @@
 <?php
 require('../modules/quizrooDB.php');
+//page under profile > my profile
+//get user's rank, and the members above and below user
+//get topics done by user from db
+//get quiz taking history of user from db
+//draw the 2 charts
+//display for profile msg and fun fact bar
+//display for ranking of user and members above and below user
+//display for loading of charts
 
 // get the member rank
 $member_rank = $member->getRanking();
@@ -15,14 +23,27 @@ $row_getBelowRank = $member->getLeaderBoardStat($member_rank+1);
 $quiz_total = $member->getStats('quizzes_total');
 
 // topic pie chart
-$topicQuery = sprintf("SELECT COUNT(fk_quiz_cat) AS count, cat_name FROM (SELECT store_id, fk_quiz_id, fk_quiz_cat, cat_name FROM q_store_result, q_quizzes, q_quiz_cat WHERE q_quizzes.quiz_id = q_store_result.fk_quiz_id AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat AND q_store_result.fk_member_id = %s GROUP BY q_store_result.fk_quiz_id) t GROUP BY fk_quiz_cat", $member->id);
+$topicQuery = sprintf("SELECT COUNT(fk_quiz_cat) AS count, cat_name 
+					   FROM (SELECT store_id, fk_quiz_id, fk_quiz_cat, cat_name 
+					   FROM q_store_result, q_quizzes, q_quiz_cat 
+					   WHERE q_quizzes.quiz_id = q_store_result.fk_quiz_id 
+					   AND q_quiz_cat.cat_id = q_quizzes.fk_quiz_cat 
+					   AND q_store_result.fk_member_id = %s 
+					   GROUP BY q_store_result.fk_quiz_id) t GROUP BY fk_quiz_cat", $member->id);
 $getTopics = mysql_query($topicQuery, $quizroo) or die(mysql_error());
 $row_getTopics = mysql_fetch_assoc($getTopics);
 $totalRows_getTopics = mysql_num_rows($getTopics);
 
 // take quiz history
-$takeQuizQuery = sprintf("SELECT count, r.takeDate FROM (SELECT takeDate FROM (SELECT DATE(timestamp) AS takeDate FROM `q_store_result` GROUP BY DATE(timestamp) ORDER BY takeDate DESC LIMIT 0, 7) t ORDER BY takeDate) r LEFT JOIN (SELECT COUNT(store_id) AS count, DATE(timestamp) As takeDate FROM `q_store_result` WHERE `fk_member_id` = %s GROUP BY DATE(timestamp)
-) a ON r.takedate = a.takeDate", $member->id);
+$takeQuizQuery = sprintf("SELECT count, r.takeDate 
+						  FROM (SELECT takeDate FROM (SELECT DATE(timestamp) AS takeDate 
+						  FROM `q_store_result` GROUP BY DATE(timestamp) 
+						  ORDER BY takeDate DESC LIMIT 0, 7) t ORDER BY takeDate) r 
+						  LEFT JOIN (SELECT COUNT(store_id) AS count, 
+						  DATE(timestamp) As takeDate 
+						  FROM `q_store_result` 
+						  WHERE `fk_member_id` = %s GROUP BY DATE(timestamp)) a 
+						  ON r.takedate = a.takeDate", $member->id);
 $getTakeQuiz = mysql_query($takeQuizQuery, $quizroo) or die(mysql_error());
 $row_getTakeQuiz = mysql_fetch_assoc($getTakeQuiz);
 $totalRows_getTakeQuiz = mysql_num_rows($getTakeQuiz);
@@ -36,7 +57,7 @@ $(document).ready(function(){
 	google.setOnLoadCallback(function(){
 		drawCharts();
 	});
-	
+	//draw the 2 charts
 	function drawCharts() {
 		drawTopicBreakdownChart();
 		drawTakeQuizHistoryChart();
@@ -77,13 +98,13 @@ $(document).ready(function(){
 });
 </script>
 <div id="statistics-preamble" class="frame rounded">
-  <h2>My Profile</h2>
+  <h2>My Profile</h2> <!-- display for profile msg-->
   <p>Get detail reports on your activity on Quizroo! Your ranking shows your rank on the Quizroo Leaderboard. Try to overtake the player just above you! The quiz topic and history charts provides interesting information on your quiz taking habits.</p>
 </div>
 <?php require('../modules/recentActivityProfile.php'); ?>
 <div class="clear">
   <div id="fun-facts" class="framePanel rounded left">
-    <h2>Fun Facts</h2>
+    <h2>Fun Facts</h2> <!-- display for fun fact bar-->
     <div class="content-container">
     <p class="fact">You have created</p>
     <div class="factbox rounded">
@@ -134,7 +155,7 @@ $(document).ready(function(){
     </div>
   </div>
   <div id="ranking" class="framePanel rounded right">
-    <h2>Your Ranking</h2>
+    <h2>Your Ranking</h2> <!-- display for ranking-->
     <div class="content-container">
     <table width="100%" border="0" cellpadding="4" cellspacing="0" id="rankTable">
       <tr>
@@ -144,7 +165,7 @@ $(document).ready(function(){
         <th scope="col">Score</th>
       </tr>
       <?php if($member_rank != 1){ ?>
-      <tr class="compare-box">
+      <tr class="compare-box"> <!-- display for member ranking above user, including profile pic from fb, mouseover msg-->
         <td align="center" scope="row" class="ranking compare"><?php echo $row_getAboveRank['ranking']; ?></td>
         <td align="center" scope="row"><img src="http://graph.facebook.com/<?php echo $row_getAboveRank['member_id']; ?>/picture" alt="<?php echo $row_getAboveRank['member_name']; ?>" width="50" height="50" class="compareImg" title="<?php echo $row_getAboveRank['member_name']; ?>" /></td>
         <td><p class="member-name compare"><?php echo $row_getAboveRank['member_name']; ?></p>
@@ -153,7 +174,7 @@ $(document).ready(function(){
         <p class="breakdown-score compare">Taker: <?php echo $row_getAboveRank['quiztaker_score']; ?>, Creator: <?php echo $row_getAboveRank['quizcreator_score']; ?></p></td>
       </tr>
       <?php } ?>
-      <tr>
+      <tr> <!--display for user's ranking-->
         <td width="55" align="center" scope="row" class="ranking"><?php echo $row_getMemRank['ranking']; ?></td>
         <td width="60" align="center" scope="row"><img src="http://graph.facebook.com/<?php echo $row_getMemRank['member_id']; ?>/picture" width="50" height="50" alt="<?php echo $row_getMemRank['member_name']; ?>" title="<?php echo $row_getMemRank['member_name']; ?>" /></td>
         <td><p class="member-name"><?php echo $row_getMemRank['member_name']; ?></p>
@@ -162,7 +183,7 @@ $(document).ready(function(){
         <p class="breakdown-score">Taker: <?php echo $row_getMemRank['quiztaker_score']; ?>, Creator: <?php echo $row_getMemRank['quizcreator_score']; ?></p></td>
       </tr>
       <?php if($row_getBelowRank != NULL){ ?>
-      <tr class="compare-box">
+      <tr class="compare-box"> <!-- display for member ranking below user-->
         <td align="center" scope="row" class="ranking compare"><?php echo $row_getBelowRank['ranking']; ?></td>
         <td align="center" scope="row"><img src="http://graph.facebook.com/<?php echo $row_getBelowRank['member_id']; ?>/picture" alt="<?php echo $row_getBelowRank['member_name']; ?>" width="50" height="50" class="compareImg" title="<?php echo $row_getBelowRank['member_name']; ?>" /></td>
         <td><p class="member-name compare"><?php echo $row_getBelowRank['member_name']; ?></p>
@@ -173,7 +194,7 @@ $(document).ready(function(){
       <?php } ?>
     </table>
     </div>
-  </div>
+  </div> <!-- display for loading of charts-->
   <div class="framePanel rounded right">
     <h2>Quiz Taking Topic Breakdown</h2>
     <div class="content-container">

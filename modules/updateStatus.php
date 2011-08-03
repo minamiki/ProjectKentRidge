@@ -1,6 +1,13 @@
 <?php
 require 'database.php';
 require 'member.php';
+//fn to get 3 latest achievements from db and store into array
+//calculate and store number of achievements 
+//get rank, level score of quiz taker
+//get today's score and total score of quiz creator and taker of the user
+//get and store notifications from the database
+//mark notifications and achievements as read into db
+//get 5 most recent achievements from db
 
 $method = $_REQUEST['method'];
 $status = new Status();
@@ -71,6 +78,7 @@ function checkAchievements($memberid){
 }
 
 function checkSystem($memberid){
+//get and store notifications from the database
 	$database = new Database();
 
 	$othernotes = $database->query('SELECT notification, label, timestamp, color, fk_from_id, isRead FROM s_notifications_log LEFT JOIN s_notifications_labels ON s_notifications_log.fk_label_id = s_notifications_labels.id WHERE fk_member_id='.$memberid.' ORDER BY timestamp DESC LIMIT 3');	
@@ -83,6 +91,7 @@ function checkSystem($memberid){
 }
 
 function readAchievements($memberid){
+//to update isRead in the db when achievements are read
 	$database = new Database();
 	$result = $database->update('g_achievements_log','fk_member_id',$memberid,array('isRead'),array('1'));
 	if($result==1){
@@ -93,6 +102,7 @@ function readAchievements($memberid){
 }
 
 function clearSystemNotification($memberid){
+//to update isRead in the db when notifications are read
 	$database = new Database();
 	$result = $database->update('s_notifications_log','fk_member_id',$memberid,array('isRead'),array('1'));
 	if($result==1){
@@ -103,6 +113,7 @@ function clearSystemNotification($memberid){
 }
 
 function recentAchievementsNotification($memberid){
+	//retrieve 5 most recent notifications from db
 	$result = array();
 	$database = new Database();
 	$achievements = $database->limit('g_achievements_log',array('fk_achievement_id'),'fk_member_id="'.$memberid.'"',5);
