@@ -35,7 +35,7 @@ if(isset($_GET['searchQuery'])){
 		  $pageNum_listQuiz = $_GET['pageNum_listQuiz'];
 		}
 		$startRow_listQuiz = $pageNum_listQuiz * $maxRows_listQuiz;
-		
+		//different search type and options
 		if($searchType == 1){
 			if($searchOption == 0){
 				$query_listQuiz = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, (MATCH(quiz_name, quiz_description) AGAINST(%s)) AS score FROM q_quizzes, q_quiz_cat, s_members WHERE MATCH(quiz_name, quiz_description) AGAINST(%s) AND member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY score DESC", GetSQLValueString($_GET['searchQuery'], "text"), GetSQLValueString($_GET['searchQuery'], "text"));
@@ -113,14 +113,14 @@ if(isset($_GET['searchQuery'])){
       <?php if(isset($_GET['sql'])){ ?><input type="hidden" name="sql" id="sql" value="on" /><?php } ?>
       <table width="100%" border="0" cellspacing="0" cellpadding="3">
         <tr>
-          <td><span id="sprytextfield1">
+          <td><span id="sprytextfield1"> <!-- display for search page-->
             <input type="text" name="searchQuery" id="searchQuery" value="<?php echo $searchQuery; ?>" />
           <span class="textfieldRequiredMsg">Your search query should not be blank!</span></span></td>
           <td width="100" align="right" valign="top"><input type="submit" name="searchBtn" id="searchBtn" value="Search" /></td>
         </tr>
       </table>
       <table width="100%" border="0" cellspacing="0" cellpadding="3">
-        <tr>
+        <tr> <!-- display for options of search types to allow user to choose-->
           <td width="20" align="right"><input <?php if (!(strcmp($searchType,0))) {echo "checked=\"checked\"";} ?> name="searchType" type="radio" id="queryType0" value="0" /></td>
           <td width="350"><label for="queryType0" title="use a simple boolean search">standard keyword search</label></td>
           <td width="20" align="right"><input <?php if (!(strcmp($searchType,1))) {echo "checked=\"checked\"";} ?> type="radio" name="searchType" id="queryType1" value="1" /></td>
@@ -133,7 +133,7 @@ if(isset($_GET['searchQuery'])){
           <td><label for="question_option1" title="use relavance feedback in the form of query expansion">include recommendations</label></td>
         </tr>
         <?php if($searchQuery != "" && $totalRows_listQuiz != 0){ ?>
-        <tr>
+        <tr> <!-- display for #results found-->
           <td colspan="4"><p>Your search returned <?php echo ($totalRows_listQuiz > 1) ? $totalRows_listQuiz." quizzes." : $totalRows_listQuiz." quiz."; ?></p></td>
         </tr>
         <?php } ?>
@@ -147,7 +147,7 @@ if(isset($_GET['searchQuery'])){
   </div>
 </div>
 <div id="results" class="framePanel rounded">
-  <h2>Results</h2>
+  <h2>Results</h2> <!-- show preview quiz boxes of search results -->
   <div class="content-container">
     <?php if($totalRows_listQuiz != 0){ do{ ?>
     <div class="quiz_box clear">

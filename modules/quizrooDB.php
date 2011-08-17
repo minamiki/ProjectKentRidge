@@ -1,3 +1,8 @@
+<!-- 
+This page is for database connection
+This page is called by other pages whenever they need to connect to database
+-->
+
 <?php
 # FileName="Connection_php_mysql.htm"
 # Type="MYSQL"
@@ -25,7 +30,8 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   }
 
   $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
-
+  
+  //data types
   switch ($theType) {
     case "text":
       $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";

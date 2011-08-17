@@ -1,4 +1,7 @@
+<!-- display form for sharing quiz to friends when recommend quiz is clicked after taking a quiz
+http://localhost/Quizroo/webroot/previewQuiz.php -->
 <?php include("variables.php"); ?>
+
 <div id='user-actions-container' class='clear'>
     <script>isSharing = true</script>
     <div class='share-like'>

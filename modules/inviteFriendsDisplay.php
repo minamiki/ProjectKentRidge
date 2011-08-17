@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 <?php 
 //Display for inviting friends to Quizroo via Facebook Wall or request
 //http://localhost/quizroo/webroot/inviteFriends.php
 include("variables.php"); ?>
+=======
+<!-- This page is for displaying Quizroo information and sharing option.
+Users can share Quizroo by posting on their wall or sending request
+This page is integrated with Facebook UI in popping up a dialogue for sharing-->
+
+<?php include("variables.php"); ?>
+>>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
 <?php
 // get the number of members
 //$getMembersQuery = sprintf("SELECT COUNT(member_id) as count FROM s_members WHERE isActive=1");
@@ -39,12 +47,14 @@ include("variables.php"); ?>
   </div>
   
   <!-- Display sharing options -->
+  <!-- Share via Facebook Wall -->
   <div class="framePanel rounded right">
   <h2>Share Quizroo via your wall</h2>
   <div class="content-container">
   <div id="share-quizroo-button" class="share-button">Post a message on your wall</div>
   </div>
   </div>
+  <!-- Share via request-->
   <div class="framePanel rounded right">
   <h2>Share Quizroo via requests</h2>
   <div class="content-container">
@@ -60,6 +70,7 @@ include("variables.php"); ?>
 	FB.init({appId: <?php echo $FB_APPID ?>, status: true, cookie: true, xfbml: true});
 	FB.ui(
 	   {
+	     //pop up dialogue for user to enter their message
 		 method: 'feed',
 		 name: ('I enjoyed Quizroo, try it out too!'),
 		 link: ('<?php echo $FB_CANVAS ?>'),
@@ -67,6 +78,7 @@ include("variables.php"); ?>
 		 caption: ('Quizroo'),
 		 description: ('Quizroo is a platform for taking and creating fun and interesting quizzes. The platform also features other interesting activities that you can do while taking and creating quizzes. You can earn points to compete against other users or collect achievements and brag about it. Unlike other quiz applications, Quizroo is also a platform for researchers aimed at providing researchers with a space to conduct surveys and experiments and to collect useful data for research.'),
 	   },
+	   // inform the user that the post has been published on wall
 	   function(response) {
 		 if (response && response.post_id) {
 		   //alert('Post was published.');
@@ -84,11 +96,13 @@ include("variables.php"); ?>
 	 */
     $('#request-quizroo-button').click(function(){
 	     FB.init({appId: <?php echo $FB_APPID ?>, cookie:true, status:true, xfbml:true});
-	     FB.ui(
+	     // UI for sending request
+		 FB.ui(
 			{
 				method: 'apprequests',  
 	       		message: 'I enjoyed Quizroo, try it out too!'
 		    },
+			// inform the user that the request has been sent
 			function(response) {
 			 if (response && response.post_id) {
 			   //alert('Post was published.');

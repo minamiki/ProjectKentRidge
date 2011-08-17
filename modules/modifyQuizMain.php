@@ -1,14 +1,17 @@
+<!--This is the main UI for modifying quizzes, defining all the steps required for modifying and retrieve the existing quiz content-->
+
 <?php
-require('../modules/quizrooDB.php');
-require('../modules/uploadFunctions.php');
-require("../modules/quiz.php");
+require('../modules/quizrooDB.php'); // require database connection
+require('../modules/uploadFunctions.php'); 
+require("../modules/quiz.php"); //require database operations
 
 // now check whether this quiz actually belongs to this user
 if(isset($_GET['id'])){
 	$quiz = new Quiz($_GET['id']);
+	//check if the quiz exist and if the current member is owner
 	if($quiz->exists() && $quiz->isOwner($member->id)){
 		$quiz_state = true;
-		// unpublish the quiz
+		// unpublish the quiz before modifying
 		$quiz->unpublish($member->id);
 		$unikey = $quiz->quiz_key;
 	}else{
@@ -25,7 +28,10 @@ if(isset($_GET['step'])){
 	$step = 1;
 }
 switch($step){
-// THE FIRST STEP (Returning): Quiz Information
+
+/**********************************************
+ * THE FIRST STEP (Returning): Quiz Information
+ **********************************************/
 default: case 1:
 	// populate the categories
 	$query_listCat = "SELECT cat_id, cat_name FROM q_quiz_cat";
@@ -118,7 +124,10 @@ foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
     </table>
 </div>
 </form>
-<?php // THE SECOND STEP: Quiz Results
+<?php 
+/**********************************
+ *THE SECOND STEP: Quiz Results
+ **********************************/
 break; case 2:
 ?>
 <div id="progress-container" class="framePanel rounded">
@@ -173,7 +182,10 @@ break; case 3:
     </div>
   </form>
 </div>
-<?php // THE FOURTH STEP: Confirm and publish
+<?php 
+/**************************************
+ * THE FOURTH STEP: Confirm and publish
+ **************************************/
 break; case 4:
 	require("../modules/variables.php");
 		
@@ -232,16 +244,19 @@ break; case 4:
         <th scope="col">Remarks</th>
       </tr>
       <tr>
+      <!-- check if the number of results is sufficient-->
         <th>Results</th>
         <td align="center"><?php echo $numResults; ?></td>
         <td><?php if($numResults < $VAR_QUIZ_MIN_RESULT){ ?>You need at least <?php echo $VAR_QUIZ_MIN_RESULT; ?> results<?php }else{ ?>Ok!<?php } ?></td>
       </tr>
       <tr>
+      <!-- check if the number of questions is sufficient-->
         <th>Question</th>
         <td align="center"><?php echo $numQuestions; ?></td>
         <td><?php if($numQuestions < $VAR_QUIZ_MIN_QUESTIONS){ ?>You need at least <?php echo $VAR_QUIZ_MIN_QUESTIONS; ?> question(s)<?php }else{ ?>Ok!<?php } ?></td>
       </tr>
       <tr>
+      <!-- check if the number of options is sufficient-->
         <th>Options</th>
         <td align="center">Avg. ~<?php echo sprintf("%.2f", $averageOptionCount); ?></td>
         <td><?php if(!$questionState){ ?>You do not have any questions<?php }else{ if(!$optionState){ ?>One of your questions has less than <?php echo $VAR_QUIZ_MIN_OPTIONS; ?> options!<?php }else{ ?>Ok!<?php }} ?></td>
@@ -266,17 +281,18 @@ break; case 4:
   </form>
 </div>
 <?php break; } ?>
+<!-- If quiz does not exist-->
 <?php }else{ ?>
 <div id="takequiz-preamble" class="framePanel rounded">
   <h2>Opps, quiz not found!</h2>
   <div class="content-container"> <span class="logo"><img src="../webroot/img/quizroo-question.png" alt="Member not found" width="248" height="236" /></span>
-    <p>Sorry! The quiz that you're looking for may no be available. Please check the ID of the quiz again.</p>
-    <p>The reason you're seeing this error could be due to:</p>
+    <p>Sorry! The quiz that you are looking for may not be available. Please check the ID of the quiz again.</p>
+    <p>The reason you are seeing this error could be due to:</p>
     <ul>
-      <li>The URL is incorrect or doesn't  contain the ID of the quiz</li>
+      <li>The URL is incorrect or does not contain the ID of the quiz</li>
       <li>No quiz with this ID exists</li>
       <li>The owner could have removed the quiz</li>
-      <li>The quiz was taken down due to violations of  rules at Quizroo</li>
+      <li>The quiz was taken down due to the violation of rules at Quizroo</li>
     </ul>
   </div>
 </div>

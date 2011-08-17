@@ -1,7 +1,21 @@
+<!--
+Member Class: This class consists of all the functions related to Quizroo members
+ - Register the user: add user to database if user does not exist and populate user data
+ - Generate the authentication query
+ - Deauthorize the user by setting active flag = 0 (0 for inactive, 1 for active)
+ - Get the member's total score (creator and taker)
+ - Check and update the member's creator score
+ - Calculation of points to award to member for taking quiz and return the level of the user
+ - Check how many time the user has taken the quiz
+ - Data providers: get information of this user: name, gender, friend array	
+ - Check if a member is the user's friend
+ - Bind a unikey with this member
+ - Find out the ranking: if the user is admin, include admins when getting the ranking, else excluding the admins' ranking
+ - Get leaderboard's statistic: including admins' if the user is admin, else excluding the admins'
+ - Get all the statistics: Total created quiz, number of drafts, published quizzes, quizzes under modification, etc.
+ - Check if the user is admin
+-->
 <?php
-//----------------------------------------
-// Member Class
-//----------------------------------------
 if(!class_exists("Member")){
 class Member{
 	// member facebook variables
@@ -26,11 +40,11 @@ class Member{
 	public $isActive = NULL;
 	public $memExist = false;
 	
-	//----------------------------------------
-	// Class constructer which
-	// - Populates the facebook $me object
-	// - Retrieves the facebook ID
-	//----------------------------------------
+   /*
+	* Class constructer which
+	*  - Populates the facebook $me object
+	*  - Retrieves the facebook ID
+	*/
 	function __construct($member_id = NULL){
 		require('variables.php');
 		if($member_id == NULL){
@@ -96,9 +110,9 @@ class Member{
 		}
 	}
 	
-	//----------------------------------------
-	// Register the user
-	//----------------------------------------
+	/******************************************************************
+	 * Register the user: add user to database if user does not exist and populate user data
+	 *******************************************************************/
 	function register($check = false){
 		require('quizrooDB.php');	// database connections
 		// check if the member is already in the database
@@ -150,9 +164,9 @@ class Member{
 		}	
 	}
 	
-	//----------------------------------------
-	// Generate the authentication query
-	//----------------------------------------
+	/***********************************
+	 * Generate the authentication query
+	 ***********************************/
 	function authenticate($permissions = NULL){
 		// set the default permissons of not specified
 		$permissions = "publish_stream";
@@ -171,26 +185,26 @@ class Member{
 		echo '<script type="text/javascript">top.location.href = "'.$url.'";</script>';
 	}
 	
-	//----------------------------------------
-	// Deauthorize the user
-	//----------------------------------------
+	/***************************************
+	 * Deauthorize the user by setting active flag = 0 (0 for inactive, 1 for active)
+	 ***************************************/
 	function deauthorize(){
 		require('quizrooDB.php');	// database connections
-		$query = sprintf("UPDATE s_members SET isActive = 0 WHERE member_id = %s", $this->id);
+		$query = sprintf("UPDATE s_members SET isActive = 0 WHERE member_id = %s", $this->id); 
 		mysql_query($query, $quizroo) or die(mysql_error());
 	}
 	
-	//----------------------------------------
-	// Update the member's combined score
-	//----------------------------------------
+	/*****************************************
+	 * Update the member's combined score (creator and taker)
+	 *****************************************/
 	function getTotalScore(){
 		return $this->quizcreator_score + $this->quiztaker_score;
 	}
 	
-	//----------------------------------------
-	// check and update the member's creator score
-	// - use with caution, will reset global scores if member quizzes are removed!
-	//----------------------------------------
+	/*****************************************
+	 * check and update the member's creator score
+	 * - use with caution, will reset global scores if member quizzes are removed!
+	 *****************************************/
 	function updateCreatorScore(){
 		require('quizrooDB.php');	// database connections
 		
@@ -204,12 +218,12 @@ class Member{
 		mysql_query($query, $quizroo) or die(mysql_error());
 	}
 	
-	//----------------------------------------
-	// or calculation of points to award to member for taking quiz
-	// - return the level
-	//----------------------------------------
+	/******************************************
+	 * Calculation of points to award to member for taking quiz
+	 * - return the level of the user
+	 *****************************************/	
 	function calculatePoints($quiz_id, $quiz_publish_status, $achievement_array){
-		include("quizrooDB.php");
+		include("quizrooDB.php"); // database connection
 		include("variables.php");
 		
 		// check if user has already taken this quiz
@@ -258,9 +272,11 @@ class Member{
 		return $achievement_array;
 	}
 	
-	// check if user has taken quiz
+	/******************************
+	 * check if user has taken quiz
+	 ******************************/
 	function timesTaken($quiz_id){
-		include("quizrooDB.php");
+		include("quizrooDB.php"); // database connection
 		// check how many time user has taken this quiz
 		$queryCheck = sprintf("SELECT COUNT(store_id) AS count FROM q_store_result WHERE `fk_member_id` = %s AND `fk_quiz_id` = %s", $this->id, GetSQLValueString($quiz_id, "int"));
 		$getResults = mysql_query($queryCheck, $quizroo) or die(mysql_error());
@@ -271,9 +287,9 @@ class Member{
 		return $timesTaken;
 	}
 	
-	//----------------------------------------
-	// Data providers
-	//----------------------------------------	
+	/***********************************
+	 * Data providers
+	 ***********************************/
 	function getToken(){
 		// returns the OAuth access token
 		return $this->session['access_token'];
@@ -301,6 +317,9 @@ class Member{
 		return $this->friendsArray;
 	}
 	
+	/***********************************
+	 *check if a member is the user's friend
+	 *************************************/
 	function isFriend($member_id){
 		$isFriend = false;
 		for($i = 0; $i < sizeof($this->friends['data']); $i++){
@@ -311,7 +330,9 @@ class Member{
 		return $isFriend;
 	}		
 	
-	// bind a unikey with this member
+	/***********************************
+	 *bind a unikey with this member
+	 *************************************/
 	function bindImagekey($unikey){
 		require('quizrooDB.php');	// database connections
 		
@@ -319,12 +340,14 @@ class Member{
 		$getCheck = mysql_query($queryCheck, $quizroo) or die(mysql_error());
 	}
 	
-	// get multiplier
+	/***********************************
+	 * get multiplier
+	 *************************************/
 	function getMultiplier($type = NULL){
 		require('quizrooDB.php');	// database connections
 		include("variables.php");
 		
-		// get the multiplier value
+		// get the multiplier value of this week or today
 		if($GAME_MULTIPLIER_TYPE == "WEEK"){
 			$queryCheck = sprintf("SELECT COUNT(DISTINCT fk_quiz_id) AS count FROM `q_store_result` WHERE `fk_member_id` = %s AND WEEK(`timestamp`) = WEEK(NOW())", $this->id);
 		}else{
@@ -342,12 +365,14 @@ class Member{
 		}
 	}
 	
-	// get their ranking
+	/***********************************
+	 * get their ranking
+	 *************************************/
 	function getRanking(){
 		require('quizrooDB.php');	// database connections
 		
-		// find out the rank
-		if($this->isAdmin){
+		// find out the rank: if the user is admin, include admins when getting the ranking, else excluding the admins' ranking
+		if($this->isAdmin){ 
 			$queryRanking = sprintf("SELECT ranking FROM (
 SELECT @rownum:=@rownum+1 ranking, member_id, quiztaker_score+quizcreator_score AS score FROM s_members, (SELECT @rownum:=0) numbering ORDER BY score DESC) ranks
 WHERE member_id = %s", $this->id);		
@@ -364,7 +389,9 @@ WHERE member_id = %s", $this->id);
 		return $ranking;
 	}
 	
-	// get leaderboard stats
+	/***********************************
+	 * get leaderboard stats
+	 *************************************/
 	function getLeaderBoardStat($rank){
 		require('quizrooDB.php');	// database connections
 		
@@ -386,7 +413,9 @@ WHERE member_id = %s", $this->id);
 		}
 	}
 	
-	// get stats
+	/***********************************
+	 * get stats
+	 *************************************/
 	function getStats($type){
 		require('quizrooDB.php');	// database connections
 		
@@ -469,7 +498,9 @@ WHERE member_id = %s", $this->id);
 		return $resultCount;
 	}
 	
-	// check if is admin
+	/***********************************
+	 * check if is admin
+	 *************************************/
 	function isAdmin(){
 		return $this->isAdmin;
 	}

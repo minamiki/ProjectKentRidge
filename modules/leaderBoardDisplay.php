@@ -1,28 +1,40 @@
+<!-- under tab Friends. This page is mainly on UI, displaying information about ranking, score, not only for current users but among all Quizroo members -->
 <?php
+<<<<<<< HEAD
 //Display of leaderboard 
 //http://localhost/quizroo/webroot/leaderBoard.php
 require('../modules/quizrooDB.php');
 require('../modules/variables.php');
+=======
+require('../modules/quizrooDB.php'); //for database connection
+require('../modules/variables.php'); 
+>>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
 require('../modules/system.php');
 
 $systemStats = new System();
 $systemStats->getMemberStats();
 
-// fetch the topic information
+/****************************
+ * fetch the topic information
+ ****************************/
 $query_getRanking = "SELECT @rownum:=@rownum+1 ranking, member_id, member_name, level, g_achievements.name as rank_name, quiztaker_score+quizcreator_score AS score, quiztaker_score, quizcreator_score FROM s_members, g_achievements, (SELECT @rownum:=0) numbering WHERE s_members.rank = g_achievements.id AND member_id NOT IN (SELECT member_id FROM s_members WHERE isAdmin = 1) ORDER BY score DESC LIMIT 0, 10";
 $getRanking = mysql_query($query_getRanking, $quizroo) or die(mysql_error());
 $row_getRanking = mysql_fetch_assoc($getRanking);
 $totalRows_getRanking = mysql_num_rows($getRanking);
 ?>
+
+<!-- main leader board-->
 <div id="leaderboard-preamble" class="frame rounded">
   <h2>Leader Board</h2>
-  <p>Find out how you fare against other Quizroo members! You can also get to know interesting facts about the quiz system on Quizzroo!</p>
+  <p>Find out how you fare against other Quizroo members! You can also get to know interesting facts about the quiz system on Quizroo!</p>
 </div>
 <!-- Get fun facts of all members in Quizroo -->
 <div class="clear">
   <div id="fun-facts" class="framePanel rounded left">
+  <!-- Fun fact: figure calculated based on all Quizroo members-->
     <h2>Fun Facts</h2>
     <div class="content-container">
+    <!-- Average score of each member (points)-->
     <p class="fact">Each member has</p>
     <div class="factbox rounded">
       <p class="unit">an average score of</p>
@@ -30,42 +42,50 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
       <p class="factDesc">Points</p>
     </div>
     <div class="factbox rounded">
+    <!-- Average number of quizzes taken by each member -->
       <p class="unit">taken an average of</p>
       <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('member_take_quiz')) ?></div>
       <p class="factDesc">Quizzes</p>
     </div>
     <div class="factbox rounded">
-      <p class="unit">created and average of</p>
+     <!-- Average number of quizzes created by each member -->
+      <p class="unit">created an average of</p>
       <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('member_create_quiz')) ?></div>
       <p class="factDesc">Quizzes</p>
     </div>
-
     <p class="fact">Each quiz</p>
     <div class="factbox rounded">
+    <!-- Average number of questions each quiz consists of -->
       <p class="unit">has an average of</p>
 	  <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('questions')); ?></div>
       <p class="factDesc">Questions</p></div>
     <div class="factbox rounded">
+    <!-- Average number of options each quiz consists of ?? each quiz or each question??-->
       <p class="unit">has an average of</p>
       <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('options')); ?></div>
       <p class="factDesc">Options</p>
     </div>
     <div class="factbox rounded">
+    <!-- Average number of likes each quiz has -->
       <p class="unit">has an average of</p>
       <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('likes')); ?></div>
       <p class="factDesc">Likes
     </p></div>
     <div class="factbox rounded">
+    <!-- Average number of points each quiz consists of -->
       <p class="unit">has an average of</p>
       <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('quiz_score')); ?></div>
     <p class="factDesc">Points</p></div>
     <div class="factbox rounded">
+    <!-- How many times this quiz has been taken-->
       <p class="unit">was taken</p>
       <div class="factValue"><?php echo sprintf("%.2f", $systemStats->getAverageStat('quiz_taken')); ?></div>
       <p class="factDesc">Times</p>
     </div>
     </div>
   </div>
+  
+  <!-- frame for Top 10 member ranking-->
   <div id="ranking" class="framePanel rounded right">
   <!-- Get Top 10 Member Rankings of Quizroo -->
     <h2>Top 10 Member Rankings</h2>

@@ -9,6 +9,7 @@ $query_recommendations = sprintf("SELECT quiz_id, quiz_name, quiz_description, q
 $recommendations = mysql_query($query_recommendations, $quizroo) or die(mysql_error());
 $row_recommendations = mysql_fetch_assoc($recommendations);
 $totalRows_recommendations = mysql_num_rows($recommendations);
+//$totalRows_recommendations = mysql_num_rows($recommendations);
 
 // retrieve popular quizzes
 $query_popular = sprintf("SELECT * FROM (SELECT quiz_id, quiz_name, quiz_description, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, dislikes, quiz_score * (IF(likes > 0, likes, 0.5)) AS rankscore FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY rankscore DESC LIMIT 0, %d) t ORDER BY RAND() LIMIT 0, %d", $VAR_NUM_POPULAR_POOL, $VAR_NUM_LISTINGS);
@@ -28,14 +29,33 @@ $totalRows_popular = mysql_num_rows($popular);
     </div>
   </div>
   <?php } ?>
+  
+  <!-- To add in tabs for sorting quizzes-->
+  <?php include("../modules/quizTab.php");?>
+  <!-- end-->
+  
   <div class="clear">
+  
+  <!-- for latest tab-->
     <div id="recommendations" class="framePanel rounded left-right">
       <h2>Latest</h2>
       <div class="repeat-container">
+<<<<<<< HEAD
       <!-- Displays the recommended quizzes - their titles, description and thumbnail picture-->
       <?php if($totalRows_recommendations != 0){ do { ?>
         <div class="quiz_box clear">
           <h3><a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>" ><?php echo $row_recommendations['quiz_name']; ?></a></h3>
+=======
+      <?php if($totalRows_recommendations != 0){ do { 
+      		//$quiz = $row_recommendations['quiz_id'];
+			//if($quiz->hasTaken($member->id)){
+      	?>
+        <div class="quiz_box clear" >
+        <!--?php } else{ ?>
+        <div class="quiz_box clear">
+        <!--?php } ?-->
+          <h3><a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><?php echo $row_recommendations['quiz_name']; ?></a></h3>
+>>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
           <div class="thumb_box">
             <a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_recommendations['quiz_picture']; ?>" alt="<?php echo $row_recommendations['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_recommendations['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
@@ -52,12 +72,14 @@ $totalRows_popular = mysql_num_rows($popular);
         <?php } ?>
         </div>
     </div>
+    
+    <!-- for popular tab-->
     <div id="popular" class="framePanel rounded left-right clear">
       <h2>Popular</h2>
       <div class="repeat-container">
       <!-- Displays most popular quizzes -->
       <?php if($totalRows_popular !=0 ){ do { ?>
-        <div class="quiz_box clear">
+        <div class="quiz_box clear" >
           <h3><a href="previewQuiz.php?id=<?php echo $row_popular['quiz_id']; ?>"><?php echo $row_popular['quiz_name']; ?></a></h3>
           <div class="thumb_box">
             <a href="previewQuiz.php?id=<?php echo $row_popular['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_popular['quiz_picture']; ?>" alt="<?php echo $row_popular['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_popular['quiz_description']; ?>" /></a></div>
@@ -75,6 +97,14 @@ $totalRows_popular = mysql_num_rows($popular);
         </div>
     </div>
   </div>
+  
+  <!-- Modify on 26 Jul for moving the topic bar to the bottom-->
+  <div>
+  <br/>
+    <?php include('../modules/topicBarFooter.php')?>
+  </div>
+  <!-- end modification-->
+  
   <div id="social" class="framePanel rounded">
     <h2>Social</h2>
     <div class="content-container">
