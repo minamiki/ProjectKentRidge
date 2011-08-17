@@ -35,7 +35,7 @@ $totalRows_popular = mysql_num_rows($popular);
       <!-- Displays the recommended quizzes - their titles, description and thumbnail picture-->
       <?php if($totalRows_recommendations != 0){ do { ?>
         <div class="quiz_box clear">
-          <h3><a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>" style = "color:#CC0000"><?php echo $row_recommendations['quiz_name']; ?></a></h3>
+          <h3><a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>" ><?php echo $row_recommendations['quiz_name']; ?></a></h3>
           <div class="thumb_box">
             <a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_recommendations['quiz_picture']; ?>" alt="<?php echo $row_recommendations['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_recommendations['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
