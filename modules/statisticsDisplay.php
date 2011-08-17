@@ -1,13 +1,14 @@
+<!--page under profile > my profile
+get user's rank, and the members above and below user
+get topics done by user from db
+get quiz taking history of user from db
+draw the 2 charts
+display for profile msg and fun fact bar
+display for ranking of user and members above and below user
+display for loading of charts
+http://localhost/Quizroo/webroot/profile.php-->
 <?php
 require('../modules/quizrooDB.php');
-//page under profile > my profile
-//get user's rank, and the members above and below user
-//get topics done by user from db
-//get quiz taking history of user from db
-//draw the 2 charts
-//display for profile msg and fun fact bar
-//display for ranking of user and members above and below user
-//display for loading of charts
 
 // get the member rank
 $member_rank = $member->getRanking();
@@ -22,7 +23,7 @@ $row_getBelowRank = $member->getLeaderBoardStat($member_rank+1);
 // total quizzes
 $quiz_total = $member->getStats('quizzes_total');
 
-// topic pie chart
+// retrieve information for topic pie chart from db
 $topicQuery = sprintf("SELECT COUNT(fk_quiz_cat) AS count, cat_name 
 					   FROM (SELECT store_id, fk_quiz_id, fk_quiz_cat, cat_name 
 					   FROM q_store_result, q_quizzes, q_quiz_cat 
@@ -34,7 +35,7 @@ $getTopics = mysql_query($topicQuery, $quizroo) or die(mysql_error());
 $row_getTopics = mysql_fetch_assoc($getTopics);
 $totalRows_getTopics = mysql_num_rows($getTopics);
 
-// take quiz history
+// retrieve information for take quiz history from db
 $takeQuizQuery = sprintf("SELECT count, r.takeDate 
 						  FROM (SELECT takeDate FROM (SELECT DATE(timestamp) AS takeDate 
 						  FROM `q_store_result` GROUP BY DATE(timestamp) 

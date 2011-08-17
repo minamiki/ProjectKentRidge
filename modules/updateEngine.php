@@ -1,14 +1,15 @@
+<!--if there's an id and quiz exists and member is owner of quiz, set quiz to publish
+else quiz doesnt exist
+if quiz exist, display quiz updated msg
+display preview of updated quiz
+else display quiz cannot be found msg
+http://localhost/Quizroo/webroot/updateQuiz.php-->
 <?php
 //----------------------------------------
 // Publish the quiz
 //----------------------------------------
 require("../modules/quiz.php");
-//if there's an id and quiz exists and member is owner of quiz, set quiz to publish
-//else quiz doesnt exist
-//if quiz exist, display quiz updated msg
-//display preview of updated quiz
-//else display quiz cannot be found msg
-
+//if id is not null
 if(isset($_GET['id'])){
 	$quiz = new Quiz($_GET['id']);
 	if($quiz->exists()){

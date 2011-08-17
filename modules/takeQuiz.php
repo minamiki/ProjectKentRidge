@@ -1,16 +1,17 @@
-<?php require('../modules/quizrooDB.php'); ?>
 <!-- get quiz info and qns from db
 display take quiz page, including top bar, title, msg with quiz title and creator
 display progress bar for qns# and hover msg
 display msg when attempting to submit without finish quiz
 log quiz taking info?
-retrieve option for the qns from db
+retrieve options for the qns from db
 <!--display qns# and qns image if available, but not implemented in quiz creation! achievement is obtained if quiz is created but not even complete
 display the qns
 display radiobutton and options for the qns 
 if 1st qns, display next button
 if 2nd qns to 2nd last qns, display previous and next button
-if last qns, display previous and complete quiz button-->
+if last qns, display previous and complete quiz button
+http://localhost/Quizroo/webroot/takeQuiz.php-->
+<?php require('../modules/quizrooDB.php'); ?>
 <?php  //get quiz info
 $query_getQuizInfo = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, creation_date, s_members.member_name, q_quiz_cat.cat_name, 
 							 (SELECT COUNT(question_id) FROM q_questions WHERE fk_quiz_id = %s) AS question_count 

@@ -1,12 +1,12 @@
-<?php // Quizroo Fact Class
-//fn to reset daily quiz taker and creator scores
-//fn to get members stats (overall/specific member), get from log if date stated
-//fn to insert daily stats into db
-//fn to get overall avg of stated stat in entire quizroo
-//fn to get today's stats depending on the stat stated
-//fn to find unused images and delete them
-//fn to display system report in text format
+<!--fn to reset daily quiz taker and creator scores
+fn to get members stats (overall/specific member), get from log if date stated
+fn to insert daily stats into db
+fn to get overall avg of stated stat in entire quizroo
+fn to get today's stats depending on the stat stated
+fn to find unused images and delete them
+fn to display system report in text format-->
 
+<?php // Quizroo Fact Class
 if(!class_exists("System")){
 class System{
 	private $date_set = false;
@@ -32,7 +32,9 @@ class System{
 		// nothing to do here
 	}
 	
-	// reset daily scores
+	/*
+	reset daily scores
+	*/
 	function resetDailyScore(){
 		require('quizrooDB.php');
 		
@@ -42,7 +44,11 @@ class System{
 		echo sprintf("%d member daily scores resetted.\n", $rows_updated);
 	}
 	
-	// function get member stats
+	/*
+	get member stats
+	input: friend's id or date if stated
+	assign values retrieved from db into system
+	*/
 	function getMemberStats($friend_list = NULL, $date = NULL){
 		require('quizrooDB.php');
 		if($date == NULL){
@@ -114,7 +120,9 @@ class System{
 		$this->data_set = true;
 	}
 	
-	// store a snapshot of member stats
+	/*
+	store a snapshot of member stats into db
+	*/
 	function logMemberStats(){
 		require('quizrooDB.php');
 		
@@ -142,7 +150,10 @@ class System{
 		mysql_query($queryInsert, $quizroo) or die(mysql_error());
 	}
 	
-	// get average stats of given parameter
+	/*
+	get average stats of given parameter
+	output: calculated value
+	*/
 	function getAverageStat($stat){
 		// get the member stats if not already there
 		if(!$this->data_set){
@@ -151,7 +162,7 @@ class System{
 		
 		if($this->quiz_total == 0){
 			return 0;
-		}else{
+		}else{ //calculate the avg
 			switch($stat){
 				case "quiz_score":
 				$returnVal = $this->quiz_total_score / $this->quiz_published;
@@ -212,6 +223,10 @@ class System{
 		return $returnVal;	
 	}
 	
+	/*
+	get today's stats of given parameter
+	output: today's stats
+	*/
 	function getTodayStat($stat){
 		require('quizrooDB.php');
 		
@@ -246,7 +261,10 @@ class System{
 		return $row_getQuery['count'];
 	}
 	
-	
+	/*
+	find unused images and delete them
+	input: delete or not
+	*/
 	function cleanImageStore($action = NULL){
 		require('quizrooDB.php');
 		
@@ -278,7 +296,9 @@ class System{
 		}
 	}
 	
-	// display output in text format
+	/*
+	display system report in text format
+	*/
 	function displayStats(){
 		// get the member stats if not already there
 		if(!$this->data_set){

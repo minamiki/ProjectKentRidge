@@ -1,18 +1,19 @@
+<!--collect final answers of each qns
+calculate result depending on weightage stated by creator
+if quiz is published, award creator points
+log user quiz taking attempt into db
+check and prepare possible achievements unlock
+get user's results from db
+get all results taken of quiz to display as a chart
+draw and display the chart
+display quiz results
+display loading of chart
+http://localhost/Quizroo/webroot/quiz_result.php -->
+
 <?php
 require('../modules/quizrooDB.php'); 
 require('../modules/variables.php');
 require('../modules/checkAchievements.php');
-
-//collect final answers of each qns
-//calculate result from weightage
-//if quiz is published, award creator points
-//log user quiz taking attempt into db
-//check and prepare possible achievements unlock
-//get user's results from db
-//get all results taken of quiz to display as a chart
-//draw and display the chart
-//display quiz results
-//display loading of chart
 
 // get the member's facebook id
 $facebookID = $member->id;

@@ -1,12 +1,15 @@
+<!--fn to convert 1-36 into corresponding alphabet and digits
+fn to randomise an id
+fn to get image type-->
+
 <?php
-
-//fn to convert 1-36 into corresponding alphabet and digits
-//fn to randomise an id
-//fn to get image type
-
+/*
+converts an input value into its corresponding alphabet or digit (used in get_rand_ id function below)
+input: a value
+output: a digit or alphabet
+*/
 function assign_rand_value($num)
 {
-// accepts 1 - 36 and converts into corresponding alphabet and digits
   switch($num)
   {
     case "1":
@@ -121,8 +124,13 @@ function assign_rand_value($num)
 return $rand_value;
 }
 
+/*
+get a random id
+input: length of id
+output: id
+*/
 function get_rand_id($length)
-{ //randomise an id
+{ //randomise an id of length stated in input
   if($length>0) 
   { 
   $rand_id="";
@@ -136,7 +144,11 @@ function get_rand_id($length)
 return $rand_id;
 }
 
-//fn to get image type
+/*
+get image type (jpeg, gif, png)
+input: file name
+output: type
+*/
 if(!function_exists('exif_imagetype')){
   function exif_imagetype($filename){
 	  if((list($width, $height, $type, $attr) = getimagesize($filename)) !== false){

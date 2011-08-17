@@ -1,11 +1,11 @@
+<!--get topic id from address bar
+retrieve latest and popular quizzes by topic from db
+retrieve categories from db as a string, fetch the result row as an associative array, return num rows
+get topic information from db
+display topic name and description
+display quizzes for latest and popular by topic. including title, image, description, creator, rating
+http://localhost/Quizroo/webroot/topics.php-->
 <?php
-//get topic id from address bar
-//retrieve latest and popular quizzes by topic from db
-//retrieve categories from db as a string, fetch the result row as an associative array, return num rows
-//get topic information from db
-//display topic name and description
-//display quizzes for latest and popular by topic. including title, image, description, creator, rating
-
 require('../modules/quizrooDB.php');
 require('../modules/variables.php');
 // hack for checking topic IDs
@@ -34,6 +34,7 @@ $getTopics = mysql_query($query_getTopics, $quizroo) or die(mysql_error());
 $row_getTopics = mysql_fetch_assoc($getTopics);
 $totalRows_getTopics = mysql_num_rows($getTopics);
 ?>
+
 <div id="dashboard-container">
 <!-- display topic name and description -->
   <div id="topic-preamble" class="frame rounded">

@@ -1,11 +1,11 @@
+<!--retrieve categories from db as a string, fetch the result row as an associative array, return num rows
+get topic id from address bar
+display feature unavailable msg
+display for quizroo logo and link and mouseover msg
+display for statusbar, including wordings on bar and mouse over msg, achievements/quiz taker and creator's scores
+mouse over info on topic bar, retrived from db, total #quiz and #undone per topic, print categories names
+http://localhost/Quizroo/webroot/index.php-->
 <?php
-//retrieve categories from db as a string, fetch the result row as an associative array, return num rows
-//get topic id from address bar
-//display feature unavailable msg
-//display for quizroo logo and link and mouseover msg
-//display for statusbar, including wordings on bar and mouse over msg, achievements/quiz taker and creator's scores
-//mouse over info on topic bar, retrived from db, total #quiz and #undone per topic, print categories names
-
 // populate the topics panel
 $query_getTopics = sprintf("SELECT cat_id, cat_name, undone, 
 							(SELECT COUNT(quiz_id) FROM `q_quizzes` WHERE isPublished = 1 AND fk_quiz_cat = cat_id) as total 						

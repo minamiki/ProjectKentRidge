@@ -1,19 +1,26 @@
+<!--fn to get 3 latest achievements from db and store into array
+calculate and store number of achievements 
+get rank, level score of quiz taker
+get today's score and total score of quiz creator and taker of the user
+get and store notifications from the database
+mark notifications and achievements as read into db
+get 5 most recent achievements from db
+http://localhost/Quizroo/webroot/js/Splash.js-->
+
 <?php
 require 'database.php';
 require 'member.php';
-//fn to get 3 latest achievements from db and store into array
-//calculate and store number of achievements 
-//get rank, level score of quiz taker
-//get today's score and total score of quiz creator and taker of the user
-//get and store notifications from the database
-//mark notifications and achievements as read into db
-//get 5 most recent achievements from db
+
+//$_REQUEST — HTTP Request variables
+//An associative array that by default contains the contents of $_GET, $_POST and $_COOKIE. - http://php.net/manual/en/reserved.variables.request.php
 
 $method = $_REQUEST['method'];
 $status = new Status();
 $member = new Member();
 $member_id = $member->id;
 
+//JSON (JavaScript Object Notation) is a lightweight data-interchange format. It is easy for humans to read and write. It is easy for machines to parse.
+//json_encode - to encode things into JSON format
 if($method=='achievements'){
 	echo json_encode($status->checkAchievements($member_id));	
 }else if($method=='system-notification'){
@@ -43,7 +50,10 @@ function checkAchievements($memberid){
 	/*
 	 * Checks for 3 latest achievements for user specified and fetches the image url, name and description for the achievement.
 	 */
-	$achievementsOverview = $database->query('SELECT fk_achievement_id,timestamp,image,name,description FROM g_achievements_log LEFT JOIN g_achievements ON fk_achievement_id=g_achievements.id WHERE (fk_member_id="'.$memberid.'" AND type<>3) ORDER BY timestamp DESC'); 
+	$achievementsOverview = $database->query('SELECT fk_achievement_id,timestamp,image,name,description 
+											  FROM g_achievements_log LEFT JOIN g_achievements ON fk_achievement_id=g_achievements.id 
+											  WHERE (fk_member_id="'.$memberid.'" AND type<>3) 
+											  ORDER BY timestamp DESC'); 
 	$count = 0;
 	foreach($achievementsOverview as $achievementOverview){
 		if($count<3){
@@ -62,7 +72,9 @@ function checkAchievements($memberid){
 	/*
 	 * Checks for the rank for the quiz taker role.
 	 */
-	$rank = $database->query('SELECT image,name,description,level FROM s_members LEFT JOIN g_achievements ON rank=g_achievements.id WHERE (member_id="'.$memberid.'")');
+	$rank = $database->query('SELECT image,name,description,level 
+							  FROM s_members LEFT JOIN g_achievements ON rank=g_achievements.id 
+							  WHERE (member_id="'.$memberid.'")');
 	$levelscore = $database->get('g_levels',array('points'),'id='.$rank[0]['level'].' OR id='.($rank[0]['level']+1));
 	$result['rank'] = array('image'=>$rank[0]['image'],'name'=>$rank[0]['name'],'description'=>$rank[0]['description'],'level'=>$rank[0]['level'],'levelscore'=>$levelscore[0]['points'],'nextlevelscore'=>$levelscore[1]['points']);
 		
@@ -77,8 +89,13 @@ function checkAchievements($memberid){
 	return $result;
 }
 
+/*
+get and store description of notifications(panel in statusbar) from the database
+input: member id
+output: notifications for specified member
+*/
 function checkSystem($memberid){
-//get and store notifications from the database
+
 	$database = new Database();
 
 	$othernotes = $database->query('SELECT notification, label, timestamp, color, fk_from_id, isRead FROM s_notifications_log LEFT JOIN s_notifications_labels ON s_notifications_log.fk_label_id = s_notifications_labels.id WHERE fk_member_id='.$memberid.' ORDER BY timestamp DESC LIMIT 3');	
@@ -89,9 +106,12 @@ function checkSystem($memberid){
 	
 	return $notes;
 }
-
+/*
+called when users click the button to read the achievements to update isRead flag to 1 in the database
+isRead flag: to check whether achievements are read or not
+*/
 function readAchievements($memberid){
-//to update isRead in the db when achievements are read
+
 	$database = new Database();
 	$result = $database->update('g_achievements_log','fk_member_id',$memberid,array('isRead'),array('1'));
 	if($result==1){
@@ -100,9 +120,11 @@ function readAchievements($memberid){
 		return 'failed';
 	}
 }
-
+/*
+to update isRead flag in the database when notifications are read
+*/
 function clearSystemNotification($memberid){
-//to update isRead in the db when notifications are read
+
 	$database = new Database();
 	$result = $database->update('s_notifications_log','fk_member_id',$memberid,array('isRead'),array('1'));
 	if($result==1){
@@ -112,8 +134,11 @@ function clearSystemNotification($memberid){
 	}
 }
 
+/*
+retrieve 5 most recent notifications from database
+*/
 function recentAchievementsNotification($memberid){
-	//retrieve 5 most recent notifications from db
+
 	$result = array();
 	$database = new Database();
 	$achievements = $database->limit('g_achievements_log',array('fk_achievement_id'),'fk_member_id="'.$memberid.'"',5);

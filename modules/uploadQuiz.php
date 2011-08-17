@@ -1,10 +1,15 @@
+<!-- for image handling only
+check file size, if too huge, display error msg and discard
+check file uploaded is a valid file
+check image size, resize if too big
+create image files of respective file types
+http://localhost/Quizroo/webroot/createQuiz.php-->
+
 <?php
 require('uploadFunctions.php');
-//check file size, if too huge, display error msg and discard
-//check file uploaded is a valid file
-//check image size, resize if too big
-//create image files of respective file types
-
+	/*
+	image uploading and checking file size
+	*/
 $unikey = $_GET['unikey'];
 $uploaddir = '../quiz_images/';
 $basename = $unikey."_".basename($_FILES['uploadfile']['name']);
@@ -25,7 +30,11 @@ if(move_uploaded_file($_FILES['uploadfile']['tmp_name'], $imagename)){
 	list($width_orig, $height_orig) = getimagesize($imagename);
 	
 	$max_image_size = 480;
-	// find out if the image is too big
+	/*
+	image resizing and handling
+	*/
+	
+	// find out if the image is too big (>$max_image_size, currently 480)
 	//resize the image if too big
 	if($width_orig > $max_image_size || $height_orig > $max_image_size){
 		if($width_orig > $max_image_size){
