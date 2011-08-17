@@ -1,32 +1,45 @@
+/********************************************************
+ *This file consists of some social quiz functions such as:
+ *	-Share quiz results - Publish to wall
+ *	-Function for creating result feeds on Facebook
+ * 	-Recommend to friends
+ *	-Rate quiz - Handle like event for logic
+ *******************************************************/
 var Share = {
 	rootPath: 'http://apps.facebook.com/quizroo/',
 	pathToSrc: '../modules/',
 	appId: '154849761223760',
 	
-	/**
+	/*****************************************
 	 * Share quiz results - Publish to wall
 	 * Provide opts in the following format:
 	 * e.g. Share.results({'quiz_id':35,'result_id':19});
-	 */
+	 ****************************************/
 	results: function(parent,opts){
-		var button = document.createElement('div');
+		var button = document.createElement('div'); // define variable button 'share your result'
 		$(button).addClass('share-button');
 		$(button).html('Share your results');
 		$(parent).prepend(button);
 		$(button).attr('id','share-results-button');
+		// onlick event
 		$(button).click(function(){
 			$.getJSON(Share.pathToSrc+'share.php/',{method:'results',quiz_id:opts.quiz_id,result_id:opts.result_id},function(data){
 			var quizdetails = data.quiz_details;
-			quizdetails = quizdetails[0];
+			quizdetails = quizdetails[0]; // add quiz detail to array
 			var resultdetails = data.result_details;
-			resultdetails = resultdetails[0];
+			resultdetails = resultdetails[0]; // add result to array
+			// call createResultFeed function
 			Share.createResultsFeed(quizdetails.quiz_name,quizdetails.quiz_id,resultdetails.result_title,resultdetails.result_picture,resultdetails.result_description);
 			});
 		});
 	},
 	
+	 /************************************************
+	 * Function for creating result feeds on Facebook
+	 *************************************************/
 	createResultsFeed: function(quiz_name,quiz_id,result_title,result_picture,result_description){
 		FB.init({appId: Share.appId, status: true, cookie: true, xfbml: true});
+		// feeds follow facebook format
 		FB.ui(
 		   {
 			 method: 'feed',
@@ -48,20 +61,25 @@ var Share = {
 		);
 	},
 
-	/**
+	/***********************************************
 	 * Recommend to friend - Publish to friends wall
-	 */
+	 ***********************************************/
 	recommend: function(parent,opts){
-		var button = document.createElement('div');
+		var button = document.createElement('div'); // define button variable
 		$(button).addClass('share-button');
 		$(button).html('Recommend to friends');
 		$(parent).prepend(button);
+		// onclick event
 		$(button).click(function(){
+			// If the user has already recommend this quiz (when recommend dialogue is not displayed)
+			// then display "Click to here to cancel"
 			if($('.recommend-dialog').css('display')=='none'){
 				$(button).css('background-color','#666');
 				$(button).css('color','#FFF');							
 				$('.recommend-dialog').slideDown('fast');
 				$(button).html('Click to here to cancel');
+			// If the user has not recommend this quiz (when recommend dialogue is displayed)
+			// then display "Recommend to friends"
 			}else{
 				$(button).css('background-color','#ECEEF5');
 				$(button).css('color','#3B5998');
@@ -72,14 +90,15 @@ var Share = {
 		$('.recommend-dialog').hide();
 	},
 	
+	// if the quiz has been published, hide 'share'
 	checkPublished: function(published){
 		if(published==false){
 			$('.share').hide();
 		}
 	},
-	/**
+	/****************************************
 	 * Rate quiz - Handle like event for logic
-	 */
+	 ****************************************/
 	 rate: function(parent,opts){
 		$.getJSON(Share.pathToSrc+'share.php/',{method:'rate',quiz_id:opts.quiz_id,type:opts.type},function(data){});
 		/*

@@ -1,6 +1,11 @@
+<!-- 
+This page displays information of quiz
+Displlay corresponding message when the quiz is not found
+If the user is the quiz owner, display quiz stat information: number of questions, options, likes, etc.
+-->
 <?php
-require('../modules/quizrooDB.php'); 
-require('../modules/quiz.php');
+require('../modules/quizrooDB.php'); //database connection
+require('../modules/quiz.php'); // operations on database
 
 // check whether such a quiz exists
 $quiz = new Quiz($_GET['id']);
@@ -23,7 +28,7 @@ if($quiz->exists()){
 		// check the number of options
 		$listQuestion = explode(',', $quiz->getQuestions());
 		$totalOptions = 0;
-		
+		// if number of question > 0. for each question get number of options, update total number of options
 		if($numQuestions != 0){
 			$questionState = true;
 			$optionState = true;
@@ -36,7 +41,7 @@ if($quiz->exists()){
 				$totalOptions += $numOptions;
 			}
 		}
-		
+		// get the average number of options if number of questions > 0
 		if($numQuestions != 0){
 			$averageOptionCount = $totalOptions / $numQuestions;
 		}else{
@@ -57,7 +62,7 @@ if($quiz->exists()){
 		$totalRows_getTakeQuiz = mysql_num_rows($getTakeQuiz);
 		$count = 0;
 		
-		// quiz taker's log
+		// get quiz taker's log
 		$quizLogQuery = sprintf("SELECT member_id, member_name, result_title, `timestamp` FROM s_members m, q_store_result s, q_results r WHERE s.fk_member_id = m.member_id AND s.fk_result_id = r.result_id AND s.fk_quiz_id = %s GROUP BY member_name ORDER BY `timestamp` DESC LIMIT 0, 10", $quiz->quiz_id);
 		$getquizLog = mysql_query($quizLogQuery, $quizroo) or die(mysql_error());
 		$row_getquizLog = mysql_fetch_assoc($getquizLog);
@@ -74,13 +79,18 @@ $(document).ready(function(){
 		drawCharts();
 	});
 	
+	/************************
+	* This function calls the main drawing functions for topic and take quiz history
+	************************/
 	function drawCharts() {
 		<?php if($totalRows_getResultChart != 0){ ?>
 		drawTopicBreakdownChart();
 		<?php } ?>
 		drawTakeQuizHistoryChart();
 	}
-	
+	/************************
+	* Draw chart for topic
+	************************/
 	function drawTopicBreakdownChart() {
 		var data = new google.visualization.DataTable();
 		data.addColumn('string', 'Result');
@@ -98,7 +108,9 @@ $(document).ready(function(){
 		var chart = new google.visualization.PieChart(document.getElementById('topic_chart'));
 		chart.draw(data, {width: 540, height: 250, title: 'Attempts per Result', backgroundColor:'transparent'});
 	}
-	
+	/************************
+	* Draw chart for information on take quiz history of the member
+	************************/
 	function drawTakeQuizHistoryChart(){
 		var data = new google.visualization.DataTable();
 		data.addColumn('string', 'Date');
@@ -115,6 +127,7 @@ $(document).ready(function(){
 	}
 });
 </script>
+<!-- if quiz does not exist, display this message-->
 <?php if($quiz->exists() == false){ ?>
 <div id="viewMember-preamble" class="framePanel rounded">
   <h2>Quiz not found!</h2>
@@ -123,6 +136,7 @@ $(document).ready(function(){
   <p>Sorry! The quiz you are looking for does not seem to be in our system! Are you sure you have followed the right link?</p>
   </div>
 </div>
+<!-- If the user is not the quiz owner, display the message to user that they cant see quiz statistics-->
 <?php }else{ if($quiz->isOwner($member->id) == false){ ?>
 <div id="viewMember-preamble" class="framePanel rounded">
   <h2>You're not the owner!</h2>
@@ -131,6 +145,7 @@ $(document).ready(function(){
   <p>Sorry! It seems that you did not create this quiz! Only quiz owners can see their quiz statistics. Are you sure you have followed the right link?</p>
   </div>
 </div>
+<!-- If the user is the quiz owner, display details on quiz statistics-->
 <?php }else{ ?>
 <div id="viewMember-preamble" class="framePanel rounded">
   <h2>Quiz Information</h2>
@@ -138,38 +153,46 @@ $(document).ready(function(){
   <p>Here's some detailed statistics about your quiz, &quot;<strong><?php echo $quiz->quiz_name; ?></strong>&quot;, which was created on <?php echo date("F j, Y g:ia", strtotime($quiz->creation_date)); ?>. It's current status is <em><?php echo $status; ?></em>.</p>
   </div>
 </div>
+<!-- This division is to display quiz stats-->
 <div class="clear">
   <div id="fun-facts" class="framePanel rounded left">
     <h2>Statistics</h2>
     <div class="content-container">
+    <!-- Number of attempts-->
     <p class="fact">This quiz has</p>
     <div class="factbox rounded">
       <p class="unit">a total of</p>
 	  <div class="factValue"><?php echo $quiz->getAttempts(); ?></div>
     <p class="factDesc">Quiz Attempts</p></div>
+    <!-- Number of unique attempt-->
     <div class="factbox rounded">
       <p class="unit">with </p>
       <div class="factValue"><?php echo $quiz->getAttempts(true); ?></div>
       <p class="factDesc">Unique Attempts</p>
     </div>
+    <!-- How many points gathered for this quiz-->
     <div class="factbox rounded">
       <p class="unit">has gathered</p>
       <div class="factValue"><?php echo $quiz->quiz_score ?></div>
       <p class="factDesc">Points</p>
     </div>
+    <!-- How many likes gathered for this quiz-->
     <div class="factbox rounded">
       <p class="unit">has gathered</p>
       <div class="factValue"><?php echo $quiz->likes ?></div>
       <p class="factDesc">Likes</p>
     </div>
+    <!-- Number of questions-->
     <div class="factbox rounded">
       <p class="unit">has</p>
       <div class="factValue"><?php echo $quiz->getQuestions('count'); ?></div>
       <p class="factDesc">Questions</p></div>
     <div class="factbox rounded">
+    <!--Average number of option-->
       <p class="unit">has a average of</p>
       <div class="factValue"><?php echo sprintf("%.2f", $averageOptionCount); ?></div>
     <p class="factDesc">Options</p></div>
+    <!-- Number of results-->
     <div class="factbox rounded">
       <p class="unit">has</p>
       <div class="factValue"><?php echo $quiz->getResults('count'); ?></div>
@@ -177,6 +200,7 @@ $(document).ready(function(){
     </div>
     </div>
   </div>
+  <!-- Display Quiz result breakdown and quiz taking history-->
   <?php if($totalRows_getResultChart != 0){ ?>
   <div id="topic-breakdown" class="framePanel rounded right">
     <h2>Quiz Results Breakdown</h2>
@@ -191,6 +215,7 @@ $(document).ready(function(){
     <div id="takeHistory_chart"><div id="loader-box"><img src="../webroot/img/loader.gif" alt="Loading.." width="16" height="16" border="0" align="absmiddle" class="noborder" /> Loading</div></div>
     </div>
   </div>
+  <!-- Display latest 10 quiz taker: taker ID, result and the last date they took quiz-->
   <?php if($totalRows_getquizLog != 0){ ?>
   <div id="ranking" class="framePanel rounded right">
     <h2>Latest 10 Quiz Takers</h2>

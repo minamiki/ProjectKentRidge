@@ -656,7 +656,7 @@
 	opacity: 0.0;
 }
 #topics-bar a.icon:link, #topics a.icon:visited {
-	background-image: url(../img/home-icon.png);
+	background-image: url(../img/edit.png);
 	background-repeat: no-repeat;
 	padding-top: 6px;
 	padding-right: 10px;

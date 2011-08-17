@@ -1,3 +1,5 @@
+<!-- This page is an UI for modifying quizzes which includes mainly “modules/modifyQuizMain.php -->
+
 <?php include("inc/header-php.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -32,7 +34,7 @@ $(document).ready(function(){
 	QuizValidate.init();
 	QuizInfo.init(<?php echo $quiz->quiz_id; ?>, '<?php echo $unikey; ?>');
 	<?php switch($step){ case 1: ?>
-	scanInitUploader();
+	scanInitUploader(); //this function is defined in swf.multi-uploader.js, to find out the number of uploading widgets
 	<?php break; case 2: ?>
 	QuizResult.init();
 	<?php break; case 3: ?>

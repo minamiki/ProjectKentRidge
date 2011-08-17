@@ -1,7 +1,37 @@
 <?php
-//----------------------------------------
-// Quiz Class
-//----------------------------------------
+/**************************************************************************
+Quiz Class: this class contains all the quiz operations on the database 
+ -Function exist: return false when quizzes do not exist or are not published 
+ -Function create: insert into table the newly created quiz then return back the quiz id for other purpose
+ -Funtion update: update information of the quiz such as description, catrgory, picture, etc.
+ -Function delete($memberID): check whether the current user is member-> delete questions, results and images
+ -Function addResult: create a new result
+ -Function updateResult: create a new result
+ -Function removeResult: remove a new result
+ -Function addQuestion: create a new question
+ -Function update a question
+ -Function remove a question
+ -Function addQuestion: create a new option
+ -Function update an option
+ -Function remove an option
+ -Function numQuestions: return the number of question in this quiz
+ -Function isPublished: return the publish status of the quiz
+ -Function checkPublish: check if quiz is ready to be published
+ -Function: publish the quiz
+ -Function: re-publish the quiz
+ -Function: archive the quiz
+ -Function: get the rating value by a member
+ -Function getResults: get the list of results belonging to this quiz
+ -Function getQuestions: get the list of questions belonging to this quiz
+ -Function getOptions: get the list of options belonging to a question
+ -Function getAttempts: get the list of attempts for this quiz
+ -Function awardPoints: award points based on like(1), dislike(-1) or neutral(0)
+ -Function creator: return the text name of the creator
+ -Function category: return the quiz topic
+ -Function isOwner: check if user is owner
+ -Function hasTaken: check if a user has taken quiz
+ -Function bindImagekey: bind a unikey with this quiz
+****************************************************************/
 if(!class_exists("Quiz")){
 class Quiz{
 	// Quiz data
@@ -20,6 +50,9 @@ class Quiz{
 	
 	public $quiz_not_available = NULL;
 	
+	/*********************
+	 * construction
+	 *********************/
 	function __construct($quiz_id = NULL){
 		if($quiz_id != NULL && $quiz_id != ""){
 			require('quizrooDB.php');
@@ -53,6 +86,9 @@ class Quiz{
 		}	
 	}
 	
+	/*********************
+	 * Function exist: return false when quizzes do not exist or are not published 
+	 *********************/
 	function exists(){
 		if($this->quiz_not_available){
 			return false;
@@ -65,7 +101,9 @@ class Quiz{
 		}
 	}
 	
-	// create a new quiz
+	/*********************************************************************************************************
+	 *Function create: insert into table the newly created quiz then return back the quiz id for other purpose
+	 ***********************************************************************************************************/
 	function create($title, $description, $cat, $picture, $member_id, $key){
 		require('quizrooDB.php');
 		
@@ -79,7 +117,7 @@ class Quiz{
 						   GetSQLValueString($key, "text"));
 		mysql_query($insertSQL, $quizroo) or die(mysql_error());
 		
-		// find the quiz id
+		// find the quiz id to return the quiz_id for the method
 		$querySQL = "SELECT LAST_INSERT_ID() AS insertID, creation_date FROM q_quizzes WHERE quiz_id = LAST_INSERT_ID()";
 		$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
 		$row_resultID = mysql_fetch_assoc($resultID);
@@ -100,8 +138,9 @@ class Quiz{
 		
 		return $this->quiz_id;
 	}
-	
-	// update the quiz
+	/********************************************************************************************
+	 * Funtion update: update information of the quiz such as description, catrgory, picture, etc.
+	 *******************************************************************************************/
 	function update($title, $description, $cat, $picture, $memberID){
 		require('quizrooDB.php');
 		
@@ -122,9 +161,11 @@ class Quiz{
 		}
 	}
 	
-	// delete the quiz
+	/********************************************************************************************
+	 * Function delete($memberID): check whether the current user is member-> delete questions, results and images
+	 *******************************************************************************************/
 	function delete($memberID){
-		require('quizrooDB.php');
+		require('quizrooDB.php'); // database connection
 		
 		// check if is member
 		if($this->isOwner($memberID)){
@@ -176,7 +217,9 @@ class Quiz{
 		}
 	}
 	
-	// create a new result
+	/********************************************************************************************
+	 *  Function addResult: create a new result (for old database)
+	 *******************************************************************************************/
 	function addResult($result_title, $result_description, $result_picture, $memberID){
 		require('quizrooDB.php');
 		
@@ -202,9 +245,11 @@ class Quiz{
 		}
 	}
 	
-	// create a new result
+	/********************************************************************************************
+	 *  Function updateResult: update new result
+	 *******************************************************************************************/
 	function updateResult($result_title, $result_description, $result_picture, $result_id, $memberID){
-		require('quizrooDB.php');
+		require('quizrooDB.php'); // database connection
 		
 		// check if is member
 		if($this->isOwner($memberID)){
@@ -222,9 +267,11 @@ class Quiz{
 		}
 	}
 	
-	// remove a new result
+	/********************************************************************************************
+	 *  Function removeResult: remove a new result
+	 *******************************************************************************************/
 	function removeResult($result_id, $memberID){
-		require('quizrooDB.php');
+		require('quizrooDB.php'); // database connection
 		
 		// owner check
 		if($this->isOwner($memberID)){
@@ -237,8 +284,10 @@ class Quiz{
 		}
 	}
 	
-	// create a new question
-	function addQuestion($question, $memberID){
+	/********************************************************************************************
+	 *  Function addQuestion: create a new question
+	 *******************************************************************************************/
+	 function addQuestion($question, $memberID){
 		require('quizrooDB.php');
 		
 		// check if is member
@@ -262,7 +311,9 @@ class Quiz{
 		}
 	}
 	
-	// update a question
+	/*****************************
+	 *Function update a question
+	 ******************************/
 	function updateQuestion($question, $question_id, $memberID){
 		require('quizrooDB.php');
 		
@@ -280,7 +331,9 @@ class Quiz{
 		}
 	}
 	
-	// remove a new question
+	/*****************************
+	 * Function remove a question
+	 ******************************/
 	function removeQuestion($question_id, $memberID){
 		require('quizrooDB.php');
 		
@@ -298,7 +351,9 @@ class Quiz{
 		}
 	}
 	
-	// create a option
+	/*****************************************
+	 * Function create a option (old database)
+	 *****************************************/
 	function addOption($option, $result, $weightage, $question, $memberID){
 		require('quizrooDB.php');
 		
@@ -312,7 +367,7 @@ class Quiz{
 						   GetSQLValueString($question, "int"));
 			mysql_query($insertSQL, $quizroo) or die(mysql_error());
 		
-			// find the question id
+			// find the option id
 			$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
 			$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
 			$row_resultID = mysql_fetch_assoc($resultID);
@@ -325,7 +380,9 @@ class Quiz{
 		}
 	}
 	
-	// update an option
+	/*****************************
+	 * Function update an option
+	 ******************************/
 	function updateOption($option, $result, $weightage, $option_id, $memberID){
 		require('quizrooDB.php');
 		
@@ -345,7 +402,9 @@ class Quiz{
 		}
 	}
 	
-	// remove an option
+	/*****************************
+	 * Function remove an option
+	 ******************************/
 	function removeOption($option_id, $memberID){
 		require('quizrooDB.php');
 		
@@ -360,7 +419,9 @@ class Quiz{
 		}
 	}
 	
-	// return the number of question in this quiz
+	/*****************************
+	 * Function numQuestions: return the number of question in this quiz
+	 ******************************/
 	function numQuestions(){
 		require('quizrooDB.php');
 		$query = sprintf("SELECT question_id FROM q_questions WHERE fk_quiz_id = %d", GetSQLValueString($this->quiz_id, "int"));
@@ -369,7 +430,9 @@ class Quiz{
 		return mysql_num_rows($getQuery);
 	}
 	
-	// return the publish status of the quiz
+	/*****************************
+	 *  Function isPublished: return the publish status of the quiz
+	 ******************************/
 	function isPublished(){
 		if($this->isPublished == 1){
 			return true;
@@ -378,7 +441,9 @@ class Quiz{
 		}
 	}
 	
-	// check if quiz is ready to be published
+	/*****************************
+	 *  Function checkPublish: check if quiz is ready to be published
+	 ******************************/
 	function checkPublish(){
 		require('variables.php');		
 		// check the number of results
@@ -410,9 +475,11 @@ class Quiz{
 		}
 	}
 	
-	// publish the quiz
+	/*****************************
+	 *  Function: publish the quiz
+	 ******************************/
 	function publish($memberID){
-		require('quizrooDB.php');
+		require('quizrooDB.php'); // database connection
 		require('variables.php');
 		
 		// check ig quiz belongs to member
@@ -479,7 +546,9 @@ class Quiz{
 		}
 	}
 	
-	// re-publish the quiz
+	/*****************************
+	 * Function: re-publish the quiz
+	 ******************************/
 	function republish($memberID){
 		require('quizrooDB.php');
 		require('variables.php');
@@ -498,7 +567,9 @@ class Quiz{
 		}
 	}
 	
-	// unpublish the quiz
+	/********************
+	 * unpublish the quiz
+	 *********************/
 	function unpublish($memberID){
 		require('quizrooDB.php');
 		require('variables.php');
@@ -523,7 +594,9 @@ class Quiz{
 		}
 	}
 	
-	// archive the quiz
+	/********************
+	 * Function: archive the quiz
+	 *********************/
 	function archive($memberID){
 		require('quizrooDB.php');
 		require('variables.php');
@@ -542,7 +615,9 @@ class Quiz{
 		}
 	}
 	
-	// get the rating value by a member
+	/********************
+	 * Function: get the rating value by a member
+	 *********************/
 	function getRating($member_id){
 		// find out the rating of this quiz
 		require('quizrooDB.php');
@@ -558,7 +633,9 @@ class Quiz{
 		}
 	}
 	
-	// get the list of results belonging to this quiz
+	/********************
+	 * Function getResults: get the list of results belonging to this quiz
+	 *********************/
 	function getResults($type = NULL){
 		require('quizrooDB.php');
 		$query = sprintf("SELECT result_id FROM q_results WHERE fk_quiz_id = %d", $this->quiz_id);
@@ -583,7 +660,9 @@ class Quiz{
 		}
 	}
 	
-	// get the list of questions belonging to this quiz
+	/********************
+	 * Function getQuestions: get the list of questions belonging to this quiz
+	 *********************/
 	function getQuestions($type = NULL){
 		require('quizrooDB.php');
 		$query = sprintf("SELECT question_id FROM q_questions WHERE fk_quiz_id = %d", $this->quiz_id);
@@ -608,7 +687,9 @@ class Quiz{
 		}
 	}
 	
-	// get the list of options belonging to a question
+	/********************
+	 * Function getOptions: get the list of options belonging to a question
+	 *********************/
 	function getOptions($question_id, $type = NULL){
 		require('quizrooDB.php');
 		$query = sprintf("SELECT option_id FROM q_options WHERE fk_question_id = %d", $question_id);
@@ -632,7 +713,9 @@ class Quiz{
 		}
 	}
 	
-	// get the list of attempts for this quiz
+	/********************
+	 * Function getAttempts: get the list of attempts for this quiz
+	 *********************/
 	function getAttempts($unique = false){
 		require('quizrooDB.php');
 		if($unique){
@@ -651,7 +734,9 @@ class Quiz{
 		}
 	}
 	
-	// award points based on like(1), dislike(-1) or neutral(0)
+	/********************
+	 * Function awardPoints: award points based on like(1), dislike(-1) or neutral(0)
+	 *********************/
 	function awardPoints($type, $member_id){
 		require('variables.php');
 		if($this->isPublished()){ // check if quiz is published
@@ -779,8 +864,10 @@ class Quiz{
 		}
 	}
 	
-	// return the text name of the creator
-	// - Note: Field is not checked for existance!
+	/********************
+	 * Function creator: return the text name of the creator
+	 * - Note: Field is not checked for existance!
+	 *********************/
 	function creator($field = NULL){
 		require('quizrooDB.php');
 		$query = sprintf("SELECT * FROM s_members WHERE member_id = %s", GetSQLValueString($this->fk_member_id, "int"));
@@ -798,7 +885,9 @@ class Quiz{
 		}
 	}
 	
-	// return the quiz topic
+	/********************
+	 * Function category: return the quiz topic
+	 *********************/
 	function category(){
 		require('quizrooDB.php');
 		$query = sprintf("SELECT cat_name FROM q_quiz_cat WHERE cat_id = %d", GetSQLValueString($this->fk_quiz_cat, "int"));
@@ -807,7 +896,9 @@ class Quiz{
 		return $row_getQuery['cat_name'];
 	}
 	
-	// check if user is owner
+	/********************
+	 * Function isOwner: check if user is owner
+	 *********************/
 	function isOwner($facebookID){
 		if($facebookID == $this->fk_member_id){
 			return true;
@@ -816,7 +907,9 @@ class Quiz{
 		}		
 	}
 	
-	// check if a user has taken quiz
+	/********************
+	 * Function hasTaken: check if a user has taken quiz
+	 *********************/
 	function hasTaken($facebookID){
 		require('quizrooDB.php');	// database connections
 		
@@ -833,12 +926,88 @@ class Quiz{
 		}
 	}
 	
-	// bind a unikey with this quiz
+	/********************
+	 * Function bindImagekey: bind a unikey with this quiz
+	 *********************/
 	function bindImagekey($unikey){
 		require('quizrooDB.php');	// database connections
 		
 		$queryCheck = sprintf("UPDATE s_image_store SET `fk_quiz_id` = %d WHERE `uni_key` = %s AND `fk_member_id`= %s", $this->quiz_id, GetSQLValueString($unikey, "text"), $this->fk_member_id);
 		mysql_query($queryCheck, $quizroo) or die(mysql_error());
 	}
-}
+	
+	/********************
+	 * Modify on 26 Jul: function for recommending quizzes, update isRecommended value in database
+	 *********************/
+	 function quizRecommendation (){
+		require('quizrooDB.php');	// database connections
+		
+		$insertSQL = sprintf("UPDATE q_quizzes SET `isRecommended`= 1 WHERE `quiz_id` = %d",
+							   GetSQLValueString($this->quiz_id, "int"));
+		mysql_query($insertSQL, $quizroo) or die(mysql_error());
+			
+		return $this->quiz_id;
+	}
+	
+	/**************************************************************************
+	 * Modify on 17 Aug: function for adding options according to new database (Test type)
+	 * (Foreign key question_id is provided)
+	 **************************************************************************/
+	 function addTestTypeOption($option, $isCorrect, $fk_question_id){
+		require('quizrooDB.php');
+		
+		// check if is member
+		if($this->isOwner($memberID)){
+			// insert the option
+			$insertSQL = sprintf("INSERT INTO q_options_test(`option`, `isCorrect`, `fk_question_id`) VALUES (%s, %d, %d)",
+						   htmlentities(GetSQLValueString($option, "text")),
+						   GetSQLValueString($isCorrect, "int"),
+						   GetSQLValueString($fk_question_id, "int"));
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());
+		
+			// find the option id
+			$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
+			$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
+			$row_resultID = mysql_fetch_assoc($resultID);
+			$currentQuestionID = $row_resultID['insertID'];
+			mysql_free_result($resultID);
+			
+			return $row_resultID['insertID'];
+		}else{
+			return false;
+		}
+	}
+	
+    /**************************************************************************
+	 * Modify on 17 Aug: function for adding result according to new database (Test type)
+	 * (Foreign key quiz_id is provided)
+	 **************************************************************************/
+	function addTestTypeResult($result_title, $result_description, $result_picture, $range_max, $range_min, $fk_quiz_id){
+		require('quizrooDB.php');
+		
+		// check if is member
+		if($this->isOwner($memberID)){
+			// Insert the result
+			$insertSQL = sprintf("INSERT INTO q_results_test(`result_title`, `result_description`, `result_picture`, `range_max`, `range_min`, `fk_quiz_id`) VALUES (%s, %s, %s, %d, %d, %d)",
+							   htmlentities(GetSQLValueString($result_title, "text")),
+							   htmlentities(GetSQLValueString($result_description, "text")),
+							   GetSQLValueString($result_picture, "text"),
+							   GetSQLValueString($range_max, "int"));
+							   GetSQLValueString($range_min, "int"));
+							   GetSQLValueString($fk_quiz_id, "int"));
+			mysql_query($insertSQL, $quizroo) or die(mysql_error());
+			
+			// find the result id
+			$querySQL = "SELECT LAST_INSERT_ID() AS insertID";
+			$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
+			$row_resultID = mysql_fetch_assoc($resultID);
+			mysql_free_result($resultID);
+			
+			return $row_resultID['insertID'];
+		}else{
+			return false;
+		}
+	}
+	
+  }
 }

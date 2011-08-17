@@ -1,16 +1,4 @@
-<?php
-// populate the topics panel
-$query_getTopics = sprintf("SELECT cat_id, cat_name, undone, (SELECT COUNT(quiz_id) FROM `q_quizzes` WHERE isPublished = 1 AND fk_quiz_cat = cat_id) as total FROM (SELECT COUNT(fk_quiz_cat) as undone, fk_quiz_cat FROM q_quizzes q WHERE q.quiz_id NOT IN (SELECT DISTINCT(fk_quiz_id) FROM `q_store_result` WHERE `fk_member_id` = %s) AND isPublished = 1 GROUP BY fk_quiz_cat) t RIGHT JOIN q_quiz_cat r ON t.fk_quiz_cat = r.cat_id", $member->id);
-$getTopics = mysql_query($query_getTopics, $quizroo) or die(mysql_error());
-$row_getTopics = mysql_fetch_assoc($getTopics);
-$totalRows_getTopics = mysql_num_rows($getTopics);
 
-if(isset($_GET['topic'])){
-	$topic = $_GET['topic'];
-}else{
-	$topic = 0;
-}
-?>
 <div id="dialog-message" style="display:none;" title="Feature Unavailable"> Oops, this feature is currently unavailable yet. Please hang in there while we work on it. </div>
 <div id="statusbar-container">
   <div id="statusbar"> <a href="index.php" id="statusbar-logo" title="Quizroo"><span>Quizroo</span></a>
@@ -24,7 +12,7 @@ if(isset($_GET['topic'])){
     <div id="statusbar-game">
       <div id="statusbar-scores" class="statusbar-element">
         <div id="statusbar-quizcreator">
-          <div id="statusbar-quizcreator-logo" title="Quiz Creator"></div>
+          <!--div id="statusbar-quizcreator-logo" title="Quiz Creator"></div-->
           <div id="statusbar-quizcreator-count-total" class="statusbar-achievements-quizcount-top" title="Quiz Creator Popularity Score"><div class="stretch--resizer" style="margin: 0pt; padding: 0pt; white-space: nowrap; overflow: hidden; font-size: 13px; word-spacing: 0px;" type="statusbar"><span class="stretch--handle" style="margin: 0pt; padding: 0pt;" type="statusbar"><?php echo $member->quizcreator_score; ?></span></div></div>
           <div id="statusbar-quizcreator-count-today" class="statusbar-achievements-quizcount-bottom" title="Quiz Creator Score for Today"><div class="stretch--resizer" style="margin: 0pt; padding: 0pt; white-space: nowrap; overflow: hidden; font-size: 13px; word-spacing: 0px;" type="statusbar"><span class="stretch--handle" style="margin: 0pt; padding: 0pt;" type="statusbar"><?php echo $member->quizcreator_score_today; ?></span></div>
           </div>
@@ -43,6 +31,8 @@ if(isset($_GET['topic'])){
       </div>
     </div>
     <div id="statusbar-divider"></div>
+    <div id="statusbar-categories" class="statusbar-text statusbar-element" title="Quiz categories">Category</div>
+    <div id="statusbar-divider"></div>
     <div id="statusbar-quiz" class="statusbar-text statusbar-element" title="Create, Manage or Browse quizzes">Quiz</div>
     <div id="statusbar-divider"></div>
     <div id="statusbar-friends" class="statusbar-text statusbar-element" title="Find out about your friends or Invite your friends to Quizroo">Friends</div>
@@ -56,14 +46,4 @@ if(isset($_GET['topic'])){
   <div id="statusbar-info"></div>
   <div id="statusbar-sidemenu"></div>
 </div>
-<div id="topics-bar" class="clear">
-  <ul>
-      <li><a href="index.php" class="icon"><span>#</span></a></li>  		
-    <?php do { ?>
-      <li><a href="topics.php?topic=<?php echo $row_getTopics['cat_id']; ?>" class="topicTitle<?php echo ($topic == $row_getTopics['cat_id']) ? " current" : ""; ?>" title="Total <?php echo $row_getTopics['total']; ?> quizzes, <?php echo ($row_getTopics['undone'] != NULL) ? $row_getTopics['undone'] : 0; ?> undone"><?php echo $row_getTopics['cat_name']; ?></a></li>
-      <?php } while ($row_getTopics = mysql_fetch_assoc($getTopics)); ?>
-  </ul>
-</div>
-<?php
-mysql_free_result($getTopics);
-?>
+

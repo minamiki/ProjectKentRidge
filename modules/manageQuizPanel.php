@@ -1,6 +1,8 @@
+<!--This page is the back end for managing quizzes. List down all the quizzes of the current member--> 
+
 <?php
-require('../modules/quizrooDB.php');
-require('../modules/quiz.php');
+require('../modules/quizrooDB.php'); // require database connection
+require('../modules/quiz.php'); // require all the available operation on quizzes
 
 $currentPage = $_SERVER["PHP_SELF"];
 
@@ -10,7 +12,7 @@ if (isset($_GET['pageNum_listQuiz'])) {
   $pageNum_listQuiz = $_GET['pageNum_listQuiz'];
 }
 $startRow_listQuiz = $pageNum_listQuiz * $maxRows_listQuiz;
-
+// select all the quizzes according to the member_id
 $query_listQuiz = sprintf("SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %s AND isPublished != 3 ORDER BY creation_date DESC", $member->id);
 $query_limit_listQuiz = sprintf("%s LIMIT %d, %d", $query_listQuiz, $startRow_listQuiz, $maxRows_listQuiz);
 $listQuiz = mysql_query($query_limit_listQuiz, $quizroo) or die(mysql_error());
