@@ -1,3 +1,6 @@
+<!-- Deleting of quiz -->
+<!-- NOTE: Does not work! -->
+
 <?php
 //----------------------------------------
 // Publish the quiz

@@ -1,4 +1,6 @@
 <?php
+// Managing quizzes created under user - whereby user can publish/unpublish/edit/delete their quizzes.
+// http://localhost/quizroo/webroot/manageQuiz.php
 require('../modules/quizrooDB.php');
 require('../modules/quiz.php');
 
@@ -11,6 +13,7 @@ if (isset($_GET['pageNum_listQuiz'])) {
 }
 $startRow_listQuiz = $pageNum_listQuiz * $maxRows_listQuiz;
 
+// Get quizzes created
 $query_listQuiz = sprintf("SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %s AND isPublished != 3 ORDER BY creation_date DESC", $member->id);
 $query_limit_listQuiz = sprintf("%s LIMIT %d, %d", $query_listQuiz, $startRow_listQuiz, $maxRows_listQuiz);
 $listQuiz = mysql_query($query_limit_listQuiz, $quizroo) or die(mysql_error());
@@ -23,6 +26,8 @@ if (isset($_GET['totalRows_listQuiz'])) {
   $all_listQuiz = mysql_query($query_listQuiz);
   $totalRows_listQuiz = mysql_num_rows($all_listQuiz);
 }
+
+//10 quizzes per page
 $totalPages_listQuiz = ceil($totalRows_listQuiz/$maxRows_listQuiz)-1;
 
 $queryString_listQuiz = "";
@@ -36,6 +41,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
     }
   }
   if (count($newParams) != 0) {
+    //converts character to HTML entities
     $queryString_listQuiz = "&" . htmlentities(implode("&", $newParams));
   }
 }
@@ -48,6 +54,7 @@ $queryString_listQuiz = sprintf("&totalRows_listQuiz=%d%s", $totalRows_listQuiz,
   </div>
 </div>
 <div class="frame rounded">
+<!-- Gets and displays quizzes (if any) that user created -->
 <?php if($totalRows__listQuiz != 0){ ?>
 <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0" id="checkQuizTable" class="rounded">
       <tr>
@@ -85,6 +92,8 @@ $queryString_listQuiz = sprintf("&totalRows_listQuiz=%d%s", $totalRows_listQuiz,
         <?php } while ($row_listQuiz = mysql_fetch_assoc($listQuiz)); ?>
     </table>
   <br />
+  
+  <!-- If quizzes > 10, pages > 1 -->
     <table width="200" border="0" align="center" cellpadding="5" cellspacing="0" class="paging-table" >
       <tr>
         <td><?php if ($pageNum_listQuiz > 0) { // Show if not first page ?>

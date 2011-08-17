@@ -1,4 +1,9 @@
+<!-- Creates 1 new question object for a particular quiz. Comes with 2 default options. If additional option required: will call createOptionObject.php
+	  or load question for particular quiz if user was to modify quiz that was already created.
+      -->
+
 <?php require("quizrooDB.php");
+
 // prepare result options
 $querySQL = "SELECT result_id, result_title FROM q_results WHERE fk_quiz_id = ".GetSQLValueString($_GET['id'], "int");
 $resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
@@ -13,7 +18,7 @@ do{
 mysql_free_result($resultID);
 
 // check what to do
-if(isset($_GET['load'])){
+if(isset($_GET['load'])){ //user is modifying quiz, load from database
 	require('quizrooDB.php');
 	
 	$query = sprintf("SELECT question_id, question, question_image, question_order FROM q_questions WHERE fk_quiz_id = %d", GetSQLValueString($_GET['id'], "int"));
@@ -22,6 +27,8 @@ if(isset($_GET['load'])){
 	$totalRows_getQuery = mysql_num_rows($getQuery);
 	
 	$question = 0;
+	
+	//loops through questions of particular quiz
 	if($totalRows_getQuery > 0){
 		do{
 ?>
@@ -47,6 +54,7 @@ if(isset($_GET['load'])){
     </tr>
   </table>
     <?php 
+	// get options for particular question
 	$queryOption = sprintf("SELECT `option_id`, `option`, `fk_result`, `option_weightage` FROM q_options WHERE fk_question_id = %d ORDER BY option_id", GetSQLValueString($row_getQuery['question_id'], "int"));
 	$getOption = mysql_query($queryOption, $quizroo) or die(mysql_error());
 	$row_getOption = mysql_fetch_assoc($getOption);
@@ -54,6 +62,7 @@ if(isset($_GET['load'])){
 	
 	$option = 0;
 	
+	//loops to display options
 	if($totalRows_getOption > 0){
 		do{
 	?>
@@ -118,6 +127,7 @@ $quiz = $_GET['id'];
       <span class="textfieldRequiredMsg">A value is required.</span></span></td>
   </tr>
 </table>
+<!-- display default of 2 options per question -->
 <div id="optionContainer_<?php echo $question; ?>">
   <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
     <tr class="optionTable">

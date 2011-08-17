@@ -1,3 +1,5 @@
+<!-- Deletion of Quiz -->
+<!-- NOTE: Does not work! -->
 <?php // delete temp
 require("../modules/member.php");
 require("../modules/quiz.php");

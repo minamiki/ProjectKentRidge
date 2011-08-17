@@ -1,3 +1,7 @@
+<!--
+Display achievements achieved already, and those that are yet to achieve. Displays level and fun facts relating to achievements
+http://localhost/quizroo/webroot/achievements.php
+-->
 <?php
 // get the list of achievements
 $getAchievementsQuery = sprintf("SELECT name, description, image, timestamp FROM g_achievements_log, g_achievements WHERE fk_achievement_id = g_achievements.id AND fk_member_id = %s AND g_achievements.type != 3 ORDER BY timestamp DESC", $member->id);

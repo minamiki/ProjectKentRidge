@@ -1,3 +1,4 @@
+<!-- Creation of quiz is successful after all basic requirements are checked -->
 <?php require('../modules/quizrooDB.php'); ?>
 <?php require("../modules/quiz.php");
 $quiz = new Quiz($_GET['id']);

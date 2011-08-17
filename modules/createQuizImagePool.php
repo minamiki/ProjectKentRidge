@@ -1,3 +1,5 @@
+<!-- Choosing of image from image pool that were already uploaded by users & 
+ 	 Uploading new images -->
 <table border="0" cellspacing="0" cellpadding="3">
   <tr>
     <td><span class="formDesc">OR click on a picture below to use it as the result picture</span></td>

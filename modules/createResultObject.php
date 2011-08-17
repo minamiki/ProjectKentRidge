@@ -1,8 +1,15 @@
-<?php // get result number
-if(isset($_GET['load'])){
+<!-- create new result object for particular quiz
+ 	or load result for particular quiz if user was to modify it -->
+
+<?php 
+
+
+// get result number
+if(isset($_GET['load'])){ //user is modifying quiz
 	$unikey = $_GET['unikey'];
 	require('quizrooDB.php');
 	
+	//get results of particular quiz
 	$query = sprintf("SELECT result_id, result_title, result_description, result_picture FROM q_results WHERE fk_quiz_id = %d", GetSQLValueString($_GET['id'], "int"));
 	$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 	$row_getQuery = mysql_fetch_assoc($getQuery);
@@ -12,6 +19,7 @@ if(isset($_GET['load'])){
 	if($totalRows_getQuery > 0){
 		do{ $count = 1;
 ?>
+<!-- Get/Add title & description & picture of result -->
 <div id="r<?php echo $result; ?>" class="resultWidget">
 <input type="hidden" name="ur<?php echo $result; ?>" id="ur<?php echo $result; ?>" value="<?php echo $row_getQuery['result_id']; ?>" />
 <table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
@@ -80,6 +88,7 @@ if(isset($_GET['load'])){
 		echo "Delete not authorized";
 	}
 }else{
+// add/create result -- title, description, picture
 $result = $_GET['resultNumber'];
 $unikey = $_GET['unikey'];
 $count = 1;

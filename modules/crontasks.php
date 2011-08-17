@@ -1,4 +1,5 @@
 <?php
+//scheduler that automates executing these tasks
 require('quizrooDB.php');
 require('system.php');
 

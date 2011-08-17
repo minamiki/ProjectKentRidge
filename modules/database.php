@@ -1,3 +1,4 @@
+<!-- Functions to help make manipulating/making use/getting data from database easier -->
 <?php
 class Database
 {	
@@ -132,6 +133,9 @@ function update($table,$keyattribute,$key,$attributes,$values){
 	return $results;
 }
 
+/*
+ * Deletes row/s that match the WHERE condition from table 
+ */
 function delete($table,$where){
 	$this->Connect();	
 	
@@ -143,6 +147,9 @@ function delete($table,$where){
 	return $results;
 }
 
+/*
+ * The NOW() function returns the current system date and time.
+ */
 function mysqlnow(){
 	$this->Connect();
 	$this->SQLStatement = "SELECT NOW() as now";

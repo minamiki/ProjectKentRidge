@@ -1,4 +1,6 @@
-// Create Quiz
+<!-- Creating/Editing Quiz - similar to Quiz.create but different. This is for editing of Quiz. -->
+<!--     selectImage, addResult, updateResult, getResultText, getOptionValues, addQuestion, addOption, submitCheck, removeField-->
+
 
 // variables
 var uploadfile = "uploadQuiz";
@@ -88,6 +90,7 @@ function addQuestion(){
 				$("#createQuestionContainer").append(data);
 				questionArray[questionCount++] = new questionClass();
 				for(i = 0; i < 3; i++){
+					//A Spry Validation Text Field widget is a text field that displays valid or invalid states when the site visitor enters text. For example, you can add a Validation Text Field widget to a form in which visitors type their e-mail addresses. If they fail to type the @ sign and a period (.) in the e-mail address, the widget returns a message stating that the information the user entered is invalid.
 					sprytextfield[checkTextField] = new Spry.Widget.ValidationTextField("sprytextfield"+checkTextField, "none", {validateOn:["change"]});
 					checkTextField++;			
 				}

@@ -1,14 +1,15 @@
+<!--
+  Checks through criteria for all achievements to determine if user has attained achievements.
+  
+  Achievements can be categorised as
+  - points based
+  - condition based
+  
+  @param $memberid, $achievement_array
+ -->
 <?php
 require 'database.php';
-/**
- * Checks through criteria for all achievements to determine if user has attained achievements.
- * 
- * Achievements can be categorised as
- * - points based
- * - condition based
- * 
- * @param $memberid, $achievement_array
- */
+
 function checkAchievements($memberid,$achievement_array){
 	
 	// Use a common database connection

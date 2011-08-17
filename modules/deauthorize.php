@@ -1,5 +1,6 @@
+<!-- Deauthorize Callback
+ 	 Methods provided by Facebook -->
 <?php
-// Deauthorize Callback
 require('variables.php');
 require('member.php');
 

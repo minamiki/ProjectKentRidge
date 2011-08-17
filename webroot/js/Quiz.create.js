@@ -1,4 +1,5 @@
-// Create Quiz
+<!-- Create Quiz -->
+<!--   QuizValidate (add, remove etc) , QuizInfo, QuizResult(add, remove etc), QuizQuestion (add, addOption etc) , submitCheck-->
 
 // Quiz Validation Class
 var QuizValidate = {

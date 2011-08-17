@@ -1,4 +1,5 @@
-<?php // imagestore cleaner
+<!-- imagestore cleaner -->
+<?php 
 require('quizrooDB.php');
 // go through all the images
 

@@ -34,6 +34,7 @@ $(document).ready(function(){
 	<?php if(isset($_GET['step'])){ ?>
 	QuizInfo.init(<?php echo $quiz->quiz_id; ?>, '<?php echo $unikey; ?>');
 	<?php switch($_GET['step']){ case 1: ?>
+	//find the number of uploading widgets (func in swf.multi-uploader.js)
 	scanInitUploader();
 	<?php break; case 2: ?>
 	QuizResult.init();

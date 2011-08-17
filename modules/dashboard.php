@@ -1,4 +1,8 @@
-<?php require('../modules/quizrooDB.php'); ?>
+<!-- Refers to the recommended & popular quizzes section of homepage
+ (NOTE: 'recommended' here means 'most recent') -->
+
+<?php 
+require('../modules/quizrooDB.php'); ?>
 <?php require('../modules/variables.php');
 // retrieve recommended quizzes
 $query_recommendations = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY creation_date DESC LIMIT 0, %d", $VAR_NUM_LISTINGS);
@@ -28,9 +32,10 @@ $totalRows_popular = mysql_num_rows($popular);
     <div id="recommendations" class="framePanel rounded left-right">
       <h2>Latest</h2>
       <div class="repeat-container">
+      <!-- Displays the recommended quizzes - their titles, description and thumbnail picture-->
       <?php if($totalRows_recommendations != 0){ do { ?>
         <div class="quiz_box clear">
-          <h3><a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><?php echo $row_recommendations['quiz_name']; ?></a></h3>
+          <h3><a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>" style = "color:#CC0000"><?php echo $row_recommendations['quiz_name']; ?></a></h3>
           <div class="thumb_box">
             <a href="previewQuiz.php?id=<?php echo $row_recommendations['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_recommendations['quiz_picture']; ?>" alt="<?php echo $row_recommendations['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_recommendations['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
@@ -41,6 +46,7 @@ $totalRows_popular = mysql_num_rows($popular);
 			<?php }}else{ ?><p class="rating"><span class="like"><?php echo $row_recommendations['likes']; ?></span> likes, <span class="dislike"><?php echo $row_recommendations['dislikes']; ?></span> dislikes</p><?php } ?>
           </div>
         </div>
+
         <?php } while ($row_recommendations = mysql_fetch_assoc($recommendations)); }else{ ?>
         <p>There are no latest quizzes!</p>
         <?php } ?>
@@ -49,6 +55,7 @@ $totalRows_popular = mysql_num_rows($popular);
     <div id="popular" class="framePanel rounded left-right clear">
       <h2>Popular</h2>
       <div class="repeat-container">
+      <!-- Displays most popular quizzes -->
       <?php if($totalRows_popular !=0 ){ do { ?>
         <div class="quiz_box clear">
           <h3><a href="previewQuiz.php?id=<?php echo $row_popular['quiz_id']; ?>"><?php echo $row_popular['quiz_name']; ?></a></h3>

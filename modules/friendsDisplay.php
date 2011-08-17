@@ -1,4 +1,6 @@
 <?php
+//This file concerns the overview of one's friends- Their ranking, and fun facts. 
+//http://localhost/quizroo/webroot/friends.php
 require('../modules/quizrooDB.php');
 require('../modules/variables.php');
 require('../modules/system.php');
@@ -14,6 +16,7 @@ $getRanking = mysql_query($query_getRanking, $quizroo) or die(mysql_error());
 $row_getRanking = mysql_fetch_assoc($getRanking);
 $totalRows_getRanking = mysql_num_rows($getRanking);
 ?>
+<!-- Get Fun Facts -->
 <div id="leaderboard-preamble" class="frame rounded">
   <h2>Friends</h2>
   <p>Find out how your friends fare against each other! You can also get to know interesting facts about your friends' quizzes on Quizzroo!</p>
@@ -65,6 +68,8 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
     </div>
     </div>
   </div>
+  
+  <!-- Get ranking of all friends -->
   <div id="ranking" class="framePanel rounded right">
     <h2>Friends Rankings</h2>
     <div class="content-container">
@@ -75,7 +80,7 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
         <th align="left" scope="col">Member</th>
         <th scope="col">Score</th>
       </tr>
-      <?php do{ ?>
+      <?php do{ ?>  
       <tr>
         <td width="55" align="center" scope="row" class="ranking"><?php echo $row_getRanking['ranking']; ?></td>
         <td width="60" align="center" scope="row"><a href="../webroot/viewMember.php?id=<?php echo $row_getRanking['member_id']; ?>"><img src="http://graph.facebook.com/<?php echo $row_getRanking['member_id']; ?>/picture" alt="<?php echo $row_getRanking['member_name']; ?>" width="50" height="50" border="0" title="<?php echo $row_getRanking['member_name']; ?>" /></a></td>

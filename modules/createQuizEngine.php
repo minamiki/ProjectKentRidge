@@ -1,4 +1,8 @@
-<?php require('quizrooDB.php'); ?>
+<!-- Does the saving of data and, 
+ Directing of which files to go to (ie. /webroot/createQuiz.php?step=3)for each step when a button is clicked -->
+
+<?php 
+require('quizrooDB.php'); ?>
 <?php
 // get the member info
 require('member.php');

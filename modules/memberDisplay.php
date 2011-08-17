@@ -1,4 +1,7 @@
 <?php
+//Display profile page of a particular member - includes rank, fun facts, quizzes created
+//If member is a friend, it will also include a chart of the quizzes taken by him/her
+//http://localhost/quizroo/webroot/viewMember.php
 require('../modules/quizrooDB.php'); 
 
 // check whether such a member exists
@@ -81,6 +84,7 @@ if($view_member->memExist){
 	}
 }
 ?>
+<!-- If Friend - Draws Quiz Topic Breakdown Chart and Quiz Taking History Chart-->
 <?php if($friend){ ?>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -150,6 +154,7 @@ $(document).ready(function(){
   <p>Here's some information about this member. You can see the latest quizzes created by this member. You can see more information if this member is your friend! (In facebook)</p>  
   <?php } ?>
 </div>
+<!-- Latest & Popular quizzes that member created -->
 <div id="member-quizzes" class="clear">
   <div id="latest-quizzes" class="framePanel rounded left-right">
     <h2>Latest Quizzes</h2>
@@ -194,6 +199,7 @@ $(document).ready(function(){
      </div>
   </div>
 </div>
+<!-- Fun facts of member -->
 <div class="clear">
   <div id="fun-facts" class="framePanel rounded left">
     <h2>Fun Facts</h2>
@@ -240,6 +246,7 @@ $(document).ready(function(){
     </div>
   </div>
   <div id="ranking" class="framePanel rounded right">
+  <!-- Rank of member -->
     <h2><?php echo $view_member->qname; ?>'s Ranking</h2>
     <div class="content-container">
     <table width="100%" border="0" cellpadding="4" cellspacing="0" id="rankTable">

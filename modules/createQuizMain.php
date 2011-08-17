@@ -1,8 +1,12 @@
+<!-- Display the steps in creating a quiz. 
+	 Directs which file to go to (ie. modules/createQuizEngine.php?step=1) for "next" "prev" button etc -->
+
 <?php 
 require('../modules/quizrooDB.php');
 require('../modules/uploadFunctions.php');
 require("../modules/quiz.php");
 
+//find out which step is it
 if(isset($_GET['step'])){
 // now check whether this quiz actually belongs to this user
 if(isset($_GET['id'])){
@@ -64,7 +68,7 @@ switch($_GET['step']){ case 1:
         <tr>
           <th valign="middle" scope="row"><label for="quiz_cat">Topic</label></th>
           <td><select name="quiz_cat" id="quiz_cat">
-              <?php do { ?>
+              <?php do { //populate categories ?> 
               <option value="<?php echo $row_listCat['cat_id']; ?>" <?php if($row_listCat['cat_id'] == $quiz->fk_quiz_cat){ echo "selected"; }; ?>><?php echo $row_listCat['cat_name']?></option>
               <?php } while ($row_listCat = mysql_fetch_assoc($listCat));
 			  $rows = mysql_num_rows($listCat);
@@ -197,6 +201,7 @@ break; case 4:
 		}
 	}
 	
+	//statistics of quiz
 	if($numQuestions != 0){
 		$averageOptionCount = $totalOptions / $numQuestions;
 	}else{
@@ -224,6 +229,8 @@ break; case 4:
 <div id="create-quiz" class="frame rounded">
   <form action="../modules/createQuizEngine.php?step=4" method="post" name="createQuiz" id="createQuiz">
 <input type="hidden" name="id" value="<?php echo $quiz->quiz_id; ?>" />
+
+<!-- Check for conditions to fulfil before quiz can be created successfully -->
 <table border="0" align="center" cellpadding="5" cellspacing="0" id="checkQuizTable">
       <tr>
         <th scope="col">&nbsp;</th>
@@ -247,7 +254,7 @@ break; case 4:
       </tr>
     </table>
     <p><?php if($quizState){ ?>
-    Congratuations! Your quiz has passed the basic requirements. You can choose to preview your quiz first, or publish your quiz now.
+    Congratulations! Your quiz has passed the basic requirements. You can choose to preview your quiz first, or publish your quiz now.
     <?php }else{ ?>
     Opps! It seems that your quiz doesn't fulfill certain requirements. All quizzes require a minimum of <?php echo $VAR_QUIZ_MIN_RESULT; ?> result(s) and <?php echo $VAR_QUIZ_MIN_QUESTIONS; ?> questions(s). Each question also required at least <?php echo $VAR_QUIZ_MIN_OPTIONS; ?> options.
     <?php } ?></p>

@@ -1,4 +1,6 @@
 <?php
+//Display of leaderboard 
+//http://localhost/quizroo/webroot/leaderBoard.php
 require('../modules/quizrooDB.php');
 require('../modules/variables.php');
 require('../modules/system.php');
@@ -16,6 +18,7 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
   <h2>Leader Board</h2>
   <p>Find out how you fare against other Quizroo members! You can also get to know interesting facts about the quiz system on Quizzroo!</p>
 </div>
+<!-- Get fun facts of all members in Quizroo -->
 <div class="clear">
   <div id="fun-facts" class="framePanel rounded left">
     <h2>Fun Facts</h2>
@@ -64,6 +67,7 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
     </div>
   </div>
   <div id="ranking" class="framePanel rounded right">
+  <!-- Get Top 10 Member Rankings of Quizroo -->
     <h2>Top 10 Member Rankings</h2>
     <div class="content-container">
     <table width="100%" border="0" cellpadding="4" cellspacing="0" id="rankTable">

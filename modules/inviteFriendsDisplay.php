@@ -1,4 +1,7 @@
-<?php include("variables.php"); ?>
+<?php 
+//Display for inviting friends to Quizroo via Facebook Wall or request
+//http://localhost/quizroo/webroot/inviteFriends.php
+include("variables.php"); ?>
 <?php
 // get the number of members
 //$getMembersQuery = sprintf("SELECT COUNT(member_id) as count FROM s_members WHERE isActive=1");

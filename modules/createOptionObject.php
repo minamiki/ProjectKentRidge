@@ -1,4 +1,7 @@
-<?php require("quizrooDB.php");
+<!-- creates one new option object for particular question of a particular quiz -->
+
+<?php 
+require("quizrooDB.php");
 if(isset($_GET['delete'])){
 	// delete the option
 	require('member.php');
@@ -29,6 +32,7 @@ do{
 
 mysql_free_result($resultID);
 ?>
+<!-- Shows that 1 option -->
 <div id="cq<?php echo $question; ?>o<?php echo $option; ?>">
 <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
   <tr>
