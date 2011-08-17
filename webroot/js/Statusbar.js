@@ -165,6 +165,22 @@ var Statusbar = {
 		/*
 		 * Display menus
 		 */
+		 
+		 //Modify on 26 Jul: display topics under category button
+		} else if(option=='statusbar-categories'){
+			$('#statusbar-info').addClass('statusbar-menu').html('');
+			//for each topic:
+			var topic1 = document.createElement('div');
+			$('#statusbar-info').append(topic1);
+			$(topic1).addClass('statusbar-menu-item').html(
+				"<div class='statusbar-menu-title'>Topic 1</div>"
+			);
+			$(topic1).click(function(){
+				goToURL('createQuiz.php');
+				$(topic1).css('background-color','#333');
+			});
+			//
+		// end
 		}else if(option=='statusbar-quiz'){			
 			$('#statusbar-info').addClass('statusbar-menu').html('');
 			
@@ -415,7 +431,8 @@ var Statusbar = {
 			}else{
 				$('#notification-system-count').show();
 			}
-			$("#notification-system-count").html('NEW');
+			// Modify on 26 Jul change "New" to "!" under notification
+			$("#notification-system-count").html('!');
 			Statusbar.systemNotification = data;
 		});
 	},

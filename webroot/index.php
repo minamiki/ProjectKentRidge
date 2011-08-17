@@ -25,6 +25,7 @@ $achievement_array = checkAchievements($facebookID, $achievement_array);
 // Retrieve details of achievements
 $achievement_details = retrieveAchievements($achievement_array);
 ?>
+
 <script type="text/javascript" src="js/Dashboard.js"></script>
 <script type="text/javascript" src="js/Splash.js"></script>
 <script type="text/javascript">

@@ -1,9 +1,14 @@
-<?php if($quiz_exist){ ?>
-<?php if(isset($_GET['unlist'])){ ?>
+<!-- 
+This is an interface for publishing quiz engine.
+Displaying message informing the user whether the quiz is unpublished, published or not found
+-->
+<?php if($quiz_exist){ // check if the quiz exists ?>
+<?php if(isset($_GET['unlist'])){ // check if the quiz is published ?>
 <div class="framePanel rounded">
 <h2 id="title_quiz_result">Quiz Unpublished!</h2> 
 <div class="content-container"><p>
 You have successfully unpublished your quiz. Your quiz will not be listed in topics or search queries.</p></div></div>
+<!-- Display quiz details-->
 <div id="takequiz-preview" class="frame rounded">
   <h2><?php echo $quiz->quiz_name; ?></h2>
   <?php if($quiz->quiz_picture != "none.gif"){ ?>
@@ -11,10 +16,12 @@ You have successfully unpublished your quiz. Your quiz will not be listed in top
   <?php } ?>
   <p class="description"><?php echo $quiz->quiz_description; ?></p>
   <p class="info">by <em><?php echo $quiz->creator(); ?></em> on <?php echo date("F j, Y g:ia", strtotime($quiz->creation_date)); ?> in the topic '<?php echo $quiz->category(); ?>'</p>
+  <!-- Display preview quiz button-->
   <input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="goToURL('previewQuiz.php?id=<?php echo $_GET['id']; ?>');" value="Preview Quiz" />
 </div>
 <?php }else{ ?>
 <div class="framePanel rounded">
+<!-- Inform user that the quiz has been published -->
 <h2 id="title_quiz_result">Quiz Published!</h2> 
 <div class="content-container"><p>
 You have successfully published your quiz. Your quiz will now be available under the topic <?php echo $quiz->category(); ?>. It will also turn up in search queries. You will start receiving points when users take your quiz! Good luck!</p>
@@ -29,7 +36,7 @@ You have successfully published your quiz. Your quiz will now be available under
   <input name="takeQuizBtn" type="button" class="styleBtn" id="takeQuizBtn" onclick="goToURL('takeQuiz.php?id=<?php echo $_GET['id']; ?>');" value="Take Quiz now!" />
 </div>
 <?php } ?>
-<?php }else{ ?>
+<?php }else{ // If the quiz does not exist ?>
 <div id="takequiz-preamble" class="framePanel rounded">
   <h2>Opps, quiz not found!</h2>
   <div class="content-container"> <span class="logo"><img src="../webroot/img/quizroo-question.png" alt="Member not found" width="248" height="236" /></span>
