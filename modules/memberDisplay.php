@@ -1,17 +1,13 @@
 <!-- 
 This page is to display information of the member that the user want to view.
 Information includes statistic pie chart, taking quiz history, taking quiz topic break down and ranking
-If the member is user's friend, detailed information will be display.
+If the member is user's friend, detailed information will be displayed.
 -->
 <?php
-<<<<<<< HEAD
 //Display profile page of a particular member - includes rank, fun facts, quizzes created
 //If member is a friend, it will also include a chart of the quizzes taken by him/her
 //http://localhost/quizroo/webroot/viewMember.php
-require('../modules/quizrooDB.php'); 
-=======
 require('../modules/quizrooDB.php'); //database connection
->>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
 
 // check whether such a member exists
 $view_member = new Member($_GET['id']);
@@ -95,12 +91,9 @@ if($view_member->memExist){
 	}
 }
 ?>
-<<<<<<< HEAD
+
 <!-- If Friend - Draws Quiz Topic Breakdown Chart and Quiz Taking History Chart-->
-<?php if($friend){ ?>
-=======
 <?php if($friend){ // javascript to draw chart if the member is friend ?>
->>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
 google.load('visualization', '1', {'packages':['corechart']});
@@ -180,9 +173,7 @@ if($view_member->memExist == false){ ?>
 </div>
 <<<<<<< HEAD
 <!-- Latest & Popular quizzes that member created -->
-=======
 <!-- This division is to display the latest quizzes panel-->
->>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
 <div id="member-quizzes" class="clear">
   <div id="latest-quizzes" class="framePanel rounded left-right">
     <h2>Latest Quizzes</h2>
@@ -228,11 +219,8 @@ if($view_member->memExist == false){ ?>
      </div>
   </div>
 </div>
-<<<<<<< HEAD
 <!-- Fun facts of member -->
-=======
 <!-- This division is to display the fun fact of the view-member-->
->>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
 <div class="clear">
   <div id="fun-facts" class="framePanel rounded left">
     <h2>Fun Facts</h2>

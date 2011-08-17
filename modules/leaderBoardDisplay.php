@@ -1,14 +1,9 @@
 <!-- under tab Friends. This page is mainly on UI, displaying information about ranking, score, not only for current users but among all Quizroo members -->
 <?php
-<<<<<<< HEAD
 //Display of leaderboard 
 //http://localhost/quizroo/webroot/leaderBoard.php
-require('../modules/quizrooDB.php');
-require('../modules/variables.php');
-=======
 require('../modules/quizrooDB.php'); //for database connection
 require('../modules/variables.php'); 
->>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
 require('../modules/system.php');
 
 $systemStats = new System();

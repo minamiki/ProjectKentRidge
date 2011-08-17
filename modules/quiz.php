@@ -3,7 +3,7 @@
 Quiz Class: this class contains all the quiz operations on the database 
  -Function exist: return false when quizzes do not exist or are not published 
  -Function create: insert into table the newly created quiz then return back the quiz id for other purpose
- -Funtion update: update information of the quiz such as description, catrgory, picture, etc.
+ -Funtion update: update information of the quiz such as description, catergory, picture, etc.
  -Function delete($memberID): check whether the current user is member-> delete questions, results and images
  -Function addResult: create a new result
  -Function updateResult: create a new result

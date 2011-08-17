@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<?php 
-//
-require('quizrooDB.php'); ?>
-=======
 <!--
 This page is for modifing quiz.
 -Checking which step it is to modify
@@ -13,7 +8,6 @@ This page is for modifing quiz.
 (If the modification is already set -> update, else add new object)
 -->
 <?php require('quizrooDB.php'); // require database connection ?> 
->>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
 <?php
 // get the member info
 require('member.php'); // require operations on member

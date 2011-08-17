@@ -3,13 +3,9 @@
 *Details of the activity of the user's friends: creating and taking quizzes 
 -->
 <?php
-<<<<<<< HEAD
 //This file concerns the overview of one's friends- Their ranking, and fun facts. 
 //http://localhost/quizroo/webroot/friends.php
-require('../modules/quizrooDB.php');
-=======
 require('../modules/quizrooDB.php'); // require database connection
->>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
 require('../modules/variables.php');
 require('../modules/system.php'); // require quiz fact class
 
@@ -85,13 +81,9 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
       <p class="factDesc">Times</p>
     </div>
     </div>
-  </div>
-<<<<<<< HEAD
-  
+  </div>  
   <!-- Get ranking of all friends -->
-=======
   <!-- display rank and score of user's friends-->
->>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
   <div id="ranking" class="framePanel rounded right">
     <h2>Friends Rankings</h2>
     <div class="content-container">
@@ -102,12 +94,9 @@ $totalRows_getRanking = mysql_num_rows($getRanking);
         <th align="left" scope="col">Member</th>
         <th scope="col">Score</th>
       </tr>
-<<<<<<< HEAD
-      <?php do{ ?>  
-=======
+
       <!-- do loop: get the data from the query to display-->
       <?php do{ ?>
->>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
       <tr>
         <td width="55" align="center" scope="row" class="ranking"><?php echo $row_getRanking['ranking']; ?></td>
         <td width="60" align="center" scope="row"><a href="../webroot/viewMember.php?id=<?php echo $row_getRanking['member_id']; ?>"><img src="http://graph.facebook.com/<?php echo $row_getRanking['member_id']; ?>/picture" alt="<?php echo $row_getRanking['member_name']; ?>" width="50" height="50" border="0" title="<?php echo $row_getRanking['member_name']; ?>" /></a></td>

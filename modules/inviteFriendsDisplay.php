@@ -1,15 +1,10 @@
-<<<<<<< HEAD
-<?php 
-//Display for inviting friends to Quizroo via Facebook Wall or request
-//http://localhost/quizroo/webroot/inviteFriends.php
-include("variables.php"); ?>
-=======
-<!-- This page is for displaying Quizroo information and sharing option.
+<!-- Display for inviting friends to Quizroo via Facebook Wall or request
+http://localhost/quizroo/webroot/inviteFriends.php
+This page is for displaying Quizroo information and sharing option.
 Users can share Quizroo by posting on their wall or sending request
 This page is integrated with Facebook UI in popping up a dialogue for sharing-->
 
 <?php include("variables.php"); ?>
->>>>>>> 849f69f6d3b766ea1983e93d8922133b33cbd7ac
 <?php
 // get the number of members
 //$getMembersQuery = sprintf("SELECT COUNT(member_id) as count FROM s_members WHERE isActive=1");
