@@ -1,0 +1,145 @@
+@charset "utf-8";
+#dashboard-container {
+	margin-bottom: 10px;
+}
+#dashboard-container h2 {
+	font-size: 17px;
+	color: #000;
+}
+.repeat-container {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+#recommendations {
+	margin-right: 10px;		
+}
+#topic-preamble h2 {
+	font-size: 30px;
+	margin-bottom: 0px;
+	color: #900;
+	margin-top: 0px;
+}
+#topic-preamble p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.thumb_box {
+	height: 68px;
+	width: 90px;
+	position: relative;
+	float: left;
+	margin-right: 10px;
+	margin-top: 4px;
+	border: 1px solid #000;
+	margin-bottom: 12px;
+}
+.left-right {
+	margin-top: 10px;
+	padding-bottom: 10px;
+	width: 371px;
+	float: left;
+	display: block;
+}
+.quiz_rating  {
+	position: absolute;
+	height: 10px;
+	width: 98px;
+	left: 0px;
+	bottom: 0px;
+	background-image: url(../img/trans_grey.png);
+	color: #FFF;
+	font-size: 10px;
+	font-weight: bold;
+	font-family: Verdana, Geneva, sans-serif;
+	padding-bottom: 3px;
+	padding-left: 3px;
+}
+.quiz_details   {
+	width: 240px;
+	float: left;
+}
+.quiz_details .like {
+	color: #090;
+	font-weight: bold;
+}
+.quiz_details .dislike {
+	color: #F00;
+	font-weight: bold;
+}
+.quiz_box a img  {
+	
+}
+.quiz_details .description {
+	font-size: 11px;
+	font-weight: normal;
+	margin: 0px;
+	font-family: Verdana, Geneva, sans-serif;
+}
+.quiz_details .source {
+	font-size: 10px;
+	margin-top: 8px;
+	margin-bottom: 0px;
+	font-family: Verdana, Geneva, sans-serif;
+	color: #999;
+}
+.quiz_details .rating {
+	font-size: 10px;
+	margin-top: 2px;
+	margin-bottom: 0px;
+	font-family: Verdana, Geneva, sans-serif;
+	color: #999;
+}
+.quiz_box {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	min-height: 100px;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #999;
+	padding-top: 0px;
+	padding-bottom: 8px;
+}
+.quiz_box h3 {
+	font-size: 15px;
+	margin-top: 0px;
+	margin-bottom: 3px;
+	color: #333;
+}
+.quiz_box a:link, .quiz_box a:visited {
+	color: #333;
+	text-decoration: none;
+}
+.quiz_box a:hover {
+	text-decoration: underline;
+}
+.quiz_box:last-child {
+	border-bottom-style: none;
+}
+#recent {
+	position: relative;
+}
+#topics .topicTitle {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+#topics .description {
+	font-size: 14px;
+}
+#topics a:link, #topics a:visited {
+	color: #333;
+	text-decoration: none;
+	font-size: 18px;
+ 	font-weight: bold;
+}
+#topics a:hover {
+	text-decoration: underline;
+}
+#social h2 {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+}
+#social p {
+	margin-bottom: 0px;
+}

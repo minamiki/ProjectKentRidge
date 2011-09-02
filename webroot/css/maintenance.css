@@ -1,0 +1,46 @@
+@charset "utf-8";
+html, body {
+	font-family: "Myriad Pro", Arial, sans-serif;
+	margin: 0px;
+	padding: 0px;
+	position: relative;
+	width: 760px;
+}
+.rounded {
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+.clear:after {
+    content: "&nbsp;";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.frame {
+	border:solid 2px #E0E0E0;
+	background-image: url(../img/statusbar_background_gradient.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
+	
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	margin-right: auto;
+	margin-left: auto;
+	
+	text-align: center;
+}
+.frame h3 {
+	font-size: 18px;
+	color: #900;
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+#takequiz-preamble {
+	margin-top: 50px;
+}
